@@ -36,50 +36,47 @@
                    <div class="card-body pt-5">
                    <div class="tab-content edit-profile-main-sec">
                        <div class="tab-pane active" id="settings">
-                       <form class="form-horizontal" id="business_setting" method="POST" action="" enctype="multipart/form-data">
+                       <form class="form-horizontal bus"  id="business_setting" method="POST" action="" enctype="multipart/form-data">
 
                            @csrf
-                           <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                           <input type="hidden" id="user_id" name="user_id" value="{{Auth::user()->id}}">
                            <div class="form-row">
                                
                                 <div class="form-group col-md-6">
                                     <label for="inputName">Business Name</label>
                                     <input type="text" name="business_name" class="form-control" id="inputName" placeholder="Business Name" value="{{ (isset($setting[0]->business_name)) ? $setting[0]->business_name : '' }}" required>
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    
+                                        <span  id="business_name_error" class="error" role="alert" >
+                                            
                                         </span>
-                                    @enderror
+                                
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Business Email</label>
-                                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="inputEmail" placeholder="Email" value="{{ (isset($setting[0]->email)) ? $setting[0]->email : '' }}" required>
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    <label for="inputEmail">Business Email</label>
+                                    <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ (isset($setting[0]->email)) ? $setting[0]->email : '' }}" required>
+                                    
+                                        <span id="email_error" class="error" role="alert">
+                                            
                                         </span>
-                                    @enderror
+                                    
                                 </div>
                                 
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Business Name</label>
-                                    <textarea  name="address" class="form-control @error('address') is-invalid @enderror" id="inputAddress" placeholder="Address" required>{{ (isset($setting[0]->address)) ? $setting[0]->address : '' }}</textarea>
-                                    @error('address')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                                
                                 <div class="form-group col-md-6">
                                     <label for="inputPassword4">Business Currency</label>
                                     <input type="text" name="currency" class="form-control @error('currency') is-invalid @enderror" id="inputCurrency" placeholder="Currency" value="{{ (isset($setting[0]->currency)) ? $setting[0]->currency : '' }}" required>
-                                    @error('currency')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    <span id="currency_error" class="error" role="alert">
+                                            
+                                    </span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputAddress">Address</label>
+                                    <textarea  name="address" class="form-control @error('address') is-invalid @enderror" id="inputAddress" placeholder="Address" required>{{ (isset($setting[0]->address)) ? $setting[0]->address : '' }}</textarea>
+                                    <span id="address_error" class="error" role="alert">
+                                            
                                         </span>
-                                    @enderror
                                 </div>
                                 
                             </div>
@@ -112,20 +109,16 @@
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">Application Name</label>
                                     <input type="text" name="application_name" class="form-control @error('application_name') is-invalid @enderror" id="inputApplicationname" placeholder="Application name" value="{{ (isset($setting[0]->application_name)) ? $setting[0]->application_name : '' }}">
-                                    @error('application_name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    <span id="application_name_error" class="error" role="alert">
+                                            
                                         </span>
-                                    @enderror
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputPassword4">Application Title</label>
                                     <input type="text" name="application_title" class="form-control @error('application_title') is-invalid @enderror" id="inputApplicationtitle" placeholder="Application title" value="{{ (isset($setting[0]->application_title)) ? $setting[0]->application_title : '' }}">
-                                    @error('application_title')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    <span id="application_title_error" class="error" role="alert">
+                                            
                                         </span>
-                                    @enderror
                                 </div>
                                 
                             </div>
@@ -133,11 +126,9 @@
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">Default Language</label>
                                     <input type="text" name="application_default_language" class="form-control @error('application_default_language') is-invalid @enderror" id="inputApplicationlanguage" placeholder="Application title" value="{{ (isset($setting[0]->application_default_language)) ? $setting[0]->application_default_language : '' }}">
-                                    @error('application_default_language')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <span id="application_default_language_error" class="error" role="alert">
+                                            
+                                            </span>
                                 </div>
                                 
                                 
@@ -169,22 +160,18 @@
                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                            <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Smtp Email</label>
+                                    <label for="inputSmtpemail">Smtp Email</label>
                                     <input type="text" name="smtp_email" class="form-control @error('smtp_email') is-invalid @enderror" id="inputSmtpemail" placeholder="Smtp Email" value="{{ (isset($setting[0]->smtp_email)) ? $setting[0]->smtp_email : '' }}">
-                                    @error('smtp_email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    <span id="smtp_email_error" class="error" role="alert">
+                                            
                                         </span>
-                                    @enderror
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputPassword4">Smtp Username</label>
                                     <input type="text" name="smtp_username" class="form-control @error('smtp_username') is-invalid @enderror" id="inputSmtpusername" placeholder="Smtp Username" value="{{ (isset($setting[0]->smtp_username)) ? $setting[0]->smtp_username : '' }}">
-                                    @error('smtp_username')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    <span id="smtp_username_error" class="error" role="alert">
+                                            
                                         </span>
-                                    @enderror
                                 </div>
                                 
                             </div>
@@ -193,21 +180,17 @@
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">Smtp Host</label>
                                     <input type="text" name="smtp_host" class="form-control @error('smtp_host') is-invalid @enderror" id="inputSmtphost" placeholder="Smtp password" value="{{ (isset($setting[0]->smtp_host)) ? $setting[0]->smtp_host : '' }}">
-                                    @error('smtp_host')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    <span id="smtp_host_error" class="error" role="alert">
+                                            
                                         </span>
-                                    @enderror
                                 </div>
                                 <div class="form-group col-md-6">
 
                                     <label for="inputEmail4">Smtp Password</label>
                                     <input type="text" name="smtp_password" class="form-control @error('smtp_password') is-invalid @enderror" id="inputSmtppassword" placeholder="Smtp password" value="{{ (isset($setting[0]->smtp_password)) ? $setting[0]->smtp_password : '' }}">
-                                    @error('smtp_password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    <span id="smtp_password_error" class="error" role="alert">
+                                            
                                         </span>
-                                    @enderror
                                 </div>
                                 
                                 
@@ -235,7 +218,7 @@
             <div class="card-body pt-5">
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <h3 class="text-center">No Payment gateway</h3>
+                        <h3 class="text-center">No Payment gateway exist</h3>
                     </div>
                 </div>
             </div>

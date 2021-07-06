@@ -2979,3 +2979,7 @@ table tbody tr.odd td a div {
 		margin-left: 3px;
 	}
 }
+.error
+{
+	color:red;
+}

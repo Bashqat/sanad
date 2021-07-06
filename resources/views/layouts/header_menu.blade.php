@@ -48,7 +48,7 @@
 		</div>
 	</nav>
 	<ul class="navbar-nav ml-auto">
-		<form class="form-inline header-search ml-3">
+		<form class="form-inline header-search ml-3 mb-0">
 			<div class="input-group input-group-sm">
 				<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
 				<div class="input-group-append">

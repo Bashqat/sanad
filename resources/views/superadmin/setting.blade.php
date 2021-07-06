@@ -35,11 +35,9 @@
                                     <label for="inputPin">Pin</label>
                                     
                                     <input type="number" name="pin" class="form-control" id="inputPin" placeholder="Enter Pin" value="{{ (isset($setting[0]->pin)) ? $setting[0]->pin : '' }}" required>
-                                    @error('pin')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <span id="pin_error" class="error" role="alert">
+                                            
+                                            </span>
                                 </div>
                               </div>
                            
