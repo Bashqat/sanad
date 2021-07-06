@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(CurrenciesTableSeeder::class);
+        //$this->call(CurrenciesTableSeeder::class);
+        $this->call(masteradmindata::class);
     }
 }
