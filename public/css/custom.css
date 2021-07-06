@@ -2650,6 +2650,22 @@ table tbody tr.odd td a div {
 	    left: 100px;
 	}
 
+	.master_section-sec .nav-tabs {
+		max-width: 100%;
+	}
+	.master_section-sec .tab-content {
+		width: 100%;
+		float: left;
+	}
+
+	.master_section-sec .container {
+		overflow: hidden;
+	}
+
+	.master_section-sec .nav-tabs li.nav-item a.nav-link.active::after{
+		display: none;
+	}
+
 }
 
 @media(min-width: 767px) {
