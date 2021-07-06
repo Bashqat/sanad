@@ -18,7 +18,29 @@
 						</div>
 					</div>
 				</li>
-				<li class="nav-item">
+				
+				<div class="nav-item dropdown company-menu show">
+						<a class="nav-link mr-md-2 ml-2 px-5" data-toggle="dropdown" href="#" aria-expanded="true">
+							                    Orgnization
+                                				<i class="fas fa-sort-down ml-3"></i>
+						</a>
+						<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right " style="left: inherit; right: 0px;">
+							
+							
+							@if (Auth::user()->role=="master")
+								<a href="{{ route('master_setting') }}" class="dropdown-item">
+								Setting
+								</a>
+							@else
+								<a href="{{ route('setting') }}" class="dropdown-item">
+								Setting
+								</a>
+							@endif
+							
+						</div>
+				</div>
+					<li class="nav-item">
+					
 					<a href="{{ route('home') }}" class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}">Dashboard</a>
 				</li>
                
@@ -87,15 +109,7 @@
 				<a class="dropdown-item">
 					<span>{{ ucfirst(Auth::user()->name) }}</span>
 				</a>
-					@if (Auth::user()->role=="master")
-						<a href="{{ route('maste_setting') }}" class="dropdown-item">
-						Setting
-						</a>
-					@else
-						<a href="{{ route('setting') }}" class="dropdown-item">
-						Setting
-						</a>
-					@endif
+					
 				
 				<a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 					<span>Sign out</span>

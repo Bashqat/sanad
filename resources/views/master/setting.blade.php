@@ -37,12 +37,14 @@
                    <div class="tab-content edit-profile-main-sec">
                        <div class="tab-pane active" id="settings">
                        <form class="form-horizontal" id="business_setting" method="POST" action="" enctype="multipart/form-data">
+
                            @csrf
                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                            <div class="form-row">
+                               
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Business Name</label>
-                                    <input type="text" name="business_name" class="form-control @error('business_name') is-invalid @enderror" id="inputName" placeholder="Business Name" value="{{ (isset($setting[0]->business_name)) ? $setting[0]->business_name : '' }}" required>
+                                    <label for="inputName">Business Name</label>
+                                    <input type="text" name="business_name" class="form-control" id="inputName" placeholder="Business Name" value="{{ (isset($setting[0]->business_name)) ? $setting[0]->business_name : '' }}" required>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -230,9 +232,11 @@
   </div>
   <div class="tab-pane" id="payment_gateway" role="tabpanel">
         <div class="card">
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    <h1 class="text-center">No Payment gateway</h1>
+            <div class="card-body pt-5">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <h3 class="text-center">No Payment gateway</h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -241,17 +245,19 @@
 
   <div class="tab-pane" id="cron" role="tabpanel">
         <div class="card">
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    <p class="text-center">
-                        You can setup cron job using this command<br>
-                        **** php/home/--------
-                    </p>
-                    <p class="text-center">
-                        or you can setup from cpanel
-                    </p>
-                </div>
-            </div>  
+            <div class="card-body pt-5">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <p class="text-center">
+                            You can setup cron job using this command<br>
+                            **** php/home/--------
+                        </p>
+                        <p class="text-center">
+                            or you can setup from cpanel
+                        </p>
+                    </div>
+                </div>  
+            </div>
         </div>
     </div>
   
@@ -301,5 +307,7 @@
     border-right: 1px solid transparent;
     padding-right: 15px;
 }
+
+
     </style>
    

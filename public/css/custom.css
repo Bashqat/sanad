@@ -2198,6 +2198,7 @@ table tbody tr.odd td a div {
     width: 100%;
     max-width: 280px;
     padding-right: 0px !important;
+	margin-bottom: 1rem;
 }
 .master_section-sec .nav-tabs li.nav-item a.nav-link {
     background: #fff;
@@ -2207,6 +2208,22 @@ table tbody tr.odd td a div {
 .master_section-sec .nav-tabs li.nav-item a.nav-link.active {
     background: #3da9fc;
     color: #ffff;
+	position: relative;
+}
+
+.master_section-sec .nav-tabs li.nav-item a.nav-link.active::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -11px;
+    border-width: 12px;
+    border-style: solid;
+    border-color: transparent transparent transparent #3da9fc;
+}
+.master_section-sec {
+    display: inline-block;
+    width: 100%;
 }
 /* July-6-master-setting-css-end */
 
