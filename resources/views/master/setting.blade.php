@@ -1,7 +1,10 @@
 @extends('layouts.app')
+<title>Sanad | Setting</title>
 @section('content')
 <div class="container">
-    
+<div class="alert  msg_response" >
+  <!-- <strong>Success!</strong> Indicates a successful or positive action. -->
+</div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" href="#buisness" role="tab" aria-controls="buisness">Buisness</a>
@@ -225,8 +228,32 @@
                 </div><!-- /.card-body -->
         </div>
   </div>
-  <div class="tab-pane" id="payment_gateway" role="tabpanel"><div class="card">In progress</div></div>
-  <div class="tab-pane" id="cron" role="tabpanel"><div class="card">in progress</div></div>
+  <div class="tab-pane" id="payment_gateway" role="tabpanel">
+        <div class="card">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <h1 class="text-center">No Payment gateway</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+  <div class="tab-pane" id="cron" role="tabpanel">
+        <div class="card">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <p class="text-center">
+                        You can setup cron job using this command<br>
+                        **** php/home/--------
+                    </p>
+                    <p class="text-center">
+                        or you can setup from cpanel
+                    </p>
+                </div>
+            </div>  
+        </div>
+    </div>
   
 
 
@@ -275,27 +302,4 @@
     padding-right: 15px;
 }
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>
-      $( document ).ready(function() {
-        $(document).on("click",".update_setting",function() {
-           // 
-           var form_id=$(this).closest('form').attr('id');
-           var form_data=$('#'+form_id).serialize();
-           console.log(form_data);
-           $.ajax({
-               type:'POST',
-               dataType: "json",
-               url:'/master-setting-update',
-               data:form_data,
-               success:function(data) {
-                  if(data.status=="success")
-                  {
-                      alert('Setting updated');
-                  }
-               }
-            });
-            return false;
-            });
-     });
-      </script>
+   

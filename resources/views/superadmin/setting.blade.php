@@ -1,13 +1,16 @@
 @extends('layouts.app')
+<title>Sanad | Setting</title>
 @section('content')
 <div class="container">
-    
+<div class="alert  msg_response" >
+  <!-- <strong>Success!</strong> Indicates a successful or positive action. -->
+</div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#pin_setting" role="tab" aria-controls="home">Pin</a>
+        <a class="nav-link active" data-toggle="tab" href="#pin_setting" role="tab" aria-controls="home">Change pin</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile">Profile</a>
+        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile">Email/smtp</a>
       </li>
       <!-- <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#messages" role="tab" aria-controls="messages">Messages</a>
@@ -24,26 +27,27 @@
                    <div class="card-body pt-5">
                    <div class="tab-content edit-profile-main-sec">
                        <div class="tab-pane active" id="settings">
-                       <form class="business_setting" method="POST" action="{{ route('setting_update', Auth::user()->id) }}" enctype="multipart/form-data">
+                       <form class="pin_setting" method="POST" action="" id="pin_change">
                            @csrf
                            <input type="hidden" name="superadmin_id" value="{{Auth::user()->id}}">
-                           <div class="form-group row">
-                               <label for="inputPin" class="col-sm-2 col-form-label">Pin</label>
-                               <div class="col-sm-10">
-                                   <input type="number" name="pin" class="form-control @error('pin') is-invalid @enderror" id="inputPin" placeholder="Enter pin" value="{{ (isset($setting[0]->pin)) ? $setting[0]->pin : '' }}" required>
-                                   @error('pin')
-                                       <span class="invalid-feedback" role="alert">
-                                           <strong>{{ $message }}</strong>
-                                       </span>
-                                   @enderror
-                               </div>
-                           </div>
+                           <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputPin">Pin</label>
+                                    
+                                    <input type="number" name="pin" class="form-control" id="inputPin" placeholder="Enter Pin" value="{{ (isset($setting[0]->pin)) ? $setting[0]->pin : '' }}" required>
+                                    @error('pin')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                              </div>
                            
                            
                            
                            <div class="form-group row">
                            <div class="offset-sm-2 col-sm-10 text-right">
-                               <button type="submit" class="btn btn-primary update_setting">Update</button>
+                               <button type="submit" class="btn btn-primary update_superadmin_setting">Update</button>
                            </div>
                            </div>
                        </form>
@@ -53,7 +57,15 @@
                    <!-- /.tab-content -->
                    </div><!-- /.card-body -->
                </div></div>
-    <div class="tab-pane" id="profile" role="tabpanel"><div class="card">in progress</div>
+    <div class="tab-pane" id="profile" role="tabpanel">
+      <div class="card">
+              <div class="form-row">
+                  <div class="form-group col-md-12">
+                      <h1 class="text-center">No Email Smtp</h1>
+                  </div>
+              </div>
+        </div>
+    </div>
     
   </div>
 

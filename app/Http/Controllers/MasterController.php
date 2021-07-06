@@ -16,37 +16,57 @@ class MasterController extends Controller
     }
     public function updateSetting(Request $request)
     {
-        $user_id=$request->input('user_id');
-        $data=Master_setting::where('user_id','=',$user_id)->get()->toArray();
+        try{
+
         
-        if(empty($data))
-        {
-            $update=[];
-                foreach($request->request as $key=>$value)
+                $user_id=$request->input('user_id');
+                $data=Master_setting::where('user_id','=',$user_id)->get()->toArray();
+                
+                if(empty($data))
                 {
-                    if($key!='_token')
-                    $update[$key]=$value;
+                    $update=[];
+                        foreach($request->request as $key=>$value)
+                        {
+                            if($key!='_token')
+                            {
+                                $update[$key]=$value;
+                            }
+                            
+                        }
+                        if(Master_setting::create($update))
+                        {
+                            return response()->json(['status'=>'success','msg'=>'Data update successfully']);
+                        }
                 }
-                if(Master_setting::create($update))
-                {
-                    echo json_encode(['status'=>'success']);
-                }
-        }
-        else{
-                $update=[];
-                foreach($request->request as $key=>$value)
-                {
-                    if($key!='_token' && $key!='user_id')
-                    $update[$key]=$value;
-                }
-            
-                if(Master_setting::where('user_id', $user_id)->update($update))
-                {
-                    echo json_encode(['status'=>'success']);
-                }
-           
+                else{
+                        $update=[];
+                        foreach($request->request as $key=>$value)
+                        {
+                            if($key!='_token' && $key!='user_id')
+                            {
+                                $update[$key]=$value;
+                            }
+                            
+                        }
                     
-        }
+                        if(Master_setting::where('user_id', $user_id)->update($update))
+                        {
+                            return response()->json(['status'=>'success','msg'=>'Data update successfully']);
+                        
+                        }
+                
+                            
+                }
+            }catch (Exception $e) {
+                DB::rollback();
+                return response()->json(['status'=>'failed','msg'=>$e->getMessage()]);
+                        
+            } catch(\Illuminate\Database\QueryException $ex){ 
+                DB::rollback();
+                return response()->json(['status'=>'failed','msg'=>$ex->getMessage()]);
+                         
+            }
+            
         
     }
 }

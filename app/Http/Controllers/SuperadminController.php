@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SuperAdmin_setting;
 use Auth;
+use DB;
 
 class SuperadminController extends Controller
 {
@@ -16,26 +17,54 @@ class SuperadminController extends Controller
     }
     public function updateSetting(Request $request)
     {
-        $superAdmin_id=$request->superadmin_id;
-        $data=SuperAdmin_setting::where('superadmin_id','=',$superAdmin_id)->get()->toArray();
-        
-        if(empty($data))
-        {
-            SuperAdmin_setting::create([
-                'pin' => $request->pin,
-                'superadmin_id' => $request->superadmin_id,
-                
-                
-            ]);
-        }
-        else{
-            SuperAdmin_setting::where('superadmin_id', $superAdmin_id)->update([
-                    'pin' => $request->pin,
-                    'superadmin_id' => $request->superadmin_id,
-                    
-                ]);
-        }
+        try{
 
-        return redirect()->route('setting');
+            $superadmin_id=$request->input('superadmin_id');
+            $data=SuperAdmin_setting::where('superadmin_id','=',$superadmin_id)->get()->toArray();
+            
+            if(empty($data))
+            {
+                $update=[];
+                    foreach($request->request as $key=>$value)
+                    {
+                        if($key!='_token')
+                        {
+                            $update[$key]=$value;
+                        }
+                        
+                    }
+                    if(SuperAdmin_setting::create($update))
+                    {
+                        return response()->json(['status'=>'success','msg'=>'Data update successfully']);
+                    }
+            }
+            else{
+                    $update=[];
+                    foreach($request->request as $key=>$value)
+                    {
+                        if($key!='_token' && $key!='superadmin_id')
+                        {
+                            $update[$key]=$value;
+                        }
+                        
+                    }
+                
+                    if(SuperAdmin_setting::where('superadmin_id', $superadmin_id)->update($update))
+                    {
+                        return response()->json(['status'=>'success','msg'=>'Data update successfully']);
+                    
+                    }
+            
+                        
+            }
+        }catch (Exception $e) {
+            DB::rollback();
+            return response()->json(['status'=>'failed','msg'=>$e->getMessage()]);
+                    
+        } catch(\Illuminate\Database\QueryException $ex){ 
+            DB::rollback();
+            return response()->json(['status'=>'failed','msg'=>$ex->getMessage()]);
+                     
+        }
     }
 }
