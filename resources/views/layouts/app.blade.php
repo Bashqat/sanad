@@ -44,7 +44,7 @@
             </div><!-- /.container-fluid -->
         </section>
 
-        <section class="content pb-3 position-relative">
+        <section class="content pb-3 position-relative master_section-sec">
             @include('flash-message')
             @yield('content')
 

@@ -2190,6 +2190,25 @@ table tbody tr.odd td a div {
 
 /*june-4-css-end*/
 
+/* July-6-master-setting-css-start */
+.master_section-sec .container {
+    max-width: 100%;
+}
+.master_section-sec .nav-tabs {
+    width: 100%;
+    max-width: 280px;
+    padding-right: 0px !important;
+}
+.master_section-sec .nav-tabs li.nav-item a.nav-link {
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    color: #5f6c7b;
+}
+.master_section-sec .nav-tabs li.nav-item a.nav-link.active {
+    background: #3da9fc;
+    color: #ffff;
+}
+/* July-6-master-setting-css-end */
 
 /**Media-Start-Here**/
 
