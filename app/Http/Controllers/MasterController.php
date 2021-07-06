@@ -17,7 +17,7 @@ class MasterController extends Controller
     public function updateSetting(Request $request)
     {
         try{
-                echo 'aaaa';exit;
+                
         
                 $user_id=$request->input('user_id');
                 $data=Master_setting::where('user_id','=',$user_id)->get()->toArray();
