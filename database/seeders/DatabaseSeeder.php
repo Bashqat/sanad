@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         //$this->call(CurrenciesTableSeeder::class);
         $this->call(masteradmindata::class);
+        $this->call(updateroleseeder::class);
+        $this->call(roleSeeder::class);
     }
 }

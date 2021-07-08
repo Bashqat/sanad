@@ -10,6 +10,10 @@ class MasterController extends Controller
 {
     public function index()
     {
+        if(Auth::user()->role!="1")
+        {
+            return redirect('/login');
+        }
         $user_id=Auth::id();
         $data=Master_setting::where('user_id','=',$user_id)->get();
         return view('master/setting',['setting'=>$data]);

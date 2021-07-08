@@ -27,7 +27,7 @@
 						<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right " style="left: inherit; right: 0px;">
 							
 							
-							@if (Auth::user()->role=="master")
+							@if (Auth::user()->role=="1")
 								<a href="{{ route('master_setting') }}" class="dropdown-item">
 								Setting
 								</a>
@@ -45,6 +45,7 @@
 				</li>
                
 			</ul>
+			
 		</div>
 	</nav>
 	<ul class="navbar-nav ml-auto">

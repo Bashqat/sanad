@@ -77,7 +77,7 @@ class LoginController extends Controller
             $newUser->avatar          = $user->avatar;
             $newUser->status          = 'active';
             $newUser->save();
-            $newUser->assignRole('admin');
+            $newUser->assignRole('2');
             $newUser->givePermissionTo($this->adminPermissions());
             auth()->login($newUser, true);
         }

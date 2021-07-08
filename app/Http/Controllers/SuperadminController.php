@@ -11,6 +11,7 @@ class SuperadminController extends Controller
 {
     public function index()
     {
+        
         $superadmin_id=Auth::id();
         $data=SuperAdmin_setting::where('superadmin_id','=',$superadmin_id)->get();
         return view('superadmin/setting',['setting'=>$data]);

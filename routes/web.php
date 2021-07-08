@@ -28,3 +28,4 @@ Route::post('/master-setting-update', [App\Http\Controllers\MasterController::cl
 Route::get('/setting', [App\Http\Controllers\SuperadminController::class, 'index'])->name('setting');
 Route::post('/setting-update', [App\Http\Controllers\SuperadminController::class, 'updateSetting'])->name('setting_update');
 });
+Route::get('lang/{locale}', [App\Http\Controllers\LocalizationController::class, 'lang']);
