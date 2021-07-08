@@ -6,13 +6,13 @@
         <div class="col-md-8">
             <div class="card">
             
-				<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre> Language 
+				<!-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre> Language 
 				<span class="caret"></span>
 				</a>
 				<div class="dropdown-menu">
 				<a class="dropdown-item" href="/lang/en">English</a>
 				<a class="dropdown-item" href="/lang/ar">Arabic</a>
-				</div>
+				</div> -->
  			
                 <div class="card-header">{{ __('language.dashboard') }}</div>
 
