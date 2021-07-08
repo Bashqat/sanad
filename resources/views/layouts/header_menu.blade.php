@@ -21,7 +21,7 @@
 				
 				<div class="nav-item dropdown company-menu show">
 						<a class="nav-link mr-md-2 ml-2 px-5" data-toggle="dropdown" href="#" aria-expanded="true">
-							                    Orgnization
+											{{ __('language.organisation') }}
                                 				<i class="fas fa-sort-down ml-3"></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right " style="left: inherit; right: 0px;">
@@ -29,11 +29,11 @@
 							
 							@if (Auth::user()->role=="1")
 								<a href="{{ route('master_setting') }}" class="dropdown-item">
-								Setting
+								{{ __('language.setting') }}
 								</a>
 							@else
 								<a href="{{ route('setting') }}" class="dropdown-item">
-								Setting
+								{{ __('language.setting') }}
 								</a>
 							@endif
 							
@@ -41,7 +41,7 @@
 				</div>
 					<li class="nav-item">
 					
-					<a href="{{ route('home') }}" class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}">Dashboard</a>
+					<a href="{{ route('home') }}" class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}">{{ __('language.dashboard') }}</a>
 				</li>
                
 			</ul>
@@ -51,7 +51,7 @@
 	<ul class="navbar-nav ml-auto">
 		<form class="form-inline header-search ml-3 mb-0">
 			<div class="input-group input-group-sm">
-				<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+				<input class="form-control form-control-navbar" type="search" placeholder="{{ __('language.search') }}" aria-label="Search">
 				<div class="input-group-append">
 					<button class="btn btn-navbar" type="submit">
 						<i class="fas fa-search"></i>
@@ -113,7 +113,7 @@
 					
 				
 				<a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-					<span>Sign out</span>
+					<span>{{ __('language.signout') }}</span>
 					<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
 						@csrf
 					</form>

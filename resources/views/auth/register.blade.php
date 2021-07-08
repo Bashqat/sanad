@@ -27,7 +27,7 @@
         <div class="card-body register-card-body">
             <!--  <p class="login-box-msg">Register a new membership</p> -->
         <div class="card-body">
-            <h4 class="pb-2 text-center text-dark text-capitalize">sign up</h4>
+            <h4 class="pb-2 text-center text-dark text-capitalize">{{ __('language.signup') }}</h4>
             <form method="post" action="{{ route('register') }}" enctype="multipart/form-data">
                 @csrf
 
@@ -36,7 +36,7 @@
                            name="name"
                            class="form-control @error('name') is-invalid @enderror"
                            value="{{ old('name') }}"
-                           placeholder="Full name"
+                           placeholder="{{ __('language.full_name') }}"
                            required>
                     <div class="input-group-append">
                         <div class="input-group-text"><span class="fas fa-user"></span></div>
@@ -53,7 +53,7 @@
                            name="email"
                            value="{{ old('email') }}"
                            class="form-control @error('email') is-invalid @enderror"
-                           placeholder="Email"
+                           placeholder="{{ __('language.email') }}"
                            required>
                     <div class="input-group-append">
                         <div class="input-group-text"><span class="fas fa-envelope"></span></div>
@@ -69,7 +69,7 @@
                     <input type="password"
                            name="password"
                            class="form-control @error('password') is-invalid @enderror"
-                           placeholder="Password"
+                           placeholder="{{ __('language.password') }}"
                            required>
                     <div class="input-group-append">
                         <div class="input-group-text"><span class="fas fa-lock"></span></div>
@@ -80,7 +80,7 @@
                     <input type="password"
                            name="password_confirmation"
                            class="form-control @error('password') is-invalid @enderror"
-                           placeholder="Confirm password"
+                           placeholder="{{ __('language.confirm_password') }}"
                            required>
                     <div class="input-group-append">
                         <div class="input-group-text"><span class="fas fa-lock"></span></div>
@@ -102,7 +102,7 @@
                           id="exampleInputFile"
                           required
                           accept="image/*">
-                          <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                          <label class="custom-file-label" for="exampleInputFile">{{ __('language.choose_file') }}</label>
                         </div>
                     </div>
                     @error('profile')
@@ -118,7 +118,7 @@
                             <div class="icheck-primary">
                                 <input type="checkbox" id="agreeTerms" name="terms" value="agree" class="@error('terms') is-invalid @enderror log-reg-check-box" required>
                                 <label for="agreeTerms">
-                                    I agree to the <a href="#">terms & conditions</a>
+                                {{ __('language.aggre_to') }}<a href="#"> {{ __('language.term_condition') }}</a>
                                 </label>
                                 @error('terms')
                                     <span class="invalid-feedback" role="alert">
@@ -129,26 +129,26 @@
                         </div>
 
                          <div class="log-btns d-flex align-items-center justify-content-end">
-                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            <button type="submit" class="btn btn-primary btn-block">{{ __('language.register') }}</button>
                         </div>
                     </div>
                      <div class="col-12">
                         <div class="or-text d-flex justify-content-center py-1">
-                            <h5 class="mb-0">or</h5>
+                            <h5 class="mb-0">{{ __('language.or') }}</h5>
                         </div>
                      </div>
                     <!-- /.col -->
                     <div class="col-12">
                         <div class="forget-pass pb-2 pt-3 justify-content-end">
                             <a href="{{ route('login-gmail') }}" class="btn btn-block btn-danger">
-                                <i class="fas fa-envelope mr-2"></i> Sign in With Gmail
+                                <i class="fas fa-envelope mr-2"></i> {{ __('language.signin_with_gmail') }}
                             </a>
                         </div>
                     </div>
                     <!-- /.col -->
                 </div>
             </form>
-            Already have an account?<a href="{{ route('login') }}" class="text-center"> Login here</a>
+            {{ __('language.already_have_account') }}?<a href="{{ route('login') }}" class="text-center"> {{ __('language.login_here') }}</a>
         </div>
     </div>
         <!-- /.form-box -->

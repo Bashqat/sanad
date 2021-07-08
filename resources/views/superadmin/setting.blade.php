@@ -7,10 +7,10 @@
 </div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#pin_setting" role="tab" aria-controls="home">Change pin</a>
+        <a class="nav-link active" data-toggle="tab" href="#pin_setting" role="tab" aria-controls="home"> {{ __('language.change_pin') }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile">Email/smtp</a>
+        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile">{{ __('language.email_smtp') }}</a>
       </li>
       <!-- <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#messages" role="tab" aria-controls="messages">Messages</a>
@@ -32,9 +32,9 @@
                            <input type="hidden" name="superadmin_id" value="{{Auth::user()->id}}">
                            <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label for="inputPin">Pin</label>
+                                    <label for="inputPin">{{ __('language.pin') }}</label>
                                     
-                                    <input type="number" name="pin" class="form-control" id="inputPin" placeholder="Enter Pin" value="{{ (isset($setting[0]->pin)) ? $setting[0]->pin : '' }}" required>
+                                    <input type="number" name="pin" class="form-control" id="inputPin" placeholder="{{ __('language.pin') }}" value="{{ (isset($setting[0]->pin)) ? $setting[0]->pin : '' }}" required>
                                     <span id="pin_error" class="error" role="alert">
                                             
                                             </span>
@@ -45,7 +45,7 @@
                            
                            <div class="form-group row">
                            <div class="offset-sm-2 col-sm-10 text-right">
-                               <button type="submit" class="btn btn-primary update_superadmin_setting">Update</button>
+                               <button type="submit" class="btn btn-primary update_superadmin_setting">{{ __('language.update') }}</button>
                            </div>
                            </div>
                        </form>

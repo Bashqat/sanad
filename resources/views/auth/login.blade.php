@@ -28,7 +28,7 @@
         <div class="login-card-body">
             <!-- <p class="login-box-msg">Sign in to start your session</p> -->
               <div class="card-body">
-                 <h4 class="pb-2 text-center text-dark text-uppercase">login</h4>
+                 <h4 class="pb-2 text-center text-dark text-uppercase">{{ __('language.login') }}</h4>
             <form method="post" action="{{ url('/login') }}">
                 @csrf
 
@@ -36,7 +36,7 @@
                     <input type="email"
                            name="email"
                            value="{{ old('email') }}"
-                           placeholder="Email"
+                           placeholder="{{ __('language.email') }}"
                            class="form-control @error('email') is-invalid @enderror">
                     <div class="input-group-append">
                         <div class="input-group-text"><span class="fas fa-envelope"></span></div>
@@ -49,7 +49,7 @@
                 <div class="input-group mb-3">
                     <input type="password"
                            name="password"
-                           placeholder="Password"
+                           placeholder="{{ __('language.password') }}"
                            class="form-control @error('password') is-invalid @enderror">
                     <div class="input-group-append">
                         <div class="input-group-text">
@@ -66,9 +66,9 @@
                         <div class="log-btns d-flex align-items-center justify-content-between">
                             <div class="icheck-primary mt-1">
                             <input type="checkbox" id="remember" class="log-reg-check-box">
-                            <label for="remember">Remember Me</label>
+                            <label for="remember">{{ __('language.remember_me') }}</label>
                         </div>
-                         <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt mr-2"></i>Sign In</button>
+                         <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt mr-2"></i>{{ __('language.signin') }}</button>
 
                        <!--  <div class="social-auth-links text-center ">
 
@@ -84,16 +84,16 @@
                   <!--  <span class="or d-block mb-3 text-center">- OR -</span> -->
 
                 <a href="{{ route('login-gmail') }}" class="gmail">
-                            <i class="fas fa-envelope mr-2"></i> Sign In With Gmail
+                            <i class="fas fa-envelope mr-2"></i> {{ __('language.signin_with_gmail') }}
                         </a>
           <!--  <a href="{{ route('register') }}" class="text-center register-btn">Register a new membership</a> -->
 
             </div>
 
             <div class="sign-up-btns pt-4 text-capitalize">
-                <a href="{{ route('password.request') }}">forget password</a>
+                <a href="{{ route('password.request') }}">{{ __('language.forget_password') }}</a>
                 <span class="px-1">|</span>
-                <a href="{{ route('register') }}">sign up</a>
+                <a href="{{ route('register') }}">{{ __('language.signup') }}</a>
             </div>
 
         </div>

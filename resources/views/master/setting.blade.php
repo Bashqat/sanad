@@ -7,19 +7,19 @@
 </div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#buisness" role="tab" aria-controls="buisness">Buisness</a>
+        <a class="nav-link active" data-toggle="tab" href="#buisness" role="tab" aria-controls="buisness">{{ __('language.business') }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#application" role="tab" aria-controls="application">Application</a>
+        <a class="nav-link" data-toggle="tab" href="#application" role="tab" aria-controls="application">{{ __('language.application') }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#email_smtp" role="tab" aria-controls="email_smtp">Email/Smtp</a>
+        <a class="nav-link" data-toggle="tab" href="#email_smtp" role="tab" aria-controls="email_smtp">{{ __('language.email_smtp') }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#payment_gateway" role="tab" aria-controls="payment_gateway">Payment Gateway</a>
+        <a class="nav-link" data-toggle="tab" href="#payment_gateway" role="tab" aria-controls="payment_gateway">{{ __('language.payment_gateway') }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#cron" role="tab" aria-controls="payment_gateway">Cron</a>
+        <a class="nav-link" data-toggle="tab" href="#cron" role="tab" aria-controls="payment_gateway">{{ __('language.cron') }}</a>
       </li>
       <!-- <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#messages" role="tab" aria-controls="messages">Messages</a>
@@ -43,8 +43,8 @@
                            <div class="form-row">
                                
                                 <div class="form-group col-md-6">
-                                    <label for="inputName">Business Name</label>
-                                    <input type="text" name="business_name" class="form-control" id="inputName" placeholder="Business Name" value="{{ (isset($setting[0]->business_name)) ? $setting[0]->business_name : '' }}" required>
+                                    <label for="inputName">{{ __('language.business_name') }}</label>
+                                    <input type="text" name="business_name" class="form-control" id="inputName" placeholder="{{ __('language.business_name') }}" value="{{ (isset($setting[0]->business_name)) ? $setting[0]->business_name : '' }}" required>
                                     
                                         <span  id="business_name_error" class="error" role="alert" >
                                             
@@ -52,8 +52,8 @@
                                 
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail">Business Email</label>
-                                    <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ (isset($setting[0]->email)) ? $setting[0]->email : '' }}" required>
+                                    <label for="inputEmail">{{ __('language.business_email') }}</label>
+                                    <input type="text" name="email" class="form-control" id="inputEmail" placeholder="{{ __('language.business_email') }}" value="{{ (isset($setting[0]->email)) ? $setting[0]->email : '' }}" required>
                                     
                                         <span id="email_error" class="error" role="alert">
                                             
@@ -65,15 +65,15 @@
                             <div class="form-row">
                                 
                                 <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Business Currency</label>
-                                    <input type="text" name="currency" class="form-control @error('currency') is-invalid @enderror" id="inputCurrency" placeholder="Currency" value="{{ (isset($setting[0]->currency)) ? $setting[0]->currency : '' }}" required>
+                                    <label for="inputPassword4">{{ __('language.currency') }}</label>
+                                    <input type="text" name="currency" class="form-control @error('currency') is-invalid @enderror" id="inputCurrency" placeholder="{{ __('language.currency') }}" value="{{ (isset($setting[0]->currency)) ? $setting[0]->currency : '' }}" required>
                                     <span id="currency_error" class="error" role="alert">
                                             
                                     </span>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputAddress">Address</label>
-                                    <textarea  name="address" class="form-control @error('address') is-invalid @enderror" id="inputAddress" placeholder="Address" required>{{ (isset($setting[0]->address)) ? $setting[0]->address : '' }}</textarea>
+                                    <label for="inputAddress">{{ __('language.business_address') }}</label>
+                                    <textarea  name="address" class="form-control @error('address') is-invalid @enderror" id="inputAddress" placeholder="{{ __('language.business_address') }}" required>{{ (isset($setting[0]->address)) ? $setting[0]->address : '' }}</textarea>
                                     <span id="address_error" class="error" role="alert">
                                             
                                         </span>
@@ -85,7 +85,7 @@
                            
                            <div class="form-group row">
                            <div class="offset-sm-2 col-sm-10 text-right">
-                               <button type="submit" class="btn btn-primary update_setting">Update</button>
+                               <button type="submit" class="btn btn-primary update_setting">{{ __('language.update') }}</button>
                            </div>
                            </div>
                        </form>
@@ -107,15 +107,15 @@
                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                            <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Application Name</label>
-                                    <input type="text" name="application_name" class="form-control @error('application_name') is-invalid @enderror" id="inputApplicationname" placeholder="Application name" value="{{ (isset($setting[0]->application_name)) ? $setting[0]->application_name : '' }}">
+                                    <label for="inputEmail4">{{ __('language.application_name') }}</label>
+                                    <input type="text" name="application_name" class="form-control @error('application_name') is-invalid @enderror" id="inputApplicationname" placeholder="{{ __('language.application_name') }}" value="{{ (isset($setting[0]->application_name)) ? $setting[0]->application_name : '' }}">
                                     <span id="application_name_error" class="error" role="alert">
                                             
                                         </span>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Application Title</label>
-                                    <input type="text" name="application_title" class="form-control @error('application_title') is-invalid @enderror" id="inputApplicationtitle" placeholder="Application title" value="{{ (isset($setting[0]->application_title)) ? $setting[0]->application_title : '' }}">
+                                    <label for="inputPassword4">{{ __('language.application_title') }}</label>
+                                    <input type="text" name="application_title" class="form-control @error('application_title') is-invalid @enderror" id="inputApplicationtitle" placeholder="{{ __('language.application_title') }}" value="{{ (isset($setting[0]->application_title)) ? $setting[0]->application_title : '' }}">
                                     <span id="application_title_error" class="error" role="alert">
                                             
                                         </span>
@@ -124,8 +124,8 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Default Language</label>
-                                    <input type="text" name="application_default_language" class="form-control @error('application_default_language') is-invalid @enderror" id="inputApplicationlanguage" placeholder="Application title" value="{{ (isset($setting[0]->application_default_language)) ? $setting[0]->application_default_language : '' }}">
+                                    <label for="inputEmail4">{{ __('language.default_language') }}</label>
+                                    <input type="text" name="application_default_language" class="form-control @error('application_default_language') is-invalid @enderror" id="inputApplicationlanguage" placeholder="{{ __('language.default_language') }}" value="{{ (isset($setting[0]->application_default_language)) ? $setting[0]->application_default_language : '' }}">
                                     <span id="application_default_language_error" class="error" role="alert">
                                             
                                             </span>
@@ -138,7 +138,7 @@
                            
                            <div class="form-group row">
                                 <div class="offset-sm-2 col-sm-10 text-right">
-                                    <button type="submit" class="btn btn-primary update_setting">Update</button>
+                                    <button type="submit" class="btn btn-primary update_setting">{{ __('language.update') }}</button>
                                 </div>
                            </div>
                        </form>
@@ -160,15 +160,15 @@
                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                            <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputSmtpemail">Smtp Email</label>
-                                    <input type="text" name="smtp_email" class="form-control @error('smtp_email') is-invalid @enderror" id="inputSmtpemail" placeholder="Smtp Email" value="{{ (isset($setting[0]->smtp_email)) ? $setting[0]->smtp_email : '' }}">
+                                    <label for="inputSmtpemail">{{ __('language.smtp_email') }}</label>
+                                    <input type="text" name="smtp_email" class="form-control @error('smtp_email') is-invalid @enderror" id="inputSmtpemail" placeholder="{{ __('language.smtp_email') }}" value="{{ (isset($setting[0]->smtp_email)) ? $setting[0]->smtp_email : '' }}">
                                     <span id="smtp_email_error" class="error" role="alert">
                                             
                                         </span>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Smtp Username</label>
-                                    <input type="text" name="smtp_username" class="form-control @error('smtp_username') is-invalid @enderror" id="inputSmtpusername" placeholder="Smtp Username" value="{{ (isset($setting[0]->smtp_username)) ? $setting[0]->smtp_username : '' }}">
+                                    <label for="inputPassword4">{{ __('language.smtp_username') }}</label>
+                                    <input type="text" name="smtp_username" class="form-control @error('smtp_username') is-invalid @enderror" id="inputSmtpusername" placeholder="{{ __('language.smtp_username') }}" value="{{ (isset($setting[0]->smtp_username)) ? $setting[0]->smtp_username : '' }}">
                                     <span id="smtp_username_error" class="error" role="alert">
                                             
                                         </span>
@@ -178,16 +178,16 @@
                             
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Smtp Host</label>
-                                    <input type="text" name="smtp_host" class="form-control @error('smtp_host') is-invalid @enderror" id="inputSmtphost" placeholder="Smtp password" value="{{ (isset($setting[0]->smtp_host)) ? $setting[0]->smtp_host : '' }}">
+                                    <label for="inputEmail4">{{ __('language.smtp_host') }}</label>
+                                    <input type="text" name="smtp_host" class="form-control @error('smtp_host') is-invalid @enderror" id="inputSmtphost" placeholder="{{ __('language.smtp_host') }}" value="{{ (isset($setting[0]->smtp_host)) ? $setting[0]->smtp_host : '' }}">
                                     <span id="smtp_host_error" class="error" role="alert">
                                             
                                         </span>
                                 </div>
                                 <div class="form-group col-md-6">
 
-                                    <label for="inputEmail4">Smtp Password</label>
-                                    <input type="text" name="smtp_password" class="form-control @error('smtp_password') is-invalid @enderror" id="inputSmtppassword" placeholder="Smtp password" value="{{ (isset($setting[0]->smtp_password)) ? $setting[0]->smtp_password : '' }}">
+                                    <label for="inputEmail4">{{ __('language.smtp_password') }}</label>
+                                    <input type="text" name="smtp_password" class="form-control @error('smtp_password') is-invalid @enderror" id="inputSmtppassword" placeholder="{{ __('language.smtp_password') }}" value="{{ (isset($setting[0]->smtp_password)) ? $setting[0]->smtp_password : '' }}">
                                     <span id="smtp_password_error" class="error" role="alert">
                                             
                                         </span>
@@ -202,7 +202,7 @@
                            
                            <div class="form-group row">
                            <div class="offset-sm-2 col-sm-10 text-right">
-                               <button type="submit" class="btn btn-primary update_setting">Update</button>
+                               <button type="submit" class="btn btn-primary update_setting">{{ __('language.update') }}</button>
                            </div>
                            </div>
                        </form>
@@ -218,7 +218,7 @@
             <div class="card-body pt-5">
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <h3 class="text-center">No Payment gateway exist</h3>
+                        <h3 class="text-center">{{ __('language.no_payment_gateway') }}/h3>
                     </div>
                 </div>
             </div>
@@ -232,7 +232,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <p class="text-center">
-                            You can setup cron job using this command<br>
+                        {{ __('language.cron_content') }}<br>
                             **** php/home/--------
                         </p>
                         <p class="text-center">
