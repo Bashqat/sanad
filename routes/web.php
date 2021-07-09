@@ -27,5 +27,12 @@ Route::get('/master-setting', [App\Http\Controllers\MasterController::class, 'in
 Route::post('/master-setting-update', [App\Http\Controllers\MasterController::class, 'updateSetting'])->name('master_setting_update');
 Route::get('/setting', [App\Http\Controllers\SuperadminController::class, 'index'])->name('setting');
 Route::post('/setting-update', [App\Http\Controllers\SuperadminController::class, 'updateSetting'])->name('setting_update');
+Route::post('/setting-update', [App\Http\Controllers\SuperadminController::class, 'updateSetting'])->name('setting_update');
+//organisations
+Route::get('/organization', [App\Http\Controllers\OrganizationController::class, 'index'])->name('org_list');
+
+Route::get('/organization/create', [App\Http\Controllers\OrganizationController::class, 'create'])->name('org_create');
+Route::post('/organization/create', [App\Http\Controllers\OrganizationController::class, 'store'])->name('org_store');
+
 });
 Route::get('lang/{locale}', [App\Http\Controllers\LocalizationController::class, 'lang']);

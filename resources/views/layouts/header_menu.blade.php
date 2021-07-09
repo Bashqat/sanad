@@ -36,6 +36,10 @@
 								{{ __('language.setting') }}
 								</a>
 							@endif
+							<a href="{{ route('org_create') }}" class="dropdown-item">
+								<i class="fa fa-plus"></i>
+								<span>Add Organization</span>
+							</a>
 							
 						</div>
 				</div>
