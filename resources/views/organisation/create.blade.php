@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<title>Add organisation</title>
 @section('content')
     <!-- Main content -->
         <div class="container-fluid">
@@ -15,17 +15,21 @@
                     <div class="card-body">
                     <div class="tab-content org-create-table">
                         <div class="tab-pane active" id="settings">
-                        <form class="form-horizontal" method="POST" action="{{ route('org_store') }}" enctype="multipart/form-data">
+                        <form class="form-horizontal" method="POST" action="{{ !empty($organisation_data) ? route('org_update') : route('org_store')}}" enctype="multipart/form-data">
                             @csrf
     
-        
+                            @if(!empty($organisation_data) )       
+                              <input type="hidden" name="id" value="{{ isset($organisation_data[0]->id) ? $organisation_data[0]->id : ''}}">  
+                            @else
+                                        
+                            @endif
         
                         <!-- An unexamined life is not worth living. - Socrates -->
                         <div class="form-group row">
                             <label for="display_name" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organisation Name <span style="color:red;">*</span> </label>
                             <div class="col-lg-9 col-md-9 col-sm-9">
                                 <input type="text" name="display_name" class="form-control 
-                                " id="display_name " placeholder="Enter Organisation Name" required="" value="">
+                                " id="display_name " placeholder="Enter Organisation Name" required="" value="{{ isset($organisation_data[0]->display_name) ? $organisation_data[0]->display_name : ''}}">
                             </div>
                         </div>
                           <!-- An unexamined life is not worth living. - Socrates -->
@@ -34,379 +38,109 @@
         
         
                         <!-- An unexamined life is not worth living. - Socrates -->
-        <div class="form-group row">
-            <label for="legal_name" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Legal Name <span style="color:red;">*</span> </label>
-            <div class="col-lg-9 col-md-9 col-sm-9">
-                <input type="text" name="legal_name" class="form-control 
-                " id="legal_name " placeholder="Enter Legal Name" required="" value="">
+                        <div class="form-group row">
+                            <label for="legal_name" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Legal Name <span style="color:red;">*</span> </label>
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <input type="text" name="legal_name" class="form-control 
+                                " id="legal_name " placeholder="Enter Legal Name" required="" value="{{ isset($organisation_data[0]->legal_name) ? $organisation_data[0]->legal_name : ''}}">
                             </div>
-        </div>
+                        </div>
                             
         
         
                         <!-- An unexamined life is not worth living. - Socrates -->
     
-        <div class="form-group row">
-            <label for="logo" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Logo </label>
-            <div class="col-lg-9 col-md-9 col-sm-9 input-group">
-                                <div class="custom-file">
-                    <input type="file" name="logo" class="form-control custom-file-input  " id="logoFile" accept="image/*">
-                    <label class="custom-file-label" for="logoFile">Choose file</label>
-                </div>
+                    <div class="form-group row">
+                        <label for="logo" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Logo </label>
+                        <div class="col-lg-9 col-md-9 col-sm-9 input-group">
+                            <div class="custom-file">
+                                <input type="file" name="logo" class="form-control custom-file-input  " id="logoFile" accept="image/*">
+                                <label class="custom-file-label" for="logoFile">Choose file</label>
                             </div>
-        </div>
+                        </div>
+                    </div>
                             
         
         
                         <div class="form-group row">
-                    <label for="type_of_organization" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Type of Organization <span style="color:red;">*</span> </label>
-                    <div class="col-lg-9 col-md-9  col-sm-9">
-                        <select name="type_of_organization" class="form-control select2  " style="width: 100%;" required="">
-    <option value="">Select </option>
-            <option value="individual">Individual</option>
-            <option value="sole_proprietorship">Sole proprietorship</option>
-            <option value="general_partnership">General Partnership</option>
-            <option value="corporation">Corporation</option>
-            <option value="limited_liability_company">Limited liability company</option>
-            <option value="non_profit">Non-Profit</option>
-    </select>
-                    </div>
-                </div>
+                            <label for="type_of_organization" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Type of Organization <span style="color:red;">*</span> </label>
+                            <div class="col-lg-9 col-md-9  col-sm-9">
+                                <select name="type_of_organization" class="form-control select2  " style="width: 100%;" required="">
+                                
+                                <option value="">Select </option>
+                                    @foreach($organisationType as $key=>$val)
+                                      <option value="{{$key}}" {{ (isset($organisation_data[0]->type_of_organization) && $key==$organisation_data[0]->type_of_organization)?'selected':''}}>{{$val}}</option>
+                                    @endforeach
+                                    
+                                </select>
+                            </div>
+                        </div>
                     
         
         
-                        <div class="form-group row">
-                    <label for="type_of_business" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Type of Business <span style="color:red;">*</span> </label>
-                    <div class="col-lg-9 col-md-9  col-sm-9">
-                        <select name="type_of_business" class="form-control select2  " style="width: 100%;" required="">
-    <option value="">Select </option>
-            <option value="automotive">Automotive</option>
-            <option value="chemicals_and_specialty_materials">Chemicals and Specialty Materials</option>
-            <option value="consumer_products">Consumer Products</option>
-            <option value="retail,_wholesale_and_distribution">Retail, Wholesale and Distribution</option>
-            <option value="travel,_hospitality_and_services">Travel, Hospitality and Services</option>
-            <option value="energy_&amp;_resources">Energy &amp; Resources</option>
-            <option value="mining">Mining</option>
-            <option value="oil_&amp;_gas">Oil &amp; Gas</option>
-            <option value="power">Power</option>
-            <option value="shipping_&amp;_ports">Shipping &amp; Ports</option>
-            <option value="water">Water</option>
-            <option value="financial_services">Financial Services</option>
-            <option value="banking_&amp;_securities">Banking &amp; Securities</option>
-            <option value="insurance">Insurance</option>
-            <option value="investment_management">Investment Management</option>
-            <option value="real_estate">Real Estate</option>
-            <option value="life_sciences_&amp;_health_care">Life Sciences &amp; Health Care</option>
-            <option value="health_care">Health Care</option>
-            <option value="life_sciences">Life Sciences</option>
-            <option value="public_sector">Public Sector</option>
-            <option value="civil_government">Civil Government</option>
-            <option value="defense">Defense</option>
-            <option value="education">Education</option>
-            <option value="international_donor_organizations">International Donor Organizations</option>
-            <option value="public_health_and_social_services">Public Health and Social Services</option>
-            <option value="public_transportation">Public Transportation</option>
-            <option value="security_and_justice">Security and Justice</option>
-            <option value="technology">Technology</option>
-            <option value="media">Media</option>
-            <option value="telecommunications">Telecommunications</option>
-    </select>
-                    </div>
-                </div>
+                            <div class="form-group row">
+                                    <label for="type_of_business" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Type of Business <span style="color:red;">*</span> </label>
+                                    <div class="col-lg-9 col-md-9  col-sm-9">
+                                        <select name="type_of_business" class="form-control select2  " style="width: 100%;" required="">
+                                            <option value="">Select </option>
+                                            
+                                            @foreach($busType as $buskey=>$busval)
+                                                <option value="{{$buskey}}" {{ (isset($organisation_data[0]->type_of_business) && $buskey==$organisation_data[0]->type_of_business)?'selected':''}}>{{$busval}}</option>
+                                            @endforeach
+                                            
+                                        </select>
+                                    </div>
+                            </div>
                     
         
         
                         <!-- An unexamined life is not worth living. - Socrates -->
-        <div class="form-group row">
-            <label for="business_registration_number" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Business Registration Number </label>
-            <div class="col-lg-9 col-md-9 col-sm-9">
-                <input type="text" name="business_registration_number" class="form-control 
-                " id="business_registration_number " placeholder="Enter Business Registration Number" value="">
+                            <div class="form-group row">
+                                <label for="business_registration_number" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Business Registration Number </label>
+                                <div class="col-lg-9 col-md-9 col-sm-9">
+                                    <input type="text" name="business_registration_number" class="form-control 
+                                    " id="business_registration_number " placeholder="Enter Business Registration Number" value="{{ isset($organisation_data[0]->business_registration_number) ? $organisation_data[0]->business_registration_number : ''}}">
+                                </div>
                             </div>
-        </div>
                             
         
         
-                        <div class="form-group row">
-                    <label for="location" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Location <span style="color:red;">*</span> </label>
-                    <div class="col-lg-9 col-md-9  col-sm-9">
-                        <select name="location" class="form-control select2  " style="width: 100%;" required="">
-    <option value="">Select </option>
-            <option value="AF">Afghanistan</option>
-            <option value="AX">Åland Islands</option>
-            <option value="AL">Albania</option>
-            <option value="DZ">Algeria</option>
-            <option value="AS">American Samoa</option>
-            <option value="AD">Andorra</option>
-            <option value="AO">Angola</option>
-            <option value="AI">Anguilla</option>
-            <option value="AQ">Antarctica</option>
-            <option value="AG">Antigua &amp; Barbuda</option>
-            <option value="AR">Argentina</option>
-            <option value="AM">Armenia</option>
-            <option value="AW">Aruba</option>
-            <option value="AU">Australia</option>
-            <option value="AT">Austria</option>
-            <option value="AZ">Azerbaijan</option>
-            <option value="BS">Bahamas</option>
-            <option value="BH">Bahrain</option>
-            <option value="BD">Bangladesh</option>
-            <option value="BB">Barbados</option>
-            <option value="BY">Belarus</option>
-            <option value="BE">Belgium</option>
-            <option value="BZ">Belize</option>
-            <option value="BJ">Benin</option>
-            <option value="BM">Bermuda</option>
-            <option value="BT">Bhutan</option>
-            <option value="BO">Bolivia</option>
-            <option value="BA">Bosnia &amp; Herzegovina</option>
-            <option value="BW">Botswana</option>
-            <option value="BV">Bouvet Island</option>
-            <option value="BR">Brazil</option>
-            <option value="IO">British Indian Ocean Territory</option>
-            <option value="VG">British Virgin Islands</option>
-            <option value="BN">Brunei</option>
-            <option value="BG">Bulgaria</option>
-            <option value="BF">Burkina Faso</option>
-            <option value="BI">Burundi</option>
-            <option value="KH">Cambodia</option>
-            <option value="CM">Cameroon</option>
-            <option value="CA">Canada</option>
-            <option value="CV">Cape Verde</option>
-            <option value="BQ">Caribbean Netherlands</option>
-            <option value="KY">Cayman Islands</option>
-            <option value="CF">Central African Republic</option>
-            <option value="TD">Chad</option>
-            <option value="CL">Chile</option>
-            <option value="CN">China</option>
-            <option value="CX">Christmas Island</option>
-            <option value="CC">Cocos (Keeling) Islands</option>
-            <option value="CO">Colombia</option>
-            <option value="KM">Comoros</option>
-            <option value="CG">Congo - Brazzaville</option>
-            <option value="CD">Congo - Kinshasa</option>
-            <option value="CK">Cook Islands</option>
-            <option value="CR">Costa Rica</option>
-            <option value="CI">Côte d’Ivoire</option>
-            <option value="HR">Croatia</option>
-            <option value="CU">Cuba</option>
-            <option value="CW">Curaçao</option>
-            <option value="CY">Cyprus</option>
-            <option value="CZ">Czechia</option>
-            <option value="DK">Denmark</option>
-            <option value="DJ">Djibouti</option>
-            <option value="DM">Dominica</option>
-            <option value="DO">Dominican Republic</option>
-            <option value="EC">Ecuador</option>
-            <option value="EG">Egypt</option>
-            <option value="SV">El Salvador</option>
-            <option value="GQ">Equatorial Guinea</option>
-            <option value="ER">Eritrea</option>
-            <option value="EE">Estonia</option>
-            <option value="SZ">Eswatini</option>
-            <option value="ET">Ethiopia</option>
-            <option value="FK">Falkland Islands</option>
-            <option value="FO">Faroe Islands</option>
-            <option value="FJ">Fiji</option>
-            <option value="FI">Finland</option>
-            <option value="FR">France</option>
-            <option value="GF">French Guiana</option>
-            <option value="PF">French Polynesia</option>
-            <option value="TF">French Southern Territories</option>
-            <option value="GA">Gabon</option>
-            <option value="GM">Gambia</option>
-            <option value="GE">Georgia</option>
-            <option value="DE">Germany</option>
-            <option value="GH">Ghana</option>
-            <option value="GI">Gibraltar</option>
-            <option value="GR">Greece</option>
-            <option value="GL">Greenland</option>
-            <option value="GD">Grenada</option>
-            <option value="GP">Guadeloupe</option>
-            <option value="GU">Guam</option>
-            <option value="GT">Guatemala</option>
-            <option value="GG">Guernsey</option>
-            <option value="GN">Guinea</option>
-            <option value="GW">Guinea-Bissau</option>
-            <option value="GY">Guyana</option>
-            <option value="HT">Haiti</option>
-            <option value="HM">Heard &amp; McDonald Islands</option>
-            <option value="HN">Honduras</option>
-            <option value="HK">Hong Kong SAR China</option>
-            <option value="HU">Hungary</option>
-            <option value="IS">Iceland</option>
-            <option value="IN">India</option>
-            <option value="ID">Indonesia</option>
-            <option value="IR">Iran</option>
-            <option value="IQ">Iraq</option>
-            <option value="IE">Ireland</option>
-            <option value="IM">Isle of Man</option>
-            <option value="IL">Israel</option>
-            <option value="IT">Italy</option>
-            <option value="JM">Jamaica</option>
-            <option value="JP">Japan</option>
-            <option value="JE">Jersey</option>
-            <option value="JO">Jordan</option>
-            <option value="KZ">Kazakhstan</option>
-            <option value="KE">Kenya</option>
-            <option value="KI">Kiribati</option>
-            <option value="KW">Kuwait</option>
-            <option value="KG">Kyrgyzstan</option>
-            <option value="LA">Laos</option>
-            <option value="LV">Latvia</option>
-            <option value="LB">Lebanon</option>
-            <option value="LS">Lesotho</option>
-            <option value="LR">Liberia</option>
-            <option value="LY">Libya</option>
-            <option value="LI">Liechtenstein</option>
-            <option value="LT">Lithuania</option>
-            <option value="LU">Luxembourg</option>
-            <option value="MO">Macao SAR China</option>
-            <option value="MG">Madagascar</option>
-            <option value="MW">Malawi</option>
-            <option value="MY">Malaysia</option>
-            <option value="MV">Maldives</option>
-            <option value="ML">Mali</option>
-            <option value="MT">Malta</option>
-            <option value="MH">Marshall Islands</option>
-            <option value="MQ">Martinique</option>
-            <option value="MR">Mauritania</option>
-            <option value="MU">Mauritius</option>
-            <option value="YT">Mayotte</option>
-            <option value="MX">Mexico</option>
-            <option value="FM">Micronesia</option>
-            <option value="MD">Moldova</option>
-            <option value="MC">Monaco</option>
-            <option value="MN">Mongolia</option>
-            <option value="ME">Montenegro</option>
-            <option value="MS">Montserrat</option>
-            <option value="MA">Morocco</option>
-            <option value="MZ">Mozambique</option>
-            <option value="MM">Myanmar (Burma)</option>
-            <option value="NA">Namibia</option>
-            <option value="NR">Nauru</option>
-            <option value="NP">Nepal</option>
-            <option value="NL">Netherlands</option>
-            <option value="NC">New Caledonia</option>
-            <option value="NZ">New Zealand</option>
-            <option value="NI">Nicaragua</option>
-            <option value="NE">Niger</option>
-            <option value="NG">Nigeria</option>
-            <option value="NU">Niue</option>
-            <option value="NF">Norfolk Island</option>
-            <option value="KP">North Korea</option>
-            <option value="MK">North Macedonia</option>
-            <option value="MP">Northern Mariana Islands</option>
-            <option value="NO">Norway</option>
-            <option value="OM">Oman</option>
-            <option value="PK">Pakistan</option>
-            <option value="PW">Palau</option>
-            <option value="PS">Palestinian Territories</option>
-            <option value="PA">Panama</option>
-            <option value="PG">Papua New Guinea</option>
-            <option value="PY">Paraguay</option>
-            <option value="PE">Peru</option>
-            <option value="PH">Philippines</option>
-            <option value="PN">Pitcairn Islands</option>
-            <option value="PL">Poland</option>
-            <option value="PT">Portugal</option>
-            <option value="PR">Puerto Rico</option>
-            <option value="QA">Qatar</option>
-            <option value="RE">Réunion</option>
-            <option value="RO">Romania</option>
-            <option value="RU">Russia</option>
-            <option value="RW">Rwanda</option>
-            <option value="WS">Samoa</option>
-            <option value="SM">San Marino</option>
-            <option value="ST">São Tomé &amp; Príncipe</option>
-            <option value="SA">Saudi Arabia</option>
-            <option value="SN">Senegal</option>
-            <option value="RS">Serbia</option>
-            <option value="SC">Seychelles</option>
-            <option value="SL">Sierra Leone</option>
-            <option value="SG">Singapore</option>
-            <option value="SX">Sint Maarten</option>
-            <option value="SK">Slovakia</option>
-            <option value="SI">Slovenia</option>
-            <option value="SB">Solomon Islands</option>
-            <option value="SO">Somalia</option>
-            <option value="ZA">South Africa</option>
-            <option value="GS">South Georgia &amp; South Sandwich Islands</option>
-            <option value="KR">South Korea</option>
-            <option value="SS">South Sudan</option>
-            <option value="ES">Spain</option>
-            <option value="LK">Sri Lanka</option>
-            <option value="BL">St. Barthélemy</option>
-            <option value="SH">St. Helena</option>
-            <option value="KN">St. Kitts &amp; Nevis</option>
-            <option value="LC">St. Lucia</option>
-            <option value="MF">St. Martin</option>
-            <option value="PM">St. Pierre &amp; Miquelon</option>
-            <option value="VC">St. Vincent &amp; Grenadines</option>
-            <option value="SD">Sudan</option>
-            <option value="SR">Suriname</option>
-            <option value="SJ">Svalbard &amp; Jan Mayen</option>
-            <option value="SE">Sweden</option>
-            <option value="CH">Switzerland</option>
-            <option value="SY">Syria</option>
-            <option value="TW">Taiwan</option>
-            <option value="TJ">Tajikistan</option>
-            <option value="TZ">Tanzania</option>
-            <option value="TH">Thailand</option>
-            <option value="TL">Timor-Leste</option>
-            <option value="TG">Togo</option>
-            <option value="TK">Tokelau</option>
-            <option value="TO">Tonga</option>
-            <option value="TT">Trinidad &amp; Tobago</option>
-            <option value="TN">Tunisia</option>
-            <option value="TR">Turkey</option>
-            <option value="TM">Turkmenistan</option>
-            <option value="TC">Turks &amp; Caicos Islands</option>
-            <option value="TV">Tuvalu</option>
-            <option value="UM">U.S. Outlying Islands</option>
-            <option value="VI">U.S. Virgin Islands</option>
-            <option value="UG">Uganda</option>
-            <option value="UA">Ukraine</option>
-            <option value="AE">United Arab Emirates</option>
-            <option value="GB">United Kingdom</option>
-            <option value="US">United States</option>
-            <option value="UY">Uruguay</option>
-            <option value="UZ">Uzbekistan</option>
-            <option value="VU">Vanuatu</option>
-            <option value="VA">Vatican City</option>
-            <option value="VE">Venezuela</option>
-            <option value="VN">Vietnam</option>
-            <option value="WF">Wallis &amp; Futuna</option>
-            <option value="EH">Western Sahara</option>
-            <option value="YE">Yemen</option>
-            <option value="ZM">Zambia</option>
-            <option value="ZW">Zimbabwe</option>
-    </select>
-                    </div>
-                </div>
-                    
+                                    <div class="form-group row">
+                                        <label for="location" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Location <span style="color:red;">*</span> </label>
+                                        <div class="col-lg-9 col-md-9  col-sm-9">
+                                            <select name="location" class="form-control select2  " style="width: 100%;" required="">
+                                            
+                                                    <option value="">Select </option>
+                                                    @foreach($countries as $cntkey=>$cntval)
+                                                        <option value="{{$cntkey}}" {{ (isset($organisation_data[0]->location) && $cntkey==$organisation_data[0]->location)?'selected':''}}>{{$cntval}}</option>
+                                                    @endforeach
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                
         
         
                         <!-- An unexamined life is not worth living. - Socrates -->
-        <div class="form-group row">
-            <label for="address" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Address </label>
-            <div class="col-lg-9 col-md-9 col-sm-9">
-                <input type="text" name="address" class="form-control 
-                " id="address " placeholder="Enter Address" value="">
-                            </div>
-        </div>
+                    <div class="form-group row">
+                        <label for="address" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Address </label>
+                        <div class="col-lg-9 col-md-9 col-sm-9">
+                            <input type="text" name="address" class="form-control 
+                            " id="address " placeholder="Enter Address" value="{{ isset($organisation_data[0]->address) ? $organisation_data[0]->address : ''}}">
+                        </div>
+                    </div>
                             
         
         
                         <div class="form-group row">
-    <label for="current_date_utc_format" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Current Date UTC Format <span style="color:red;">*</span> </label>
-    <div class="col-lg-9 col-md-9 col-sm-9">
-        <select name="current_date_utc_format" class="form-control select2 " style="width: 100%;" required="">
-            <option value="">Select Current Date UTC Format</option>
-                            <optgroup label="General">
+                        <label for="current_date_utc_format" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Current Date UTC Format <span style="color:red;">*</span> </label>
+                        <div class="col-lg-9 col-md-9 col-sm-9">
+                                    <select name="current_date_utc_format" class="form-control select2 " style="width: 100%;" required="">
+                                            <option value="">Select Current Date UTC Format</option>
+                                            <optgroup label="General">
                                             <option value="GMT">GMT timezone</option>
                                             <option value="UTC">UTC timezone</option>
-                                                </optgroup><optgroup label="Africa">
+                                            </optgroup><optgroup label="Africa">
                                             <option value="Africa/Abidjan">(GMT/UTC + 00:00)&nbsp;&nbsp;&nbsp;&nbsp;Abidjan</option>
                                             <option value="Africa/Accra">(GMT/UTC + 00:00)&nbsp;&nbsp;&nbsp;&nbsp;Accra</option>
                                             <option value="Africa/Addis_Ababa">(GMT/UTC + 03:00)&nbsp;&nbsp;&nbsp;&nbsp;Addis Ababa</option>
@@ -459,7 +193,7 @@
                                             <option value="Africa/Tripoli">(GMT/UTC + 02:00)&nbsp;&nbsp;&nbsp;&nbsp;Tripoli</option>
                                             <option value="Africa/Tunis">(GMT/UTC + 01:00)&nbsp;&nbsp;&nbsp;&nbsp;Tunis</option>
                                             <option value="Africa/Windhoek">(GMT/UTC + 02:00)&nbsp;&nbsp;&nbsp;&nbsp;Windhoek</option>
-                                                </optgroup><optgroup label="America">
+                                            </optgroup><optgroup label="America">
                                             <option value="America/Adak">(GMT/UTC − 09:00)&nbsp;&nbsp;&nbsp;&nbsp;Adak</option>
                                             <option value="America/Anchorage">(GMT/UTC − 08:00)&nbsp;&nbsp;&nbsp;&nbsp;Anchorage</option>
                                             <option value="America/Anguilla">(GMT/UTC − 04:00)&nbsp;&nbsp;&nbsp;&nbsp;Anguilla</option>
@@ -607,7 +341,7 @@
                                             <option value="America/Winnipeg">(GMT/UTC − 05:00)&nbsp;&nbsp;&nbsp;&nbsp;Winnipeg</option>
                                             <option value="America/Yakutat">(GMT/UTC − 08:00)&nbsp;&nbsp;&nbsp;&nbsp;Yakutat</option>
                                             <option value="America/Yellowknife">(GMT/UTC − 06:00)&nbsp;&nbsp;&nbsp;&nbsp;Yellowknife</option>
-                                                </optgroup><optgroup label="Antarctica">
+                                            </optgroup><optgroup label="Antarctica">
                                             <option value="Antarctica/Casey">(GMT/UTC + 11:00)&nbsp;&nbsp;&nbsp;&nbsp;Casey</option>
                                             <option value="Antarctica/Davis">(GMT/UTC + 07:00)&nbsp;&nbsp;&nbsp;&nbsp;Davis</option>
                                             <option value="Antarctica/DumontDUrville">(GMT/UTC + 10:00)&nbsp;&nbsp;&nbsp;&nbsp;DumontDUrville</option>
@@ -619,9 +353,9 @@
                                             <option value="Antarctica/Syowa">(GMT/UTC + 03:00)&nbsp;&nbsp;&nbsp;&nbsp;Syowa</option>
                                             <option value="Antarctica/Troll">(GMT/UTC + 02:00)&nbsp;&nbsp;&nbsp;&nbsp;Troll</option>
                                             <option value="Antarctica/Vostok">(GMT/UTC + 06:00)&nbsp;&nbsp;&nbsp;&nbsp;Vostok</option>
-                                                </optgroup><optgroup label="Arctic">
+                                            </optgroup><optgroup label="Arctic">
                                             <option value="Arctic/Longyearbyen">(GMT/UTC + 02:00)&nbsp;&nbsp;&nbsp;&nbsp;Longyearbyen</option>
-                                                </optgroup><optgroup label="Asia">
+                                            </optgroup><optgroup label="Asia">
                                             <option value="Asia/Aden">(GMT/UTC + 03:00)&nbsp;&nbsp;&nbsp;&nbsp;Aden</option>
                                             <option value="Asia/Almaty">(GMT/UTC + 06:00)&nbsp;&nbsp;&nbsp;&nbsp;Almaty</option>
                                             <option value="Asia/Amman">(GMT/UTC + 03:00)&nbsp;&nbsp;&nbsp;&nbsp;Amman</option>
@@ -840,95 +574,96 @@
                                             <option value="Pacific/Tongatapu">(GMT/UTC + 13:00)&nbsp;&nbsp;&nbsp;&nbsp;Tongatapu</option>
                                             <option value="Pacific/Wake">(GMT/UTC + 12:00)&nbsp;&nbsp;&nbsp;&nbsp;Wake</option>
                                             <option value="Pacific/Wallis">(GMT/UTC + 12:00)&nbsp;&nbsp;&nbsp;&nbsp;Wallis</option>
-                                        </optgroup></select>
-            </div>
-</div>
+                                        </optgroup>
+                                    </select>
+                            </div>
+                        </div>
 
                     
         
         
                         <!-- An unexamined life is not worth living. - Socrates -->
-        <div class="form-group row">
-            <label for="phone" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Phone </label>
-            <div class="col-lg-9 col-md-9 col-sm-9">
-                <input type="text" name="phone" class="form-control 
-                " id="phone " placeholder="Enter Phone" value="">
-                            </div>
-        </div>
+                <div class="form-group row">
+                    <label for="phone" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Phone </label>
+                    <div class="col-lg-9 col-md-9 col-sm-9">
+                        <input type="text" name="phone" class="form-control 
+                        " id="phone " placeholder="Enter Phone" value="{{ isset($organisation_data[0]->phone) ? $organisation_data[0]->phone : ''}}">
+                    </div>
+                </div>
                             
         
         
                         <!-- An unexamined life is not worth living. - Socrates -->
-        <div class="form-group row">
-            <label for="fax" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Fax </label>
-            <div class="col-lg-9 col-md-9 col-sm-9">
-                <input type="text" name="fax" class="form-control 
-                " id="fax " placeholder="Enter Fax" value="">
-                            </div>
-        </div>
+                <div class="form-group row">
+                    <label for="fax" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Fax </label>
+                    <div class="col-lg-9 col-md-9 col-sm-9">
+                        <input type="text" name="fax" class="form-control 
+                        " id="fax " placeholder="Enter Fax" value="{{ isset($organisation_data[0]->fax) ? $organisation_data[0]->fax : ''}}">
+                    </div>
+                </div>
                             
         
         
                         <!-- An unexamined life is not worth living. - Socrates -->
-        <div class="form-group row">
-            <label for="mobile" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Mobile </label>
-            <div class="col-lg-9 col-md-9 col-sm-9">
-                <input type="text" name="mobile" class="form-control 
-                " id="mobile " placeholder="Enter Mobile" value="">
-                            </div>
-        </div>
+            <div class="form-group row">
+                <label for="mobile" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Mobile </label>
+                <div class="col-lg-9 col-md-9 col-sm-9">
+                    <input type="text" name="mobile" class="form-control 
+                    " id="mobile " placeholder="Enter Mobile" value="{{ isset($organisation_data[0]->mobile) ? $organisation_data[0]->mobile : ''}}">
+                </div>
+            </div>
                             
         
         
                         <!-- An unexamined life is not worth living. - Socrates -->
-        <div class="form-group row">
-            <label for="website" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Website </label>
-            <div class="col-lg-9 col-md-9 col-sm-9">
-                <input type="text" name="website" class="form-control 
-                " id="website " placeholder="Enter Website" value="">
-                            </div>
-        </div>
+                <div class="form-group row">
+                    <label for="website" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Website </label>
+                    <div class="col-lg-9 col-md-9 col-sm-9">
+                        <input type="text" name="website" class="form-control 
+                        " id="website " placeholder="Enter Website" value="{{ isset($organisation_data[0]->website) ? $organisation_data[0]->website : ''}}">
+                    </div>
+                </div>
                             
         
         
                         <!-- An unexamined life is not worth living. - Socrates -->
-        <div class="form-group row">
-            <label for="email" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Email </label>
-            <div class="col-lg-9 col-md-9 col-sm-9">
-                <input type="text" name="email" class="form-control 
-                " id="email " placeholder="Enter Email" value="">
-                            </div>
-        </div>
+            <div class="form-group row">
+                <label for="email" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Email </label>
+                <div class="col-lg-9 col-md-9 col-sm-9">
+                    <input type="text" name="email" class="form-control 
+                    " id="email " placeholder="Enter Email" value="{{ isset($organisation_data[0]->email) ? $organisation_data[0]->email : ''}}">
+                </div>
+            </div>
                             
         
         
                         <div class="form-group row">
-                    <label for="currency" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Currency <span style="color:red;">*</span> </label>
-                    <div class="col-lg-9 col-md-9  col-sm-9">
-                        <select name="currency" class="form-control select2  " style="width: 100%;" required="">
-    <option value="">Select </option>
-            <option value="0" selected="">USD</option>
-            <option value="1">EUR</option>
-            <option value="2">JPY</option>
-            <option value="3">GBP</option>
-            <option value="4">CHF</option>
-            <option value="5">CAD</option>
-            <option value="6">AUD</option>
-            <option value="7">ZAR</option>
-    </select>
-                    </div>
-                </div>
+                            <label for="currency" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Currency <span style="color:red;">*</span> </label>
+                            <div class="col-lg-9 col-md-9  col-sm-9">
+                                <select name="currency" class="form-control select2  " style="width: 100%;" required="">
+                                    <option value="">Select </option>
+                                    <option value="0" selected="">USD</option>
+                                    <option value="1">EUR</option>
+                                    <option value="2">JPY</option>
+                                    <option value="3">GBP</option>
+                                    <option value="4">CHF</option>
+                                    <option value="5">CAD</option>
+                                    <option value="6">AUD</option>
+                                    <option value="7">ZAR</option>
+                                </select>
+                            </div>
+                        </div>
                     
         
         
                         <!-- An unexamined life is not worth living. - Socrates -->
-        <div class="form-group row">
-            <label for="user_defined" class="col-lg-3 col-md-3 col-sm-3 col-form-label">User Defined </label>
-            <div class="col-lg-9 col-md-9 col-sm-9">
-                <input type="text" name="user_defined" class="form-control 
-                " id="user_defined " placeholder="Enter User Defined" value="">
-                            </div>
-        </div>
+                <div class="form-group row">
+                    <label for="user_defined" class="col-lg-3 col-md-3 col-sm-3 col-form-label">User Defined </label>
+                    <div class="col-lg-9 col-md-9 col-sm-9">
+                        <input type="text" name="user_defined" class="form-control 
+                        " id="user_defined " placeholder="Enter User Defined" value="{{ isset($organisation_data[0]->user_defined) ? $organisation_data[0]->user_defined : ''}}">
+                    </div>
+                </div>
                             
         
                             

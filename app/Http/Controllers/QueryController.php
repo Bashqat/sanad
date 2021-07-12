@@ -40,6 +40,7 @@ class QueryController extends Controller
             `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `website` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `currency` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+            `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `status` enum('active','not-active') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `user_defined` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `created_at` timestamp NULL DEFAULT NULL,

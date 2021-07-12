@@ -175,6 +175,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Monarobase\CountryList\CountryListServiceProvider::class,
+        Jackiedo\Timezonelist\TimezonelistServiceProvider::class,
 
     ],
 
@@ -229,6 +231,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Countries' => Monarobase\CountryList\CountryListFacade::class,
+        
 
     ],
 

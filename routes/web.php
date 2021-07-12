@@ -29,10 +29,13 @@ Route::get('/setting', [App\Http\Controllers\SuperadminController::class, 'index
 Route::post('/setting-update', [App\Http\Controllers\SuperadminController::class, 'updateSetting'])->name('setting_update');
 Route::post('/setting-update', [App\Http\Controllers\SuperadminController::class, 'updateSetting'])->name('setting_update');
 //organisations
-Route::get('/organization', [App\Http\Controllers\OrganizationController::class, 'index'])->name('org_list');
+Route::get('/organisation', [App\Http\Controllers\OrganizationController::class, 'index'])->name('org_list');
 
-Route::get('/organization/create', [App\Http\Controllers\OrganizationController::class, 'create'])->name('org_create');
-Route::post('/organization/create', [App\Http\Controllers\OrganizationController::class, 'store'])->name('org_store');
+Route::get('/organisation/create', [App\Http\Controllers\OrganizationController::class, 'create'])->name('org_create');
+Route::post('/organisation/create', [App\Http\Controllers\OrganizationController::class, 'store'])->name('org_store');
+Route::get('/organisation/edit/{org_id}', [App\Http\Controllers\OrganizationController::class, 'edit'])->name('org_edit');
+Route::post('/organisation/update', [App\Http\Controllers\OrganizationController::class, 'update'])->name('org_update');
+Route::post('/organisation/delete', [App\Http\Controllers\OrganizationController::class, 'destroy'])->name('org_delete');
 
 });
 Route::get('lang/{locale}', [App\Http\Controllers\LocalizationController::class, 'lang']);
