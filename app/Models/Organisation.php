@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Organisation extends Model
 {
     use HasFactory;
-    protected $table='organisations';
+    protected $table='organisation_info';
     protected $fillable = ['org_name',
     'superadmin_id',
+    'org_id',
     'org_db_name', 
     'display_name',
     'legal_name',

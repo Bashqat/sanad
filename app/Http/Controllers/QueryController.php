@@ -21,8 +21,9 @@ class QueryController extends Controller
     }
     public function createOrganisation()
     {
-        $query="CREATE TABLE `organisations` (
+        $query="CREATE TABLE `organisation_info` (
             `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `org_id` bigint UNSIGNED NOT NULL,
             `org_name` varchar(255) NOT NULL,
             `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `superadmin_id` bigint UNSIGNED DEFAULT NULL,

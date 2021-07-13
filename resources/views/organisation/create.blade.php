@@ -19,6 +19,7 @@
                             @csrf
     
                             @if(!empty($organisation_data) )       
+                              <input type="hidden" name="org_id" value="{{ isset($organisation_data[0]->org_id) ? $organisation_data[0]->org_id : ''}}"> 
                               <input type="hidden" name="id" value="{{ isset($organisation_data[0]->id) ? $organisation_data[0]->id : ''}}">  
                             @else
                                         
@@ -50,7 +51,7 @@
         
                         <!-- An unexamined life is not worth living. - Socrates -->
     
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <label for="logo" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Logo </label>
                         <div class="col-lg-9 col-md-9 col-sm-9 input-group">
                             <div class="custom-file">
@@ -58,7 +59,7 @@
                                 <label class="custom-file-label" for="logoFile">Choose file</label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                             
         
         

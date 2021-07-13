@@ -12,10 +12,10 @@
 			<table id="example1" class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Legal name</th>
-						<th>Type of organization</th>
-						<th>Type of business</th>
+						<th>Org_db Name</th>
+						<th>created by</th>
+						<!-- <th>Type of organization</th>
+						<th>Type of business</th> -->
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -26,10 +26,10 @@
 						@else
 					<tr class="odd">
 						@endif
-						<td>{{ $organization->display_name }}</td>
-						<td>{{ $organization->legal_name }}</td>
-						<td>{{ $organization->type_of_organization }}</td>
-						<td>{{ $organization->type_of_business }}</td>
+						<td>{{ $organization->org_db_name }}</td>
+						<td>{{ $user_name }}</td>
+						<!-- <td>{{ $organization->type_of_organization }}</td>
+						<td>{{ $organization->type_of_business }}</td> -->
 						<td>
 							<div class="dropdown">
 								<!--Trigger-->
@@ -39,6 +39,7 @@
 								<a href="{{ route('org_edit', $organization->id) }}" class="dropdown-item">Edit</a>
 								<form class="inline-block" action="{{ route('org_delete')}}" method="POST" onsubmit="return confirm('Are you sure?');">
 										<input type="hidden" name="id" value="{{$organization->id}}">
+
 										<input type="hidden" name="_token" value="{{ csrf_token() }}">
 										<input type="submit" class="dropdown-item" value="Delete">
 									</form>

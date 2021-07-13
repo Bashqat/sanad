@@ -25,8 +25,31 @@
                                 				<i class="fas fa-sort-down ml-3"></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right " style="left: inherit; right: 0px;">
-							
-							
+							<?php 
+								Config::set("database.connections.mysql", [
+								            'driver' => 'mysql',
+								            "host" => "localhost",
+								            "database" => 'sanad',
+								            "username" => "root",
+								            "password" => "Password@123",
+								            'charset' => 'utf8',
+								            'prefix' => '',
+								            'prefix_indexes' => true,
+								            'schema' => 'public',
+								            'sslmode' => 'prefer',
+								        ]);
+								DB::purge('mysql');
+
+							$org_list= \App\Models\MasterOrganisation::where('superadmin_id',Auth::id())->get();
+							 ?>
+							 @if(!empty($org_list))
+
+							@foreach ( $org_list as $list )
+							<a href="/organisation/edit/{{$list->id}}" class="dropdown-item">
+								{{$list->org_db_name}}
+								</a>
+							@endforeach
+							@endif
 							@if (Auth::user()->role=="1")
 								<a href="{{ route('master_setting') }}" class="dropdown-item">
 								{{ __('language.setting') }}
@@ -40,6 +63,7 @@
 								<i class="fa fa-plus"></i>
 								<span>Add Organization</span>
 							</a>
+
 							
 						</div>
 				</div>

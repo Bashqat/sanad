@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Organisation;
+use App\Models\MasterOrganisation;
+use App\Models\User;
 use DB;
 use App\Http\Controllers\QueryController;
 use Illuminate\Support\Facades\Config;
@@ -21,11 +23,12 @@ class OrganizationController extends Controller
     }
     public function index()
     {
-        //echo '<h1>Organisation is created but listing is In progress</h1>';exit;
+        $organisations=MasterOrganisation::where('superadmin_id','=',Auth::id())->get();
+        $user=User::where('id',Auth::id())->get();
+        $user_name=$user[0]->name;
         
-        
-        $organisations=Organisation::where('superadmin_id','=',Auth::id())->get();
-        return view('organisation.index', compact('organisations'));
+
+        return view('organisation.index', compact('organisations','user_name'));
         //echo '<pre>';
         //print_r($organisation);exit;
     }
@@ -48,13 +51,15 @@ class OrganizationController extends Controller
             "host" => "localhost",
             "database" => $databaseName,
             "username" => "root",
-            "password" => "",
+            "password" => "Password@123",
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
             'schema' => 'public',
             'sslmode' => 'prefer',
         ]);
+        DB::purge('mysql');
+        return $databaseName;
     }
     public function store(Request $request)
     {
@@ -67,8 +72,14 @@ class OrganizationController extends Controller
                 $inputs['superadmin_id']=Auth::id();
                 $inputs['org_name']=$org_name;
                 //$inputs['org_db_name']=Auth::id();
-                if($data=Organisation::create($inputs))
+                $org_input=[
+                            'org_db_name' => $org_name,
+                            'superadmin_id' => Auth::id(),
+                        ];
+                if($data=MasterOrganisation::create($org_input))
                     {
+                        $inputs['org_id']=$data->id;
+
                         $databaseName=$data->id.'_'.$org_name;
                         if($return=$obj->createDb($databaseName))
                         {
@@ -96,13 +107,25 @@ class OrganizationController extends Controller
     public function edit($org_id)
     {
         try{
+            $orgData=MasterOrganisation::where('id','=',$org_id)->get();
+            $databaseName=$org_id.'_'.$orgData[0]->org_db_name;
+            //echo $databaseName;exit;
+            
+
             $countries=CountryListFacade::getList('en');
             $organisationType=$this->organizationTypes();
             $busType=$this->businessTypes();
-            $orgData=Organisation::where('id','=',$org_id)->get();
-            // echo '<pre>';
-            // print_R($orgData[0]->display_name);exit;
-            return view('organisation/create',['organisation_data'=>$orgData,'organisationType'=>$organisationType,'busType'=>$busType,'countries'=>$countries]);
+            $connection=$this->org_connection($databaseName);
+            //echo $connection;exit;
+            //$database = Config::get('database.connections.mysql');
+            //echo DB::connection()->getDatabaseName();exit;
+            //dd($database);
+
+            $orgInfo=Organisation::where('org_id','=',$org_id)->get();
+            
+            //echo '<pre>';
+            //print_R($orgInfo);exit;
+            return view('organisation/create',['organisation_data'=>$orgInfo,'organisationType'=>$organisationType,'busType'=>$busType,'countries'=>$countries]);
             
         }catch (Exception $e) {
             DB::rollback();
@@ -116,17 +139,33 @@ class OrganizationController extends Controller
         }
 
     }
+    public function get_db_name($org_id)
+    {
+            $db=MasterOrganisation::where('id','=',$org_id)->get();
+            $databaseName=$org_id.'_'.$db[0]->org_db_name;
+            return $databaseName;
+    }
     public function update(Request $request)
     {
         try{
             $request->except('_token');
             $inputs = $request->all();
-            $org_id=$request->input('id');
+            $org_db_id=$request->input('org_id');
+            $databaseName=$this->get_db_name($org_db_id);
+            $connection=$this->org_connection($databaseName);
             
-            if(Organisation::where('id', $org_id)->update(Arr::except($request->all(), ['_token'])))
-               {
-                return redirect('/organisation');
-               }
+            $org_id=$request->input('id');
+
+            if(Organisation::where('id', $org_id)->update(Arr::except($request->all(), ['_token','org_id'])))
+                       {
+                        return redirect('/organisation');
+                       }
+            
+    //         $database = Config::get('database.connections.'.Config::get('database.default'));
+
+    // dd($database);
+            
+            
             
             
         }catch (Exception $e) {
@@ -143,8 +182,10 @@ class OrganizationController extends Controller
     }
     public function destroy( Request $request)
     {
+
         $org_id=$request->input('id');
-        if(Organisation::where('id','=',$org_id)->delete())
+
+        if(MasterOrganisation::where('id','=',$org_id)->delete())
         {
             return redirect()->route('org_list')->with('success','Organization delete successfully.');
         }
