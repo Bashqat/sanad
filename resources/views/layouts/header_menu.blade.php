@@ -29,7 +29,7 @@
 								Config::set("database.connections.mysql", [
 								            'driver' => 'mysql',
 								            "host" => "localhost",
-								            "database" => 'sanad',
+								            "database" => env('DB_DATABASE'),
 								            "username" => "root",
 								            "password" => "Password@123",
 								            'charset' => 'utf8',
