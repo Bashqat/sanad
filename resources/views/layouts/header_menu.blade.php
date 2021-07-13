@@ -31,7 +31,7 @@
 								            "host" => "localhost",
 								            "database" => env('DB_DATABASE'),
 								            "username" => "root",
-								            "password" => "password",
+								            "password" => env('DB_PASSWORD'),
 								            'charset' => 'utf8',
 								            'prefix' => '',
 								            'prefix_indexes' => true,
