@@ -51,7 +51,7 @@ class OrganizationController extends Controller
             "host" => "localhost",
             "database" => $databaseName,
             "username" => "root",
-            "password" => "Password@123",
+            "password" => env('DB_PASSWORD'),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
