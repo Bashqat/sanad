@@ -29,9 +29,9 @@
 								Config::set("database.connections.mysql", [
 								            'driver' => 'mysql',
 								            "host" => "localhost",
-								            "database" => env('DB_DATABASE'),
+								            "database" => getenv("DB_DATABASE"),
 								            "username" => "root",
-								            "password" => env('DB_PASSWORD'),
+								            "password" => getenv("DB_PASSWORD"),
 								            'charset' => 'utf8',
 								            'prefix' => '',
 								            'prefix_indexes' => true,
@@ -39,6 +39,7 @@
 								            'sslmode' => 'prefer',
 								        ]);
 								DB::purge('mysql');
+								//echo DB::connection()->getDatabaseName();exit
 
 							$org_list= \App\Models\MasterOrganisation::where('superadmin_id',Auth::id())->get();
 							 ?>

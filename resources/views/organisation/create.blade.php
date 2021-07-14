@@ -133,7 +133,7 @@
                             
         
         
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                         <label for="current_date_utc_format" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Current Date UTC Format <span style="color:red;">*</span> </label>
                         <div class="col-lg-9 col-md-9 col-sm-9">
                                     <select name="current_date_utc_format" class="form-control select2 " style="width: 100%;" required="">
@@ -578,7 +578,7 @@
                                         </optgroup>
                                     </select>
                             </div>
-                        </div>
+                        </div> -->
 
                     
         
