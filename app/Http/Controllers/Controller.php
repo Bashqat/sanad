@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
@@ -55,5 +56,33 @@ class Controller extends BaseController
             'telecommunications' => 'Telecommunications',
 
         ];
+    }
+    public function uploadDataAttachmentsGetLinks($dataArr,$path = 'Default'){
+        foreach ( $dataArr as $key => $data ) {
+            if( is_object($data) ){
+                if(strpos(get_class($data), 'UploadedFile') !== false){
+                    $file = $data;
+                    $imageName = Str::random(15).'.'.$file->getClientOriginalExtension();
+                    $file->move(public_path('images/'.$path), $imageName);
+                    $dataArr[$key] = 'images/'.$path.'/'.$imageName;
+                }
+            }elseif( is_array($data) ){
+                $links = [];
+                foreach ( $data as $key2 => $data2 ) {
+                    if( is_object($data2) ){
+                        if(strpos(get_class($data2), 'UploadedFile') !== false){
+                            $file = $data2;
+                            $imageName = Str::random(15).'.'.$file->getClientOriginalExtension();
+                            $file->move(public_path('images/'.$path), $imageName);
+                            $links[] = 'images/'.$path.'/'.$imageName;
+                        }
+                    }
+                }
+                if( !empty($links) ){
+                    $dataArr[$key] = $links;
+                }
+            }
+        }
+        return $dataArr;
     }
 }

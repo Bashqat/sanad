@@ -72,7 +72,15 @@
 					
 					<a href="{{ route('home') }}" class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}">{{ __('language.dashboard') }}</a>
 				</li>
-               
+				<?php 
+				$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+				?>
+				@if (strpos($actual_link, 'organisation/') !== false)
+				    
+				<?php $org_id=substr($actual_link, strrpos($actual_link, '/') + 1); ?>
+				<a href="/organisation/contact/{{ $org_id }}" class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}">{{__('language.contact')  }}</a>
+               @endif
 			</ul>
 			
 		</div>

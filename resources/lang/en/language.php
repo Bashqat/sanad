@@ -45,6 +45,7 @@ return [
     'or'=>'Or',
     'already_have_account'=>'Already have an account',
     'login_here'=>'Login here',
+    'contact'=>'Contact',
     
 
 

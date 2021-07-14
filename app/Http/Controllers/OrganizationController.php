@@ -122,7 +122,7 @@ class OrganizationController extends Controller
             //dd($database);
 
             $orgInfo=Organisation::where('org_id','=',$org_id)->get();
-            
+
             //echo '<pre>';
             //print_R($orgInfo);exit;
             return view('organisation/create',['organisation_data'=>$orgInfo,'organisationType'=>$organisationType,'busType'=>$busType,'countries'=>$countries]);
@@ -160,15 +160,7 @@ class OrganizationController extends Controller
                        {
                         return redirect('/organisation');
                        }
-            
-    //         $database = Config::get('database.connections.'.Config::get('database.default'));
-
-    // dd($database);
-            
-            
-            
-            
-        }catch (Exception $e) {
+            }catch (Exception $e) {
             DB::rollback();
         // return response()->json(['status'=>'failed','msg'=>$e->getMessage()]);
                     

@@ -36,6 +36,12 @@ Route::post('/organisation/create', [App\Http\Controllers\OrganizationController
 Route::get('/organisation/edit/{org_id}', [App\Http\Controllers\OrganizationController::class, 'edit'])->name('org_edit');
 Route::post('/organisation/update', [App\Http\Controllers\OrganizationController::class, 'update'])->name('org_update');
 Route::post('/organisation/delete', [App\Http\Controllers\OrganizationController::class, 'destroy'])->name('org_delete');
+//contacts
+Route::get('organisation/contact/{org_id}', [App\Http\Controllers\ContactController::class,'index'])->name('contact.index');
+Route::get('organisation/contact/create/{org_id}', [App\Http\Controllers\ContactController::class,'create'])->name('contact.create');
+Route::post('organisation/contact/store/{org_id}', [App\Http\Controllers\ContactController::class,'store'])->name('contact.store');
+
+
 
 });
 Route::get('lang/{locale}', [App\Http\Controllers\LocalizationController::class, 'lang']);
