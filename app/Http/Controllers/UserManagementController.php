@@ -24,12 +24,14 @@ class UserManagementController extends Controller
   public function index(Request $request)
   {
     $role=$this->role;
+    $users=[];
     if($role==1)
       {
         $obj=new OrganizationController();
         $users=User::where('role','!=',1)->get();
         return view('user-management.index',compact('users','role'));
       }
+      return view('user-management.index',compact('users','role'));
 
   }
   public function edit($id)
