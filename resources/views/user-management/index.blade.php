@@ -63,9 +63,9 @@
                                 <button class="btn btn-success">{{ucfirst(str_replace("_"," ",$user->status))}}</button>
                                 @endif
                             </td>
-                            <td>
+                            <!-- <td>
                                 {{ucfirst($user->roles[0]['name'])}}
-                            </td>
+                            </td> -->
                             <td><i class="fa fa-at" aria-hidden="true"></i>{{ $user->email }}</td>
                             <!-- <td>
                                 <p>{{ ( $user->can('view edit contact') ) ? "view edit contact":"" }}</p>
