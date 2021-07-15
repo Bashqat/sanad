@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Monarobase\CountryList\CountryListFacade;
 use App\Http\Controllers\OrganizationController;
 use App\Models\Contact;
+use App\Models\ContactInformation;
+use App\Models\Websiteinformation;
 use Auth;
 
 class ContactController extends Controller
@@ -22,14 +24,10 @@ class ContactController extends Controller
         $databaseName=$obj->get_db_name($org_id);
         $db_connection=$obj->org_connection($databaseName);
         $contacts=Contact::get();
-        
-
         return view('contact.index',['org_id'=>$org_id,'contacts'=>$contacts]);
     }
     public function create($org_id)
     {
-        
-        
         $countries = CountryListFacade::getList('en');
         return view('contact.create',compact('countries','org_id'));
     }
@@ -64,9 +62,9 @@ class ContactController extends Controller
             // Save Conatct Information
             if(isset($request->persons_contacts)){
                 foreach ($request->persons_contacts as $key => $data) {
-                    $contactInformationData = $this->uploadDataAttachmentsGetLinks($data,'contacts');
+                    //$contactInformationData = $this->uploadDataAttachmentsGetLinks($data,'contacts');
                      $contactInformationData['contact_id'] = $contact->id;
-                     $contactInformation[] = contactInformation::create($contactInformationData);
+                     $contactInformation[] = ContactInformation::create($contactInformationData);
                 }
             }
 
@@ -74,10 +72,10 @@ class ContactController extends Controller
             if(isset($request->website_information)){
                 foreach ($request->website_information as $key => $websiteData) {
                     $websiteData['contact_id'] = $contact->id;
-                    $website_information[] = website_information::create($websiteData);
+                    $website_information[] = Websiteinformation::create($websiteData);
                 }
             }
-            
+
             return redirect()->route('contact.index',[$org_id])->with('success','Contact added successfully.');
         }catch ( \Exception $e ) {
             if($contact != ""){
@@ -95,5 +93,10 @@ class ContactController extends Controller
             }
             return redirect()->route('contact.index',[$org_id])->with('error',$e->getMessage());
         }
+    }
+    public function edit($org_id,$contact_id)
+    {
+      die('sss');
+
     }
 }

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+<title>Contacts</title>
 @section('content')
 
 
@@ -25,7 +26,7 @@
                                     <a class="dropdown-item" href="#">Check columns list view</a>
                                 </div>
                             </div>
-                            <div class="input-group-prepend">
+                            <!-- <div class="input-group-prepend">
                                 <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>
                                     Options
                                 </button>
@@ -40,7 +41,7 @@
                                     </form>
                                 </div>
                                 <span class="contact-filter d-flex align-items-center"><i class="fa fa-filter mr-1" aria-hidden="true"></i>Filter</span>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -54,7 +55,7 @@
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th></th>
-                                    <th>Tags</th>
+                                    <!-- <th>Tags</th> -->
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -64,10 +65,10 @@
                                 <tr class="odd">
                                     <td class="sorting_1"><input type="checkbox" class="row-select" value="1"></td>
                                     <td>
-                                        <a href="http://127.0.0.1:8001/contact/1">
+                                        <a href="contact/{{$contact->id}}">
                                             <div>
                                                 <div>{{$contact->name}}</div>
-                                                
+
                                             </div>
                                         </a>
                                     </td>
@@ -75,22 +76,27 @@
                                         <i class="fa fa-globe mr-1" aria-hidden="true"></i><a href="{{$contact->website}}">{{$contact->website}}</a>
                                     </td>
                                     <td>
-                                        <i class="fa fa-at mr-1" aria-hidden="true"></i><a href="mailto:sdasd@gmail.com">{{$contact->email}}</a>
+                                        <i class="fa fa-at mr-1" aria-hidden="true"></i><a href="mailto:{{$contact->email}}">{{$contact->email}}</a>
                                     </td>
                                     <td>
-                                        <i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>{{$contact->website}}
+                                        <i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>
+                                        @if(!empty($contact->phone))
+                                        @foreach($contact->phone as $phone)
+                                        {{$phone}}
+                                        @endforeach
+                                        @endif
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <button class="attachment-view-btn d-flex align-items-center" data-toggle="modal" data-target="#attachment-view" data-files="[&quot;images\/contacts\/MIkBawUPoC5j4h0.jpg&quot;]" data-file-type="contact" data-id="1">
                                             <i class="far fa-file-alt"></i>1
                                         </button>
-                                    </td>
+                                    </td> -->
                                     <td></td>
                             <td>
                                     <div class="dropdown">
                                     <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-v"></i></a>
-                                    <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);"><a href="http://127.0.0.1:8001/contact/1/edit" class="dropdown-item">Edit</a>
-                                    <form class="inline-block" action="http://127.0.0.1:8001/contact/1" method="POST" onsubmit="return confirm(`Are you sure?`);">
+                                    <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);"><a href="{{ route('contact.edit',[$org_id,$contact->id]) }}" class="dropdown-item">Edit</a>
+                                    <form class="inline-block" action="/contact/1" method="POST" onsubmit="return confirm(`Are you sure?`);">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="C8kQOIRxu5CJMwvLVx7aZZApNzML2DCJz8mrgWqS">
                                         <input type="submit" class="dropdown-item" value="Delete">
@@ -99,7 +105,7 @@
                             </div>
                         </td>
                     </tr>
-                    
+
                     @endforeach
                     @endif
                             </tbody>

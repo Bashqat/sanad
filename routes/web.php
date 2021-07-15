@@ -37,11 +37,15 @@ Route::get('/organisation/edit/{org_id}', [App\Http\Controllers\OrganizationCont
 Route::post('/organisation/update', [App\Http\Controllers\OrganizationController::class, 'update'])->name('org_update');
 Route::post('/organisation/delete', [App\Http\Controllers\OrganizationController::class, 'destroy'])->name('org_delete');
 //contacts
-Route::get('organisation/contact/{org_id}', [App\Http\Controllers\ContactController::class,'index'])->name('contact.index');
-Route::get('organisation/contact/create/{org_id}', [App\Http\Controllers\ContactController::class,'create'])->name('contact.create');
-Route::post('organisation/contact/store/{org_id}', [App\Http\Controllers\ContactController::class,'store'])->name('contact.store');
+// Route::get('organisation/contact/{org_id}', [App\Http\Controllers\ContactController::class,'index'])->name('contact.index');
+// Route::get('organisation/contact/create/{org_id}', [App\Http\Controllers\ContactController::class,'create'])->name('contact.create');
+// Route::post('organisation/contact/store/{org_id}', [App\Http\Controllers\ContactController::class,'store'])->name('contact.store');
+// Route::get('organisation/contact/{org_id}/edit/{contact_id}', [App\Http\Controllers\ContactController::class,'edit'])->name('contact.edit');
 
-
+//user Management
+Route::resource('users-management',App\Http\Controllers\UserManagementController::class);
+Route::get('bulk-destroy',[App\Http\Controllers\UserManagementController::class,'bulkdestroy'])->name('bulk-destroy');
+Route::get('users-management/update',[App\Http\Controllers\UserManagementController::class,'update'])->name('users-management.update');
 
 });
 Route::get('lang/{locale}', [App\Http\Controllers\LocalizationController::class, 'lang']);

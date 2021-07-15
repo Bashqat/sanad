@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<title>Contacts</title>
 @section('content')
 <!-- Main content -->
 <div class="container-fluid">
@@ -15,7 +15,7 @@
 				<div class="card-body">
 					<div class="tab-content contact-create-sec">
 						<div class="tab-pane active" id="settings">
-							
+
 							<form class="form-horizontal" method="POST" action="{{ route('contact.store',[$org_id]) }}" enctype="multipart/form-data">
 								@csrf
 								<div class="form-group row">

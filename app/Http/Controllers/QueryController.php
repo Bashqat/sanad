@@ -12,7 +12,7 @@ class QueryController extends Controller
         if(DB::statement("CREATE DATABASE $db_name"))
         {
             $query="use $db_name";
-            DB::statement($query);
+            DB::connection()->getPdo()->exec($query);
             $this->createRole();
             $this->createUser();
             $this->createOrganisation();
@@ -51,7 +51,7 @@ class QueryController extends Controller
             `updated_at` timestamp NULL DEFAULT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
           ";
-          DB::statement($query);
+          DB::connection()->getPdo()->exec($query);
     }
     public function createRole()
     {
@@ -62,7 +62,8 @@ class QueryController extends Controller
             `created_at` timestamp NULL DEFAULT NULL,
             `updated_at` timestamp NULL DEFAULT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-            DB::statement($query);
+            //DB::statement($query);
+            DB::connection()->getPdo()->exec($query);
     }
     public function createUser()
     {
@@ -83,7 +84,8 @@ class QueryController extends Controller
             `tenants` longtext COLLATE utf8mb4_unicode_ci,
             `tenant_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-            DB::statement($query);
+          //  DB::statement($query);
+          DB::connection()->getPdo()->exec($query);
     }
     public function createContact()
     {
@@ -115,7 +117,8 @@ class QueryController extends Controller
               `updated_at` timestamp NULL DEFAULT NULL,
               `group_id` bigint UNSIGNED DEFAULT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-          DB::statement($query);
+        //  DB::statement($query);
+        DB::connection()->getPdo()->exec($query);
     }
     public function contact_information()
     {
@@ -137,7 +140,8 @@ class QueryController extends Controller
               `updated_at` timestamp NULL DEFAULT NULL,
               `group_id` bigint UNSIGNED DEFAULT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-             DB::statement($query);
+            // DB::statement($query);
+            DB::connection()->getPdo()->exec($query);
     }
 
     public function website_information()
@@ -155,7 +159,8 @@ class QueryController extends Controller
           `group_id` bigint UNSIGNED DEFAULT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
         ";
-        DB::statement($query);
+        //DB::statement($query);
+        DB::connection()->getPdo()->exec($query);
 
     }
 

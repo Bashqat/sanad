@@ -8,24 +8,24 @@
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					<div class="nav-item dropdown company-menu">
-						
+
 						<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
 							<span class="dropdown-item dropdown-header text-left">
 								<img src="{{url('/images/site-logo.png')}}" alt="AdminLTE Logo" class="brand-image">
 							</span>
-							
-							
+
+
 						</div>
 					</div>
 				</li>
-				
+
 				<div class="nav-item dropdown company-menu show">
 						<a class="nav-link mr-md-2 ml-2 px-5" data-toggle="dropdown" href="#" aria-expanded="true">
 											{{ __('language.organisation') }}
                                 				<i class="fas fa-sort-down ml-3"></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right " style="left: inherit; right: 0px;">
-							<?php 
+							<?php
 								Config::set("database.connections.mysql", [
 								            'driver' => 'mysql',
 								            "host" => "localhost",
@@ -64,25 +64,28 @@
 								<i class="fa fa-plus"></i>
 								<span>Add Organization</span>
 							</a>
+							<a href="{{ route('users-management.index') }}" class="dropdown-item">
+												<span>User Management</span>
+							</a>
 
-							
 						</div>
 				</div>
 					<li class="nav-item">
-					
+
 					<a href="{{ route('home') }}" class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}">{{ __('language.dashboard') }}</a>
 				</li>
-				<?php 
-				$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+				<?php
+				 $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 				?>
 				@if (strpos($actual_link, 'organisation/') !== false)
-				    
-				<?php $org_id=substr($actual_link, strrpos($actual_link, '/') + 1); ?>
-				<a href="/organisation/contact/{{ $org_id }}" class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}">{{__('language.contact')  }}</a>
+
+				<!-- <?php $org_id=substr($actual_link, strrpos($actual_link, '/') + 1); ?>
+				<a href="/organisation/contact/{{ $org_id }}" class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}">{{__('language.contact')  }}</a> -->
                @endif
 			</ul>
-			
+
 		</div>
 	</nav>
 	<ul class="navbar-nav ml-auto">
@@ -147,8 +150,8 @@
 				<a class="dropdown-item">
 					<span>{{ ucfirst(Auth::user()->name) }}</span>
 				</a>
-					
-				
+
+
 				<a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 					<span>{{ __('language.signout') }}</span>
 					<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
