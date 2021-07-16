@@ -1,4 +1,4 @@
-<?php 
+<?php
 return [
 
     'dashboard' => 'Dashboard',
@@ -46,7 +46,9 @@ return [
     'already_have_account'=>'Already have an account',
     'login_here'=>'Login here',
     'contact'=>'Contact',
-    
+    'user_management'=>'User management',
+    'invite_user'=>'Invite User',
+
 
 
 

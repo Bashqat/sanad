@@ -26,7 +26,7 @@ class OrganizationController extends Controller
         $organisations=MasterOrganisation::where('superadmin_id','=',Auth::id())->get();
         $user=User::where('id',Auth::id())->get();
         $user_name=$user[0]->name;
-        
+
 
         return view('organisation.index', compact('organisations','user_name'));
         //echo '<pre>';
@@ -35,13 +35,13 @@ class OrganizationController extends Controller
     public function create()
     {
         $timezone_list =Timezonelist::create('current_date_utc_format', null, 'id="timezone" class="form-control select2"');
-       
+
         //print_r($timezone_list);exit;
         $countries=CountryListFacade::getList('en');
-        
+
         $organisationType=$this->organizationTypes();
         $busType=$this->businessTypes();
-        
+
         return view('organisation/create',['organisationType'=>$organisationType,'busType'=>$busType,'countries'=>$countries,'timezone_list'=>$timezone_list]);
     }
     public function org_connection($databaseName)
@@ -73,7 +73,7 @@ class OrganizationController extends Controller
                 $inputs['org_name']=$org_name;
                 //$inputs['org_db_name']=Auth::id();
                 $org_input=[
-                            'org_db_name' => $org_name,
+                            'org_db_name' => str_replace(' ', '', $org_name),
                             'superadmin_id' => Auth::id(),
                         ];
                 if($data=MasterOrganisation::create($org_input))
@@ -81,36 +81,37 @@ class OrganizationController extends Controller
                         $inputs['org_id']=$data->id;
 
                         $databaseName=$data->id.'_'.$org_name;
+                        $databaseName=str_replace(' ', '', $databaseName);
                         if($return=$obj->createDb($databaseName))
                         {
                             $connection=$this->org_connection($databaseName);
                             Organisation::create($inputs);
-                            
+
 
                         }
-                        
+
                     }
                     return redirect('/organisation');
-                    
+
             }catch (Exception $e) {
                 DB::rollback();
                // return response()->json(['status'=>'failed','msg'=>$e->getMessage()]);
-                        
-            } catch(\Illuminate\Database\QueryException $ex){ 
+
+            } catch(\Illuminate\Database\QueryException $ex){
                 print_r($ex->getMessage());
                 DB::rollback();
                // return response()->json(['status'=>'failed','msg'=>$ex->getMessage()]);
-                         
+
             }
-    }  
-    
+    }
+
     public function edit($org_id)
     {
         try{
             $orgData=MasterOrganisation::where('id','=',$org_id)->get();
             $databaseName=$org_id.'_'.$orgData[0]->org_db_name;
             //echo $databaseName;exit;
-            
+
 
             $countries=CountryListFacade::getList('en');
             $organisationType=$this->organizationTypes();
@@ -126,16 +127,16 @@ class OrganizationController extends Controller
             //echo '<pre>';
             //print_R($orgInfo);exit;
             return view('organisation/create',['organisation_data'=>$orgInfo,'organisationType'=>$organisationType,'busType'=>$busType,'countries'=>$countries]);
-            
+
         }catch (Exception $e) {
             DB::rollback();
         // return response()->json(['status'=>'failed','msg'=>$e->getMessage()]);
-                    
-        } catch(\Illuminate\Database\QueryException $ex){ 
+
+        } catch(\Illuminate\Database\QueryException $ex){
             print_r($ex->getMessage());
             DB::rollback();
         // return response()->json(['status'=>'failed','msg'=>$ex->getMessage()]);
-                    
+
         }
 
     }
@@ -153,7 +154,7 @@ class OrganizationController extends Controller
             $org_db_id=$request->input('org_id');
             $databaseName=$this->get_db_name($org_db_id);
             $connection=$this->org_connection($databaseName);
-            
+
             $org_id=$request->input('id');
 
             if(Organisation::where('id', $org_id)->update(Arr::except($request->all(), ['_token','org_id'])))
@@ -163,12 +164,12 @@ class OrganizationController extends Controller
             }catch (Exception $e) {
             DB::rollback();
         // return response()->json(['status'=>'failed','msg'=>$e->getMessage()]);
-                    
-        } catch(\Illuminate\Database\QueryException $ex){ 
+
+        } catch(\Illuminate\Database\QueryException $ex){
             print_r($ex->getMessage());
             DB::rollback();
         // return response()->json(['status'=>'failed','msg'=>$ex->getMessage()]);
-                    
+
         }
 
     }
@@ -181,7 +182,7 @@ class OrganizationController extends Controller
         {
             return redirect()->route('org_list')->with('success','Organization delete successfully.');
         }
-        
-        
+
+
     }
 }

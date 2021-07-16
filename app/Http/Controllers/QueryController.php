@@ -11,6 +11,7 @@ class QueryController extends Controller
     {
         if(DB::statement("CREATE DATABASE $db_name"))
         {
+            $db_name=str_replace(' ', '', $db_name);
             $query="use $db_name";
             DB::connection()->getPdo()->exec($query);
             $this->createRole();
@@ -19,6 +20,8 @@ class QueryController extends Controller
             $this->createContact();
             $this->contact_information();
             $this->website_information();
+            $this->user_permission();
+            $this->user_has_permissions();
             return 'aaaa';
         }
     }
@@ -63,7 +66,11 @@ class QueryController extends Controller
             `updated_at` timestamp NULL DEFAULT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
             //DB::statement($query);
+            $query1="INSERT INTO `roles` (`id`, `name`,`guard_name`) VALUES
+            (3, 'admin','web');";
             DB::connection()->getPdo()->exec($query);
+            DB::connection()->getPdo()->exec($query1);
+
     }
     public function createUser()
     {
@@ -71,18 +78,21 @@ class QueryController extends Controller
             `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
             -- `google_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+
             `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
             `email_verified_at` timestamp NULL DEFAULT NULL,
             `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
             `avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user-avatar.png',
             `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-            `created_at` timestamp NULL DEFAULT NULL,
-            `updated_at` timestamp NULL DEFAULT NULL,
+            `role` bigint COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+            
             `organization_id` bigint UNSIGNED DEFAULT NULL,
             `status` enum('pending_acceptance','active','suspended') COLLATE utf8mb4_unicode_ci NOT NULL,
             `xero_access_token` longtext COLLATE utf8mb4_unicode_ci,
             `tenants` longtext COLLATE utf8mb4_unicode_ci,
-            `tenant_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+            `tenant_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+            `created_at` timestamp NULL DEFAULT NULL,
+            `updated_at` timestamp NULL DEFAULT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
           //  DB::statement($query);
           DB::connection()->getPdo()->exec($query);
@@ -147,7 +157,7 @@ class QueryController extends Controller
     public function website_information()
     {
         $query="CREATE TABLE `website_informations` (
-          `id` bigint UNSIGNED NOT NULL,
+          `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
           `contact_id` bigint UNSIGNED NOT NULL,
           `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'contact',
           `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -160,6 +170,39 @@ class QueryController extends Controller
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
         ";
         //DB::statement($query);
+        DB::connection()->getPdo()->exec($query);
+
+    }
+    public function user_permission()
+    {
+      $query="CREATE TABLE `permissions` (
+        `id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `created_at` timestamp NULL DEFAULT NULL,
+        `updated_at` timestamp NULL DEFAULT NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+
+      $query1="INSERT INTO `permissions` (`id`, `name`, `guard_name`) VALUES
+      (1, 'edit articles', 'web'),
+      (2, 'delete articles', 'web'),
+      (3, 'publish articles', 'web'),
+      (4, 'unpublish articles', 'web'),
+      (5, 'view contact', 'web'),
+      (6, 'view edit contact', 'web'),
+      (7, 'view password', 'web')";
+        DB::connection()->getPdo()->exec($query);
+        DB::connection()->getPdo()->exec($query1);
+
+    }
+    public function user_has_permissions()
+    {
+      $query="CREATE TABLE `user_has_permissions` (
+        `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `permission_id` bigint(20) UNSIGNED NOT NULL,
+        `user_id` bigint(20) UNSIGNED NOT NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+      ";
         DB::connection()->getPdo()->exec($query);
 
     }

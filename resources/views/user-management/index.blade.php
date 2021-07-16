@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<title>Sanad | User management</title>
 @section('content')
 @error('name')
 <div class="alert alert-danger alert-block">
@@ -17,7 +17,11 @@
 <div class="card">
 	<div class="card-header user-mang-filter">
 		<h3 class="card-title">{{ ucfirst( str_replace("-"," ", Request::segment(1)) ) }}</h3>
-                <a href="/invite-user-view" class="float-right btn btn-primary common-button-site user-filter-btn {{ ( !Session::has('organization') || $role == 'admin' )?'disabled': ''}}">Invite User <i class="fa fa-plus ml-1"></i></a>
+		@if(!isset($org_id))
+		{{$org_id=''}}
+		@endif
+
+                <a href="{{ route('org-users-management.invite', $org_id ?? '') }}" class="float-right btn btn-primary common-button-site user-filter-btn {{ ($org_id=="")?'disabled': ''}}">{{ __('language.invite_user') }} <i class="fa fa-plus ml-1"></i></a>
 		<!-- @hasrole('super-admin') -->
 		<form id="filter" method="get">
             <select class="float-right form-control select2 col-lg-1 col-md-2 col-sm-2 mr-1" name="role" onchange="change()">
@@ -63,7 +67,7 @@
                                 <button class="btn btn-success">{{ucfirst(str_replace("_"," ",$user->status))}}</button>
                                 @endif
                             </td>
-                            
+
                             <td><i class="fa fa-at" aria-hidden="true"></i>{{ $user->email }}</td>
                             <!-- <td>
                                 <p>{{ ( $user->can('view edit contact') ) ? "view edit contact":"" }}</p>
@@ -77,10 +81,17 @@
                                         <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-v"></i></a>
                                         <!--Menu-->
                                         <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);">
+																					@if(isset($org_id) && $org_id!="")
+																					<a class="dropdown-item" href="{{ route('org-users-management.edit', [$org_id,$user->id]) }}">Edit</a>
+																					@else
+																					<a class="dropdown-item" href="{{ route('users-management.edit', $user->id) }}">Edit</a>
+																					@endif
 
-                                            <a class="dropdown-item" href="{{ route('users-management.edit', $user->id) }}">Edit</a>
-
-                                            <form class="inline-block" action="{{ route('users-management.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+																						@if(isset($org_id) && $org_id!="")
+                                            <form class="inline-block" action="{{ route('org-users-management.delete', [$org_id,$user->id]) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+																							@else
+																							<form class="inline-block" action="{{ route('users-management.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+																							@endif
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="submit" class="dropdown-item" value="Delete">
@@ -104,7 +115,9 @@
                         <form>
                             <td>
                                 @if(count($users))
+																@if(isset($org_id) && $org_id=="")
                                     <button type="button" class="btn btn-danger " id="delete_all">Delete</button>
+																		@endif
                                 @endif
                             </td>
                             <td colspan="6">

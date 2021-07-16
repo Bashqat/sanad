@@ -15,11 +15,19 @@
                     <div class="card-body pt-5">
                     <div class="tab-content edit-profile-main-sec">
                         <div class="tab-pane active" id="settings">
-                        <form class="form-horizontal" method="POST" action="{{ route('users-management.update', $user->id) }}" enctype="multipart/form-data">
+                          @if(isset($org_id))
+                          <form class="form-horizontal" method="POST" action="{{ route('org-users-management.update') }}" enctype="multipart/form-data">
+                            <input type="hidden" name="org_id" value="{{ $org_id }}">"
+                          @else
+                            <form class="form-horizontal" method="POST" action="{{ route('users-management.update', $user->id) }}" enctype="multipart/form-data">
+                              @method('put')
+                          @endif
+
                             @csrf
-                            @method('put')
+
                             <input type="hidden" name="edit_type" value="admin_edit">
                             <input type="hidden" name="id" value="{{ $user->id }}">
+
                             <div class="form-group row">
                                 <label for="inputEmail" class="col-sm-2 col-form-label">Upload Logo</label>
                                 <div class="col-sm-10 input-group edit-input-field">

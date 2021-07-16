@@ -64,9 +64,17 @@
 								<i class="fa fa-plus"></i>
 								<span>Add Organization</span>
 							</a>
-							<a href="{{ route('users-management.index') }}" class="dropdown-item">
-												<span>User Management</span>
-							</a>
+
+							<?php $actual_link = $_SERVER['REQUEST_URI'];?>
+							@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
+
+							 <?php $org_id=substr($actual_link, strrpos($actual_link, '/') + 1); ?>
+							<a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item">{{__('language.user_management') }}</a>
+							@else
+								<a href="{{ route('users-management.index') }}" class="dropdown-item">
+													<span>User Management</span>
+								</a>
+			        @endif
 
 						</div>
 				</div>
@@ -75,10 +83,7 @@
 					<a href="{{ route('home') }}" class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}">{{ __('language.dashboard') }}</a>
 				</li>
 
-				<?php
-				 $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-				?>
+				
 				@if (strpos($actual_link, 'organisation/') !== false)
 
 				<!-- <?php $org_id=substr($actual_link, strrpos($actual_link, '/') + 1); ?>
