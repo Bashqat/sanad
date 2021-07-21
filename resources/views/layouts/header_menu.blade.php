@@ -45,6 +45,8 @@
 										@foreach ( $org_list as $list )
 											@if($org_id==$list->id)
 											{{$list->org_name}}
+											@else
+											Select Organisation
 											@endif
 										@endforeach
                                 				<i class="fas fa-sort-down ml-3"></i>
