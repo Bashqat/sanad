@@ -58,5 +58,13 @@ Route::get('organisation/{org_id}/verify/{token}',[App\Http\Controllers\UserMana
 Route::get('invalid',[App\Http\Controllers\UserManagementController::class,'invalid'])->name('org-users-management.invalid');
 Route::post('organisation/{org_id}/user-management/change-status/{user_id}',[App\Http\Controllers\UserManagementController::class,'orgUserChangeStatus'])->name('org-users-management.change-status');
 
+//smtp setting for organisations
+Route::get('organisation/{org_id}/smtp',[App\Http\Controllers\OrganizationController::class,'setting'])->name('organisation.setting');
+Route::post('organisation/smtp/update',[App\Http\Controllers\OrganizationController::class,'settingUpdate'])->name('organisation.setting-update');
+
 });
+
+
+
+
 Route::get('lang/{locale}', [App\Http\Controllers\LocalizationController::class, 'lang']);

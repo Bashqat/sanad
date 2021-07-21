@@ -65,8 +65,8 @@
 											<a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item" >
 		 									 User management
 		 								 </a></li>
-										<li> <a href="#" class="dropdown-item" >
-											contact
+										<li> <a href="/organisation/{{ $org_id }}/smtp" class="dropdown-item" >
+											Smtp
 										</a>
 										</li>
 									</ul>

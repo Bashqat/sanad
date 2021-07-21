@@ -10,6 +10,7 @@ use App\Models\User_permission;
 use App\Http\Controllers\OrganizationController;
 use Illuminate\Validation\Rule;
 use App\Lib\Email;
+use App\Models\Org_setting;
 use URL;
 
 class UserManagementController extends Controller
@@ -161,52 +162,53 @@ class UserManagementController extends Controller
                 'recipientEmail' => 'required|email|max:255|unique:users,email',
                 'name' => 'required'
             ]);
-        $obj=new OrganizationController();
-        $databaseName=$obj->get_db_name($request->organization);
-        $connection=$obj->org_connection($databaseName);
-        $length = 10;
-        $token = bin2hex(random_bytes($length));
-        $link=URL::to('organisation/'.$request->organization.'/verify').'/'.$token;
+            $obj=new OrganizationController();
+            $databaseName=$obj->get_db_name($request->organization);
+            $connection=$obj->org_connection($databaseName);
+            $length = 10;
+            $token = bin2hex(random_bytes($length));
+            $link=URL::to('organisation/'.$request->organization.'/verify').'/'.$token;
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->recipientEmail,
-            'password' => '',
-            'organization_id'=>$request->organization,
-            'role'=>'3',
-            'status' => 'pending_acceptance',
-            'remember_token'=>$token,
+            $user = User::create([
+              'name' => $request->name,
+              'email' => $request->recipientEmail,
+              'password' => '',
+              'organization_id'=>$request->organization,
+              'role'=>'3',
+              'status' => 'pending_acceptance',
+              'remember_token'=>$token,
 
-        ]);
-        $permission=[];
-        if($request->viewEdit == 'on'){
-            $permission[]='view edit contact';
-        }
-        if($request->viewOnly == 'on'){
-            $permission[]='view contact';
-        }
-        if($request->viewPassword == 'on'){
-            $permission[]='view password';
-        }
-
-        if(!empty($permission))
-        {
-          foreach($permission as $perm)
-          {
-            $perm_id=Permission::select('id')->where('name','=',$perm)->get();
-            $permissionId=$perm_id[0]->id;
-            User_permission::create([
-                'permission_id' => $permissionId,
-                'user_id' => $user->id,
-            ]);
+          ]);
+          $permission=[];
+          if($request->viewEdit == 'on'){
+              $permission[]='view edit contact';
+          }
+          if($request->viewOnly == 'on'){
+              $permission[]='view contact';
+          }
+          if($request->viewPassword == 'on'){
+              $permission[]='view password';
           }
 
-        }
+          if(!empty($permission))
+          {
+            foreach($permission as $perm)
+            {
+              $perm_id=Permission::select('id')->where('name','=',$perm)->get();
+              $permissionId=$perm_id[0]->id;
+              User_permission::create([
+                  'permission_id' => $permissionId,
+                  'user_id' => $user->id,
+              ]);
+            }
 
-
-          
-            $data=$this->email($request->name,$request->recipientEmail,$link);
-
+          }
+            $setting=Org_setting::get()->toArray();
+            if(!empty($setting))
+            {
+              
+              $data=$this->email($request->name,$request->recipientEmail,$link,$request->organization);
+            }
 
             return redirect()->route('org-users-management.index',$request->organization)->with('success','User Invite Sent Successfully.');
         }catch ( \Exception $e ) {
@@ -295,17 +297,21 @@ class UserManagementController extends Controller
     }
     public function veryfyToken($org_id,$token)
     {
-
-      $obj=new OrganizationController();
-      $databaseName=$obj->get_db_name($org_id);
-      $connection=$obj->org_connection($databaseName);
-      $data=User::where('remember_token',$token)->get()->toArray();
-      if(empty($data))
-      {
-        return redirect()->route('org-users-management.invalid')->with('error','Invalid url');
-      }
-      $update=User::where('remember_token',$token)->update(['status'=>'active','remember_token'=>'']);
-      return redirect()->route('org-users-management.index',$org_id)->with('success','Your account is verified');
+      try{
+          $obj=new OrganizationController();
+          $databaseName=$obj->get_db_name($org_id);
+          $connection=$obj->org_connection($databaseName);
+          $data=User::where('remember_token',$token)->get()->toArray();
+          if(empty($data))
+          {
+            return redirect()->route('org-users-management.invalid')->with('error','Invalid url');
+          }
+          $update=User::where('remember_token',$token)->update(['status'=>'active','remember_token'=>'']);
+          return redirect()->route('org-users-management.index',$org_id)->with('success','Your account is verified');
+        }catch( \Exception $e ){
+            return redirect()->back()->with('error',$e->getMessage());
+            return "error: " .$e->getMessage();
+        }
     }
     public function orgUserChangeStatus($org_id,$user_id)
     {

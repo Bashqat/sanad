@@ -7,6 +7,7 @@ use Auth;
 use App\Models\Organisation;
 use App\Models\MasterOrganisation;
 use App\Models\User;
+use App\Models\Org_setting;
 use DB;
 use App\Http\Controllers\QueryController;
 use Illuminate\Support\Facades\Config;
@@ -185,4 +186,33 @@ class OrganizationController extends Controller
 
 
     }
+    public function setting($org_id)
+    {
+      $databaseName=$this->get_db_name($org_id);
+      $connection=$this->org_connection($databaseName);
+      $data=Org_setting::get();
+      return view('organisation/setting',['org_id'=>$org_id,'smtp_data'=>$data]);
+    }
+    public function settingUpdate(Request $request)
+    {
+      try{
+
+        $databaseName=$this->get_db_name($request->org_id);
+        $connection=$this->org_connection($databaseName);
+        $data=Org_setting::get()->toArray();
+        if(empty($data))
+        {
+          Org_setting::create(Arr::except($request->all(), ['_token','org_id']));
+        }
+        else {
+            Org_setting::where('id', $data[0]['id'])->update(Arr::except($request->all(), ['_token','org_id','id']));
+          }
+          return redirect()->back()->with('success','Smtp detail updated successfully');
+        }catch( \Exception $e ){
+            return redirect()->back()->with('error',$e->getMessage());
+
+        }
+      }
+
+
 }

@@ -22,7 +22,8 @@ class QueryController extends Controller
             $this->website_information();
             $this->user_permission();
             $this->user_has_permissions();
-            return 'aaaa';
+            $this->setting();
+            return $db_name;
         }
     }
     public function createOrganisation()
@@ -85,7 +86,7 @@ class QueryController extends Controller
             `avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user-avatar.png',
             `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `role` bigint COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-            
+
             `organization_id` bigint UNSIGNED DEFAULT NULL,
             `status` enum('pending_acceptance','active','suspended') COLLATE utf8mb4_unicode_ci NOT NULL,
             `xero_access_token` longtext COLLATE utf8mb4_unicode_ci,
@@ -205,6 +206,21 @@ class QueryController extends Controller
       ";
         DB::connection()->getPdo()->exec($query);
 
+    }
+
+    public function setting()
+    {
+        $query="CREATE TABLE `setting` (
+          `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+          `smtp_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+          `smtp_username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+          `smtp_password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+          `smtp_host` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+          `created_at` timestamp NULL DEFAULT NULL,
+          `updated_at` timestamp NULL DEFAULT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  ";
+    DB::connection()->getPdo()->exec($query);
     }
 
 }
