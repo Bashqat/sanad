@@ -41,12 +41,12 @@
 				 ?>
 				<div class="nav-item dropdown company-menu show">
 						<a class="nav-link mr-md-2 ml-2 px-5" data-toggle="dropdown" href="#" aria-expanded="true">
-
+							@if(!preg_match('#[0-9]#',$org_id))
+									select Organisation
+									@endif
 										@foreach ( $org_list as $list )
 											@if($org_id==$list->id)
 											{{$list->org_name}}
-											@else
-											Select Organisation
 											@endif
 										@endforeach
                                 				<i class="fas fa-sort-down ml-3"></i>
