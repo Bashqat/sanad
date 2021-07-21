@@ -17,7 +17,7 @@ trait Email {
                 $mail->Password = "gjzewjdysyfalcab";
                 $mail->Port = 587;
                 $mail->From = "ravinder.zestgeek@gmail.com";
-                $mail->FromName = "Full Name";
+                $mail->FromName = "Sanad";
                 $mail->smtpConnect(
                 array(
                     "ssl" => array(
