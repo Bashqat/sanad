@@ -58,9 +58,9 @@
 								 @if($org_id==$list->id)
 
 								 <ul class="org_setting" >
-									 <a href="#" class="dropdown-item" >
+									 <!-- <a href="#" class="dropdown-item" >
 										 {{  __('language.setting')  }}
-									 </a>
+									 </a> -->
 		 						 		<li >
 											<a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item" >
 		 									 User management
@@ -100,7 +100,7 @@
 							<a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item">{{__('language.user_management') }}</a>
 							@else
 								<a href="{{ route('users-management.index') }}" class="dropdown-item">
-													<span>User Management</span>
+													<span>Subscription</span>
 								</a>
 			        @endif
 
