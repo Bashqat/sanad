@@ -76,7 +76,9 @@ class OrganizationController extends Controller
                 $org_input=[
                             'org_db_name' => str_replace(' ', '', $org_name),
                             'superadmin_id' => Auth::id(),
+                            'org_name'=>$org_name,
                         ];
+                        
                 if($data=MasterOrganisation::create($org_input))
                     {
                         $inputs['org_id']=$data->id;

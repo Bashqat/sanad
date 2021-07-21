@@ -12,6 +12,7 @@ class MasterOrganisation extends Model
     protected $table='organisation';
     protected $fillable = ['org_db_name',
     'superadmin_id',
-    
+    'org_name',
+
     ];
 }

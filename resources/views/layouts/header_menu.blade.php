@@ -19,43 +19,49 @@
 					</div>
 				</li>
 
+				<?php
+					Config::set("database.connections.mysql", [
+											'driver' => 'mysql',
+											"host" => "localhost",
+											"database" => getenv("DB_DATABASE"),
+											"username" => "root",
+											"password" => getenv("DB_PASSWORD"),
+											'charset' => 'utf8',
+											'prefix' => '',
+											'prefix_indexes' => true,
+											'schema' => 'public',
+											'sslmode' => 'prefer',
+									]);
+					DB::purge('mysql');
+					//echo DB::connection()->getDatabaseName();exit
 
+				$org_list= \App\Models\MasterOrganisation::where('superadmin_id',Auth::id())->get();
+				$actual_link = $_SERVER['REQUEST_URI'];
+				 $org_id=substr($actual_link, strrpos($actual_link, '/') + 1);
+				 ?>
 				<div class="nav-item dropdown company-menu show">
 						<a class="nav-link mr-md-2 ml-2 px-5" data-toggle="dropdown" href="#" aria-expanded="true">
-											{{ __('language.organisation') }}
+
+										@foreach ( $org_list as $list )
+											@if($org_id==$list->id)
+											{{$list->org_name}}
+											@endif
+										@endforeach
                                 				<i class="fas fa-sort-down ml-3"></i>
 						</a>
 
 						<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right org-menu" style="left: inherit; right: 0px;">
-							<?php
-								Config::set("database.connections.mysql", [
-								            'driver' => 'mysql',
-								            "host" => "localhost",
-								            "database" => getenv("DB_DATABASE"),
-								            "username" => "root",
-								            "password" => getenv("DB_PASSWORD"),
-								            'charset' => 'utf8',
-								            'prefix' => '',
-								            'prefix_indexes' => true,
-								            'schema' => 'public',
-								            'sslmode' => 'prefer',
-								        ]);
-								DB::purge('mysql');
-								//echo DB::connection()->getDatabaseName();exit
 
-							$org_list= \App\Models\MasterOrganisation::where('superadmin_id',Auth::id())->get();
-							$actual_link = $_SERVER['REQUEST_URI'];
-							 $org_id=substr($actual_link, strrpos($actual_link, '/') + 1);
-							 ?>
 							 @if(!empty($org_list))
 
 							@foreach ( $org_list as $list )
 							<a href="/organisation/edit/{{$list->id}}" class="dropdown-item">
-								{{$list->org_db_name}}
+								{{$list->org_name}}
 								</a>
 								@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
 
 								 @if($org_id==$list->id)
+
 
 								 <ul class="org_setting" >
 									 <!-- <a href="#" class="dropdown-item" >
@@ -96,7 +102,7 @@
 
 							@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
 
-							 <?php $org_id=substr($actual_link, strrpos($actual_link, '/') + 1); ?>
+
 							<a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item">{{__('language.user_management') }}</a>
 							@else
 								<a href="{{ route('users-management.index') }}" class="dropdown-item">
