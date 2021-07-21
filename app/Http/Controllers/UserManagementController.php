@@ -9,9 +9,12 @@ use App\Models\Permission;
 use App\Models\User_permission;
 use App\Http\Controllers\OrganizationController;
 use Illuminate\Validation\Rule;
+use App\Lib\Email;
+use URL;
 
 class UserManagementController extends Controller
 {
+  use Email;
   protected $id,$userData;
   public function __construct()
   {
@@ -25,6 +28,8 @@ class UserManagementController extends Controller
   }
   public function index(Request $request,$org_id='')
   {
+    //$obj=new Email();
+
 
     $role=$this->role;
     $users=[];
@@ -104,6 +109,21 @@ class UserManagementController extends Controller
   public function bulkdestroy(Request $request){
 
         $ids = $request->idArr;
+        $org_status=$request->org_status;
+        if($org_status=="org_selected")
+        {
+          $obj=new OrganizationController();
+          $org_id=$request->org_id;
+          $databaseName=$obj->get_db_name($org_id);
+          $connection=$obj->org_connection($databaseName);
+
+          User::whereIn('id', $ids)->delete();
+          return response()->json([
+              'success' => 2,
+              'msg' => "User deleted successfully"
+          ]);
+
+          }
 
         try {
             User::whereIn('id', $ids)->delete();
@@ -135,16 +155,19 @@ class UserManagementController extends Controller
     }
     public function inviteUserSave(Request $request)
     {
-          $validated = $request->validate([
-            'recipientEmail' => 'required|email|max:255|unique:users,email',
-            'name' => 'required'
-        ]);
+        try {
 
-        //start create user
-
+              $validated = $request->validate([
+                'recipientEmail' => 'required|email|max:255|unique:users,email',
+                'name' => 'required'
+            ]);
         $obj=new OrganizationController();
         $databaseName=$obj->get_db_name($request->organization);
         $connection=$obj->org_connection($databaseName);
+        $length = 10;
+        $token = bin2hex(random_bytes($length));
+        $link=URL::to('organisation/'.$request->organization.'/verify').'/'.$token;
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->recipientEmail,
@@ -152,6 +175,7 @@ class UserManagementController extends Controller
             'organization_id'=>$request->organization,
             'role'=>'3',
             'status' => 'pending_acceptance',
+            'remember_token'=>$token,
 
         ]);
         $permission=[];
@@ -180,14 +204,13 @@ class UserManagementController extends Controller
         }
 
 
+          
+            $data=$this->email($request->name,$request->recipientEmail,$link);
 
 
-
-        try {
-          //  $status = Mail::to( $request->recipientEmail )->send( new InviteUser( $user ) );
             return redirect()->route('org-users-management.index',$request->organization)->with('success','User Invite Sent Successfully.');
         }catch ( \Exception $e ) {
-            $user->delete();
+            //$user->delete();
             return redirect()->route('org-users-management.index',$request->organization)->with('error',$e->getMessage());
         }
 
@@ -270,4 +293,48 @@ class UserManagementController extends Controller
       User::where('id', $user_id)->delete();
       return redirect()->back()->with('success','User deleted successfully.');
     }
+    public function veryfyToken($org_id,$token)
+    {
+
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $connection=$obj->org_connection($databaseName);
+      $data=User::where('remember_token',$token)->get()->toArray();
+      if(empty($data))
+      {
+        return redirect()->route('org-users-management.invalid')->with('error','Invalid url');
+      }
+      $update=User::where('remember_token',$token)->update(['status'=>'active','remember_token'=>'']);
+      return redirect()->route('org-users-management.index',$org_id)->with('success','Your account is verified');
+    }
+    public function orgUserChangeStatus($org_id,$user_id)
+    {
+        try{
+            $obj=new OrganizationController();
+            $databaseName=$obj->get_db_name($org_id);
+            $connection=$obj->org_connection($databaseName);
+            $data=User::select('status')->where('id',$user_id)->get()->toArray();
+            $status=$data[0]['status'];
+
+            //$update_status='active';
+            if($status=="active")
+            {
+              $update_status='suspended';
+            }elseif($status=="suspended")
+            {
+              $update_status='active';
+            }
+
+        $update=User::where('id',$user_id)->update(['status'=>$update_status]);
+        return redirect()->route('org-users-management.index',$org_id)->with('success','Account is '.$update_status);
+      }catch( \Exception $e ){
+          return redirect()->back()->with('error',$e->getMessage());
+          return "error: " .$e->getMessage();
+      }
+    }
+    public function invalid()
+    {
+      return view('user-management.invalid_url');
+    }
+
 }

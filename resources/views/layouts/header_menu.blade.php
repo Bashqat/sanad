@@ -19,12 +19,14 @@
 					</div>
 				</li>
 
+
 				<div class="nav-item dropdown company-menu show">
 						<a class="nav-link mr-md-2 ml-2 px-5" data-toggle="dropdown" href="#" aria-expanded="true">
 											{{ __('language.organisation') }}
                                 				<i class="fas fa-sort-down ml-3"></i>
 						</a>
-						<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right " style="left: inherit; right: 0px;">
+
+						<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right org-menu" style="left: inherit; right: 0px;">
 							<?php
 								Config::set("database.connections.mysql", [
 								            'driver' => 'mysql',
@@ -42,6 +44,8 @@
 								//echo DB::connection()->getDatabaseName();exit
 
 							$org_list= \App\Models\MasterOrganisation::where('superadmin_id',Auth::id())->get();
+							$actual_link = $_SERVER['REQUEST_URI'];
+							 $org_id=substr($actual_link, strrpos($actual_link, '/') + 1);
 							 ?>
 							 @if(!empty($org_list))
 
@@ -49,6 +53,30 @@
 							<a href="/organisation/edit/{{$list->id}}" class="dropdown-item">
 								{{$list->org_db_name}}
 								</a>
+								@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
+
+								 @if($org_id==$list->id)
+
+								 <ul class="org_setting" >
+									 <a href="#" class="dropdown-item" >
+										 {{  __('language.setting')  }}
+									 </a>
+		 						 		<li >
+											<a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item" >
+		 									 User management
+		 								 </a></li>
+										<li> <a href="#" class="dropdown-item" >
+											contact
+										</a>
+										</li>
+									</ul>
+
+
+								 @endif
+								 <hr>
+
+								 @endif
+
 							@endforeach
 							@endif
 							@if (Auth::user()->role=="1")
@@ -65,7 +93,7 @@
 								<span>Add Organization</span>
 							</a>
 
-							<?php $actual_link = $_SERVER['REQUEST_URI'];?>
+
 							@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
 
 							 <?php $org_id=substr($actual_link, strrpos($actual_link, '/') + 1); ?>
@@ -83,7 +111,7 @@
 					<a href="{{ route('home') }}" class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}">{{ __('language.dashboard') }}</a>
 				</li>
 
-				
+
 				@if (strpos($actual_link, 'organisation/') !== false)
 
 				<!-- <?php $org_id=substr($actual_link, strrpos($actual_link, '/') + 1); ?>
@@ -171,6 +199,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
-		$(':checkbox').append('<label for=""></label>')
-    })
+
+		$(':checkbox').append('<label for=""></label>');
+		$(".org_setting").click(function () {
+
+        $("li", this).toggle();
+				// $('.company-menu').addClass('show');
+				// $('.org-menu').addClass('show');
+
+    });
+
+		// $('a.dropdown-item').click(function(){
+		// 	$('.dropdown-menu').addClass('show');
+		// });
+  })
+
 </script>

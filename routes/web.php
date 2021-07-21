@@ -45,7 +45,7 @@ Route::post('/organisation/delete', [App\Http\Controllers\OrganizationController
 //user Management
 Route::resource('users-management',App\Http\Controllers\UserManagementController::class);
 Route::get('bulk-destroy',[App\Http\Controllers\UserManagementController::class,'bulkdestroy'])->name('bulk-destroy');
-Route::get('users-management/update',[App\Http\Controllers\UserManagementController::class,'update'])->name('users-management.update');
+// Route::get('users-management/update',[App\Http\Controllers\UserManagementController::class,'update'])->name('users-management.update');
 Route::get('organisation/{org_id?}/user-management',[App\Http\Controllers\UserManagementController::class,'index'])->name('org-users-management.index');
 Route::get('organisation/{org_id?}/invite-user',[App\Http\Controllers\UserManagementController::class,'inviteUser'])->name('org-users-management.invite');
 Route::post('organisation/invite-user',[App\Http\Controllers\UserManagementController::class,'inviteUserSave'])->name('org-users-management.invite-user');
@@ -53,6 +53,10 @@ Route::get('organisation/{org_id?}/user-management/edit/{user_id}',[App\Http\Con
 Route::post('organisation/user-management/update',[App\Http\Controllers\UserManagementController::class,'orgUserUpdate'])->name('org-users-management.update');
 Route::delete('organisation/{org_id}/user-management/delete/{user_id}',[App\Http\Controllers\UserManagementController::class,'orgUserDestroy'])->name('org-users-management.delete');
 //organisation user
+//verify user
+Route::get('organisation/{org_id}/verify/{token}',[App\Http\Controllers\UserManagementController::class,'veryfyToken'])->name('org-users-management.verify');
+Route::get('invalid',[App\Http\Controllers\UserManagementController::class,'invalid'])->name('org-users-management.invalid');
+Route::post('organisation/{org_id}/user-management/change-status/{user_id}',[App\Http\Controllers\UserManagementController::class,'orgUserChangeStatus'])->name('org-users-management.change-status');
 
 });
 Route::get('lang/{locale}', [App\Http\Controllers\LocalizationController::class, 'lang']);

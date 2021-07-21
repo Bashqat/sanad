@@ -96,6 +96,16 @@
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="submit" class="dropdown-item" value="Delete">
                                             </form>
+																						@if(isset($org_id) && $org_id!="")
+																						<form class="inline-block" action="{{ route('org-users-management.change-status', [$org_id,$user->id]) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+																							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+																							@if($user->status=='active')
+																							<input type="submit" class="dropdown-item" value="Suspend">
+																							@elseif($user->status=='suspended')
+																							<input type="submit" class="dropdown-item" value="Active">
+																							@endif
+																					</form>
+																					@endif
                                             @if($role == 'user')
                                             <a class="dropdown-item" href="/auth-update-view/{{$user->id}}">Manage Authority</a>
                                             @endif
@@ -115,9 +125,16 @@
                         <form>
                             <td>
                                 @if(count($users))
-																@if(isset($org_id) && $org_id=="")
+																@if(isset($org_id) && $org_id!="")
+																<input type="hidden" value="org_selected" id="org_select_status">
+																<input type="hidden" value="{{$org_id}}" id="org_id">
+																@else
+																<input type="hidden" value="0" id="org_id">
+																<input type="hidden" value="org_not_selected" id="org_select_status">
+																@endif
+
                                     <button type="button" class="btn btn-danger " id="delete_all">Delete</button>
-																		@endif
+
                                 @endif
                             </td>
                             <td colspan="6">

@@ -45,6 +45,8 @@ $(document).on('click','#delete_all',function(){
     if (check == false) { return false; }
 
     let idArr = [];
+    var org_status=$('#org_select_status').val();
+    var org_id=$('#org_id').val();
 
     $('.row-select').each(function(){
         if($(this).prop('checked')){
@@ -55,11 +57,16 @@ $(document).on('click','#delete_all',function(){
     $.ajax({
         type:"GET",
         url:"/bulk-destroy",
-        data:{idArr:idArr},
+        data:{idArr:idArr,org_status:org_status,org_id:org_id},
         success: function(response){
+
             if (response.success == 1){
                 window.location.href = "/users-management";
-            }else{
+            }
+            else if(response.success == 2){
+                window.location.href = "/organisation/"+org_id+"/user-management";
+            }
+            else{
                 alert("something went wrong");
             }
         }
