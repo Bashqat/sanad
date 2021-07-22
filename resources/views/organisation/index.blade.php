@@ -12,7 +12,7 @@
 			<table id="example1" class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>Org_db Name</th>
+						<th>Organisation Name</th>
 						<th>created by</th>
 						<!-- <th>Type of organization</th>
 						<th>Type of business</th> -->
@@ -26,8 +26,8 @@
 						@else
 					<tr class="odd">
 						@endif
-						<td>{{ $organization->org_db_name }}</td>
-						<td>{{ $user_name }}</td>
+						<td>{{ $organization->org_name }}</td>
+						<td>{{ $organization['user_detail']['name'] }}</td>
 						<!-- <td>{{ $organization->type_of_organization }}</td>
 						<td>{{ $organization->type_of_business }}</td> -->
 						<td>

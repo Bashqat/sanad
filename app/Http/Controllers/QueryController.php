@@ -62,13 +62,13 @@ class QueryController extends Controller
         $query="CREATE TABLE `roles` (
             `id` bigint UNSIGNED NOT NULL,
             `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-            `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
             `created_at` timestamp NULL DEFAULT NULL,
             `updated_at` timestamp NULL DEFAULT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
             //DB::statement($query);
-            $query1="INSERT INTO `roles` (`id`, `name`,`guard_name`) VALUES
-            (3, 'admin','web');";
+            $query1="INSERT INTO `roles` (`id`, `name`) VALUES
+            (3, 'admin'),
+            (4, 'employee');";
             DB::connection()->getPdo()->exec($query);
             DB::connection()->getPdo()->exec($query1);
 
@@ -179,34 +179,50 @@ class QueryController extends Controller
       $query="CREATE TABLE `permissions` (
         `id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
         `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+        `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
         `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
         `created_at` timestamp NULL DEFAULT NULL,
         `updated_at` timestamp NULL DEFAULT NULL
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 
-      $query1="INSERT INTO `permissions` (`id`, `name`, `guard_name`) VALUES
-      (1, 'edit articles', 'web'),
-      (2, 'delete articles', 'web'),
-      (3, 'publish articles', 'web'),
-      (4, 'unpublish articles', 'web'),
-      (5, 'view contact', 'web'),
-      (6, 'view edit contact', 'web'),
-      (7, 'view password', 'web')";
+      $query1="INSERT INTO `permissions` (`id`, `name`,`slug`, `guard_name`) VALUES
+
+      (1, 'View Contact Only','view_contact', 'contact'),
+      (2, 'View Create and Edit Contact','view_create_edit_contact', 'contact'),
+      (3, 'View Password','view_password', 'contact'),
+      (4, 'Create Drafts Invoices Only','create_draft_invoice', 'sales'),
+      (5, 'Create and approve Invoices','create_approve_invoice', 'sales'),
+      (6, 'Allow Invoice Payment','allow_invoice_payment', 'sales'),
+      (7, 'Create Drafts Quotes Only','create_draft_quote', 'sales'),
+      (8, 'Create and approve Quotes','create_approve_quote', 'sales'),
+
+      (9, 'Create Drafts Only','create_journal_draft', 'accounting'),
+      (10, 'Create and Post', 'create_post_journal','accounting'),
+      (11, 'Allow Date Locking','allow_date_locking', 'accounting'),
+      (12, 'Allow to view and Run Reports','allow_view_run_report', 'accounting'),
+      (13, 'Allow to Publish Reports', 'allow_publish_report','accounting')
+
+
+
+      ";
         DB::connection()->getPdo()->exec($query);
         DB::connection()->getPdo()->exec($query1);
 
     }
     public function user_has_permissions()
     {
+
       $query="CREATE TABLE `user_has_permissions` (
         `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        `permission_id` bigint(20) UNSIGNED NOT NULL,
-        `user_id` bigint(20) UNSIGNED NOT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-      ";
+        `permission_id` text COLLATE utf8mb4_unicode_ci,
+        `user_id` bigint(20) UNSIGNED NOT NULL,
+        `group_contact_permission` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+
         DB::connection()->getPdo()->exec($query);
 
     }
+
 
     public function setting()
     {

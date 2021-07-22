@@ -36,18 +36,19 @@ class UserManagementController extends Controller
     $users=[];
     if($role==1)
       {
-
+        $tittle="Sanad | Subscription and billing";
         $users=User::where('role','!=',1)->get();
         return view('user-management.index',compact('users','role'));
       }
       if($role==2 && $org_id!="")
       {
+        $tittle="Sanad | User management";
         $obj=new OrganizationController();
         $databaseName=$obj->get_db_name($org_id);
         $connection=$obj->org_connection($databaseName);
         $users=User::get();
       }
-      return view('user-management.index',compact('users','role','org_id'));
+      return view('user-management.index',compact('users','role','org_id','tittle'));
 
   }
   public function edit($id)
@@ -158,6 +159,7 @@ class UserManagementController extends Controller
     {
         try {
 
+
               $validated = $request->validate([
                 'recipientEmail' => 'required|email|max:255|unique:users,email',
                 'name' => 'required'
@@ -174,39 +176,62 @@ class UserManagementController extends Controller
               'email' => $request->recipientEmail,
               'password' => '',
               'organization_id'=>$request->organization,
-              'role'=>'3',
+              'role'=>$request->role,
               'status' => 'pending_acceptance',
               'remember_token'=>$token,
 
           ]);
           $permission=[];
-          if($request->viewEdit == 'on'){
-              $permission[]='view edit contact';
-          }
-          if($request->viewOnly == 'on'){
-              $permission[]='view contact';
-          }
-          if($request->viewPassword == 'on'){
-              $permission[]='view password';
-          }
 
+          if($request->contact != ''){
+              $permission[]=$request->contact;
+          }
+          if($request->viewPassword != ''){
+              $permission[]=$request->viewPassword ;
+          }
+          if($request->invoice != ''){
+              $permission[]=$request->invoice;
+          }
+          if($request->invoicePayment != ''){
+              $permission[]=$request->invoicePayment;
+          }
+          if($request->quote != ''){
+              $permission[]=$request->quote;
+          }
+          if($request->journals != ''){
+              $permission[]=$request->journals;
+          }
+          if($request->dateLocking != ''){
+              $permission[]=$request->dateLocking;
+          }
+          if($request->report != ''){
+              $permission[]=$request->report;
+          }
+          $group_contact_permission='';
+          if(!empty($request->group_contact_access))
+          {
+            $group_contact_permission=json_encode($request->group_contact_access);
+          }
+          $permissionId=[];
           if(!empty($permission))
           {
             foreach($permission as $perm)
             {
-              $perm_id=Permission::select('id')->where('name','=',$perm)->get();
-              $permissionId=$perm_id[0]->id;
-              User_permission::create([
-                  'permission_id' => $permissionId,
-                  'user_id' => $user->id,
-              ]);
+              $perm_id=Permission::select('id')->where('slug','=',$perm)->get();
+              $permissionId[]=$perm_id[0]->id;
+
             }
 
           }
+            User_permission::create([
+                'permission_id' => json_encode($permissionId),
+                'user_id' => $user->id,
+                'group_contact_permission'=>$group_contact_permission
+            ]);
             $setting=Org_setting::get()->toArray();
             if(!empty($setting))
             {
-              
+
               $data=$this->email($request->name,$request->recipientEmail,$link,$request->organization);
             }
 

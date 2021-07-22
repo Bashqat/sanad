@@ -24,7 +24,15 @@ class OrganizationController extends Controller
     }
     public function index()
     {
-        $organisations=MasterOrganisation::where('superadmin_id','=',Auth::id())->get();
+
+        $organisations=MasterOrganisation::with('user_detail')->where('superadmin_id','=',Auth::id())->get();
+
+        if(Auth::user()->role==1)
+        {
+          $organisations=MasterOrganisation::with('user_detail')->get();
+        }
+        
+
         $user=User::where('id',Auth::id())->get();
         $user_name=$user[0]->name;
 
@@ -78,7 +86,7 @@ class OrganizationController extends Controller
                             'superadmin_id' => Auth::id(),
                             'org_name'=>$org_name,
                         ];
-                        
+
                 if($data=MasterOrganisation::create($org_input))
                     {
                         $inputs['org_id']=$data->id;
@@ -190,6 +198,7 @@ class OrganizationController extends Controller
     }
     public function setting($org_id)
     {
+
       $databaseName=$this->get_db_name($org_id);
       $connection=$this->org_connection($databaseName);
       $data=Org_setting::get();

@@ -10,10 +10,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-    
+
     <link href="{{ url('css/app.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ url('css/toastr.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ url('css/custom.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ url('css/chosen/style.css') }}">
+
+    <link rel="stylesheet" href="{{ url('css/chosen/chosen.css') }}">
 
     @yield('third_party_stylesheets')
 
@@ -168,6 +171,8 @@
 <script src="{{ mix('js/app.js') }}" defer></script>
 <script src="{{ url('js/script.js') }}" defer></script>
 <script src="{{ url('js/custom.js') }}" defer></script>
+<script src="{{ url('js/chosen/chosen.jquery.js') }}" ></script>
+<script src="{{ url('js/chosen/init.js') }}" ></script>
 @yield('third_party_scripts')
 
 @stack('scripts')

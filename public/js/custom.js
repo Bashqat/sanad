@@ -1,7 +1,8 @@
 $( document ).ready(function() {
-    
+
+
     $(document).on("click",".update_setting",function() {
-       // 
+       //
 
        var form_id=$(this).closest('form').attr('id');
     //    console.log(form_id);
@@ -23,7 +24,7 @@ $( document ).ready(function() {
       {
           return false;
       }
-    
+
        var form_data=$('#'+form_id).serialize();
        $.ajax({
            type:'POST',
@@ -39,16 +40,16 @@ $( document ).ready(function() {
               else{
                     $('.msg_response').addClass('alert-danger');
                     $('.msg_response').html('<strong>Error!</strong>'+data.msg);
-              
+
               }
            }
         });
         return false;
         });
         $(document).on("click",".update_superadmin_setting",function() {
-            // 
+            //
             var form_id=$(this).closest('form').attr('id');
-            
+
             var form_data=$('#'+form_id).serialize();
             var form_array_data=$('#'+form_id).serializeArray();
             var form_submit='yes';
@@ -67,8 +68,8 @@ $( document ).ready(function() {
             {
                 return false;
             }
-            
-            
+
+
             $.ajax({
                 type:'POST',
                 dataType: "json",
@@ -83,10 +84,27 @@ $( document ).ready(function() {
                    else{
                          $('.msg_response').addClass('alert-danger');
                          $('.msg_response').html('<strong>Error!</strong>'+data.msg);
-                   
+
                    }
                 }
              });
              return false;
-        });  
+        });
+
+        $(document).on("click",".role",function() {
+          var role=$(this).attr('role_attr');
+          var setRole='';
+          if(role=="employee")
+          {
+            setRole='4';
+            $('.role-select-employee').css('display','block');
+            $('.role-select-manager').css('display','none');;
+          }else if(role=="manager")
+          {
+            $('.role-select-employee').css('display','none');;
+            $('.role-select-manager').css('display','block');
+            setRole='3';
+          }
+          $('#role').val(setRole);
+        });
     });

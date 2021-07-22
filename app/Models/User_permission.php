@@ -11,5 +11,5 @@ class User_permission extends Model
     public $timestamps = false;
     protected $table='user_has_permissions';
     protected $fillable = ['user_id',
-    'permission_id'];
+    'permission_id','group_contact_permission'];
 }

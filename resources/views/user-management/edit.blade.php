@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<title>Sanad | User Management</title>
 @section('content')
     <!-- Main content -->
         <div class="container-fluid">
@@ -7,8 +7,8 @@
             <div class="profile-form">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Settings</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Organization Details</li>
+                        <li class="breadcrumb-item"><a href="#">User management</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">edit</li>
                     </ol>
                 </nav>
                 <div class="card">

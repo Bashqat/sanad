@@ -1,4 +1,28 @@
 <!-- Main Header -->
+<?php
+	Config::set("database.connections.mysql", [
+							'driver' => 'mysql',
+							"host" => "localhost",
+							"database" => getenv("DB_DATABASE"),
+							"username" => "root",
+							"password" => getenv("DB_PASSWORD"),
+							'charset' => 'utf8',
+							'prefix' => '',
+							'prefix_indexes' => true,
+							'schema' => 'public',
+							'sslmode' => 'prefer',
+					]);
+					DB::purge('mysql');
+					//echo DB::connection()->getDatabaseName();exit
+					$org_list= \App\Models\MasterOrganisation::get();
+					if(Auth::user()->role!=1)
+					{
+						$org_list= \App\Models\MasterOrganisation::where('superadmin_id',Auth::id())->get();
+					}
+
+					$actual_link = $_SERVER['REQUEST_URI'];
+				 	$org_id=substr($actual_link, strrpos($actual_link, '/') + 1);
+ ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light py-0">
 	<nav class="navbar navbar-expand-md toggle-navbar-sec p-0">
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -14,78 +38,53 @@
 								<img src="{{url('/images/site-logo.png')}}" alt="AdminLTE Logo" class="brand-image">
 							</span>
 
-
 						</div>
 					</div>
 				</li>
 
-				<?php
-					Config::set("database.connections.mysql", [
-											'driver' => 'mysql',
-											"host" => "localhost",
-											"database" => getenv("DB_DATABASE"),
-											"username" => "root",
-											"password" => getenv("DB_PASSWORD"),
-											'charset' => 'utf8',
-											'prefix' => '',
-											'prefix_indexes' => true,
-											'schema' => 'public',
-											'sslmode' => 'prefer',
-									]);
-					DB::purge('mysql');
-					//echo DB::connection()->getDatabaseName();exit
 
-				$org_list= \App\Models\MasterOrganisation::where('superadmin_id',Auth::id())->get();
-				$actual_link = $_SERVER['REQUEST_URI'];
-				 $org_id=substr($actual_link, strrpos($actual_link, '/') + 1);
-				 ?>
 				<div class="nav-item dropdown company-menu show">
 						<a class="nav-link mr-md-2 ml-2 px-5" data-toggle="dropdown" href="#" aria-expanded="true">
-							@if(!preg_match('#[0-9]#',$org_id))
-									select Organisation
-									@endif
-										@foreach ( $org_list as $list )
-											@if($org_id==$list->id)
+								@if(!preg_match('#[0-9]#',$org_id))
+										select Organisation
+								@endif
+								@foreach ( $org_list as $list )
+										@if($org_id==$list->id)
 											{{$list->org_name}}
-											@endif
-										@endforeach
-                                				<i class="fas fa-sort-down ml-3"></i>
+										@endif
+								@endforeach
+	              <i class="fas fa-sort-down ml-3"></i>
 						</a>
 
 						<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right org-menu" style="left: inherit; right: 0px;">
 
 							 @if(!empty($org_list))
 
-							@foreach ( $org_list as $list )
-							<a href="/organisation/edit/{{$list->id}}" class="dropdown-item">
-								{{$list->org_name}}
-								</a>
-								@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
-
-								 @if($org_id==$list->id)
-
-
-								 <ul class="org_setting" >
-									 <!-- <a href="#" class="dropdown-item" >
-										 {{  __('language.setting')  }}
-									 </a> -->
-		 						 		<li >
-											<a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item" >
-		 									 User management
-		 								 </a></li>
-										<li> <a href="/organisation/{{ $org_id }}/smtp" class="dropdown-item" >
-											Smtp
+								@foreach ( $org_list as $list )
+										<a href="/organisation/edit/{{$list->id}}" class="dropdown-item">
+												{{$list->org_name}}
 										</a>
-										</li>
-									</ul>
-
-
-								 @endif
-								 <hr>
-
-								 @endif
-
-							@endforeach
+										@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
+											@if($org_id==$list->id)
+												<ul class="org_setting" >
+														 <!-- <a href="#" class="dropdown-item" >
+															 {{  __('language.setting')  }}
+														 </a> -->
+							 						 		<li >
+																	<a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item" >
+																		 User management
+								 								 	</a>
+														 	</li>
+															<li>
+																	<a href="/organisation/{{ $org_id }}/smtp" class="dropdown-item" >
+																		 Smtp
+																	</a>
+															</li>
+													</ul>
+											@endif
+								 			<hr>
+										@endif
+								@endforeach
 							@endif
 							@if (Auth::user()->role=="1")
 								<a href="{{ route('master_setting') }}" class="dropdown-item">
@@ -108,7 +107,7 @@
 							<a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item">{{__('language.user_management') }}</a>
 							@else
 								<a href="{{ route('users-management.index') }}" class="dropdown-item">
-													<span>Subscription</span>
+													<span>Subscription and billing</span>
 								</a>
 			        @endif
 

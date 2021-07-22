@@ -32,8 +32,8 @@
         <div class="tab-content">
 
 
-    <div class="tab-pane active" id="email_smtp" role="tabpanel">
-      <div class="card">
+          <div class="tab-pane active" id="email_smtp" role="tabpanel">
+              <div class="card">
 
                    <div class="card-body pt-5">
                    <div class="tab-content edit-profile-main-sec">

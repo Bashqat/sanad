@@ -15,4 +15,8 @@ class MasterOrganisation extends Model
     'org_name',
 
     ];
+    public function user_detail()
+    {
+      return $this->hasOne(User::class, 'id', 'superadmin_id');
+    }
 }

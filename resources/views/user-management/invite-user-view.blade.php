@@ -14,6 +14,7 @@
 </div>
 @enderror
 <form method="POST" action="{{ route('org-users-management.invite-user') }}" class="user-mang-view-sec">
+	<input type="hidden" name="role" id="role" value="3">
 	<div class="modal-body">
 		@csrf
 		<input type="hidden" name="organization" value="{{ $org_id }}">
@@ -41,8 +42,8 @@
 
 		<nav>
 			<div class="nav nav-tabs" id="nav-tab" role="tablist">
-				<a class="nav-item nav-link disabled" id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="true">Manager</a>
-				<a class="nav-item nav-link active" id="employee-tab" data-toggle="tab" href="#employee" role="tab" aria-controls="employee" aria-selected="false">Employee</a>
+				<a class="nav-item nav-link active role" id="admin-tab" role_attr="manager" data-toggle="tab" href="" role="tab" aria-controls="admin" aria-selected="true">Manager<i class="fa fa-check role-select-manager" aria-hidden="true"></i></a>
+				<a class="nav-item nav-link role" id="employee-tab" role_attr="employee" data-toggle="tab" href="" role="tab" aria-controls="employee" aria-selected="false">Employee<i class="fa fa-check hide role-select-employee" aria-hidden="true"></i></a>
 				<i class="far fa-question-circle mr-2 fa-2x" data-toggle="tooltip" data-html="true" title="A Manager can invite other users and grant the same authority he has or lesser" style="margin-left: auto;"></i>
 			</div>
 		</nav>
@@ -53,22 +54,7 @@
 				<div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
 					<!-- Accordion card -->
 					<div id="accordion">
-					<div class="card">
-						<!-- Card header -->
-						<div class="card-header">
-							<h5 class="mb-0">
-								<input type="checkbox" name="sales">
-								<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne1" class="card-link" aria-expanded="true">
-									Sales <i class="fas fa-angle-down rotate-icon float-right"></i>
-								</a>
-							</h5>
-						</div>
-						<!-- Card body -->
-						<div id="collapseOne1" class="collapse show">
-							<div class="card-body">
-							</div>
-						</div>
-					</div>
+
 					<!-- Accordion card -->
 
 					<!-- Accordion card -->
@@ -92,15 +78,15 @@
 										<div class="form-group clearfix">
 											<p>How much access do they need?</p>
 											<div class="icheck-primary">
-												<input type="checkbox" class="contact-checkbox" name="viewOnly" id="checkboxPrimary1">
+												<input type="radio" class="contact-checkbox" name="contact" value="view_contact"  id="checkboxPrimary1">
 												<label for="checkboxPrimary1">
 													View Contact Only
 												</label>
 											</div>
 											<div class="icheck-primary">
-												<input type="checkbox" class="contact-checkbox" name="viewEdit" id="checkboxPrimary2">
+												<input type="radio" class="contact-checkbox" name="contact" value="view_create_edit_contact" id="checkboxPrimary1">
 												<label for="checkboxPrimary2">
-													View and Edit Contact
+													View Create and Edit Contact
 												</label>
 											</div>
 										</div>
@@ -108,12 +94,16 @@
 										<div class="form-group clearfix">
 											<p>Allow Access only to the following Groups/Contacts:</p>
 											<div class="form-group">
-												<select name="contactList" class="form-control select2" style="width: 100%;">
-													<option>All Contact</option>
-													<option>All</option>
-												</select>
+											<select data-placeholder="Select" name="group_contact_access[]" multiple class="chosen-select" tabindex="8">
+												<option value=""></option>
+												<option>All Conacts</option>
+												<option>All Groups</option>
+												<option>All</option>
+
+											</select>
 											</div>
 										</div>
+
 
 										<div class="form-group clearfix">
 											<div class="d-flex view-pswd-text">
@@ -121,10 +111,144 @@
 												<i class="far fa-question-circle fa-lg mt-2" data-toggle="tooltip" data-html="true" title="User will be prompted upon sign into choose a Pin"></i>
 											</div>
 											<div class="icheck-primary">
-												<input type="checkbox" class="contact-checkbox" name="viewPassword" id="checkboxPrimary3">
+												<input type="checkbox" class="contact-checkbox" name="viewPassword" value="view_password" id="checkboxPrimary3">
 												<label for="checkboxPrimary3">
 													View Password
 												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+					<div class="card">
+						<!-- Card header -->
+						<div class="card-header" role="tab" id="headingTwo2">
+							<h5 class="mb-0">
+								<input type="checkbox" name="sales" id="contact-sales-all">
+								<a class="card-link" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo2" aria-expanded="true">
+									Sales <i class="fas fa-angle-down rotate-icon float-right"></i>
+								</a>
+							</h5>
+						</div>
+						<!-- Card body -->
+						<div id="collapseTwo2" class="collapse show">
+							<div class="card-body auth-update-view-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<!-- checkbox -->
+										<div class="form-group clearfix">
+											<p>Invoice</p>
+											<div class="icheck-primary">
+												<input type="radio" class="contact-checkbox" name="invoice" value="create_draft_invoice"  id="checkboxPrimary1">
+												<label for="checkboxPrimary1">
+													Create Drafts Invoices Only
+												</label>
+											</div>
+											<div class="icheck-primary">
+												<input type="radio" class="contact-checkbox" name="invoice" value="create_approve_invoice" id="checkboxPrimary1">
+												<label for="checkboxPrimary2">
+													Create and approve Invoices
+												</label>
+											</div>
+										</div>
+
+
+
+										<div class="form-group clearfix">
+											<div class="d-flex view-pswd-text">
+												<p>Is He Allowed to apply payment to invoices?</p>
+												<i class="far fa-question-circle fa-lg mt-2" data-toggle="tooltip" data-html="true" title="User Can apply Payments received to an issued invoices"></i>
+											</div>
+											<div class="icheck-primary">
+												<input type="checkbox" class="contact-checkbox" name="invoicePayment" value="allow_invoice_payment" id="checkboxPrimary3">
+												<label for="checkboxPrimary3">
+													Allow Invoice Payment
+												</label>
+											</div>
+											<div class="form-group clearfix">
+												<p>Quote</p>
+												<div class="icheck-primary">
+													<input type="radio" class="contact-checkbox" name="quote" value="create_draft_quote"  id="checkboxPrimary1">
+													<label for="checkboxPrimary1">
+														Create Drafts Quotes Only
+													</label>
+												</div>
+												<div class="icheck-primary">
+													<input type="radio" class="contact-checkbox" name="quote" value="create_approve_quote" id="checkboxPrimary1">
+													<label for="checkboxPrimary2">
+														Create and approve Quotes
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+					<div class="card">
+						<!-- Card header -->
+						<div class="card-header" role="tab" id="headingTwo2">
+							<h5 class="mb-0">
+								<input type="checkbox" name="accounting" id="contact-sales-all">
+								<a class="card-link" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo2" aria-expanded="true">
+									Accounting <i class="fas fa-angle-down rotate-icon float-right"></i>
+								</a>
+							</h5>
+						</div>
+						<!-- Card body -->
+						<div id="collapseTwo2" class="collapse show">
+							<div class="card-body auth-update-view-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<!-- checkbox -->
+										<div class="form-group clearfix">
+											<p>Manual Journals</p>
+											<div class="icheck-primary">
+												<input type="radio" class="contact-checkbox" name="journals" value="create_journal_draft"  id="checkboxPrimary1">
+												<label for="checkboxPrimary1">
+													Create Drafts Only
+												</label>
+											</div>
+											<div class="icheck-primary">
+												<input type="radio" class="contact-checkbox" name="journals" value="create_post_journal" id="checkboxPrimary1">
+												<label for="checkboxPrimary2">
+													Create and Post
+												</label>
+											</div>
+										</div>
+
+
+
+										<div class="form-group clearfix">
+											<div class="d-flex view-pswd-text">
+												<p>Is He Allowed to Lock date?</p>
+												<i class="far fa-question-circle fa-lg mt-2" data-toggle="tooltip" data-html="true" title="User Can apply Locking Date were  no transaction will be allowed within stated date"></i>
+											</div>
+											<div class="icheck-primary">
+												<input type="checkbox" class="contact-checkbox" value="allow_date_locking" name="dateLocking" id="checkboxPrimary3">
+												<label for="checkboxPrimary3">
+													Allow Date Locking
+												</label>
+											</div>
+											<div class="form-group clearfix">
+												<p>Reports</p>
+												<div class="icheck-primary">
+													<input type="radio" class="contact-checkbox" name="report" value="allow_view_run_report"  id="checkboxPrimary1">
+													<label for="checkboxPrimary1">
+														Allow to view and Run Reports
+													</label>
+												</div>
+												<div class="icheck-primary">
+													<input type="radio" class="contact-checkbox" name="report" value="allow_publish_report" id="checkboxPrimary1">
+													<label for="checkboxPrimary2">
+														Allow to Publish Reports
+													</label>
+												</div>
 											</div>
 										</div>
 									</div>
