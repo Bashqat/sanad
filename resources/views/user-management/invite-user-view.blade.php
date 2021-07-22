@@ -15,7 +15,7 @@
 @enderror
 <form method="POST" action="{{ route('org-users-management.invite-user') }}" class="user-mang-view-sec">
 	<input type="hidden" name="role" id="role" value="3">
-	<div class="modal-body">
+	<div class="modal-body invite-user-sec">
 		@csrf
 		<input type="hidden" name="organization" value="{{ $org_id }}">
 		<div class="row">
