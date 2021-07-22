@@ -2984,14 +2984,7 @@ table tbody tr.odd td a div {
 	color:red;
 }
 
-i.fa.fa-check {
-    color: #6fb367;
-    /* background: #6fb367; */
 
-    font-size: 22px;
-    margin: 20 3px px;
-    margin: 6px 6px;
-}
 .hide{
 	display:none;
 }
@@ -3000,4 +2993,25 @@ i.fa.fa-check {
 }
 .invite-user-sec .nav-tabs {
     max-width: 100%;
+}
+.role-select {
+    background: green;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 27px;
+    margin-left: 10px;
+}
+.invite-user-sec .nav-tabs .nav-item {
+    display: flex;
+    align-items: center;
+}
+.role-select i.fa.fa-check {
+    margin: 0px;
+    font-size: 14px;
+    color: #fff;
+}
+.invite-user-sec .chosen-container.chosen-container-multi {
+    width: 100% !important;
 }

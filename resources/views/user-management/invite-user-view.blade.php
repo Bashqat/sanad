@@ -261,9 +261,8 @@
 				</div>
 				<!-- Accordion wrapper -->
 			</div>
-		</div>
-	</div>
-	<div class="modal-footer">
+
+	<div class="modal-footer border-0">
 		<a href="{{ URL::previous() }}" class="btn btn-secondary common-button-site">Cancel</a>
 <!--		 <button type="button" class="btn btn-secondary common-button-site" data-dismiss="modal">Cancel</button> -->
 		<button type="submit" class="btn btn-primary common-button-site">Send Invite</button>
