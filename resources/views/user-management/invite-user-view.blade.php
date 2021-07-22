@@ -42,8 +42,8 @@
 
 		<nav>
 			<div class="nav nav-tabs" id="nav-tab" role="tablist">
-				<a class="nav-item nav-link active role" id="admin-tab" role_attr="manager" data-toggle="tab" href="" role="tab" aria-controls="admin" aria-selected="true">Manager<i class="fa fa-check role-select-manager" aria-hidden="true"></i></a>
-				<a class="nav-item nav-link role" id="employee-tab" role_attr="employee" data-toggle="tab" href="" role="tab" aria-controls="employee" aria-selected="false">Employee<i class="fa fa-check hide role-select-employee" aria-hidden="true"></i></a>
+				<a class="nav-item nav-link active role" id="admin-tab" role_attr="manager" data-toggle="tab" href="" role="tab" aria-controls="admin" aria-selected="true">Manager<div class="role-select-manager role-select"><i class="fa fa-check " aria-hidden="true"></i></div></a>
+				<a class="nav-item nav-link role" id="employee-tab" role_attr="employee" data-toggle="tab" href="" role="tab" aria-controls="employee" aria-selected="false"><div class="role-select-employee role-select">Employee</div><i class="fa fa-check hide " aria-hidden="true"></i></a>
 				<i class="far fa-question-circle mr-2 fa-2x" data-toggle="tooltip" data-html="true" title="A Manager can invite other users and grant the same authority he has or lesser" style="margin-left: auto;"></i>
 			</div>
 		</nav>

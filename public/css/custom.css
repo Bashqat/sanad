@@ -2998,3 +2998,6 @@ i.fa.fa-check {
 .show{
 	display:block;
 }
+.invite-user-sec .nav-tabs {
+    max-width: 100%;
+}
