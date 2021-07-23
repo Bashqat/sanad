@@ -48,6 +48,9 @@ return [
     'contact'=>'Contact',
     'user_management'=>'User management',
     'invite_user'=>'Invite User',
+    'super_admin_setting'=>'Super Admin Setting',
+    'edit'=>'Edit',
+    'package'=>'Package',
 
 
 

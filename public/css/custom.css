@@ -2227,6 +2227,26 @@ table tbody tr.odd td a div {
 }
 /* July-6-master-setting-css-end */
 
+.header-dropdown-menu ul li {
+    list-style: none;
+    margin: 0;
+}
+
+.header-dropdown-menu ul.dropdown-menu.header-submenu {
+    position: unset;
+    box-shadow: none;
+    border: 0px;
+    padding-left: 10px;
+}
+
+.header-dropdown-menu ul.dropdown-menu a.dropdown-item {
+    width: 100%;
+}
+
+.navbar-collapse ul.navbar-nav li.nav-item {
+    list-style: none;
+}
+
 /**Media-Start-Here**/
 
 @media(max-width: 1199px) {
@@ -3014,4 +3034,7 @@ table tbody tr.odd td a div {
 }
 .invite-user-sec .chosen-container.chosen-container-multi {
     width: 100% !important;
+}
+.dropdown-menu.dropdown-menu-sm.dropdown-menu-right.org-menu.show {
+    right: -24px;
 }

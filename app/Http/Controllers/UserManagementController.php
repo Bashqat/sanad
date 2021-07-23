@@ -34,6 +34,7 @@ class UserManagementController extends Controller
 
     $role=$this->role;
     $users=[];
+    $tittle='';
     if($role==1)
       {
         $tittle="Sanad | Subscription and billing";

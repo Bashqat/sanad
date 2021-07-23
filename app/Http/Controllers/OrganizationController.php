@@ -26,20 +26,13 @@ class OrganizationController extends Controller
     {
 
         $organisations=MasterOrganisation::with('user_detail')->where('superadmin_id','=',Auth::id())->get();
-
         if(Auth::user()->role==1)
-        {
-          $organisations=MasterOrganisation::with('user_detail')->get();
-        }
-        
-
+          {
+            $organisations=MasterOrganisation::with('user_detail')->get();
+          }
         $user=User::where('id',Auth::id())->get();
-        $user_name=$user[0]->name;
+        return view('organisation.index', compact('organisations'));
 
-
-        return view('organisation.index', compact('organisations','user_name'));
-        //echo '<pre>';
-        //print_r($organisation);exit;
     }
     public function create()
     {
@@ -150,6 +143,24 @@ class OrganizationController extends Controller
 
         }
 
+    }
+    public function view($org_id)
+    {
+      try{
+          $orgData=MasterOrganisation::where('id','=',$org_id)->get();
+          $databaseName=$org_id.'_'.$orgData[0]->org_db_name;
+          $connection=$this->org_connection($databaseName);
+          $orgInfo=Organisation::where('org_id','=',$org_id)->get();
+          return view('organisation/view',['organisation_data'=>$orgInfo]);
+
+      }catch (Exception $e) {
+          DB::rollback();
+
+      } catch(\Illuminate\Database\QueryException $ex){
+          print_r($ex->getMessage());
+          DB::rollback();
+
+      }
     }
     public function get_db_name($org_id)
     {
