@@ -3038,3 +3038,25 @@ table tbody tr.odd td a div {
 .dropdown-menu.dropdown-menu-sm.dropdown-menu-right.org-menu.show {
     right: -24px;
 }
+.company-menu .org-menu {
+    left: 0 !important;
+    right: 0 !important;
+}
+.company-menu .org-menu a.dropdown-item {
+    width: 100% !important;
+}
+.company-menu .org-menu .header-submenu {
+    position: unset;
+    border: 0px;
+    box-shadow: none;
+    overflow: hidden !important;
+    width: 100% !important;
+    padding-left: 10px;
+    background: transparent;
+}
+.company-menu .org-menu .dropdown-submenu {
+    margin: 0px;
+}
+.company-menu .org-menu .header-submenu li {
+    margin: 0px;
+}
