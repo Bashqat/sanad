@@ -40,7 +40,7 @@
 																@if((empty($org_list)) && !preg_match('#[0-9]#',$org_id))
 																		  No Organisation exist
 																@elseif($org_id!="" && Auth::user()->role!=1 && !preg_match('#[0-9]#',$org_id))
-																
+
 																@endif
 																@foreach ( $org_list as $list )
 																		@if($org_id==$list->id)
@@ -101,7 +101,7 @@
 												<a href="{{ route('master_setting') }}" class="dropdown-item">
 														{{ __('language.setting') }}
 												</a>
-												<a href="{{ route('package.create') }}" class="dropdown-item">
+												<a href="{{ route('package.list') }}" class="dropdown-item">
 														{{ __('language.package') }}
 												</a>
 
@@ -123,8 +123,11 @@
 
 												<a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item">{{__('language.user_management') }}</a>
 											@else
-														<a href="{{ route('users-management.index') }}" class="dropdown-item">
+														<a href="{{ route('subscription.list') }}" class="dropdown-item">
 																			<span>Subscription and billing</span>
+														</a>
+														<a href="{{ route('users-management.index') }}" class="dropdown-item">
+																			<span>User management</span>
 														</a>
 									    @endif
 

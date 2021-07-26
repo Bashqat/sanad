@@ -65,8 +65,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('organisation/smtp/update',[App\Http\Controllers\OrganizationController::class,'settingUpdate'])->name('organisation.setting-update');
 
     ///Package management
-    Route::post('Package/create',[App\Http\Controllers\OrganizationController::class,'create'])->name('package.create');
-    Route::post('Package/update',[App\Http\Controllers\OrganizationController::class,'store'])->name('package.update');
+    Route::get('package/list',[App\Http\Controllers\PackageController::class,'list'])->name('package.list');
+    Route::get('package/create/{id?}',[App\Http\Controllers\PackageController::class,'create'])->name('package.create');
+    Route::post('package/add',[App\Http\Controllers\PackageController::class,'store'])->name('package.store');
+    Route::post('package/update',[App\Http\Controllers\PackageController::class,'update'])->name('package.update');
+    Route::post('package/delete',[App\Http\Controllers\PackageController::class,'delete'])->name('package.delete');
+
+    //Subscription Management
+    Route::get('subscription/list',[App\Http\Controllers\SubscriptionController::class,'list'])->name('subscription.list');
+    Route::get('subscription/view/{id}',[App\Http\Controllers\SubscriptionController::class,'view'])->name('subscription.view');
+    Route::get('subscription/view/{id}',[App\Http\Controllers\SubscriptionController::class,'view'])->name('subscription.view');
+    Route::post('subscription/status',[App\Http\Controllers\SubscriptionController::class,'status'])->name('subscription.status');
+
+
 
 });
 
