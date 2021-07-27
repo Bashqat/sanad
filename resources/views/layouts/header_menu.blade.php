@@ -18,9 +18,23 @@
 					{
 						$org_list= \App\Models\MasterOrganisation::where('superadmin_id',Auth::id())->get();
 					}
-
 					$actual_link = $_SERVER['REQUEST_URI'];
-				 	$org_id=substr($actual_link, strrpos($actual_link, '/') + 1);
+					$org_id=substr($actual_link, strrpos($actual_link, '/') + 1);
+
+					if (strpos($actual_link, 'organisation/') !== false   ) {
+						if(strpos($actual_link, 'organisation/create') == true)
+						{
+
+						}else {
+							preg_match_all('!\d+!', $actual_link, $matches);
+
+							$org_id=$matches[0][0];
+						}
+
+
+						}
+					
+
  ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light py-0">
 				<nav class="navbar navbar-expand-md toggle-navbar-sec p-0">
@@ -44,8 +58,10 @@
 														<a class="nav-link mr-md-2 ml-2 px-5" data-toggle="dropdown" href="#" aria-expanded="true">
 																@if((empty($org_list)) && !preg_match('#[0-9]#',$org_id))
 																		  No Organisation exist
-																@elseif($org_id!="" && Auth::user()->role!=1 && !preg_match('#[0-9]#',$org_id))
-
+																@elseif(!empty($org_list) && Auth::user()->role==1 )
+																				Select
+																@elseif(Auth::user()->role==2 && !empty($org_list) && !preg_match('#[0-9]#',$org_id))
+																			{{$org_list[0]->org_name}}
 																@endif
 																@foreach ( $org_list as $list )
 																		@if($org_id==$list->id)
@@ -126,7 +142,7 @@
 
 											@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
 
-												<a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item">{{__('language.user_management') }}</a>
+												<!-- <a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item">{{__('language.user_management') }}</a> -->
 											@else
 														<a href="{{ route('subscription.list') }}" class="dropdown-item">
 																			<span>Subscription and billing</span>
