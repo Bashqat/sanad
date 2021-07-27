@@ -13,7 +13,12 @@
 							'sslmode' => 'prefer',
 			]);
 					DB::purge('mysql');
-					$org_list= \App\Models\MasterOrganisation::where('superadmin_id',Auth::id())->get();
+					$org_list= \App\Models\MasterOrganisation::get();
+					if(Auth::user()->role!=1)
+					{
+						$org_list= \App\Models\MasterOrganisation::where('superadmin_id',Auth::id())->get();
+					}
+
 					$actual_link = $_SERVER['REQUEST_URI'];
 				 	$org_id=substr($actual_link, strrpos($actual_link, '/') + 1);
  ?>
@@ -52,7 +57,7 @@
 
 												<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right org-menu" >
 
-													 @if(!empty($org_list))
+													 @if(!empty($org_list) && Auth::user()->role!=1)
 													 		@foreach ( $org_list as $key=>$list )
 																	<a href="/organisation/view/{{$list->id}}" class="dropdown-item">
 																			{{$list->org_name}}
