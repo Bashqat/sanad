@@ -71,6 +71,7 @@ class OrganizationController extends Controller
                 $org_name=$request->input('display_name');
                 // $org_db_name=$request->input('display_name');
                 $inputs = $request->all();
+                
                 $inputs['superadmin_id']=Auth::id();
                 $inputs['org_name']=$org_name;
                 //$inputs['org_db_name']=Auth::id();
@@ -114,22 +115,11 @@ class OrganizationController extends Controller
         try{
             $orgData=MasterOrganisation::where('id','=',$org_id)->get();
             $databaseName=$org_id.'_'.$orgData[0]->org_db_name;
-            //echo $databaseName;exit;
-
-
             $countries=CountryListFacade::getList('en');
             $organisationType=$this->organizationTypes();
             $busType=$this->businessTypes();
             $connection=$this->org_connection($databaseName);
-            //echo $connection;exit;
-            //$database = Config::get('database.connections.mysql');
-            //echo DB::connection()->getDatabaseName();exit;
-            //dd($database);
-
             $orgInfo=Organisation::where('org_id','=',$org_id)->get();
-
-            //echo '<pre>';
-            //print_R($orgInfo);exit;
             return view('organisation/create',['organisation_data'=>$orgInfo,'organisationType'=>$organisationType,'busType'=>$busType,'countries'=>$countries]);
 
         }catch (Exception $e) {
