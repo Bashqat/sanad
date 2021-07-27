@@ -17,6 +17,7 @@
 							<th>No of organisation limit</th>
 							<th>Number of user limit</th>
               <th>Number of contact limit</th>
+              <th>Storage</th>
               <th>Third Party api</th>
 							<th>Action</th>
 						</tr>
@@ -33,6 +34,7 @@
 											<td>{{ $package->storage_per_org }}</td>
 											 <td>{{ $package->invite_user_count }}</td>
                        <td>{{ $package->contact_count }}</td>
+                       <td>{{ $package->storage }}</td>
 
                        <td>{{ ($package->third_party_api!='null')?$package->third_party_api:'' }}</td>
 

@@ -31,6 +31,8 @@ class PackageController extends Controller
         $data['storage_per_org']=$request->input('storage_per_org');
         $data['invite_user_count']=$request->input('invite_user_count');
         $data['contact_count']=$request->input('contact_count');
+        $data['storage']=$request->input('storage');
+        $data['email']=$request->input('email');
         $data['third_party_api']=json_encode($request->input('third_party_api'));
         if(Package::create($data))
         {
@@ -50,12 +52,14 @@ class PackageController extends Controller
     public function update(Request $request)
     {
       try {
-        
+
           $data['name']=$request->input('name');
           $data['price']=$request->input('price');
           $data['storage_per_org']=$request->input('storage_per_org');
           $data['invite_user_count']=$request->input('invite_user_count');
           $data['contact_count']=$request->input('contact_count');
+          $data['storage']=$request->input('storage');
+          $data['email']=$request->input('email');
           $data['third_party_api']=json_encode($request->input('third_party_api'));
           $package_id=$request->input('package_id');
 

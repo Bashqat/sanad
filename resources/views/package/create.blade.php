@@ -66,6 +66,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="contact_count" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Storage<span style="color:red;">in GB</span> </label>
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <input type="number" name="storage" class="form-control
+                                " id="storage " placeholder="Enter number of contact" required="" value="{{ isset($package_data[0]->storage) ? $package_data[0]->storage : ''}}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="contact_count" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Email </label>
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <input type="email" name="email" class="form-control
+                                " id="email " placeholder="Enter number of contact" required="" value="{{ isset($package_data[0]->email) ? $package_data[0]->email : ''}}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="legal_name" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Third Party Api  </label>
                             <div class="col-lg-9 col-md-9 col-sm-9">
                               <select data-placeholder="Select" name="third_party_api[]" multiple class="chosen-select" tabindex="8">

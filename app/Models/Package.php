@@ -14,6 +14,8 @@ class Package extends Model
     'storage_per_org',
     'invite_user_count',
     'contact_count',
-    'third_party_api'
+    'third_party_api',
+    'storage',
+    'email'
   ];
 }
