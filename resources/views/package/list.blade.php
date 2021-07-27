@@ -1,5 +1,5 @@
 @extends('layouts.app')
-<title>Organisation List</title>
+<title>Sanad | Package List</title>
 @section('content')
 <div class="card">
 		<div class="card-header">
