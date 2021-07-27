@@ -25,8 +25,9 @@
 								@else
 									<tr class="odd">
 								@endif
+								<?php echo '<pre>';print_r($organisation); ?>
 											<td>{{ $organisation->org_name }}</td>
-											<td>{{ $organisation['user_detail']['name'] }}</td>
+											<!-- <td>{{ $organisation['user_detail']['name'] }}</td> -->
 											 <td>{{ $organisation->created_at }}</td>
 											<td>
 												<div class="dropdown">
