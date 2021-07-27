@@ -36,9 +36,9 @@
 														<!--Menu-->
 														<div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);">
 															@if (Auth::user()->role=="2")
-																	<a href="{{ route('org_edit', $organization->id) }}" class="dropdown-item">Edit</a>
+																	<a href="{{ route('org_edit', $organisation->id) }}" class="dropdown-item">Edit</a>
 																	<form class="inline-block" action="{{ route('org_delete')}}" method="POST" onsubmit="return confirm('Are you sure?');">
-																			<input type="hidden" name="id" value="{{$organization->id}}">
+																			<input type="hidden" name="id" value="{{$organisation->id}}">
 																			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 																			<input type="submit" class="dropdown-item" value="Delete">
 																	</form>
