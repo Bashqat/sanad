@@ -17,6 +17,7 @@
                         <div class="tab-pane active" id="settings">
 
 
+                          @if(isset($subscriptions[0]) && !empty($subscriptions[0]))
                         <!-- An unexamined life is not worth living. - Socrates -->
                         <div class="form-group row">
                             <label for="display_name" class="col-lg-3 col-md-3 col-sm-3 col-form-label">User Name </label>
@@ -85,6 +86,11 @@
                             {{ isset($subscriptions[0]->paid_via) ? $subscriptions[0]->paid_via : ''}}
                         </div>
                     </div>
+
+                    @else
+                    <h1 class="text-center">No subscription detail exist</h1>
+
+                    @endif
 
 
 
