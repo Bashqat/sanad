@@ -39,4 +39,9 @@ class SubscriptionController extends Controller
 
      }
    }
+   public function subscriptionDetail($id)
+   {
+     $subscriptions=Subscription::with('user_detail')->with('package')->where('superadmin_id',$id)->get();
+     return view('subscription/view',compact('subscriptions'));
+   }
 }

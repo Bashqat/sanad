@@ -85,6 +85,7 @@
 																					<a class="dropdown-item" href="{{ route('org-users-management.edit', [$org_id,$user->id]) }}">Edit</a>
 																					@else
 																					<a class="dropdown-item" href="{{ route('users-management.edit', $user->id) }}">Edit</a>
+																					<a class="dropdown-item" href="{{ route('subscription.user.view', $user->id) }}">View</a>
 																					@endif
 
 																						@if(isset($org_id) && $org_id!="")

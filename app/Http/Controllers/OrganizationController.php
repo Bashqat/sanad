@@ -151,7 +151,8 @@ class OrganizationController extends Controller
           $databaseName=$org_id.'_'.$orgData[0]->org_db_name;
           $connection=$this->org_connection($databaseName);
           $orgInfo=Organisation::where('org_id','=',$org_id)->get();
-          return view('organisation/view',['organisation_data'=>$orgInfo]);
+          $invite_user=User::count();
+          return view('organisation/view',['organisation_data'=>$orgInfo,'invite_user'=>$invite_user]);
 
       }catch (Exception $e) {
           DB::rollback();

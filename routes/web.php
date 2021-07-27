@@ -74,6 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Subscription Management
     Route::get('subscription/list',[App\Http\Controllers\SubscriptionController::class,'list'])->name('subscription.list');
     Route::get('subscription/view/{id}',[App\Http\Controllers\SubscriptionController::class,'view'])->name('subscription.view');
+    Route::get('subscription/user/view/{id}',[App\Http\Controllers\SubscriptionController::class,'subscriptionDetail'])->name('subscription.user.view');
     Route::get('subscription/view/{id}',[App\Http\Controllers\SubscriptionController::class,'view'])->name('subscription.view');
     Route::post('subscription/status',[App\Http\Controllers\SubscriptionController::class,'status'])->name('subscription.status');
 

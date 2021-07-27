@@ -50,6 +50,7 @@ class PackageController extends Controller
     public function update(Request $request)
     {
       try {
+        
           $data['name']=$request->input('name');
           $data['price']=$request->input('price');
           $data['storage_per_org']=$request->input('storage_per_org');
@@ -74,7 +75,7 @@ class PackageController extends Controller
     {
       try {
           $package_id=$request->input('package_id');
-          
+
           if(Package::where('id', $package_id)->delete())
               {
                 return redirect()->route('package.list')->with('success','Package deleted successfully.');

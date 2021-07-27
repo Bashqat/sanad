@@ -39,8 +39,8 @@
                         <div class="form-group row">
                             <label for="legal_name" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Price <span style="color:red;">*</span> </label>
                             <div class="col-lg-9 col-md-9 col-sm-9">
-                                <input type="number" name="price" class="form-control
-                                " id="price " placeholder="Enter Legal Name" required="" value="{{ isset($package_data[0]->price) ? $package_data[0]->price : ''}}">
+                                <input type="number" step="any"  name="price" class="form-control
+                                " id="price " placeholder="Enter price" required="" value="{{ isset($package_data[0]->price) ? $package_data[0]->price : ''}}">
                             </div>
                         </div>
 
@@ -48,21 +48,21 @@
                             <label for="storage_per_org" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Number Of Organisation Limit <span style="color:red;">*</span> </label>
                             <div class="col-lg-9 col-md-9 col-sm-9">
                                 <input type="number" name="storage_per_org" class="form-control
-                                " id="storage_per_org " placeholder="Enter Legal Name" required="" value="{{ isset($package_data[0]->storage_per_org) ? $package_data[0]->storage_per_org : ''}}">
+                                " id="storage_per_org " placeholder="Enter number of organisation" required="" value="{{ isset($package_data[0]->storage_per_org) ? $package_data[0]->storage_per_org : ''}}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="legal_name" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Number of invitation user Limit<span style="color:red;">*</span> </label>
                             <div class="col-lg-9 col-md-9 col-sm-9">
                                 <input type="number" name="invite_user_count" class="form-control
-                                " id="invite_user_count " placeholder="Enter Legal Name" required="" value="{{ isset($package_data[0]->invite_user_count) ? $package_data[0]->invite_user_count : ''}}">
+                                " id="invite_user_count " placeholder="Enter user count" required="" value="{{ isset($package_data[0]->invite_user_count) ? $package_data[0]->invite_user_count : ''}}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="contact_count" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Number of Contact Limit <span style="color:red;">*</span> </label>
                             <div class="col-lg-9 col-md-9 col-sm-9">
                                 <input type="number" name="contact_count" class="form-control
-                                " id="invite_user_count " placeholder="Enter Legal Name" required="" value="{{ isset($package_data[0]->invite_user_count) ? $package_data[0]->invite_user_count : ''}}">
+                                " id="invite_user_count " placeholder="Enter number of contact" required="" value="{{ isset($package_data[0]->invite_user_count) ? $package_data[0]->invite_user_count : ''}}">
                             </div>
                         </div>
                         <div class="form-group row">

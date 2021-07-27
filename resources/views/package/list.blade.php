@@ -29,11 +29,12 @@
 									<tr class="odd">
 								@endif
 											<td>{{ $package->name }}</td>
+                      <td>{{ $package->price }}</td>
 											<td>{{ $package->storage_per_org }}</td>
 											 <td>{{ $package->invite_user_count }}</td>
                        <td>{{ $package->contact_count }}</td>
-                       <td>{{ $package->contact_count }}</td>
-                       <td>{{ $package->third_party_api }}</td>
+
+                       <td>{{ ($package->third_party_api!='null')?$package->third_party_api:'' }}</td>
 
 											<td>
 												<div class="dropdown">

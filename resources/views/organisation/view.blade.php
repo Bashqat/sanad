@@ -148,13 +148,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="currency" class="col-lg-3 col-md-3 col-sm-3 col-form-label">No of Invited User <span style="color:red;">*</span> </label>
+                            <div class="col-lg-9 col-md-9  col-sm-9">
+                                {{ isset($invite_user) ? $invite_user : 0}}
+                            </div>
+                        </div>
 
 
 
 
 
 
-                            
+
+
                 </div>
                         <!-- /.tab-pane -->
                     </div>
