@@ -28,12 +28,12 @@
 						}else {
 							preg_match_all('!\d+!', $actual_link, $matches);
 
-							$org_id=$matches[0][0];
+							//$org_id=$matches[0][0];
 						}
 
 
 						}
-					
+
 
  ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light py-0">
@@ -60,7 +60,7 @@
 																		  No Organisation exist
 																@elseif(!empty($org_list) && Auth::user()->role==1 )
 																				Select
-																@elseif(Auth::user()->role==2 && !empty($org_list) && !preg_match('#[0-9]#',$org_id))
+																@elseif(Auth::user()->role==2 && isset($org_list[0]) && !empty($org_list[0]) && !preg_match('#[0-9]#',$org_id))
 																			{{$org_list[0]->org_name}}
 																@endif
 																@foreach ( $org_list as $list )
