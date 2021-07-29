@@ -38,11 +38,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/organisation/edit/{org_id}', [App\Http\Controllers\OrganizationController::class, 'edit'])->name('org_edit');
     Route::post('/organisation/update', [App\Http\Controllers\OrganizationController::class, 'update'])->name('org_update');
     Route::post('/organisation/delete', [App\Http\Controllers\OrganizationController::class, 'destroy'])->name('org_delete');
-    //contacts
-    // Route::get('organisation/contact/{org_id}', [App\Http\Controllers\ContactController::class,'index'])->name('contact.index');
-    // Route::get('organisation/contact/create/{org_id}', [App\Http\Controllers\ContactController::class,'create'])->name('contact.create');
-    // Route::post('organisation/contact/store/{org_id}', [App\Http\Controllers\ContactController::class,'store'])->name('contact.store');
-    // Route::get('organisation/contact/{org_id}/edit/{contact_id}', [App\Http\Controllers\ContactController::class,'edit'])->name('contact.edit');
+    //organisation contacts
+    Route::get('organisation/{org_id}/contact/', [App\Http\Controllers\ContactController::class,'index'])->name('contact.index');
+    Route::get('organisation/{org_id}/contact/create', [App\Http\Controllers\ContactController::class,'create'])->name('contact.create');
+     Route::post('organisation/{org_id}/contact/store', [App\Http\Controllers\ContactController::class,'store'])->name('contact.store');
+    Route::get('organisation/{org_id}/contact/edit/{contact_id}', [App\Http\Controllers\ContactController::class,'edit'])->name('contact.edit');
+    Route::post('organisation/contact/update', [App\Http\Controllers\ContactController::class,'update'])->name('contact.update');
+    Route::post('organisation/contact/delete', [App\Http\Controllers\ContactController::class,'destroye'])->name('contact.delete');
+
 
     //user Management
     Route::resource('users-management',App\Http\Controllers\UserManagementController::class);
@@ -64,6 +67,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('organisation/{org_id}/smtp',[App\Http\Controllers\OrganizationController::class,'setting'])->name('organisation.setting');
     Route::post('organisation/smtp/update',[App\Http\Controllers\OrganizationController::class,'settingUpdate'])->name('organisation.setting-update');
 
+    //security setting for organisation
+    Route::get('organisation/{org_id}/security',[App\Http\Controllers\OrganizationController::class,'security'])->name('organisation.security');
+    Route::post('organisation/security/update',[App\Http\Controllers\OrganizationController::class,'securityUpdate'])->name('organisation.security.update');
+
     ///Package management
     Route::get('package/list',[App\Http\Controllers\PackageController::class,'list'])->name('package.list');
     Route::get('package/create/{id?}',[App\Http\Controllers\PackageController::class,'create'])->name('package.create');
@@ -77,6 +84,23 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('subscription/user/view/{id}',[App\Http\Controllers\SubscriptionController::class,'subscriptionDetail'])->name('subscription.user.view');
     Route::get('subscription/view/{id}',[App\Http\Controllers\SubscriptionController::class,'view'])->name('subscription.view');
     Route::post('subscription/status',[App\Http\Controllers\SubscriptionController::class,'status'])->name('subscription.status');
+
+    // Third part connected_apps
+    Route::get('organisation/{org_id}/connected-apps',[App\Http\Controllers\ConnectedAppsController::class,'index'])->name('organisation.app');
+    Route::get('organisation/{org_id}/connected-apps/create',[App\Http\Controllers\ConnectedAppsController::class,'create'])->name('organisation.app.create');
+    Route::get('organisation/{org_id}/connected-apps/{id}',[App\Http\Controllers\ConnectedAppsController::class,'create'])->name('organisation.app.edit');
+    Route::post('organisation/connected-apps/store',[App\Http\Controllers\ConnectedAppsController::class,'store'])->name('organisation.app.store');
+    Route::post('organisation/connected-apps/update',[App\Http\Controllers\ConnectedAppsController::class,'update'])->name('organisation.app.update');
+    Route::post('organisation/connected-apps/update-data',[App\Http\Controllers\ConnectedAppsController::class,'updateData'])->name('organisation.app.updatedata');
+    Route::post('organisation/connected-apps/delete',[App\Http\Controllers\ConnectedAppsController::class,'destroy'])->name('organisation.app.delete');
+
+    Route::get('/xero/auth', [\App\Http\Controllers\XeroController::class, 'redirectUserToXero'])->name('xero.auth');
+    Route::get('/xero/auth/callback', [\App\Http\Controllers\XeroController::class, 'handleCallbackFromXero'])->name('xero.auth.callback');
+    Route::get('/xero/options', [\App\Http\Controllers\XeroController::class, 'options'])->name('xero.options');
+    Route::get('/xero/sync-contacts-from-xero', [\App\Http\Controllers\XeroController::class, 'syncContactsFromXero'])->name('xero.synccontactsfromxero');
+    Route::get('/xero/sync-contacts-to-xero', [\App\Http\Controllers\XeroController::class, 'syncContactsToXero'])->name('xero.synccontactstoxero');
+
+    Route::post('/xero/organization-update', [\App\Http\Controllers\XeroController::class, 'updateOrganization'])->name('xero.updateOrganization');
 
 
 

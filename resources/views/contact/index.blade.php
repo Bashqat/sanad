@@ -96,9 +96,12 @@
                                     <div class="dropdown">
                                     <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-v"></i></a>
                                     <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);"><a href="{{ route('contact.edit',[$org_id,$contact->id]) }}" class="dropdown-item">Edit</a>
-                                    <form class="inline-block" action="/contact/1" method="POST" onsubmit="return confirm(`Are you sure?`);">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="C8kQOIRxu5CJMwvLVx7aZZApNzML2DCJz8mrgWqS">
+                                    <form class="inline-block" action="{{route('contact.delete')}}" method="POST" onsubmit="return confirm(`Are you sure?`);">
+
+                                        @csrf
+                                        <input type="hidden" name="org_id" value={{$org_id}}>
+
+                                        <input type="hidden" name="id" value="{{$contact->id}}">
                                         <input type="submit" class="dropdown-item" value="Delete">
                                     </form>
                                 </div>

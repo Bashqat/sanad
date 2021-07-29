@@ -71,7 +71,7 @@ class OrganizationController extends Controller
                 $org_name=$request->input('display_name');
                 // $org_db_name=$request->input('display_name');
                 $inputs = $request->all();
-                
+
                 $inputs['superadmin_id']=Auth::id();
                 $inputs['org_name']=$org_name;
                 //$inputs['org_db_name']=Auth::id();
@@ -208,24 +208,55 @@ class OrganizationController extends Controller
     }
     public function settingUpdate(Request $request)
     {
-      try{
+        try{
 
-        $databaseName=$this->get_db_name($request->org_id);
-        $connection=$this->org_connection($databaseName);
-        $data=Org_setting::get()->toArray();
-        if(empty($data))
-        {
-          Org_setting::create(Arr::except($request->all(), ['_token','org_id']));
-        }
-        else {
-            Org_setting::where('id', $data[0]['id'])->update(Arr::except($request->all(), ['_token','org_id','id']));
+          $databaseName=$this->get_db_name($request->org_id);
+          $connection=$this->org_connection($databaseName);
+          $data=Org_setting::get()->toArray();
+          if(empty($data))
+          {
+            Org_setting::create(Arr::except($request->all(), ['_token','org_id']));
           }
-          return redirect()->back()->with('success','Smtp detail updated successfully');
-        }catch( \Exception $e ){
-            return redirect()->back()->with('error',$e->getMessage());
+          else {
+              Org_setting::where('id', $data[0]['id'])->update(Arr::except($request->all(), ['_token','org_id','id']));
+            }
+            return redirect()->back()->with('success','Smtp detail updated successfully');
+          }catch( \Exception $e ){
+              return redirect()->back()->with('error',$e->getMessage());
 
+          }
         }
-      }
+
+        public function security($org_id)
+        {
+          $org_id=$org_id;
+          $databaseName=$this->get_db_name($org_id);
+          $connection=$this->org_connection($databaseName);
+          $data=Org_setting::select('security_pin')->get();
+
+          return view('organisation/security',['org_id'=>$org_id,'org_data'=>$data]);
+        }
+        public function securityUpdate(Request $request)
+        {
+          try{
+
+            $databaseName=$this->get_db_name($request->org_id);
+            $connection=$this->org_connection($databaseName);
+            $data=Org_setting::get()->toArray();
+            if(empty($data))
+            {
+              Org_setting::create(Arr::except($request->all(), ['_token','org_id','id']));
+            }
+            else {
+                Org_setting::where('id', $data[0]['id'])->update(Arr::except($request->all(), ['_token','org_id','id']));
+              }
+              return redirect()->back()->with('success','Security token updated successfully');
+            }catch( \Exception $e ){
+                return redirect()->back()->with('error',$e->getMessage());
+
+            }
+          }
+
 
 
 }

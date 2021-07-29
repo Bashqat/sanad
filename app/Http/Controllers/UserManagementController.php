@@ -230,7 +230,7 @@ class UserManagementController extends Controller
                 'group_contact_permission'=>$group_contact_permission
             ]);
             $setting=Org_setting::get()->toArray();
-            if(!empty($setting))
+            if(!empty($setting[0]['smtp_email']))
             {
 
               $data=$this->email($request->name,$request->recipientEmail,$link,$request->organization);

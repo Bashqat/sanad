@@ -28,9 +28,9 @@
 						}else {
 							preg_match_all('!\d+!', $actual_link, $matches);
 
-							//$org_id=$matches[0][0];
+							$org_id=$matches[0][0];
 						}
-
+						//echo $org_id;
 
 						}
 
@@ -89,10 +89,10 @@
 																											<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/user-management">User Management</a></li>
 																											<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/smtp">Email Setting</a></li>
 																											<li><a class="dropdown-item" href="#">Contact</a></li>
-																											<li><a class="dropdown-item" href="#">Security</a></li>
+																											<li><a class="dropdown-item" href="/organisation/{{$org_id}}/security">Security</a></li>
 																											<li><a class="dropdown-item" href="#">Account setting</a></li>
 																											<li><a class="dropdown-item" href="#">Template Setting</a></li>
-																											<li><a class="dropdown-item" href="#">App Connection</a></li>
+																											<li><a class="dropdown-item" href="{{route('organisation.app',$org_id)}}">App Connection</a></li>
 																									</ul>
 																							</li>
 
@@ -108,10 +108,10 @@
 																					<li><a class="dropdown-item" href="/organisation/{{ $org_list[0]->id}}/user-management">User Management</a></li>
 																					<li><a class="dropdown-item" href="/organisation/{{ $org_list[0]->id }}/smtp">Email Setting</a></li>
 																					<li><a class="dropdown-item" href="#">Contact</a></li>
-																					<li><a class="dropdown-item" href="#">Security</a></li>
+																					<li><a class="dropdown-item" href="/organisation/{{$org_list[0]->id}}/security">Security</a></li>
 																					<li><a class="dropdown-item" href="#">Account setting</a></li>
 																					<li><a class="dropdown-item" href="#">Template Setting</a></li>
-																					<li><a class="dropdown-item" href="#">App Connection</a></li>
+																					<li><a class="dropdown-item" href="{{route('organisation.app',$org_list[0]->id)}}">App Connection</a></li>
 																			</ul>
 																	</li>
 																@endif

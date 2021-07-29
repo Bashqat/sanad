@@ -14,6 +14,7 @@ class Org_setting extends Model
     'smtp_username',
     'smtp_password',
     'smtp_host',
+    'security_pin',
 
   ];
 }

@@ -23,6 +23,7 @@ class QueryController extends Controller
             $this->user_permission();
             $this->user_has_permissions();
             $this->setting();
+            $this->conneacted_app();
             return $db_name;
         }
     }
@@ -232,11 +233,27 @@ class QueryController extends Controller
           `smtp_username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
           `smtp_password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
           `smtp_host` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+          `security_pin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
           `created_at` timestamp NULL DEFAULT NULL,
           `updated_at` timestamp NULL DEFAULT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
   ";
     DB::connection()->getPdo()->exec($query);
+    }
+    public function conneacted_app()
+    {
+        $query="CREATE TABLE `connected_apps` (
+              `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+              `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+              `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'images/connected_apps/contact-avatar.png',
+              `app_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+              `app_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+              `app_extra_info` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+              `status` enum('connected','disconnected') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'disconnected',
+              `created_at` timestamp NULL DEFAULT NULL,
+              `updated_at` timestamp NULL DEFAULT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+            DB::connection()->getPdo()->exec($query);
     }
 
 }

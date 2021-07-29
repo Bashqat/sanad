@@ -16,12 +16,16 @@
 					<div class="tab-content contact-create-sec">
 						<div class="tab-pane active" id="settings">
 
-							<form class="form-horizontal" method="POST" action="{{ route('contact.store',[$org_id]) }}" enctype="multipart/form-data">
+							<form class="form-horizontal" method="POST" action="{{ (isset($contact) && !empty($contact[0])) ? route('contact.update'):route('contact.store',[$org_id]) }}" enctype="multipart/form-data">
 								@csrf
+								@if(isset($contact) && !empty($contact[0]))
+								<input type="hidden" name="id" value="{{$contact[0]->id}}">
+								<input type="hidden" name="org_id" value="{{$org_id}}">
+								@endif
 								<div class="form-group row">
 									<label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Contact name in English <span style="color:red;">*</span> </label>
 									<div class="col-lg-9 col-md-9 col-sm-8">
-										<input type="text" name="contact[name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" Enter Contact Name" required="" value="{{ old('contacts.name', '') }}">
+										<input type="text" name="contact[name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" Enter Contact Name" required="" value="{{ (isset($contact[0]->name))?$contact[0]->name:'' }}">
 										@error('contacts.name')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
@@ -32,7 +36,7 @@
 								<div class="form-group row">
 									<label for="name_arabic" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Contact  name in other language </label>
 									<div class="col-lg-9 col-md-9 col-sm-8">
-										<input type="text" name="contact[name_arabic]" class="form-control" placeholder=" Enter Contact Name" value="{{ old('contacts.name_arabic', '') }}">
+										<input type="text" name="contact[name_arabic]" class="form-control" placeholder=" Enter Contact Name" value="{{ (isset($contact[0]->name_arabic))?$contact[0]->name_arabic:'' }}">
 										@error('name_arabic')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
@@ -43,7 +47,7 @@
 								<div class="form-group row">
 									<label for="account_no" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Account no# </label>
 									<div class="col-lg-9 col-md-9 col-sm-8">
-										<input type="text" name="contact[account_no]" class="form-control @error('contacts.account_no') is-invalid @enderror" placeholder="Enter Account no#" value="{{ old('contacts.account_no', '') }}">
+										<input type="text" name="contact[account_no]" class="form-control @error('contacts.account_no') is-invalid @enderror" placeholder="Enter Account no#" value="{{ (isset($contact[0]->account_no))?$contact[0]->account_no:'' }}">
 										@error('contacts.account_no')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
@@ -68,7 +72,7 @@
 								<div class="form-group row">
 									<label for="business_registration_number" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Business registration number </label>
 									<div class="col-lg-9 col-md-9 col-sm-8">
-										<input type="text" name="contact[business_registration_number]" class="form-control" placeholder="Enter Business registration number" value="{{ old('contacts.business_registration_number', '') }}">
+										<input type="text" name="contact[business_registration_number]" class="form-control" placeholder="Enter Business registration number" value="{{ (isset($contact[0]->business_registration_number))?$contact[0]->business_registration_number:'' }}">
 										@error('business_registration_number')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
@@ -79,7 +83,7 @@
 								<div class="form-group row">
 									<label for="tax_registration_number" class="col-lg-3 col-md-3 col-sm-4 col-form-label">TAX registration number </label>
 									<div class="col-lg-9 col-md-9 col-sm-8">
-										<input type="text" name="contact[tax_registration_number]" class="form-control" placeholder="Enter TAX registration number" value="{{ old('contacts.tax_registration_number', '') }}">
+										<input type="text" name="contact[tax_registration_number]" class="form-control" placeholder="Enter TAX registration number" value="{{ (isset($contact[0]->tax_registration_number))?$contact[0]->tax_registration_number:'' }}">
 										@error('tax_registration_number')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
@@ -90,7 +94,7 @@
 								<div class="form-group row">
 									<label for="location" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Location GPS,google maps </label>
 									<div class="col-lg-9 col-md-9 col-sm-8">
-										<input type="text" name="contact[location]" class="form-control" placeholder="Enter Location GPS" value="">
+										<input type="text" name="contact[location]" class="form-control" placeholder="Enter Location GPS" value="{{ (isset($contact[0]->location))?$contact[0]->location:'' }}">
 										@error('location')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
@@ -101,31 +105,37 @@
 								<div class="form-group row contact-row">
 									<label for="phone" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Phone </label>
 									<div class="d-flex contact-inputs col-lg-9 col-md-9 col-sm-8">
-										<input type="text" name="contact[phone][country_code]" class="form-control " placeholder="Country Code" value="{{ old('contacts.phone.country_code', '') }}">
-										<input type="text" name="contact[phone][area]" class="form-control " placeholder="Area" value="{{ old('contacts.phone.area', '') }}">
-										<input type="tel" name="contact[phone][number]" class="form-control " placeholder="Number" value="{{ old('contacts.phone.number', '') }}">
+										<input type="text" name="contact[phone][country_code]" class="form-control " placeholder="Country Code" value="{{ (isset($contact[0]->phone['country_code']))?$contact[0]->phone['country_code']:'' }}">
+										<input type="text" name="contact[phone][area]" class="form-control " placeholder="Area" value="{{ (isset($contact[0]->phone['area']))?$contact[0]->phone['area']:'' }}">
+										<input type="tel" name="contact[phone][number]" class="form-control " placeholder="Number" value="{{ (isset($contact[0]->phone['number']))?$contact[0]->phone['number']:'' }}">
 									</div>
 								</div>
+								<?php
+								//echo '<pre>';
+
+								//$phone=json_decode($contact[0]->phone);
+								//print_r($phone);
+								?>
 								<div class="form-group row contact-row">
 									<label for="fax" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Fax </label>
 									<div class="d-flex  contact-inputs col-lg-9 col-md-9 col-sm-8">
-										<input type="text" name="contact[fax][country_code]" class="form-control " placeholder="Country Code" value="{{ old('contacts.fax.country_code', '') }}">
-										<input type="text" name="contact[fax][area]" class="form-control " placeholder="Area" value="{{ old('contacts.fax.area', '') }}">
-										<input type="tel" name="contact[fax][number]" class="form-control " placeholder="Number" value="{{ old('contacts.fax.number', '') }}">
+										<input type="text" name="contact[fax][country_code]" class="form-control " placeholder="Country Code" value="{{ (isset($contact[0]->fax['country_code']))?$contact[0]->phone['country_code']:'' }}">
+										<input type="text" name="contact[fax][area]" class="form-control " placeholder="Area" value="{{ (isset($contact[0]->fax['area']))?$contact[0]->phone['area']:'' }}">
+										<input type="tel" name="contact[fax][number]" class="form-control " placeholder="Number" value="{{ (isset($contact[0]->fax['number']))?$contact[0]->phone['number']:'' }}">
 									</div>
 								</div>
 								<div class="form-group row contact-row">
 									<label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile </label>
 									<div class="d-flex  contact-inputs col-lg-9 col-md-9 col-sm-8">
-										<input type="text" name="contact[mobile][country_code]" class="form-control " placeholder="Country Code" value="{{ old('contacts.mobile.country_code', '') }}">
-										<input type="text" name="contact[mobile][area]" class="form-control " placeholder="Area" value="{{ old('contacts.mobile.area', '') }}">
-										<input type="tel" name="contact[mobile][number]" class="form-control " placeholder="Number" value="{{ old('contacts.mobile.number', '') }}">
+										<input type="text" name="contact[mobile][country_code]" class="form-control " placeholder="Country Code" value="{{ (isset($contact[0]->mobile['country_code']))?$contact[0]->mobile['country_code']:'' }}">
+										<input type="text" name="contact[mobile][area]" class="form-control " placeholder="Area" value="{{ (isset($contact[0]->mobile['area']))?$contact[0]->mobile['area']:'' }}">
+										<input type="tel" name="contact[mobile][number]" class="form-control " placeholder="Number" value="{{ (isset($contact[0]->mobile['number']))?$contact[0]->mobile['number']:'' }}">
 									</div>
 								</div>
 								<div class="form-group row">
 									<label for="website" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Website </label>
 									<div class="col-lg-9 col-md-9 col-sm-8">
-										<input type="url" name="contact[website]" class="form-control" placeholder="Enter Website" value="http://">
+										<input type="url" name="contact[website]" class="form-control" placeholder="Enter Website" value="{{ (isset($contact[0]->website))?$contact[0]->website:'' }}">
 										@error('website')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
@@ -136,7 +146,7 @@
 								<div class="form-group row">
 									<label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
 									<div class="col-lg-9 col-md-9 col-sm-8">
-										<input type="email" name="contact[email]" class="form-control" placeholder="Example@example.com" value="{{ old('contacts.email', '') }}">
+										<input type="email" name="contact[email]" class="form-control" placeholder="Example@example.com" value="{{ (isset($contact[0]->email))?$contact[0]->email:'' }}">
 										@error('email')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
@@ -147,7 +157,7 @@
 								<div class="form-group row">
 									<label for="user_defined" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Addition field user defined </label>
 									<div class="col-lg-9 col-md-9 col-sm-8">
-										<input type="text" name="contact[user_defined]" class="form-control" placeholder="Enter Addition filed user defined" value="{{ old('contacts.user_defined', '') }}">
+										<input type="text" name="contact[user_defined]" class="form-control" placeholder="Enter Addition filed user defined" value="{{ (isset($contact[0]->user_defined))?$contact[0]->user_defined:'' }}">
 									</div>
 								</div>
 								<div class="form-group row">
@@ -168,9 +178,10 @@
 									<label for="notes" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Dashboard Notes </label>
 									<div class="col-lg-9 col-md-9 col-sm-8">
 										<input type="text" name="contact[notes]" class="form-control
-                                                " placeholder="Enter Dashboard Notes" value="">
+                                                " placeholder="Enter Dashboard Notes" value="{{ (isset($contact[0]->notes))?$contact[0]->notes:'' }}">
 									</div>
 								</div>
+								<input type="hidden" value="{{ json_encode($countries) }}" id="countryList">
 								<!--  Address start -->
 								<div class="form-group row address-contact-row">
 									<label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Address</label>

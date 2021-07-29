@@ -148,6 +148,7 @@ $(document).ready(function(){
 		var count = parseInt($(this).attr('data-count')) + 1;
 		$(this).attr('data-count', count);
 		var countryList = JSON.parse($('#countryList').val());
+
 		var form = `
         <div class="form-group row address-contact-row" id="address${count}">
             <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Address ( ${count+1} )
