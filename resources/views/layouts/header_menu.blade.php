@@ -107,7 +107,7 @@
 																			<ul class="dropdown-menu header-submenu">
 																					<li><a class="dropdown-item" href="/organisation/{{ $org_list[0]->id}}/user-management">User Management</a></li>
 																					<li><a class="dropdown-item" href="/organisation/{{ $org_list[0]->id }}/smtp">Email Setting</a></li>
-																					<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/contact">Contact</a></li>
+																					<li><a class="dropdown-item" href="/organisation/{{ $org_list[0]->id }}/contact">Contact</a></li>
 																					<li><a class="dropdown-item" href="/organisation/{{$org_list[0]->id}}/security">Security</a></li>
 																					<li><a class="dropdown-item" href="#">Account setting</a></li>
 																					<li><a class="dropdown-item" href="#">Template Setting</a></li>
