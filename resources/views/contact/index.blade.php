@@ -2,7 +2,7 @@
 <title>Contacts</title>
 @section('content')
 
-
+@include('contact.add-tag-modal')
 <div class="contact-page-new mb-1">
     <div class="container-fluid">
         <div class="row">
@@ -16,34 +16,34 @@
             </div>
             <div class="col-lg-10 col-md-9 col-sm-12 common-table-scroll contact-filters">
                 <div class="inner-new-contact border bg-white">
-                    <div class="card-header">
-                        <h3 class="card-title"> All Contacts</h3>
-                        <div class="btn-group float-right mr-2">
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-list mr-1 p-1"></i>View</button>
-                                <div class="dropdown-menu" aria-labelledby="custom-menu">
-                                    <a class="dropdown-item" href="#">Check columns list view</a>
-                                </div>
-                            </div>
-                            <!-- <div class="input-group-prepend">
-                                <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>
-                                    Options
-                                </button>
+                  <div class="card-header">
+                      <h3 class="card-title"> All Contacts</h3>
+                      <div class="btn-group float-right mr-2">
+                          <div class="dropdown">
+                              <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <i class="fa fa-list mr-1 p-1"></i>View</button>
+                              <div class="dropdown-menu" aria-labelledby="custom-menu">
+                                  <a class="dropdown-item" href="#">Check columns list view</a>
+                              </div>
+                          </div>
+                          <div class="input-group-prepend">
+                              <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>
+                                  Options
+                              </button>
 
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item option" href="javascript:void(0);" data-type="group" data-id="contacts_table">Add to group</a>
-                                    <a class="dropdown-item option" href="javascript:void(0);" data-type="tag" data-id="contacts_table">Add Tag</a>
-                                    <a class="dropdown-item option" href="/contact-merge" data-type="merge" data-id="contacts_table">Merge</a>
-                                    <a class="dropdown-item option" href="/contact-archive" data-type="archive" data-id="contacts_table">Archive</a>
-                                    <form action="" method="GET">
-                                        <button type="submit" class="dropdown-item" href="/export-contacts" data-id="contacts_table">Export CSV</button>
-                                    </form>
-                                </div>
-                                <span class="contact-filter d-flex align-items-center"><i class="fa fa-filter mr-1" aria-hidden="true"></i>Filter</span>
-                            </div> -->
-                        </div>
-                    </div>
+                              <div class="dropdown-menu">
+                                  <a class="dropdown-item option" href="javascript:void(0);" data-type="group" data-id="contacts_table">Add to group</a>
+                                  <a class="dropdown-item option" href="javascript:void(0);" data-type="tag" data-id="contacts_table">Add Tag</a>
+                                  <a class="dropdown-item option" href="/contact-merge" data-type="merge" data-id="contacts_table">Merge</a>
+                                  <a class="dropdown-item option" href="/organisation/{{$org_id}}/contact-archive" data-type="archive" data-id="contacts_table">Archive</a>
+                                  <form action="{{ route('export.contacts', [$org_id,'all','']) }}" method="GET">
+                                      <button type="submit" class="dropdown-item" href="/export-contacts" data-id="contacts_table">Export CSV</button>
+                                  </form>
+                              </div>
+                              <span class="contact-filter d-flex align-items-center"><i class="fa fa-filter mr-1" aria-hidden="true"></i>Filter</span>
+                          </div>
+                      </div>
+                  </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="contacts_table" class="table table-bordered table-striped">
@@ -55,7 +55,7 @@
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th></th>
-                                    <!-- <th>Tags</th> -->
+                                    <th>Tags</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -63,7 +63,7 @@
                                 @if(isset($contacts))
                                 @foreach($contacts as $contact)
                                 <tr class="odd">
-                                    <td class="sorting_1"><input type="checkbox" class="row-select" value="1"></td>
+                                    <td class="sorting_1"><input type="checkbox" class="row-select" value="{{$contact->id}}"></td>
                                     <td>
                                         <a href="contact/{{$contact->id}}">
                                             <div>
@@ -91,7 +91,17 @@
                                             <i class="far fa-file-alt"></i>1
                                         </button>
                                     </td> -->
-                                    <td></td>
+                                    <td>
+
+                                  </td>
+                                    <td>
+                                      <?php if(!empty($contact->tags)){
+                                        $contact->tags = array_reverse($contact->tags);
+                                        foreach ($contact->tags as $key => $tag) {
+                                            echo '<button class = "btn contact-tag-btn">'.$tag.'</button>';
+                                        }
+                                    }?>
+                                    </td>
                             <td>
                                     <div class="dropdown">
                                     <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-v"></i></a>
@@ -152,5 +162,5 @@
 
 @endsection
 @push('scripts')
-    <script src="{{ url('js/contact.js') }}" defer></script>
+<script src="{{ url('js/contact.js') }}" defer></script>
 @endpush

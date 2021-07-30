@@ -58,6 +58,11 @@
 								<div class="form-group row">
 									<label for="logo" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Logo </label>
 									<div class="col-lg-9 col-md-9 col-sm-8 input-group">
+										@if(isset($contact[0]->logo) && $contact[0]->logo!="")
+											<div class="thumb_img">
+                      		<img src="{{ url('/') }}/{{ isset($contact[0]->logo)?$contact[0]->logo:'' }}" class="img-thumbnail" placeholder="Image not found">
+                      </div>
+											@endif
 										<div class="custom-file">
 											<input type="file" name="contact[logo]" class="form-control custom-file-input" accept="image/*">
 											<label class="custom-file-label" for="logoFile">Choose file</label>
@@ -163,6 +168,34 @@
 								<div class="form-group row">
 									<label for="attachment" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Attachment </label>
 									<div class="col-lg-9 col-md-9 col-sm-8 input-group">
+									@if (!empty($contact[0]->attachment))
+																					@foreach ($contact[0]->attachment as $attachment )
+																							@switch( pathinfo($attachment, PATHINFO_EXTENSION) )
+																									@case('pdf')
+																											<a href="/{{ $attachment }}" target='_blank' class='attachment-link'><i class='far fa-file-pdf fa-3x'></i></a>
+																									@break
+																									@case('jpg')
+																									@case('jpeg')
+																									@case('png')
+																									@case('gif')
+																											<a href="/{{ $attachment }}" target="_blank" class="attachment-link">
+																													<img src="/{{$attachment}}" class="img-thumbnail" width="50" height="50">
+																											</a>
+																									@break
+																									@case('word')
+																											<a href="/{{$attachment}}" target="_blank" class="attachment-link"><i class="far fa-file-word fa-3x"></i></a>
+																									@break
+																									@default
+																											<a href="/{{ $attachment }}" target="_blank" class="attachment-link"><i class="far fa-file-pdf fa-3x"></i></a>
+																									@break
+
+																							@endswitch
+																							{{-- <div class="thumb_img">
+																									<img src="{{ url('/') }}/{{ $attachment }}" class="img-thumbnail">
+																							</div> --}}
+																					@endforeach
+																			@endif
+
 										<div class="custom-file">
 											<input type="file" name="contact[attachment][]" class="form-control custom-file-input" id="attachment" accept="image/*, .pdf, .doc" multiple>
 											<label class="custom-file-label" for="attachment">Choose file</label>
@@ -183,15 +216,17 @@
 								</div>
 								<input type="hidden" value="{{ json_encode($countries) }}" id="countryList">
 								<!--  Address start -->
+
 								<div class="form-group row address-contact-row">
 									<label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Address</label>
+
 									<div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-										<input type="text" name="contact[address][0][name]" class="form-control" placeholder="Address Name (e.g Head Office, Postal...etc)" value="">
-										<input type="text" name="contact[address][0][address_line_1]" class="form-control" placeholder="Address Line 1">
-										<input type="text" name="contact[address][0][address_line_2]" class="form-control" placeholder="Address Line 2">
+										<input type="text" name="contact[address][0][name]" class="form-control" placeholder="Address Name (e.g Head Office, Postal...etc)" value="{{ (isset($contact[0]->address[0]['name']))?$contact[0]->address[0]['name']:'' }}">
+										<input type="text" name="contact[address][0][address_line_1]" class="form-control" placeholder="Address Line 1" value="{{ (isset($contact[0]->address[0]['address_line_1']))?$contact[0]->address[0]['address_line_1']:'' }}">
+										<input type="text" name="contact[address][0][address_line_2]" class="form-control" placeholder="Address Line 2" value="{{ (isset($contact[0]->address[0]['address_line_2']))?$contact[0]->address[0]['address_line_2']:'' }}" >
 										<div class="address-city-post-code">
-											<input type="text" name="contact[address][0][city]" class="form-control" placeholder="City">
-											<input type="text" name="contact[address][0][post_code]" class="form-control" placeholder="Post Code">
+											<input type="text" name="contact[address][0][city]" class="form-control" placeholder="City" value="{{ (isset($contact[0]->address[0]['city']))?$contact[0]->address[0]['city']:'' }}">
+											<input type="text" name="contact[address][0][post_code]" class="form-control" placeholder="Post Code" value="{{ (isset($contact[0]->address[0]['post_code']))?$contact[0]->address[0]['post_code']:'' }}">
 										</div>
 										<select name="contact[address][0][country]" class="form-control select2 select-input-field" id="countrySelect">
 											<option class="mmmm" value="">Select Country</option>

@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+  $('#contacts_table').DataTable();
     var siteurl = window.location.origin;
 
 	$(document).on('click', '.mobile-clone', function () {
@@ -620,6 +622,7 @@ $(document).ready(function(){
 
     // Table Action performer
     $('.option').click(function(e){
+      
         e.preventDefault();
         var id = $(this).data('id');
         var action = $(this).data('type');

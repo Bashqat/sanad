@@ -102,7 +102,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/xero/organization-update', [\App\Http\Controllers\XeroController::class, 'updateOrganization'])->name('xero.updateOrganization');
 
-
+    // Contact Export Route
+        Route::get('organisation/{org_id}/export-contacts/{type}/{id?}',[App\Http\Controllers\ContactController::class,'exportContacts'])->name('export.contacts');
+        Route::post('/tag-contact',[App\Http\Controllers\ContactController::class,'tagContact'])->name('tag-contact');
+        Route::post('organisation/{org_id}/contact-archive',[App\Http\Controllers\ContactController::class,'contactToArchive'])->name('contactArchive');
+        // Route::get('contacts-import-option',[App\Http\Controllers\ContactController::class,'importContactsOption'])->name('export.contacts.option');
+        // Route::post('import-contacts',[App\Http\Controllers\ContactController::class,'importContacts'])->name('import.contacts');
 
 });
 

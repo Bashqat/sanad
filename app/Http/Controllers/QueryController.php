@@ -24,6 +24,7 @@ class QueryController extends Controller
             $this->user_has_permissions();
             $this->setting();
             $this->conneacted_app();
+            $this->contact_activity();
             return $db_name;
         }
     }
@@ -254,6 +255,21 @@ class QueryController extends Controller
               `updated_at` timestamp NULL DEFAULT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
             DB::connection()->getPdo()->exec($query);
+    }
+    public function contact_activity()
+    {
+      $query="CREATE TABLE `contact_activities` (
+        `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `contact_id` bigint(20) UNSIGNED NOT NULL,
+        `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'publish',
+        `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `description` longtext COLLATE utf8mb4_unicode_ci,
+        `activity_by` bigint(20) UNSIGNED NOT NULL,
+        `created_at` timestamp NULL DEFAULT NULL,
+        `updated_at` timestamp NULL DEFAULT NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      DB::connection()->getPdo()->exec($query);
+
     }
 
 }

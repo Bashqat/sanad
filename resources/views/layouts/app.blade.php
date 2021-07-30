@@ -173,6 +173,8 @@
 <script src="{{ url('js/custom.js') }}" defer></script>
 <script src="{{ url('js/chosen/chosen.jquery.js') }}" ></script>
 <script src="{{ url('js/chosen/init.js') }}" ></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
 @yield('third_party_scripts')
 
 @stack('scripts')

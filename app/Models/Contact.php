@@ -40,4 +40,12 @@ class Contact extends Model
         'attachment' => 'array',
         'tags' => 'array',
     ];
+    public function contact_information()
+    {
+      return $this->hasMany(ContactInformation::class, 'contact_id', 'id');
+    }
+    public function website_information()
+    {
+      return $this->hasMany(Websiteinformation::class, 'contact_id', 'id');
+    }
 }
