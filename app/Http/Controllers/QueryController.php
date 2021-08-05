@@ -25,6 +25,7 @@ class QueryController extends Controller
             $this->setting();
             $this->conneacted_app();
             $this->contact_activity();
+            $this->group();
             return $db_name;
         }
     }
@@ -267,9 +268,22 @@ class QueryController extends Controller
         `activity_by` bigint(20) UNSIGNED NOT NULL,
         `created_at` timestamp NULL DEFAULT NULL,
         `updated_at` timestamp NULL DEFAULT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
       DB::connection()->getPdo()->exec($query);
 
+    }
+    public function group()
+    {
+      $query="CREATE TABLE `groups` (
+            `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+              `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+              `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+              `parent` bigint(20) UNSIGNED DEFAULT NULL,
+              `created_at` timestamp NULL DEFAULT NULL,
+              `updated_at` timestamp NULL DEFAULT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            ";
+          DB::connection()->getPdo()->exec($query);
     }
 
 }

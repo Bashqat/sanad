@@ -177,6 +177,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Monarobase\CountryList\CountryListServiceProvider::class,
         Jackiedo\Timezonelist\TimezonelistServiceProvider::class,
+         Yajra\DataTables\DataTablesServiceProvider::class,
 
     ],
 
@@ -232,7 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Countries' => Monarobase\CountryList\CountryListFacade::class,
-        
+
 
     ],
 

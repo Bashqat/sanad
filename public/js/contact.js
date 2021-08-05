@@ -1,6 +1,58 @@
 $(document).ready(function(){
 
-  $('#contacts_table').DataTable();
+  var org_id=$('.org_id').val();
+  var table=$('#contacts_table').DataTable({
+   //"scrollX": true,
+   //"pagingType": "numbers",
+       "processing": true,
+       "serverSide": true,
+       "ajax": '/organisation/'+org_id+'/contact/server-side',
+
+   } );
+   $('#contacts_archive_table').DataTable({
+    //"scrollX": true,
+    //"pagingType": "numbers",
+          "processing": true,
+            "serverSide": true,
+            "searching": true,
+            "ajax": '/organisation/'+org_id+'/contact/archive/server-side',
+
+
+    } );
+   $('a.toggle-vis').on( 'click', function (e) {
+        e.preventDefault();
+
+        // Get the column API object
+        var column = table.column( $(this).attr('data-column') );
+
+        // Toggle the visibility
+        column.visible( ! column.visible() );
+    } );
+    $(document).on('click', '.filter', function () {
+      var filter_value=[];
+      $('.filter').each(function(){
+        if($(this).prop("checked") == true)
+         {
+           filter_value.push($(this).val());
+         }
+       })
+         $('#contacts_table').DataTable({
+          //"scrollX": true,
+          //"pagingType": "numbers",
+                data: {
+                  "filter_value": filter_value,
+
+                },
+                  "processing": true,
+                  "serverSide": true,
+                  "searching": true,
+                  "ajax": '/organisation/'+org_id+'/contact/server-side',
+
+
+          } );
+
+    })
+
     var siteurl = window.location.origin;
 
 	$(document).on('click', '.mobile-clone', function () {
@@ -622,7 +674,7 @@ $(document).ready(function(){
 
     // Table Action performer
     $('.option').click(function(e){
-      
+
         e.preventDefault();
         var id = $(this).data('id');
         var action = $(this).data('type');
@@ -658,6 +710,7 @@ $(document).ready(function(){
                     success: function(response){
                         $('#modal-div').html(response);
                         $('#contact-merge-modal').modal('show');
+                        $('#merge-selected-row').val(rows);
                     }
                 });
                 break;
@@ -802,6 +855,7 @@ $(document).ready(function(){
                         }else{
                             $('#modal-div').html(response);
                             $('#contact-merge-modal').modal('show');
+
                         }
                     }
                 });
@@ -1063,12 +1117,13 @@ $(document).ready(function(){
     });
 
     // Group list DataTable
+    var org_id=$('.org_id').val();
 	window.group_list = $('table#group_list_table').DataTable({
 		processing: true,
 		serverSide: false,
 		aaSorting: [[0, 'ASC']],
 		"ajax": {
-			url: "/group",
+			url: '/organisation/'+org_id+'/group',
             data: function (d) {
 				d.type = $(".group-filter.active").attr('data-value');
 			}
@@ -1132,4 +1187,27 @@ $(document).ready(function(){
         $(this).addClass('active');
         notes.ajax.reload();
     });
+      $(document).on('click','.filter', function(e){
+
+        table.search(this.value).draw();
+          // var filter_value=[];
+          // $('.filter').each(function(){
+          //     if($(this).prop("checked") == true)
+          //     {
+          //       filter_value.push($(this).val());
+          //     }
+          //
+          //
+          // });
+          //
+          // var org_id=$('.org_id').val();
+          // $.ajax({
+          //     type: "get",
+          //     url: '/organisation/'+org_id+'/contact/',
+          //     data: {'filter_value':filter_value},
+          //     success: function(response){
+          //
+          //     }
+          // });
+      })
 });

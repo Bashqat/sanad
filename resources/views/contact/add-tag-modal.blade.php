@@ -15,7 +15,7 @@
                    <input type="text" name="tag" class="form-control" id="tag-name" >
                 </div>
              </div>
-             <input type="hidden" name="org_id" value="{{$org_id}}">
+             <input type="hidden" name="org_id" class="org_id" value="{{$org_id}}">
              <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save</button>

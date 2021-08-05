@@ -16,7 +16,9 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "monarobase/country-list": "^3.2",
-        "phpmailer/phpmailer": "^6.5"
+        "phpmailer/phpmailer": "^6.5",
+        "yajra/laravel-datatables-buttons": "^4.0",
+        "yajra/laravel-datatables-oracle": "^9.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

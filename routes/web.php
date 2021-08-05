@@ -40,11 +40,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/organisation/delete', [App\Http\Controllers\OrganizationController::class, 'destroy'])->name('org_delete');
     //organisation contacts
     Route::get('organisation/{org_id}/contact/', [App\Http\Controllers\ContactController::class,'index'])->name('contact.index');
+    Route::get('organisation/{org_id}/contact/server-side', [App\Http\Controllers\ContactController::class,'serverSide'])->name('contact.index.serverside');
+    Route::get('organisation/{org_id}/contact/archive/server-side', [App\Http\Controllers\ContactController::class,'archiveserverSide'])->name('contact.archive.serverside');
     Route::get('organisation/{org_id}/contact/create', [App\Http\Controllers\ContactController::class,'create'])->name('contact.create');
      Route::post('organisation/{org_id}/contact/store', [App\Http\Controllers\ContactController::class,'store'])->name('contact.store');
     Route::get('organisation/{org_id}/contact/edit/{contact_id}', [App\Http\Controllers\ContactController::class,'edit'])->name('contact.edit');
     Route::post('organisation/contact/update', [App\Http\Controllers\ContactController::class,'update'])->name('contact.update');
     Route::post('organisation/contact/delete', [App\Http\Controllers\ContactController::class,'destroye'])->name('contact.delete');
+    Route::get('organisation/{org_id}/contact/archive', [App\Http\Controllers\ContactController::class,'archive'])->name('contact.archive');
 
 
     //user Management
@@ -106,8 +109,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('organisation/{org_id}/export-contacts/{type}/{id?}',[App\Http\Controllers\ContactController::class,'exportContacts'])->name('export.contacts');
         Route::post('/tag-contact',[App\Http\Controllers\ContactController::class,'tagContact'])->name('tag-contact');
         Route::post('organisation/{org_id}/contact-archive',[App\Http\Controllers\ContactController::class,'contactToArchive'])->name('contactArchive');
+        Route::post('organisation/{org_id}/contact-merge',[App\Http\Controllers\ContactController::class,'contactToMerge'])->name('contactToMerge');
+        Route::post('organisation/contact/restore',[App\Http\Controllers\ContactController::class,'contactToRestore'])->name('contact.restore');
+
         // Route::get('contacts-import-option',[App\Http\Controllers\ContactController::class,'importContactsOption'])->name('export.contacts.option');
         // Route::post('import-contacts',[App\Http\Controllers\ContactController::class,'importContacts'])->name('import.contacts');
+
+        //Group for perticular
+
+        Route::get('organisation/{org_id}/group',[App\Http\Controllers\GroupController::class,'index'])->name('organisation.group');
+        Route::post('organisation/group/create',[App\Http\Controllers\GroupController::class,'store'])->name('organisation.group.create');
+        Route::get('organisation/{org_id}/group/edit/{id}',[App\Http\Controllers\GroupController::class,'edit'])->name('organisation.group.edit');
+        Route::post('organisation/group/deleted',[App\Http\Controllers\GroupController::class,'delete'])->name('organisation.group.destroy');
 
 });
 

@@ -11,6 +11,8 @@ use App\Models\Websiteinformation;
 use App\Models\contact_activity;
 use Auth;
 use Illuminate\Support\Arr;
+use Yajra\DataTables\Facades\DataTables;
+use App\Models\Group;
 
 
 class ContactController extends Controller
@@ -21,14 +23,167 @@ class ContactController extends Controller
         // $obj=new OrganizationController();
         // $this->databaseName=$obj->org_connection($org_db_name);
     }
-    public function index($org_id)
+    public function index(Request $request,$org_id)
     {
-        $obj=new OrganizationController();
-        $databaseName=$obj->get_db_name($org_id);
-        $db_connection=$obj->org_connection($databaseName);
-        $contacts=Contact::where('type','!=','archive')->get();
-        return view('contact.index',['org_id'=>$org_id,'contacts'=>$contacts]);
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $contacts=Contact::select('name','email','phone',)->where('type','!=','archive')->get();
+      $groups=Group::get();
+      // if(request()->ajax()){
+      //   $filter=$request->filter_value;
+      //   $contacts=Contact::where('type','!=','archive')->orderBy('tags', 'DESC')->get();
+      //   return view('contact.filter',['org_id'=>$org_id,'contacts'=>$contacts]);
+      // }
+      //return json_encode($contacts);
+       return view('contact.index',['org_id'=>$org_id,'contacts'=>$contacts,'groups'=>$groups]);
     }
+    public function serverSide(Request $request,$org_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+
+      $contacts=Contact::where('type','!=','archive');
+      if(request()->ajax()){
+        $search=$request->search['value'];
+        if($search=="country")
+        {
+          $contacts=$contacts->orderBy('address', 'ASC');
+        }
+        else if($search!="") {
+          $contacts=$contacts->where('name', 'like', '%' . $search . '%')
+             ->orWhere('website', 'like', '%' . $search. '%');
+        }
+
+
+      }
+      $contacts=$contacts->get();
+      $totalData=$contacts->count();
+      $totalFiltered = $totalData;
+
+
+          $data=[];
+      foreach($contacts as $key=>$contact)
+      {
+        $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
+        $data[$key][]=$contact->name;
+        $data[$key][]=$contact->website;
+        $data[$key][]=$contact->email;
+        $phone='';
+        $token = csrf_token();
+
+        if(!empty($contact->phone))
+        {
+          foreach($contact->phone as $phone)
+          {
+            $phone=$phone;
+          }
+        }
+        $edit_path=route('contact.edit',[$org_id,$contact->id]);
+        $delete_path=route('contact.delete');
+        $data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
+        $data[$key][]='<div class="dropdown">
+                  <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-v"></i></a>
+                  <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);"><a href="'.$edit_path.'" class="dropdown-item">Edit</a>
+                  <form class="inline-block" action="'.$delete_path.'" method="POST" onsubmit="return confirm(`Are you sure?`);">
+
+                      <input type="hidden" name="org_id" value="'.$org_id.'">
+
+                      <input type="hidden" name="id" value="'.$contact->id.'">
+                      <input type="hidden" name="_token" value="'.$token.'">
+                      <input type="submit" class="dropdown-item" value="Delete">
+                  </form>
+              </div>
+            </div>';
+      }
+
+
+          //$tabledata[]=$data;
+          $json_data = [
+                    "draw"            => intval($request->input('draw')),
+                    "recordsTotal"    => intval($totalData),
+                    "recordsFiltered" => intval($totalFiltered),
+                    "data"            => $data
+                  ];
+          echo  json_encode($json_data);
+
+
+
+
+
+    }
+    public function archiveserverSide(Request $request,$org_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+
+      $contacts=Contact::where('type','=','archive');
+      if(request()->ajax()){
+        $search=$request->search['value'];
+        if($search=="country")
+        {
+          $contacts=$contacts->orderBy('address', 'ASC');
+        }
+        else if($search!="") {
+          $contacts=$contacts->where('name', 'like', '%' . $search . '%')
+             ->orWhere('website', 'like', '%' . $search. '%');
+        }
+
+
+      }
+      $contacts=$contacts->get();
+      $totalData=$contacts->count();
+      $totalFiltered = $totalData;
+
+
+          $data=[];
+      foreach($contacts as $key=>$contact)
+      {
+        $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
+        $data[$key][]=$contact->name;
+        $data[$key][]=$contact->website;
+        $data[$key][]=$contact->email;
+        $phone='';
+        $token = csrf_token();
+
+        if(!empty($contact->phone))
+        {
+          foreach($contact->phone as $phone)
+          {
+            $phone=$phone;
+          }
+        }
+
+        $restore_path=route('contact.restore');
+        $data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
+        $data[$key][]='<div class="dropdown">
+                  <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-v"></i></a>
+                  <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);">
+                  <form class="inline-block" action="'.$restore_path.'" method="POST" onsubmit="return confirm(`Are you want to restore?`);">
+
+                      <input type="hidden" name="org_id" value="'.$org_id.'">
+
+                      <input type="hidden" name="id" value="'.$contact->id.'">
+                      <input type="hidden" name="_token" value="'.$token.'">
+                      <input type="submit" class="dropdown-item" value="Restore">
+                  </form>
+              </div>
+            </div>';
+      }
+
+
+          //$tabledata[]=$data;
+          $json_data = [
+                    "draw"            => intval($request->input('draw')),
+                    "recordsTotal"    => intval($totalData),
+                    "recordsFiltered" => intval($totalFiltered),
+                    "data"            => $data
+                  ];
+          echo  json_encode($json_data);
+
+}
     public function create($org_id)
     {
         $countries = CountryListFacade::getList('en');
@@ -321,10 +476,12 @@ class ContactController extends Controller
 
     public function contactToArchive(Request $request,$org_id){
         try {
+
               $obj=new OrganizationController();
               $databaseName=$obj->get_db_name($org_id);
               $db_connection=$obj->org_connection($databaseName);
             if( !empty($rows = $request->rows ) ){
+
                 $contact = Contact::whereIn('id', $rows)->update(['type' => 'archive']);
                 Websiteinformation::whereIn('contact_id', $rows)->update(['type' => 'archive']);
                 contactInformation::whereIn('contact_id', $rows)->update(['type' => 'archive']);
@@ -360,5 +517,108 @@ class ContactController extends Controller
         }catch ( \Exception $e ) {
             return redirect()->back()->with('error',$e->getMessage());
         }
+    }
+
+    public function archive($org_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $contacts=Contact::where('type','=','archive')->get();
+
+      return view('contact.archive',['org_id'=>$org_id,'contacts'=>$contacts]);
+
+
+  }
+
+  // Contact Merge
+  public function contactToMerge(Request $request,$org_id){
+
+
+      try {
+        $obj=new OrganizationController();
+        $databaseName=$obj->get_db_name($org_id);
+        $db_connection=$obj->org_connection($databaseName);
+        if(request()->ajax()){
+            $rows = $request->rows;
+            if (empty($rows)) {
+                return response()->json([
+                    'success' => 0,
+                    'msg' => "Contact id not found!"
+                ]);
+            }
+            $contacts = Contact::where('type','contact')->pluck('name', 'id');
+
+            return view('contact.merge-contact-modal', compact('contacts','rows','org_id'));
+        }
+
+          if($request->mergeContactId){
+              $archive_id = $request->rows;
+              $id = $request->mergeContactId;
+              $status = 'archive';
+              $allAddress = [];
+              $mergeData=Contact::where('id',$archive_id)->get()->toArray();
+              $websiteData=Websiteinformation::where('contact_id',$archive_id)->get()->toArray();
+              $contactData=ContactInformation::where('contact_id',$archive_id)->get()->toArray();
+              $websiteData[0]['updated_at']=date('Y-m-d h:i:s');
+              $contactData[0]['updated_at']=date('Y-m-d h:i:s');
+              $mergeData[0]['updated_at']=date('Y-m-d h:i:s');
+              if(!empty($contactData))
+              {
+                ContactInformation::where('contact_id',$id)->update(['type'=>'archive']);
+                ContactInformation::where('contact_id',$archive_id)->update(['type'=>'merged']);
+                foreach($contactData as $contact){
+                  $contact['contact_id']=$id;
+                  $contact['type']='contact';
+                  ContactInformation::create($contact);
+                }
+              }
+
+              $mergeData[0]['updated_at']=date('Y-m-d h:i:s');
+              if(!empty($websiteData))
+              {
+                Websiteinformation::where('contact_id',$id)->update(['type'=>'archive']);
+                Websiteinformation::where('contact_id',$archive_id)->update(['type'=>'merged']);
+                foreach($websiteData as $website){
+                  $website['contact_id']=$id;
+                  $website['type']='contact';
+                  Websiteinformation::create($website);
+                }
+              }
+
+
+
+                Contact::where('id',$archive_id)->update(['type'=>'archive']);
+                return redirect()->back()->with('success','Contact merge successfully');
+
+
+
+
+          }else{
+              throw new Exception("Contact must selected for merge", 500);
+          }
+      }catch ( \Exception $e ) {
+          return redirect()->back()->with('error',$e->getMessage());
+      }
+    }
+    public function contactToRestore(Request $request)
+    {
+      $obj=new OrganizationController();
+      $org_id=$request->input('org_id');
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $restoreContactId=$request->input('id');
+      Contact::where('id',$restoreContactId)->update(['type'=>"contact"]);
+      ContactInformation::where('contact_id','=',$restoreContactId)->where('type','merged')->update(['type'=>'contact']);
+      Websiteinformation::where('contact_id','=',$restoreContactId)->where('type','merged')->update(['type'=>'contact']);
+      $parentContact=Contact::select('merged_to')->where('id',$restoreContactId)->get();
+      $parentId=$parentContact[0]->merged_to;
+
+      ContactInformation::where('contact_id',$parentId)->where('type','contact')->delete();
+      Websiteinformation::where('contact_id',$parentId)->where('type','contact')->delete();
+      ContactInformation::where('contact_id',$parentId)->where('type','archive')->update(['type'=>'contact']);
+      Websiteinformation::where('contact_id',$parentId)->where('type','archive')->update(['type'=>'contact']);
+
+      return redirect()->route('contact.archive',[$org_id])->with('success','Contact Restored successfully.');
     }
 }
