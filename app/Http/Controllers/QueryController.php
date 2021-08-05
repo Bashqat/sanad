@@ -129,7 +129,8 @@ class QueryController extends Controller
               `xero_sync_status` enum('true','false') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
               `created_at` timestamp NULL DEFAULT NULL,
               `updated_at` timestamp NULL DEFAULT NULL,
-              `group_id` bigint UNSIGNED DEFAULT NULL
+              `group_id` bigint UNSIGNED DEFAULT NULL,
+              `merged_to` bigint UNSIGNED DEFAULT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
         //  DB::statement($query);
         DB::connection()->getPdo()->exec($query);

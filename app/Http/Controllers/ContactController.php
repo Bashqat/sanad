@@ -588,7 +588,7 @@ class ContactController extends Controller
 
 
 
-                Contact::where('id',$archive_id)->update(['type'=>'archive']);
+                Contact::where('id',$archive_id)->update(['type'=>'archive','merged_to'=>$id]);
                 return redirect()->back()->with('success','Contact merge successfully');
 
 
