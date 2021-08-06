@@ -647,10 +647,11 @@ $(document).ready(function(){
 
     // Add Group Submit handler
     $('#group-form').submit(function(e){
+      var org_id=$('.org_id').val();
         e.preventDefault();
         $.ajax({
             data: $(this).serialize(),
-            url: '/group-contact',
+            url: '/organisation/'+org_id+'/group-contact',
             type: 'POST',
             beforeSend: function (request) {
                 $('#myModal').modal('hide');
@@ -679,11 +680,12 @@ $(document).ready(function(){
         var id = $(this).data('id');
         var action = $(this).data('type');
         var rows = [];
-        $(`#${id} .row-select`).each(function(){
+        $('.row-select').each(function(){
             if($(this).is(":checked")){
                 rows.push(this.value)
             }
         });
+
 
         if(rows.length <= 0 ){
             toastr.error('Please select atleast one row.');
@@ -715,6 +717,7 @@ $(document).ready(function(){
                 });
                 break;
             case "group":
+
                 $('#group-selected-row').val(rows);
                 $('#myModal').modal('show');
                 break;

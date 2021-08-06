@@ -31,6 +31,8 @@ class Contact extends Model
         'notes',
         'organization_id',
         'created_by',
+        'country',
+        'city'
     ];
     protected $casts = [
         'phone' => 'array',

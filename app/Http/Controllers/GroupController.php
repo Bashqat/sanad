@@ -20,11 +20,9 @@ class GroupController extends Controller
 
           return datatables($groups)
           ->addColumn(
-              'action',function ($row) {
+              'action',function ($row) use($org_id){
 
-
-
-                      $html = '<div class="dropdown">
+                  $html = '<div class="dropdown">
                           <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-v"></i></a>
                           <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);">';
 

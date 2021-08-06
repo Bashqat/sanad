@@ -110,6 +110,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/tag-contact',[App\Http\Controllers\ContactController::class,'tagContact'])->name('tag-contact');
         Route::post('organisation/{org_id}/contact-archive',[App\Http\Controllers\ContactController::class,'contactToArchive'])->name('contactArchive');
         Route::post('organisation/{org_id}/contact-merge',[App\Http\Controllers\ContactController::class,'contactToMerge'])->name('contactToMerge');
+        Route::post('organisation/{org_id}/group-contact',[App\Http\Controllers\ContactController::class,'groupContact'])->name('group-contact');
         Route::post('organisation/contact/restore',[App\Http\Controllers\ContactController::class,'contactToRestore'])->name('contact.restore');
 
         // Route::get('contacts-import-option',[App\Http\Controllers\ContactController::class,'importContactsOption'])->name('export.contacts.option');

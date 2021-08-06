@@ -49,7 +49,11 @@ class ContactController extends Controller
         $search=$request->search['value'];
         if($search=="country")
         {
-          $contacts=$contacts->orderBy('address', 'ASC');
+          $contacts=$contacts->orderBy('country', 'ASC');
+        }
+        if($search=="tag")
+        {
+          $contacts=$contacts->orderBy('tags', 'ASC');
         }
         else if($search!="") {
           $contacts=$contacts->where('name', 'like', '%' . $search . '%')
@@ -191,8 +195,11 @@ class ContactController extends Controller
     }
     public function store(Request $request,$org_id)
     {
+
         $obj=new OrganizationController();
+
         $databaseName=$obj->get_db_name($org_id);
+
         $db_connection=$obj->org_connection($databaseName);
 
         $request->request->add(['contacts' => $request->contact]);
@@ -620,5 +627,41 @@ class ContactController extends Controller
       Websiteinformation::where('contact_id',$parentId)->where('type','archive')->update(['type'=>'contact']);
 
       return redirect()->route('contact.archive',[$org_id])->with('success','Contact Restored successfully.');
+    }
+    public function groupContact(Request $request,$org_id){
+        try {
+          $obj=new OrganizationController();
+          $databaseName=$obj->get_db_name($org_id);
+          $db_connection=$obj->org_connection($databaseName);
+            if ( !empty( $groupId = $request->groupId ) && !empty($rows = $request->rows) ) {
+                if ( isset($request->type) && $request->type == "person" ) {
+                    $rows = explode(',',$rows);
+                    contactInformation::whereIn('id', $rows)->update(['group_id' => $groupId]);
+                    return response()->json([
+                        'success' => 1,
+                        'msg' => 'Person assign group successfully.'
+                    ]);
+                }else{
+                    $rows = explode(',',$rows);
+                    Contact::whereIn('id', $rows)->update(['group_id' => $groupId]);
+                    contactInformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
+                    Websiteinformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
+                    return response()->json([
+                        'success' => 1,
+                        'msg' => 'Contact moved in group successfully.'
+                    ]);
+                }
+            }else{
+                return response()->json([
+                    'success' => 0,
+                    'msg' => 'Group Id or Row must me selected.'
+                ]);
+            }
+        }catch ( \Exception $e ) {
+            return response()->json([
+                'success' => 0,
+                'msg' => $e->getMessage()
+            ]);
+        }
     }
 }

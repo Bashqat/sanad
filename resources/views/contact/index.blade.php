@@ -6,6 +6,7 @@
 @include('contact.merge-contact-modal')
 {{-- Add Group Modal --}}
 @include('contact.add-group-modal')
+@include('contact.group-modal')
 
 <div class="contact-page-new mb-1">
     <div class="container-fluid">

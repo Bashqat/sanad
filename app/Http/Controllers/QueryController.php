@@ -111,6 +111,8 @@ class QueryController extends Controller
               `tags` json DEFAULT NULL,
               `account_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'images/contacts/contact-avatar.png',
+              `country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+              `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `business_registration_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `tax_registration_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `address` json DEFAULT NULL,
