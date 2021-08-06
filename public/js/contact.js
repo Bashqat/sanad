@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   var org_id=$('.org_id').val();
-  var table=$('#contacts_table').DataTable({
+  var table=$('#contact_table').DataTable({
    //"scrollX": true,
    //"pagingType": "numbers",
        "processing": true,
@@ -36,7 +36,7 @@ $(document).ready(function(){
            filter_value.push($(this).val());
          }
        })
-         $('#contacts_table').DataTable({
+         $('#contact_table').DataTable({
           //"scrollX": true,
           //"pagingType": "numbers",
                 data: {

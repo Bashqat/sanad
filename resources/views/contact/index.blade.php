@@ -83,7 +83,7 @@
                   </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="contacts_table" class="table table-bordered table-striped">
+                        <table id="contact_table" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th><input type="checkbox" name="checkbox" class="select-all"></th>
