@@ -51,15 +51,20 @@
 
                         <!-- An unexamined life is not worth living. - Socrates -->
 
-                    <!-- <div class="form-group row">
+                    <div class="form-group row">
                         <label for="logo" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Logo </label>
                         <div class="col-lg-9 col-md-9 col-sm-9 input-group">
+                          @if(isset($organisation_data[0]) && $organisation_data[0]!="")
+      											<div class="thumb_img">
+                            		<img src="{{ url('/organisation_logo') }}/{{ isset($organisation_data[0]->logo)?$organisation_data[0]->logo:'' }}" class="img-thumbnail" placeholder="Image not found">
+                            </div>
+      											@endif
                             <div class="custom-file">
-                                <input type="file" name="logo" class="form-control custom-file-input  " id="logoFile" accept="image/*">
+                                <input type="file" name="logo" class="form-control custom-file-input  "  id="logoFile" accept="image/*" >
                                 <label class="custom-file-label" for="logoFile">Choose file</label>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
 
 
 
@@ -643,14 +648,9 @@
                             <div class="col-lg-9 col-md-9  col-sm-9">
                                 <select name="currency" class="form-control select2  " style="width: 100%;" required="">
                                     <option value="">Select </option>
-                                    <option value="USD">USD</option>
-                                    <option value="EUR">EUR</option>
-                                    <option value="JPY">JPY</option>
-                                    <option value="GBP">GBP</option>
-                                    <option value="CHF">CHF</option>
-                                    <option value="CAD">CAD</option>
-                                    <option value="AUD">AUD</option>
-                                    <option value="ZAR">ZAR</option>
+                                    @foreach($currency as $cur)
+                                    <option value="{{$cur}}" {{($organisation_data[0]->currency==$cur)?'selected':''}}>{{$cur}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

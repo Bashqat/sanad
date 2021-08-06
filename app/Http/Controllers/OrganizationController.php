@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Arr;
 use Monarobase\CountryList\CountryListFacade;
 use Timezonelist;
+use Str;
 
 class OrganizationController extends Controller
 {
@@ -40,11 +41,13 @@ class OrganizationController extends Controller
 
         //print_r($timezone_list);exit;
         $countries=CountryListFacade::getList('en');
+        $currency=['USD','EUR','JPY','GBP','CHF','CAD','AUD','ZAR'];
+
 
         $organisationType=$this->organizationTypes();
         $busType=$this->businessTypes();
 
-        return view('organisation/create',['organisationType'=>$organisationType,'busType'=>$busType,'countries'=>$countries,'timezone_list'=>$timezone_list]);
+        return view('organisation/create',['organisationType'=>$organisationType,'busType'=>$busType,'countries'=>$countries,'timezone_list'=>$timezone_list,'currency'=>$currency]);
     }
     public function org_connection($databaseName)
     {
@@ -66,33 +69,34 @@ class OrganizationController extends Controller
     public function store(Request $request)
     {
         try{
+
                 $obj=new QueryController();
                 $superAdminId=Auth::id();
                 $org_name=$request->input('display_name');
-                // $org_db_name=$request->input('display_name');
                 $inputs = $request->all();
-
                 $inputs['superadmin_id']=Auth::id();
                 $inputs['org_name']=$org_name;
-                //$inputs['org_db_name']=Auth::id();
+                $file=$request->file('logo');
+                $path=public_path('organisation_logo/');
+                $imageName = Str::random(15).'.'.$file->getClientOriginalExtension();
+                $file->move($path, $imageName);
                 $org_input=[
                             'org_db_name' => str_replace(' ', '', $org_name),
                             'superadmin_id' => Auth::id(),
                             'org_name'=>$org_name,
+                            'logo'=>$imageName
                         ];
 
                 if($data=MasterOrganisation::create($org_input))
                     {
                         $inputs['org_id']=$data->id;
-
+                        $inputs['logo']=$imageName ;
                         $databaseName=$data->id.'_'.$org_name;
                         $databaseName=str_replace(' ', '', $databaseName);
                         if($return=$obj->createDb($databaseName))
                         {
                             $connection=$this->org_connection($databaseName);
                             Organisation::create($inputs);
-
-
                         }
 
                     }
@@ -113,6 +117,7 @@ class OrganizationController extends Controller
     public function edit($org_id)
     {
         try{
+            $currency=['USD','EUR','JPY','GBP','CHF','CAD','AUD','ZAR'];
             $orgData=MasterOrganisation::where('id','=',$org_id)->get();
             $databaseName=$org_id.'_'.$orgData[0]->org_db_name;
             $countries=CountryListFacade::getList('en');
@@ -120,7 +125,7 @@ class OrganizationController extends Controller
             $busType=$this->businessTypes();
             $connection=$this->org_connection($databaseName);
             $orgInfo=Organisation::where('org_id','=',$org_id)->get();
-            return view('organisation/create',['organisation_data'=>$orgInfo,'organisationType'=>$organisationType,'busType'=>$busType,'countries'=>$countries]);
+            return view('organisation/create',['organisation_data'=>$orgInfo,'organisationType'=>$organisationType,'busType'=>$busType,'countries'=>$countries,'currency'=>$currency]);
 
         }catch (Exception $e) {
             DB::rollback();
@@ -169,8 +174,24 @@ class OrganizationController extends Controller
             $connection=$this->org_connection($databaseName);
 
             $org_id=$request->input('id');
+            $inputs=$request->all();
+            $organisation=Organisation::where('id',$org_id)->get();
+            $org_logo=$organisation[0]->logo;
+            $file=$request->file('logo');
 
-            if(Organisation::where('id', $org_id)->update(Arr::except($request->all(), ['_token','org_id'])))
+            if($file!="")
+            {
+              $path=public_path('organisation_logo/');
+              $imageName = Str::random(15).'.'.$file->getClientOriginalExtension();
+              $file->move($path, $imageName);
+              $inputs['logo']=$imageName;
+            }
+            else {
+              $inputs['logo']=$org_logo;
+            }
+
+
+            if(Organisation::where('id', $org_id)->update(Arr::except($inputs, ['_token','org_id'])))
                        {
                         return redirect('/organisation');
                        }

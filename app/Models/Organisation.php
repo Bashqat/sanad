@@ -12,7 +12,7 @@ class Organisation extends Model
     protected $fillable = ['org_name',
     'superadmin_id',
     'org_id',
-    'org_db_name', 
+    'org_db_name',
     'display_name',
     'legal_name',
     // 'logo',
@@ -29,5 +29,7 @@ class Organisation extends Model
     'email',
     'currency',
     'status',
-    'user_defined'];
+    'user_defined',
+    'logo'
+  ];
 }

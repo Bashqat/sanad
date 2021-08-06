@@ -13,6 +13,7 @@ class MasterOrganisation extends Model
     protected $fillable = ['org_db_name',
     'superadmin_id',
     'org_name',
+    'logo'
 
     ];
     public function user_detail()
