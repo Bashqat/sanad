@@ -77,9 +77,14 @@ class OrganizationController extends Controller
                 $inputs['superadmin_id']=Auth::id();
                 $inputs['org_name']=$org_name;
                 $file=$request->file('logo');
+                $imageName='';
                 $path=public_path('organisation_logo/');
-                $imageName = Str::random(15).'.'.$file->getClientOriginalExtension();
-                $file->move($path, $imageName);
+                if($file!="")
+                {
+                  $imageName = Str::random(15).'.'.$file->getClientOriginalExtension();
+                  $file->move($path, $imageName);
+                }
+
                 $org_input=[
                             'org_db_name' => str_replace(' ', '', $org_name),
                             'superadmin_id' => Auth::id(),
