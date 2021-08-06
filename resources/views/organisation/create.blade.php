@@ -649,7 +649,7 @@
                                 <select name="currency" class="form-control select2  " style="width: 100%;" required="">
                                     <option value="">Select </option>
                                     @foreach($currency as $cur)
-                                    <option value="{{$cur}}" {{($organisation_data[0]->currency==$cur)?'selected':''}}>{{$cur}}</option>
+                                    <option value="{{$cur}}" {{(isset($organisation_data) && $organisation_data[0]->currency==$cur)?'selected':''}}>{{$cur}}</option>
                                     @endforeach
                                 </select>
                             </div>
