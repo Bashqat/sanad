@@ -10,21 +10,31 @@
 
 <div class="contact-page-new mb-1">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12 contact-add-button">
+        <div class="row flex-nowrap">
+            <!-- <div class="col-lg-12 contact-add-button">
                 <a href="{{ route('contact.create',[$org_id]) }}">
                        <button class="btn add-new-contact common-button-site float-right">New Contact <i class="fa fa-plus ml-1"></i> </button>
                      </a>
-            </div>
-            <div class=" col-lg-2 col-md-3 col-sm-12 mb-3">
+            </div> -->
+            <div class="common-sidebar-sec mb-3">
             @include('contact.sidebar')
             </div>
 
-            <div class="col-lg-10 col-md-9 col-sm-12 common-table-scroll contact-filters">
-                <div class="inner-new-contact border bg-white">
+            <div class="contact-list-sec common-table-scroll contact-filters w-100">
+                <div class="inner-new-contact">
                   <div class="card-header">
                       <h3 class="card-title"> All Contacts</h3>
-                      <div class="btn-group float-right mr-2">
+                      <div class="btn-group float-right">
+                      <form class="form-inline contact-side-bar-search contact-table-search">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control " type="search" placeholder="Search" aria-label="Search">
+                                <div class="input-search-append">
+                                    <button class="btn" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                     </form>
                         <div class="input-group-prepend">
                             <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list mr-1 p-1"></i>
                                 View
@@ -40,9 +50,6 @@
 
 
                             </div>
-
-
-
                             </div>
                           <div class="input-group-prepend">
                               <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>
@@ -68,7 +75,7 @@
 
 
                                   <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-filter mr-1"></i>
-                                      Filter
+                                      Sort By
                                   </button>
                                   <input type="hidden" class="org_id" name="org_id" value={{$org_id}}>
 
@@ -79,6 +86,11 @@
 
                                   </div>
                               </div>
+
+                              <a href="{{ route('contact.create',[$org_id]) }}">
+                                <button class="btn add-new-contact common-button-site float-right"><i class="fa fa-plus ml-1"></i> Add New Contact  </button>
+                              </a>
+
                           </div>
                       </div>
                   </div>
@@ -139,4 +151,5 @@
 @endsection
 @push('scripts')
 <script src="{{ url('js/contact.js') }}" defer></script>
+
 @endpush

@@ -53,7 +53,7 @@ class OrganizationController extends Controller
     {
         Config::set("database.connections.mysql", [
             'driver' => 'mysql',
-            "host" => "localhost",
+            "host" => "127.0.0.1",
             "database" => $databaseName,
             "username" => "root",
             "password" => getenv('DB_PASSWORD'),
@@ -100,7 +100,9 @@ class OrganizationController extends Controller
                         $databaseName=str_replace(' ', '', $databaseName);
                         if($return=$obj->createDb($databaseName))
                         {
+                         
                             $connection=$this->org_connection($databaseName);
+                            
                             Organisation::create($inputs);
                         }
 

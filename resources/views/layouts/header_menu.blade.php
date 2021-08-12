@@ -2,7 +2,7 @@
 <?php
 		Config::set("database.connections.mysql", [
 							'driver' => 'mysql',
-							"host" => "localhost",
+							"host" => "127.0.0.1",
 							"database" => getenv("DB_DATABASE"),
 							"username" => "root",
 							"password" => getenv("DB_PASSWORD"),
@@ -13,6 +13,7 @@
 							'sslmode' => 'prefer',
 			]);
 					DB::purge('mysql');
+					//$org_list = array();
 					$org_list= \App\Models\MasterOrganisation::get();
 					if(Auth::user()->role!=1)
 					{
@@ -33,6 +34,7 @@
 						//echo $org_id;
 
 						}
+						
 
 
  ?>
@@ -56,6 +58,7 @@
 
 													<div class="nav-item dropdown company-menu show">
 														<a class="nav-link mr-md-2 ml-2 px-5" data-toggle="dropdown" href="#" aria-expanded="true">
+															
 																@if((empty($org_list)) && !preg_match('#[0-9]#',$org_id))
 																		  No Organisation exist
 																@elseif(!empty($org_list) && Auth::user()->role==1 )
