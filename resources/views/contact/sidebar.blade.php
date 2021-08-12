@@ -1,32 +1,107 @@
-<aside class="border bg-white p-3">
+<aside class="border bg-white contact-side-bar">
     <div class="sidebar-menu">
-        <ul>
+    <form class="form-inline contact-side-bar-search">
+        <div class="input-group input-group-sm">
+            <input class="form-control " type="search" placeholder="Search" aria-label="Search">
+            <div class="input-search-append">
+                <button class="btn" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+        <ul class="side-bar-list">
             <li class="sidebar-dropdown new-contact-btns">
-                <a href="{{ route('contact.index',[$org_id]) }}">
+                <a class="all-contacts" href="{{ route('contact.index',[$org_id]) }}">
                     <span>All Contacts</span>
                 </a>
+                    <ul>
+                        <li class="sidebar-dropdown new-contact-btns">
+                        <img src="/images/site-images/customers.svg">
+                        Customers</li>
+                        <li class="sidebar-dropdown new-contact-btns">
+                        <img src="/images/site-images/supplier.svg">
+                        Suppliers</li>
+                        <li class="sidebar-dropdown new-contact-btns">
+                        <img src="/images/site-images/employees.svg">
+                        Employees</li>
+                        <li class="sidebar-dropdown new-contact-btns">
+                           <img src="/images/site-images/archive.svg">
+                            <a href="{{ route('contact.archive',[$org_id]) }}">
+                            <span class="">Archive</span>
+                            </a>
 
-                <a href="{{ route('contact.create',[$org_id]) }}">
+                        </li>
+                    </ul>
+            </li>
+
+                <!-- <a href="{{ route('contact.create',[$org_id]) }}">
                     <span class="badge badge-pill badge-danger">New</span>
-                </a>
+                </a> -->
 
 
             </li>
 
-            <li class="sidebar-dropdown new-contact-btns">
-                <a href="{{ route('contact.archive',[$org_id]) }}">
-                  <span class="">Archive</span>
-                </a>
-
-            </li>
-            <li class="sidebar-dropdown new-contact-btns">
-                <a href="{{ route('organisation.group',[$org_id]) }}">
-                    <span>All Groups</span>
-                </a>
+            <li class="new-contact-btns new-gp-sliderbar  add-gps-sidebar">
+                <div class="add-gp-side-bar">
+                    <a href="{{ route('organisation.group',[$org_id]) }}">
+                        <span>All Groups</span>
+                    </a>
 
                     <button type="button" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#modal-default">
-                        New
+                        Add New
                     </button>
+                </div>
+
+                    <ul>
+                        <li class="groups-side-bar">
+
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="heading0">
+                                    <h3 class="panel-title">
+                                    <a class="collapsed gp-link" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse0" aria-expanded="false" aria-controls="collapse0">
+                                        Group 1
+                                    </a>
+                                    </h3>
+                                </div>
+                                <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0" style="">
+                                    <div class="panel-body">
+                                    <ul>
+                                        <li>Sub Group 1</li>
+                                        <li>Sub Group 2</li>
+                                    </ul>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                        </li>
+
+                        <li class="groups-side-bar">
+
+                            <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="heading2">
+                                        <h3 class="panel-title">
+                                        <a class="collapsed gp-link" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                                        Group 2
+                                        </a>
+                                        </h3>
+                                    </div>
+                                    <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
+                                        <div class="panel-body">
+                                            <ul>
+                                                <li>Sub Group 1</li>
+                                                <li>Sub Group 2</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
 
             </li>
 
@@ -34,3 +109,14 @@
     </div>
     <!-- sidebar-menu  -->
 </aside>
+
+<script>
+$(document).ready(function(){
+  $(".gp-link").click(function(){
+    //$(".groups-side-bar").toggleClass("groups-side-bar-active ");
+    $(this).closest('.groups-side-bar').toggleClass("groups-side-bar-active ");
+  });
+});
+</script>
+
+<!-- https://www.solodev.com/blog/web-design/how-to-use-bootstrap-accordions-to-organize-faq-pages.stml -->
