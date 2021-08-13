@@ -107,7 +107,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Contact Export Route
         Route::get('organisation/{org_id}/export-contacts/{type}/{id?}',[App\Http\Controllers\ContactController::class,'exportContacts'])->name('export.contacts');
-        Route::post('/tag-contact',[App\Http\Controllers\ContactController::class,'tagContact'])->name('tag-contact');
+        Route::post('organisation/{org_id}/tag-contact',[App\Http\Controllers\ContactController::class,'tagContact'])->name('tag-contact');
         Route::post('organisation/{org_id}/contact-archive',[App\Http\Controllers\ContactController::class,'contactToArchive'])->name('contactArchive');
         Route::post('organisation/{org_id}/contact-merge',[App\Http\Controllers\ContactController::class,'contactToMerge'])->name('contactToMerge');
         Route::post('organisation/{org_id}/group-contact',[App\Http\Controllers\ContactController::class,'groupContact'])->name('group-contact');
@@ -122,6 +122,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('organisation/group/create',[App\Http\Controllers\GroupController::class,'store'])->name('organisation.group.create');
         Route::get('organisation/{org_id}/group/edit/{id}',[App\Http\Controllers\GroupController::class,'edit'])->name('organisation.group.edit');
         Route::post('organisation/group/deleted',[App\Http\Controllers\GroupController::class,'delete'])->name('organisation.group.destroy');
+
+        //organisation group based contact list
+        Route::get('organisation/{org_id}/group/{group_id}/contacts',[App\Http\Controllers\GroupController::class,'contactList'])->name('organisation.group.contact.list');
+        Route::get('organisation/{org_id}/group/{group_id}/contact/server-side', [App\Http\Controllers\GroupController::class,'contactserverSide'])->name('group.contact.serverside');
+        Route::post('organisation/group/contact/remove', [App\Http\Controllers\GroupController::class,'groupRemove'])->name('group.contact.remove');
 
 });
 

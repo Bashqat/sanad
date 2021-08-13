@@ -45,7 +45,7 @@
 							</button>
 							<div class="collapse navbar-collapse" id="collapsibleNavbar">
 								<ul class="navbar-nav">
-													<li class="nav-item">
+													<li class="nav-item d-none">
 														<div class="nav-item dropdown company-menu">
 															<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
 																<span class="dropdown-item dropdown-header text-left">
@@ -71,7 +71,8 @@
 																			{{$list->org_name}}
 																		@endif
 																@endforeach
-									              <i class="fas fa-sort-down ml-3"></i>
+																<!-- <i class="fa fa-angle-down" aria-hidden="true"></i> -->
+																<img src="/images/site-images/arrow-right.svg">
 														</a>
 
 												<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right org-menu" >
@@ -166,20 +167,36 @@
 				</div>
 		</nav>
 						<ul class="navbar-nav ml-auto">
-							<form class="form-inline header-search ml-3 mb-0">
+							<form class="form-inline header-search mb-0">
 								<div class="input-group input-group-sm">
 									<input class="form-control form-control-navbar" type="search" placeholder="{{ __('language.search') }}" aria-label="Search">
 									<div class="input-group-append">
 										<button class="btn btn-navbar" type="submit">
-											<i class="fas fa-search"></i>
+											<!-- <i class="fas fa-search"></i> -->
+											<img src="/images/site-images/noun_search.svg">
 										</button>
 									</div>
 								</div>
 							</form>
+							<li class="nav-item dropdown question-icon-header">
+								<a class="nav-link text-white" data-toggle="dropdown" href="#" aria-expanded="false">
+									<!-- <i class="far fa-question-circle"></i> -->
+									<img src="/images/site-images/grid_round.svg">
+								</a>
+								<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+									<a href="#" class="dropdown-item">
+										<span>Help Center</span>
+									</a>
+									<a href="#" class="dropdown-item">
+										<span>Submit Support Ticket</span>
+									</a>
+								</div>
+							</li>
 							<li class="nav-item dropdown">
 								<a class="nav-link text-white d-flex align-items-center" data-toggle="dropdown" href="#" aria-expanded="false">
-									<i class="far fa-bell"></i>
-									<span class="badge badge-warning navbar-badge">15</span>
+									<!-- <i class="far fa-bell"></i> -->
+									<img src="/images/site-images/alarm.svg">
+									<span class="badge badge-warning navbar-badge d-none">15</span>
 								</a>
 								<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 									<span class="dropdown-item dropdown-header">15 Notifications</span>
@@ -201,25 +218,16 @@
 									<div class="dropdown-divider"></div>
 									<a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
 								</div>
-							<li class="nav-item dropdown question-icon-header">
-								<a class="nav-link text-white" data-toggle="dropdown" href="#" aria-expanded="false">
-									<i class="far fa-question-circle"></i>
-								</a>
-								<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-									<a href="#" class="dropdown-item">
-										<span>Help Center</span>
-									</a>
-									<a href="#" class="dropdown-item">
-										<span>Submit Support Ticket</span>
-									</a>
-								</div>
 							</li>
 							</li>
 							<div class="nav-item dropdown user-menu super-admin">
 								<a href="#" class="nav-link mr-md-1 dropdown-toggle user-circle-img" data-toggle="dropdown">
 									<img src="@if (filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL)){{ Auth::user()->avatar }}@else/images/profile/{{ Auth::user()->avatar }}@endif" class="user-image img-circle elevation-2" alt="User Image">
 									<span class="d-none d-md-inline">
-										<!-- {{ Auth::user()->name }} --><i class="fas fa-sort-down"></i>
+										<!-- {{ Auth::user()->name }} -->
+										<!-- <i class="fas fa-sort-down"></i> -->
+										<!-- <i class="fa fa-angle-down" aria-hidden="true"></i> -->
+										<img src="/images/site-images/path.svg">
 									</span>
 								</a>
 								<ul class="dropdown-menu dropdown-menu-sm w-auto dropdown-menu-right super-admin">

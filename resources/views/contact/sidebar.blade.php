@@ -5,7 +5,8 @@
             <input class="form-control " type="search" placeholder="Search" aria-label="Search">
             <div class="input-search-append">
                 <button class="btn" type="submit">
-                    <i class="fas fa-search"></i>
+                    <!-- <i class="fas fa-search"></i> -->
+                    <img src="/images/site-images/search-shape.svg">
                 </button>
             </div>
         </div>
@@ -17,16 +18,16 @@
                 </a>
                     <ul>
                         <li class="sidebar-dropdown new-contact-btns">
-                        <img src="/images/site-images/customers.svg">   
+                        <img src="/images/site-images/customers.svg">
                         Customers</li>
                         <li class="sidebar-dropdown new-contact-btns">
-                        <img src="/images/site-images/supplier.svg">      
+                        <img src="/images/site-images/supplier.svg">
                         Suppliers</li>
                         <li class="sidebar-dropdown new-contact-btns">
-                        <img src="/images/site-images/employees.svg">      
+                        <img src="/images/site-images/employees.svg">
                         Employees</li>
                         <li class="sidebar-dropdown new-contact-btns">
-                           <img src="/images/site-images/archive.svg">  
+                           <img src="/images/site-images/archive.svg">
                             <a href="{{ route('contact.archive',[$org_id]) }}">
                             <span class="">Archive</span>
                             </a>

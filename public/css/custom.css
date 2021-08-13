@@ -277,9 +277,9 @@ input#agreeTerms {
 	margin-right: 10px;
 }
 
-nav.main-header {
+/* nav.main-header {
 	background: #3da9fc;
-}
+} */
 
 .company-menu a.nav-link .fa-sort-down,
 .super-admin a.nav-link .fa-sort-down {
@@ -780,9 +780,9 @@ ul.sidebar-top-list li span {
 	-webkit-appearance: unset;
 }
 
-.contact-page-new .sidebar-menu ul li a {
+/* .contact-page-new .sidebar-menu ul li a {
 	color: #5f6c7b;
-}
+} */
 
 ul#Group-1 {
 	margin-top: 10px;
@@ -1249,6 +1249,7 @@ table thead tr th {
 .toggle-navbar-sec ul.navbar-nav a.nav-link.active {
 	border-bottom: 2px solid #fff;
 	color: #fff;
+	font-weight: 600;
 }
 
 
@@ -1374,7 +1375,7 @@ select.form-control {
 	padding-top: 18px;
 }
 
-.toggle-navbar-sec ul.navbar-nav .company-menu a.nav-link {
+/* .toggle-navbar-sec ul.navbar-nav .company-menu a.nav-link {
 	border-radius: 4px;
 	font-size: 15px;
 	background: #fafafa;
@@ -1384,7 +1385,7 @@ select.form-control {
 	padding-right: 10px !important;
 	padding-top: 8px;
 	padding-bottom: 8px;
-}
+} */
 
 .toggle-navbar-sec ul.navbar-nav .company-menu a.nav-link:hover {
 	color: #5c6982 !important;
@@ -2249,11 +2250,6 @@ table tbody tr.odd td a div {
 }
 
 /***** Aug-11-css-start-here *****/
-
-.contact-side-bar-search .input-search-append button.btn i {
-    color: #e3e3e3;
-}
-
 .contact-side-bar-search .input-group {
     background: #fff;
     width: 250px;
@@ -2296,6 +2292,17 @@ table tbody tr.odd td a div {
     font-weight: 600;
     line-height: 20px;
     letter-spacing: -0.05px;
+	text-decoration: none;
+	color: #4A4A4A;
+}
+
+.add-gp-side-bar a span {
+    color: #4A4A4A;
+    font-size: 14px;
+    font-weight: 600;
+	line-height: 20px;
+    letter-spacing: -0.05px;
+    text-decoration: none;
 }
 
 .side-bar-list li.new-contact-btns {
@@ -2313,6 +2320,13 @@ table tbody tr.odd td a div {
     display: flex;
     align-items: center;
     padding-left: 47px !important;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.05px;
+    color: #4A4A4A;
+}
+
+.side-bar-list li.new-contact-btns ul li a span {
     font-size: 14px;
     line-height: 20px;
     letter-spacing: -0.05px;
@@ -2407,22 +2421,12 @@ table tbody tr.odd td a div {
 }
 
 .groups-side-bar .panel-group .panel-body ul li {
-    font-size: 14px; 
+	list-style: disc !important;
+    font-size: 14px;
     color: #4B7DDE;
     font-weight: 500;
 	padding-bottom: 16px !important;
 	border-bottom: 0px;
-	position: relative;
-}
-
-.groups-side-bar .panel-group .panel-body ul li::before {
-    content: "";
-    background: #4B7DDE;
-    width: 8px;
-    height: 8px;
-    position: absolute;
-    border-radius: 30px;
-    left: 20px;
 }
 
 .groups-side-bar .panel-group .panel-title {
@@ -2438,7 +2442,6 @@ table tbody tr.odd td a div {
     font-style: normal;
     font-size: 14px;
     content: "\f107";
-    
     float: right;
     margin-top: -12px;
     right: 17px;
@@ -2510,14 +2513,8 @@ table tbody tr.odd td a div {
 	font-weight: 100 !important;
 }
 
-.contact-list-sec .card-header .input-group-prepend button i.fa {
-    padding: 0px !important;
-    margin-right: 10px !important;
-    font-size: 16px;
-}
-
-.contact-list-sec .card-header .input-group-prepend button i.fa.fa-cog {
-    font-size: 18px !important;
+.contact-list-sec .card-header .input-group-prepend button img {
+    margin-right: 10px;
 }
 
 form.contact-side-bar-search.contact-table-search {
@@ -2534,9 +2531,174 @@ form.contact-side-bar-search.contact-table-search {
     font-weight: 500;
 }
 
-.contact-list-sec .card-header a button.add-new-contact.common-button-site i.fa {
+.contact-list-sec .card-header a button.add-new-contact.common-button-site img {
     margin-right: 5px;
 }
+
+/***** Header-sec-css-start-here *****/
+nav.main-header.navbar {
+    padding: 21px 24px 23px !important;
+}
+
+nav.main-header nav.navbar .navbar-collapse ul.navbar-nav{
+	align-items: center;
+}
+
+.toggle-navbar-sec ul.navbar-nav .company-menu a.nav-link{
+	margin: 0px !important;
+    height: 44px;
+    width: 250px !important;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 31px 0px 24px !important;
+    border-radius: 4px;
+	color:#858585;
+	font-size: 14px;
+}
+
+nav.main-header nav.navbar .navbar-collapse ul.navbar-nav .nav-item.dropdown.company-menu {
+    padding: 0px !important;
+    margin-right: 31px;
+}
+
+nav.main-header nav.navbar .navbar-collapse ul.navbar-nav li.nav-item {
+    margin-right: 29px;
+}
+
+nav.main-header nav.navbar .navbar-collapse ul.navbar-nav li.nav-item a.nav-link {
+    padding: 0px 0px 7px;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.06px;
+	position: relative;
+}
+
+nav.main-header {
+	background: #4B7DDE;
+}
+
+nav.main-header nav.navbar .navbar-collapse ul.navbar-nav li.nav-item a.nav-link:hover {
+    background: transparent;
+    color: #fff !important;
+	border-color: transparent;
+}
+
+nav.main-header nav.navbar .navbar-collapse ul.navbar-nav li.nav-item a.nav-link::after {
+    position: absolute;
+    content: "";
+    background: transparent;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 52px;
+    height: 4;
+    border-radius: 20px;
+}
+
+nav.main-header nav.navbar .navbar-collapse ul.navbar-nav li.nav-item a.nav-link:hover:after {
+    position: absolute;
+    content: "";
+    background: #fff;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 52px;
+    height: 4;
+    border-radius: 20px;
+}
+
+nav.main-header.navbar ul.navbar-nav {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+nav.main-header.navbar ul.navbar-nav .form-inline .input-group {
+    width: auto;
+    height: auto;
+    position: relative;
+    padding-right: 26px;
+}
+
+nav.main-header.navbar ul.navbar-nav .form-inline .input-group .input-group-append {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 14px;
+	z-index: 3;
+}
+
+nav.main-header.navbar ul.navbar-nav .form-inline .input-group::after {
+    position: absolute;
+    content: "";
+    background: #D8D8D8;
+    top: -20px;
+    right: 0;
+    bottom: -23px;
+    width: 1px;
+}
+
+nav.main-header.navbar li.nav-item.dropdown a.nav-link {
+    padding: 0px 26px !important;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+nav.main-header.navbar ul.navbar-nav .form-inline .input-group input.form-control-navbar {
+    /* padding-left: 95px !important; */
+	padding-left: 50px !important;
+    width: 360px;
+    height: 44px !important;
+    border-radius: 0.2rem;
+}
+
+nav.main-header.navbar ul.navbar-nav .form-inline .input-group .input-group-append .btn-navbar {
+    padding: 0;
+    background-color: transparent;
+}
+
+nav.main-header.navbar li.nav-item.dropdown a.nav-link {
+    padding: 0px 26px !important;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+li.nav-item.dropdown a.nav-link::after {
+    position: absolute;
+    content: "";
+    background: #D8D8D8;
+    top: -21px;
+    right: 0;
+    bottom: -27px;
+    width: 1px;
+}
+
+nav.main-header.navbar li.nav-item.dropdown a.nav-link {
+    padding: 0px 26px !important;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+li.nav-item.dropdown a.nav-link::after {
+    position: absolute;
+    content: "";
+    background: #D8D8D8;
+    top: -21px;
+    right: 0;
+    bottom: -27px;
+    width: 1px;
+}
+.contact-list-sec .inner-new-contact .card-header {
+	/* padding: 70px 0px !important; */
+	padding: 40px 0px !important;
+}
+
+/***** Header-sec-css-end-here *****/
 
 /***** Aug-11-css-end-here *****/
 
@@ -2847,10 +3009,10 @@ form.contact-side-bar-search.contact-table-search {
 		margin-bottom: 10px;
 	}
 
-	nav.main-header.navbar {
+	/* nav.main-header.navbar {
 		padding-top: 10px !important;
 		padding-bottom: 10px !important;
-	}
+	} */
 
 	nav.main-header form.form-inline.header-search {
 		display: none;

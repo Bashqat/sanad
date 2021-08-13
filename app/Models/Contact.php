@@ -11,8 +11,12 @@ class Contact extends Model
 
     protected $fillable = [
         'xero_contact_id',
-        'name',
-        'name_arabic',
+        'first_name',
+        'last_name',
+        'first_name_arabic',
+        'last_name_arabic',
+        'nickname',
+        'position',
         'type',
         'tags',
         'account_no',
@@ -32,7 +36,12 @@ class Contact extends Model
         'organization_id',
         'created_by',
         'country',
-        'city'
+        'city',
+        'emp_info',
+        'personal_info',
+        'emergency_contact',
+        'dependent_info',
+        'contact_type'
     ];
     protected $casts = [
         'phone' => 'array',
@@ -41,6 +50,11 @@ class Contact extends Model
         'address' => 'array',
         'attachment' => 'array',
         'tags' => 'array',
+        'financial_information'=>'array',
+        'emp_info'=>'array',
+        'personal_info'=>'array',
+        'emergency_contact'=>'array',
+        'dependent_info'=>'array'
     ];
     public function contact_information()
     {

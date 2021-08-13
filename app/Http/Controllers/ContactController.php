@@ -28,7 +28,8 @@ class ContactController extends Controller
       $obj=new OrganizationController();
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
-      $contacts=Contact::select('name','email','phone',)->where('type','!=','archive')->get();
+      $contacts=Contact::select('id','first_name','email','phone',)->with('contact_information')->where('type','!=','archive')->get();
+
       $groups=Group::get();
       // if(request()->ajax()){
       //   $filter=$request->filter_value;
@@ -44,7 +45,8 @@ class ContactController extends Controller
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
 
-      $contacts=Contact::where('type','!=','archive');
+      $contacts=Contact::where('type','!=','archive')->with('contact_information');
+
       if(request()->ajax()){
         $search=$request->search['value'];
         if($search=="country")
@@ -56,7 +58,7 @@ class ContactController extends Controller
           $contacts=$contacts->orderBy('tags', 'ASC');
         }
         else if($search!="") {
-          $contacts=$contacts->where('name', 'like', '%' . $search . '%')
+          $contacts=$contacts->where('first_name', 'like', '%' . $search . '%')
              ->orWhere('website', 'like', '%' . $search. '%');
         }
 
@@ -67,23 +69,51 @@ class ContactController extends Controller
       $totalFiltered = $totalData;
 
 
-          $data=[];
+      $data=[];
+
       foreach($contacts as $key=>$contact)
       {
         $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
-        $data[$key][]=$contact->name;
+        $data[$key][]=$contact->first_name;
+
+
+        if(isset($contact->contact_information) && count($contact->contact_information)>0 )
+        {
+           $first_person=$contact->contact_information[0]->first_name;
+           $data[$key][]=$first_person;
+
+        }
+        else {
+          $data[$key][]='';
+        }
+        if(isset($contact->contact_information) && count($contact->contact_information)>1 )
+        {
+           $second_person=$contact->contact_information[1]->first_name;
+           $data[$key][]=$second_person;
+
+        }
+        else {
+          $data[$key][]='';
+        }
+
         $data[$key][]=$contact->website;
         $data[$key][]=$contact->email;
         $phone='';
         $token = csrf_token();
 
-        if(!empty($contact->phone))
+        if($contact->contact_type=='person')
         {
-          foreach($contact->phone as $phone)
+          if(!empty($contact->phone))
           {
-            $phone=$phone;
+            foreach($contact->phone as $phone)
+            {
+              $phone=$phone['number'];
+            }
           }
         }
+
+
+
         $edit_path=route('contact.edit',[$org_id,$contact->id]);
         $delete_path=route('contact.delete');
         $data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
@@ -131,7 +161,7 @@ class ContactController extends Controller
           $contacts=$contacts->orderBy('address', 'ASC');
         }
         else if($search!="") {
-          $contacts=$contacts->where('name', 'like', '%' . $search . '%')
+          $contacts=$contacts->where('first_name', 'like', '%' . $search . '%')
              ->orWhere('website', 'like', '%' . $search. '%');
         }
 
@@ -195,32 +225,19 @@ class ContactController extends Controller
     }
     public function store(Request $request,$org_id)
     {
+      //echo '<pre>';
+       //print_r($request->all());exit;
 
         $obj=new OrganizationController();
-
         $databaseName=$obj->get_db_name($org_id);
-
         $db_connection=$obj->org_connection($databaseName);
-
         $request->request->add(['contacts' => $request->contact]);
         $request->request->remove('contact');
-
-        $validate = $request->validate([
-            'contacts.account_no' => 'unique:contacts|max:255|nullable',
-            'contacts.name' => 'unique:contacts|required|regex:/^[\pL\s\-]+$/u|max:255',
-        ],[
-            'contacts.account_no.unique' => 'Account no# already exists',
-            'contacts.name.unique' => 'Account name already exists',
-            'contacts.name.regex' => 'The name format is invalid.',
-        ]);
-
         $contact = "";
         $contactInformation = [];
         $website_information = [];
         try {
-            // Save Conatct
             $contactData = $this->uploadDataAttachmentsGetLinks($request->contacts,'contacts');
-
             $contactData['organization_id'] = $org_id;
             $contactData['created_by'] = Auth::user()->id;
             $contact = Contact::create($contactData);
@@ -303,6 +320,16 @@ class ContactController extends Controller
             //$contactData = $this->uploadDataAttachmentsGetLinks($request->contacts,'contacts');
 
             $contactData = $request->input('contact');
+            $websiteData = $request->input('website_information');
+            // if(isset($request->website_information)){
+            //     foreach ($request->website_information as $key => $websiteData) {
+            //         $websiteData['contact_id'] = $contact->id;
+            //         $website_information[] = Websiteinformation::create($websiteData);
+            //     }
+            // }
+            //echo '<pre>';
+            //print_r($contactData);exit;
+          ///  print_r($websiteData);exit;
             //$contactData['created_by'] = Auth::user()->id;
 
             $contact_id=$request->input('id');
