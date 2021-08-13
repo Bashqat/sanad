@@ -225,8 +225,8 @@ class ContactController extends Controller
     }
     public function store(Request $request,$org_id)
     {
-      //echo '<pre>';
-       //print_r($request->all());exit;
+    
+
 
         $obj=new OrganizationController();
         $databaseName=$obj->get_db_name($org_id);
@@ -240,6 +240,8 @@ class ContactController extends Controller
             $contactData = $this->uploadDataAttachmentsGetLinks($request->contacts,'contacts');
             $contactData['organization_id'] = $org_id;
             $contactData['created_by'] = Auth::user()->id;
+            $contactData['contact_type'] = $request->input('contact_type');
+
             $contact = Contact::create($contactData);
 
             // Save Conatct Information
