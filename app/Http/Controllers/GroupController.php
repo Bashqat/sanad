@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Http\Controllers\OrganizationController;
+use App\Models\Contact;
 
 class GroupController extends Controller
 {
@@ -55,6 +56,7 @@ class GroupController extends Controller
     }
     public function store(Request $request)
     {
+
         $obj=new OrganizationController();
         $org_id=$request->input('org_id');
         $databaseName=$obj->get_db_name($org_id);
@@ -111,4 +113,108 @@ class GroupController extends Controller
             ], 200);
         }
     }
+    public function contactList($org_id,$group_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $contacts=Contact::select('name','email','phone',)->where('type','!=','archive')->where('group_id',$group_id)->get();
+      $groups=Group::get();
+      // if(request()->ajax()){
+      //   $filter=$request->filter_value;
+      //   $contacts=Contact::where('type','!=','archive')->orderBy('tags', 'DESC')->get();
+      //   return view('contact.filter',['org_id'=>$org_id,'contacts'=>$contacts]);
+      // }
+      //return json_encode($contacts);
+       return view('group.contact',['org_id'=>$org_id,'contacts'=>$contacts,'groups'=>$groups,'group_id'=>$group_id]);
+
+    }
+    public function contactserverSide(Request $request,$org_id,$group_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+
+      $contacts=Contact::where('type','!=','archive')->where('group_id',$group_id);
+      if(request()->ajax()){
+        $search=$request->search['value'];
+
+        if($search!="") {
+          $contacts=$contacts->where('name', 'like', '%' . $search . '%')
+             ->orWhere('website', 'like', '%' . $search. '%');
+        }
+
+
+      }
+      $contacts=$contacts->get();
+      $totalData=$contacts->count();
+      $totalFiltered = $totalData;
+      $data=[];
+      foreach($contacts as $key=>$contact)
+      {
+        $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
+        $data[$key][]=$contact->name;
+        $data[$key][]=$contact->website;
+        $data[$key][]=$contact->email;
+        $phone='';
+        $token = csrf_token();
+
+        if(!empty($contact->phone))
+        {
+          foreach($contact->phone as $phone)
+          {
+            $phone=$phone;
+          }
+        }
+        $group_remove_path=route('group.contact.remove');
+        $data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
+        $data[$key][]='<div class="dropdown">
+                  <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-v"></i></a>
+                  <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);">
+                  <form class="inline-block" action="'.$group_remove_path.'" method="POST" onsubmit="return confirm(`Are you sure?`);">
+
+                      <input type="hidden" name="org_id" value="'.$org_id.'">
+
+                      <input type="hidden" name="contact_id" value="'.$contact->id.'">
+                      <input type="hidden" name="group_id" value="'.$group_id.'">
+                      <input type="hidden" name="_token" value="'.$token.'">
+                      <input type="submit" class="dropdown-item" value="Remove">
+                  </form>
+              </div>
+            </div>';
+      }
+
+
+          //$tabledata[]=$data;
+      $json_data = [
+                "draw"            => intval($request->input('draw')),
+                "recordsTotal"    => intval($totalData),
+                "recordsFiltered" => intval($totalFiltered),
+                "data"            => $data
+              ];
+      echo  json_encode($json_data);
+
+    }
+    public function groupRemove(Request $request)
+    {
+      try{
+          $contact_id=$request->input('contact_id');
+          $group_id=$request->input('group_id');
+          $org_id=$request->input('org_id');
+          $obj=new OrganizationController();
+          $databaseName=$obj->get_db_name($org_id);
+          $db_connection=$obj->org_connection($databaseName);
+          Contact::where('id',$contact_id)->where('group_id',$group_id)->update(['group_id'=>'0']);
+          return redirect()->back()->with('success','Contact removed successfully.');
+
+        }catch (Exception $e) {
+        DB::rollback();
+        } catch(\Illuminate\Database\QueryException $ex){
+        print_r($ex->getMessage());
+        DB::rollback();
+
+
+    }
+    }
+
 }

@@ -55,6 +55,8 @@
                 </div>
 
                     <ul>
+                      @if(!empty($groups))
+                      @foreach($groups as $group)
                         <li class="groups-side-bar">
 
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -62,7 +64,7 @@
                                 <div class="panel-heading" role="tab" id="heading0">
                                     <h3 class="panel-title">
                                     <a class="collapsed gp-link" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse0" aria-expanded="false" aria-controls="collapse0">
-                                        Group 1
+                                        {{$group->title}}
                                     </a>
                                     </h3>
                                 </div>
@@ -78,8 +80,10 @@
                             </div>
 
                         </li>
+                        @endforeach
+                        @endif
 
-                        <li class="groups-side-bar">
+                        <!-- <li class="groups-side-bar">
 
                             <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
                                 <div class="panel panel-default">
@@ -101,7 +105,7 @@
                                 </div>
                             </div>
 
-                        </li>
+                        </li> -->
                     </ul>
 
             </li>

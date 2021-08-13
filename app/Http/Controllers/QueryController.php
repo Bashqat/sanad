@@ -106,7 +106,7 @@ class QueryController extends Controller
         $query="CREATE TABLE `contacts` (
               `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
               `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-              `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+              `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `first_name_arabic` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `last_name_arabic` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `nickname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

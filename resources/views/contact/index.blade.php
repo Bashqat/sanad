@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.contact_layout')
 <title>Contacts</title>
 @section('content')
 
@@ -45,11 +45,11 @@
 
                             <div class="dropdown-menu">
 
-                                <a class="toggle-vis dropdown-item" data-column="1"><input type="checkbox">Name</a>
-                                <a class="toggle-vis dropdown-item" data-column="2"><input type="checkbox">website</a>
-                                  <a class="toggle-vis dropdown-item" data-column="3"><input type="checkbox">email</a>
-                                  <a class="toggle-vis dropdown-item" data-column="4"><input type="checkbox">phone</a>
-                                  <a class="toggle-vis dropdown-item" data-column="5"><input type="checkbox">Action</a>
+                                <a class="toggle-vis dropdown-item" data-column="1">Name</a>
+                                <a class="toggle-vis dropdown-item" data-column="2">website</a>
+                                  <a class="toggle-vis dropdown-item" data-column="3">email</a>
+                                  <a class="toggle-vis dropdown-item" data-column="4">phone</a>
+                                  <a class="toggle-vis dropdown-item" data-column="5">Action</a>
 
 
                             </div>
@@ -110,14 +110,14 @@
                             <thead>
                               <tr>
                                   <th><input type="checkbox" name="checkbox" class="select-all"></th>
-                                  <th>Name</th>
+                                  <th>Cntact name</th>
                                   <th>First person</th>
                                   <th>Second person</th>
-                              <th>Website</th>
-                                  <th>Email</th>
-                                  <th>Phone</th>
+                                  <th>Country</th>
+                                  <!-- <th>Email</th>
+                                  <th>Phone</th> -->
                                   <!-- <th></th> -->
-                                  <!-- <th>Tags</th> -->
+                                   <th>Tags</th>
                                   <th>Action</th>
                               </tr>
                             </thead>

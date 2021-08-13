@@ -113,6 +113,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('organisation/{org_id}/group-contact',[App\Http\Controllers\ContactController::class,'groupContact'])->name('group-contact');
         Route::post('organisation/contact/restore',[App\Http\Controllers\ContactController::class,'contactToRestore'])->name('contact.restore');
 
+
         // Route::get('contacts-import-option',[App\Http\Controllers\ContactController::class,'importContactsOption'])->name('export.contacts.option');
         // Route::post('import-contacts',[App\Http\Controllers\ContactController::class,'importContacts'])->name('import.contacts');
 
@@ -127,6 +128,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('organisation/{org_id}/group/{group_id}/contacts',[App\Http\Controllers\GroupController::class,'contactList'])->name('organisation.group.contact.list');
         Route::get('organisation/{org_id}/group/{group_id}/contact/server-side', [App\Http\Controllers\GroupController::class,'contactserverSide'])->name('group.contact.serverside');
         Route::post('organisation/group/contact/remove', [App\Http\Controllers\GroupController::class,'groupRemove'])->name('group.contact.remove');
+
+        ///contact details
+        Route::get('organisation/{org_id}/contact/{contact_id}/view', [App\Http\Controllers\ContactController::class,'view'])->name('contact.view');
 
 });
 
