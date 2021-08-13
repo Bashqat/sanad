@@ -93,7 +93,7 @@ class ContactController extends Controller
         }
 
         $data[$key][]=$contact->country;
-        $data[$key][]=$contact->email;
+        //$data[$key][]=$contact->email;
 
         $phone='';
         $token = csrf_token();
@@ -114,7 +114,7 @@ class ContactController extends Controller
 
         $edit_path=route('contact.edit',[$org_id,$contact->id]);
         $delete_path=route('contact.delete');
-        $data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
+        //$data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
         $data[$key][]=$contact->tags;
         $data[$key][]='<div class="dropdown">
                   <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-v"></i></a>
