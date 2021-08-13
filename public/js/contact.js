@@ -30,11 +30,7 @@ $(document).ready(function(){
     } );
    $('a.toggle-vis').on( 'click', function (e) {
         e.preventDefault();
-
-        // Get the column API object
-        var column = table.column( $(this).attr('data-column') );
-
-        // Toggle the visibility
+        var column = table.column($(this).attr('data-column'));
         column.visible( ! column.visible() );
     } );
     $(document).on('click', '.filter', function () {

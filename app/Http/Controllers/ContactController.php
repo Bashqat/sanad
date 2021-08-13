@@ -44,9 +44,7 @@ class ContactController extends Controller
       $obj=new OrganizationController();
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
-
       $contacts=Contact::where('type','!=','archive')->with('contact_information');
-
       if(request()->ajax()){
         $search=$request->search['value'];
         if($search=="country")
@@ -74,15 +72,13 @@ class ContactController extends Controller
       foreach($contacts as $key=>$contact)
       {
         $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
-        $data[$key][]=$contact->first_name;
-
+        $data[$key][]='<a href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->first_name.'</a>';
 
         if(isset($contact->contact_information) && count($contact->contact_information)>0 )
         {
            $first_person=$contact->contact_information[0]->first_name;
            $data[$key][]=$first_person;
-
-        }
+         }
         else {
           $data[$key][]='';
         }
@@ -96,8 +92,9 @@ class ContactController extends Controller
           $data[$key][]='';
         }
 
-        $data[$key][]=$contact->website;
+        $data[$key][]=$contact->country;
         $data[$key][]=$contact->email;
+
         $phone='';
         $token = csrf_token();
 
@@ -114,9 +111,11 @@ class ContactController extends Controller
 
 
 
+
         $edit_path=route('contact.edit',[$org_id,$contact->id]);
         $delete_path=route('contact.delete');
         $data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
+        $data[$key][]=$contact->tags;
         $data[$key][]='<div class="dropdown">
                   <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-v"></i></a>
                   <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);"><a href="'.$edit_path.'" class="dropdown-item">Edit</a>
@@ -130,6 +129,7 @@ class ContactController extends Controller
                   </form>
               </div>
             </div>';
+
       }
 
 
@@ -225,7 +225,7 @@ class ContactController extends Controller
     }
     public function store(Request $request,$org_id)
     {
-    
+
 
 
         $obj=new OrganizationController();
@@ -296,24 +296,12 @@ class ContactController extends Controller
     }
     public function update(Request $request)
     {
-
+        echo '<pre>';
+        print_r($request->all());exit;
         $obj=new OrganizationController();
         $org_id=$request->input('org_id');
         $databaseName=$obj->get_db_name($org_id);
         $db_connection=$obj->org_connection($databaseName);
-
-      //  $request->request->add(['contacts' => $request->contact]);
-        //$request->request->remove('contact');
-
-        // $validate = $request->validate([
-        //     'contacts.account_no' => 'unique:contacts|max:255|nullable',
-        //     'contacts.name' => 'unique:contacts|required|regex:/^[\pL\s\-]+$/u|max:255',
-        // ],[
-        //     'contacts.account_no.unique' => 'Account no# already exists',
-        //     'contacts.name.unique' => 'Account name already exists',
-        //     'contacts.name.regex' => 'The name format is invalid.',
-        // ]);
-
         $contact = "";
         $contactInformation = [];
         $website_information = [];
@@ -692,5 +680,9 @@ class ContactController extends Controller
                 'msg' => $e->getMessage()
             ]);
         }
+    }
+    public function view($org_id,$contact_id)
+    {
+      return view('contact/view');
     }
 }

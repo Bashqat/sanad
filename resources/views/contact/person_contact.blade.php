@@ -1,7 +1,7 @@
 <div class="tab-pane active" id="settings">
 
   <form class="form-horizontal" method="POST" action="{{ (isset($contact) && !empty($contact[0])) ? route('contact.update'):route('contact.store',[$org_id]) }}" enctype="multipart/form-data">
-
+    <input type="hidden" name="contact_type" value="person">
     @csrf
     @if(isset($contact) && !empty($contact[0]))
     <input type="hidden" name="id" value="{{$contact[0]->id}}">
@@ -87,6 +87,7 @@
         <input type="text" name="contact[phone][0][extention]" class="form-control col-md-3" placeholder="Extention" value="{{ (isset($contact[0]->phone[0]['extention']))?$contact[0]->phone[0]['extention']:'' }}">
       </div>
     </div>
+
     @if(isset($contact[0]->mobile) && !empty($contact[0]->mobile))
     @foreach($contact[0]->mobile as $key=>$mobile)
     <div class="form-group row contact-row" id="mobile-field">
@@ -128,7 +129,7 @@
     <div class="form-group row email-field">
       <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
       <div class="col-lg-9 col-md-9 col-sm-8">
-        <input type="email" name="contact[email]" class="form-control" placeholder="Example@example.com" value="">
+        <input type="email" name="contact[email]" class="form-control" placeholder="Example@example.com" value="{{ (isset($contact[0]->email))?$contact[0]->email:'' }}">
         @error('email')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -140,6 +141,7 @@
 
     <input type="hidden" value="{{ json_encode($countries) }}" id="countryList">
     <!--  Address start -->
+    <?php //echo '<pre>';print_R($contact[0]->address); ?>
 @if(isset($contact[0]->address) && !empty($contact[0]->address) )
   @foreach($contact[0]->address as $key=>$address)
 

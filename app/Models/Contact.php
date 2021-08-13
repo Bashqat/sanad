@@ -41,7 +41,8 @@ class Contact extends Model
         'personal_info',
         'emergency_contact',
         'dependent_info',
-        'contact_type'
+        'contact_type',
+        'financial_information'
     ];
     protected $casts = [
         'phone' => 'array',
