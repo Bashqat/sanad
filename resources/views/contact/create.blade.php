@@ -57,7 +57,7 @@
 						<div class="contact_form company_contact">
 							@include('contact.company_contact')
 						</div>
-						@else
+						@elseif(!isset($contact[0]->contact_type))
 						<div  class="contact_form company_contact" style="display:none">
 							@include('contact.company_contact')
 						</div>

@@ -1,15 +1,32 @@
 <div class="tab-pane active" id="settings">
+  <?php
+  $firstname='';
+  $lastname='';
+  $firstname_arabic='';
+  $lastname_arabic='';
+  if(isset($contact) && !empty($contact[0]))
+  {
+    $name=explode(" ",$contact[0]->name);
+    $name_arabic=explode(" ",$contact[0]->name_arabic);
+    $firstname=$name[0];
+    $lastname=$name[1];
+    $firstname_arabic=$name_arabic[0];
+    $lastname_arabic=$name_arabic[1];
+
+  }
+  ?>
     <form class="form-horizontal" method="POST" action="{{ (isset($contact) && !empty($contact[0])) ? route('contact.employee.update'):route('contact.employee.store',[$org_id]) }}" enctype="multipart/form-data">
-        <!-- <input type="hidden" name="contact_type" value="employee"> -->
+        <input type="hidden" name="contact_type" value="employee">
         @csrf
         @if(isset($contact) && !empty($contact[0]))
           <input type="hidden" name="id" value="{{$contact[0]->id}}">
           <input type="hidden" name="org_id" value="{{$org_id}}">
         @endif
+
         <div class="form-group row">
           <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Contact name in English <span style="color:red;">*</span> </label>
           <div class="col-lg-4 col-md-3 col-sm-4">
-            <input type="text" name="contact[first_name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" First Name" required="" value="{{ (isset($contact[0]->first_name))?$contact[0]->first_name:'' }}">
+            <input type="text" name="contact[first_name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" First Name" required="" value="{{ (isset($firstname))?$firstname:'' }}">
             @error('contacts.first_name')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
@@ -17,7 +34,7 @@
             @enderror
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4">
-            <input type="text" name="contact[last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name" required="" value="{{ (isset($contact[0]->last_name))?$contact[0]->last_name:'' }}">
+            <input type="text" name="contact[last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name" required="" value="{{ (isset($lastname))?$lastname:'' }}">
             @error('contacts.first_name')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
@@ -28,7 +45,7 @@
         <div class="form-group row">
           <label for="name_arabic" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Contact  name in other language </label>
           <div class="col-lg-4 col-md-4 col-sm-5">
-            <input type="text" name="contact[first_name_arabic]" class="form-control" placeholder=" First Name" value="{{ (isset($contact[0]->first_name_arabic))?$contact[0]->first_name_arabic:'' }}">
+            <input type="text" name="contact[first_name_arabic]" class="form-control" placeholder=" First Name" value="{{ (isset($firstname_arabic))?$firstname_arabic:'' }}">
             @error('first_name_arabic')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
@@ -36,7 +53,7 @@
             @enderror
           </div>
           <div class="col-lg-4.5 col-md-4 col-sm-5">
-            <input type="text" name="contact[last_name_arabic]" class="form-control" placeholder=" Last Name" value="{{ (isset($contact[0]->last_name_arabic))?$contact[0]->last_name_arabic:'' }}">
+            <input type="text" name="contact[last_name_arabic]" class="form-control" placeholder=" Last Name" value="{{ (isset($lastname_arabic))?$lastname_arabic:'' }}">
             @error('last_name_arabic')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
@@ -96,10 +113,12 @@
 
       <a href="javascript:void(0)" class="float-right mr-5 mobile-clone-only" data-count="{{(isset($contact[0]->mobile) && !empty($contact[0]->mobile))?count($contact[0]->mobile)-1:0}}">Add Another Mobile</a>
       <br>
+      @if(isset($contact[0]->email) && !empty($contact[0]->email))
+        @foreach($contact[0]->email as $key=>$email)
       <div class="form-group row email-field">
         <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
         <div class="col-lg-9 col-md-9 col-sm-8">
-          <input type="email" name="contact[email]" class="form-control" placeholder="Example@example.com" value="">
+          <input type="email" name="contact[email][{{$key}}]" class="form-control" placeholder="Example@example.com" value="{{$email}}">
           @error('email')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -107,6 +126,20 @@
           @enderror
         </div>
       </div>
+      @endforeach
+      @else
+      <div class="form-group row email-field">
+        <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
+        <div class="col-lg-9 col-md-9 col-sm-8">
+          <input type="email" name="contact[email][0]" class="form-control" placeholder="Example@example.com" value="">
+          @error('email')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+          @enderror
+        </div>
+      </div>
+      @endif
       <a href="javascript:void(0)" class="float-right mr-5 email_only" data-count="{{(isset($contact[0]->email) && !empty($contact[0]->email))?count($contact[0]->email)-1:0}}">Add Another Email</a>
       <br>
 
@@ -168,8 +201,8 @@
     <div class="form-group row">
       <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Notes <span style="color:red;">*</span> </label>
       <div class="col-lg-3 col-md-3 col-sm-4">
-        <textarea name="contact[notes]" class="form-control @error('contacts.notes') is-invalid @enderror" placeholder=" Notes" required="" >{{ (isset($contact[0]->first_name))?$contact[0]->first_name:'' }}</textarea>
-        @error('contacts.first_name')
+        <textarea name="contact[notes]" class="form-control @error('contacts.notes') is-invalid @enderror" placeholder=" Notes" required="" >{{ (isset($contact[0]->notes))?$contact[0]->notes:'' }}</textarea>
+        @error('contacts.notes')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
         </span>
@@ -363,9 +396,9 @@
           <div class="col-lg-9 col-md-9 col-sm-8">
           <select name="contact[personal_info][0][gender]" class="form-control select2  select-input-field" style="width: 100%;">
             <option value="">Select</option>
-            <option value="male" {{ (isset($mobile['type']) && $mobile['type']=='male')?'selected':'' }}>Male</option>
-            <option value="female" {{ (isset($mobile['type']) && $mobile['type']=='female')?'selected':'' }}>Female</option>
-            <option value="other" {{ (isset($mobile['type']) && $mobile['type']=='other')?'selected':'' }}>Other</option>
+            <option value="male" {{ (isset($contact[0]->personal_info[0]['gender']) && $contact[0]->personal_info[0]['gender']=='male')?'selected':'' }}>Male</option>
+            <option value="female" {{ (isset($contact[0]->personal_info[0]['gender']) && $contact[0]->personal_info[0]['gender']=='female')?'selected':'' }}>Female</option>
+            <option value="other" {{ (isset($contact[0]->personal_info[0]['gender']) && $contact[0]->personal_info[0]['gender']=='other')?'selected':'' }}>Other</option>
           </select>
           </div>
           </div>
@@ -376,9 +409,9 @@
             <div class="col-lg-9 col-md-9 col-sm-8">
             <select name="contact[personal_info][0][blood_group]" class="form-control select2  select-input-field" style="width: 100%;">
               <option value="">Select</option>
-              <option value="a+" {{ (isset($mobile['type']) && $mobile['type']=='male')?'selected':'' }}>A+</option>
-              <option value="b+" {{ (isset($mobile['type']) && $mobile['type']=='female')?'selected':'' }}>B+</option>
-              <option value="o+" {{ (isset($mobile['type']) && $mobile['type']=='other')?'selected':'' }}>O+</option>
+              <option value="a+" {{ (isset($contact[0]->personal_info[0]['blood_group']) && $contact[0]->personal_info[0]['blood_group']=='a+')?'selected':'' }}>A+</option>
+              <option value="b+" {{ (isset($contact[0]->personal_info[0]['blood_group']) && $contact[0]->personal_info[0]['blood_group']=='b+')?'selected':'' }}>B+</option>
+              <option value="o+" {{ (isset($contact[0]->personal_info[0]['blood_group']) && $contact[0]->personal_info[0]['blood_group']=='o+')?'selected':'' }}>O+</option>
             </select>
             </div>
             </div>
@@ -389,8 +422,8 @@
               <div class="col-lg-9 col-md-9 col-sm-8">
               <select name="contact[personal_info][0][martial_status]" class="form-control select2  select-input-field" style="width: 100%;">
                 <option value="">Select</option>
-                <option value="single" {{ (isset($mobile['type']) && $mobile['type']=='male')?'selected':'' }}>Single</option>
-                <option value="married" {{ (isset($mobile['type']) && $mobile['type']=='female')?'selected':'' }}>Married</option>
+                <option value="single" {{ (isset($contact[0]->personal_info[0]['martial_status']) && $contact[0]->personal_info[0]['martial_status']=='single')?'selected':'' }}>Single</option>
+                <option value="married"  {{ (isset($contact[0]->personal_info[0]['martial_status']) && $contact[0]->personal_info[0]['martial_status']=='married')?'selected':'' }}>Married</option>
 
               </select>
               </div>
@@ -404,7 +437,7 @@
                   <select name="contact[personal_info][0][country]" class="form-control select2 select-input-field" id="countrySelect">
                     <option class="mmmm" value="">Select Country</option>
                     @foreach ($countries as $value => $option )
-                    <option value="{{ $value }}" {{(isset($address['country']) && ($value==$address['country']))?'selected':''}}>{{ $option }}</option>
+                    <option value="{{ $value }}" {{(isset($contact[0]->personal_info[0]['country']) && ($value==$contact[0]->personal_info[0]['country']))?'selected':''}}>{{ $option }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -412,13 +445,13 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
                   <div class="col-lg-9 col-md-9 col-sm-8">
-                    <input type="text" name="contact[personal_info][0][city]" class="form-control" placeholder="City" value="">
+                    <input type="text" name="contact[personal_info][0][city]" class="form-control" placeholder="City" value="{{(isset($contact[0]->personal_info[0]['city'])?$contact[0]->personal_info[0]['city']:'')}}">
 
                   </div>
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
                     <div class="col-lg-9 col-md-9 col-sm-8">
-                      <input type="date" name="contact[personal_info][0][dob]" class="form-control" placeholder="DOB" value="">
+                      <input type="date" name="contact[personal_info][0][dob]" class="form-control" placeholder="DOB" value="{{(isset($contact[0]->personal_info[0]['dob'])?$contact[0]->dob[0]['city']:'')}}">
 
                     </div>
                     </div>
@@ -431,7 +464,7 @@
                   <select name="contact[personal_info][0][nationality]" class="form-control select2 select-input-field" id="countrySelect">
                     <option class="mmmm" value="">Select Country</option>
                     @foreach ($countries as $value => $option )
-                    <option value="{{ $value }}" {{(isset($address['country']) && ($value==$address['country']))?'selected':''}}>{{ $option }}</option>
+                    <option value="{{ $value }}" {{(isset($contact[0]->personal_info[0]['nationality']) && ($value==$contact[0]->personal_info[0]['nationality']))?'selected':''}}>{{ $option }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -440,37 +473,34 @@
               </div>
               <div class="form-group row ">
                 <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">User Defined </label>
+
                 <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
                   <div class="col-lg-9 col-md-9 col-sm-8">
-                    <input type="text" name="contact[personal_info][0][user_defined]" class="form-control" placeholder="User Defined" value="">
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
+                    <input type="text" name="contact[personal_info][0][user_defined]" class="form-control" placeholder="User Defined" value="{{(isset($contact[0]->personal_info[0]['user_defined'])?$contact[0]->personal_info[0]['user_defined']:'')}}">
+
                   </div>
 
                 </div>
               </div>
+  @if(isset($contact[0]->emergency_contact) && !empty($contact[0]->emergency_contact))
+    @foreach($contact[0]->emergency_contact as $key=>$emergency_contact)
         <div class="emergency-contact">
             <div class="form-group row address-contact-row">
-              <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Emergency Contact Information</label>
+              <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Emergency Contact Information({{$key+1}})</label>
             </div>
             <div class="form-group row ">
               <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Name </label>
               <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
                 <div class="col-lg-9 col-md-9 col-sm-8">
-                  <input type="text" name="contact[emergency_contact][0][name]" class="form-control" placeholder="Name" value="">
-
+                  <input type="text" name="contact[emergency_contact][0][name]" class="form-control" placeholder="Name" value="{{(isset($emergency_contact['name'])?$emergency_contact['name']:'')}}">
                 </div>
-
               </div>
             </div>
             <div class="form-group row ">
               <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Relation </label>
               <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
                 <div class="col-lg-9 col-md-9 col-sm-8">
-                  <input type="text" name="contact[emergency_contact][0][relation]" class="form-control" placeholder="Relation" value="">
+                  <input type="text" name="contact[emergency_contact][0][relation]" class="form-control" placeholder="Relation" value="{{(isset($emergency_contact['relation'])?$emergency_contact['relation']:'')}}">
 
                 </div>
 
@@ -480,10 +510,10 @@
               <label for="land_line" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Land Line </label>
 
               <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
-                <input type="text" name="contact[emergency_contact][0][country_code]" class="form-control col-md-3" placeholder="Country Code" value="">
-                <input type="text" name="contact[emergency_contact][0][area]" class="form-control col-md-3" placeholder="Area" value="">
-                <input type="tel" name="contact[emergency_contact][0][number]" class="form-control col-md-3" placeholder="Number" value="">
-                <input type="text" name="contact[emergency_contact][0][extention]" class="form-control col-md-3" placeholder="Extention" value="">
+                <input type="text" name="contact[emergency_contact][0][country_code]" class="form-control col-md-3" placeholder="Country Code" value="{{(isset($emergency_contact['country_code'])?$emergency_contact['country_code']:'')}}">
+                <input type="text" name="contact[emergency_contact][0][area]" class="form-control col-md-3" placeholder="Area" value="{{(isset($emergency_contact['area'])?$emergency_contact['area']:'')}}">
+                <input type="tel" name="contact[emergency_contact][0][number]" class="form-control col-md-3" placeholder="Number" value="{{(isset($emergency_contact['number'])?$emergency_contact['number']:'')}}">
+                <input type="text" name="contact[emergency_contact][0][extention]" class="form-control col-md-3" placeholder="Extention" value="{{(isset($emergency_contact['extention'])?$emergency_contact['extention']:'')}}">
               </div>
             </div>
             <div class="form-group row contact-row" id="mobile-field">
@@ -492,13 +522,14 @@
               <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
                 <select name="contact[emergency_contact][0][mobile_type]" class="form-control select2 col-md-3 select-input-field" style="width: 100%;">
                   <option value="">Select Type</option>
-                  <option value="main" {{ (isset($mobile['type']) && $mobile['type']=='main')?'selected':'' }}>Main</option>
-                  <option value="work" {{ (isset($mobile['type']) && $mobile['type']=='work')?'selected':'' }}>Work</option>
-                  <option value="whatsapp" {{ (isset($mobile['type']) && $mobile['type']=='whatsapp')?'selected':'' }}>Whatsapp</option>
+                  <option value="main" {{ (isset($emergency_contact['mobile_type']) && $mobile['type']=='main')?'selected':'' }}>Main</option>
+                  <option value="work" {{ (isset($emergency_contact['mobile_type']) && $emergency_contact['mobile_type']=='work')?'selected':'' }}>Work</option>
+                  <option value="whatsapp" {{ (isset($emergency_contact['mobile_type']) && $emergency_contact['mobile_type']=='whatsapp')?'selected':'' }}>Whatsapp</option>
                 </select>
-                <input type="text" name="contact[emergency_contact][0][mobile_area]" class="form-control col-md-3" placeholder="Area" value="{{ (isset($mobile['area']))?$mobile['area']:'' }}">
-                <input type="tel" name="contact[emergency_contact][0][mobile_number]" class="form-control col-md-3" placeholder="Number" value="">
-                <input type="tel" name="contact[emergency_contact][0][mobile_extention]" class="form-control col-md-3" placeholder="Extention" value="">
+                <input type="text" name="contact[emergency_contact][0][mobile_area]" class="form-control col-md-3" placeholder="Area" value="{{ (isset($emergency_contact['mobile_area']))?$emergency_contact['mobile_area']:'' }}">
+
+                <input type="tel" name="contact[emergency_contact][0][number]" class="form-control col-md-3" placeholder="Number" value="{{ (isset($emergency_contact['number']))?$emergency_contact['number']:'' }}">
+                <input type="tel" name="contact[emergency_contact][0][mobile_extention]" class="form-control col-md-3" placeholder="Extention" value="{{ (isset($emergency_contact['mobile_extention']))?$emergency_contact['mobile_extention']:'' }}">
               </div>
 
             </div>
@@ -506,14 +537,229 @@
               <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
               <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
                 <div class="col-lg-9 col-md-9 col-sm-8">
-                  <input type="email" name="contact[emergency_contact][0][relation]" class="form-control" placeholder="Email" value="">
+                  <input type="email" name="contact[emergency_contact][0][email]" class="form-control" placeholder="Email" value="{{ (isset($emergency_contact['email']))?$emergency_contact['email']:'' }}">
 
                 </div>
 
               </div>
             </div>
           </div>
+          @endforeach
+          @else
+          <div class="emergency-contact">
+              <div class="form-group row address-contact-row">
+                <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Emergency Contact Information</label>
+              </div>
+              <div class="form-group row ">
+                <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Name </label>
+                <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+                  <div class="col-lg-9 col-md-9 col-sm-8">
+                    <input type="text" name="contact[emergency_contact][0][name]" class="form-control" placeholder="Name" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row ">
+                <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Relation </label>
+                <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+                  <div class="col-lg-9 col-md-9 col-sm-8">
+                    <input type="text" name="contact[emergency_contact][0][relation]" class="form-control" placeholder="Relation" value="">
+
+                  </div>
+
+                </div>
+              </div>
+              <div class="form-group row contact-row">
+                <label for="land_line" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Land Line </label>
+
+                <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+                  <input type="text" name="contact[emergency_contact][0][country_code]" class="form-control col-md-3" placeholder="Country Code" value="">
+                  <input type="text" name="contact[emergency_contact][0][area]" class="form-control col-md-3" placeholder="Area" value="">
+                  <input type="tel" name="contact[emergency_contact][0][number]" class="form-control col-md-3" placeholder="Number" value="">
+                  <input type="text" name="contact[emergency_contact][0][extention]" class="form-control col-md-3" placeholder="Extention" value="">
+                </div>
+              </div>
+              <div class="form-group row contact-row" id="mobile-field">
+                <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile
+                 </label>
+                <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+                  <select name="contact[emergency_contact][0][mobile_type]" class="form-control select2 col-md-3 select-input-field" style="width: 100%;">
+                    <option value="">Select Type</option>
+                    <option value="main" {{ (isset($mobile['type']) && $mobile['type']=='main')?'selected':'' }}>Main</option>
+                    <option value="work" {{ (isset($mobile['type']) && $mobile['type']=='work')?'selected':'' }}>Work</option>
+                    <option value="whatsapp" {{ (isset($mobile['type']) && $mobile['type']=='whatsapp')?'selected':'' }}>Whatsapp</option>
+                  </select>
+                  <input type="text" name="contact[emergency_contact][0][mobile_area]" class="form-control col-md-3" placeholder="Area" value="{{ (isset($mobile['area']))?$mobile['area']:'' }}">
+                  <input type="tel" name="contact[emergency_contact][0][mobile_number]" class="form-control col-md-3" placeholder="Number" value="">
+                  <input type="tel" name="contact[emergency_contact][0][mobile_extention]" class="form-control col-md-3" placeholder="Extention" value="">
+                </div>
+
+              </div>
+              <div class="form-group row ">
+                <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
+                <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+                  <div class="col-lg-9 col-md-9 col-sm-8">
+                    <input type="email" name="contact[emergency_contact][0][relation]" class="form-control" placeholder="Email" value="">
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          @endif
             <a href="javascript:void(0)" class="float-right mr-5 emergency_contact" data-count="{{(isset($contact[0]->mobile) && !empty($contact[0]->mobile))?count($contact[0]->mobile)-1:0}}">Add Another contact</a><br>
+
+            @if(isset($contact[0]->dependent_info) && !empty($contact[0]->dependent_info) )
+            @foreach($contact[0]->dependent_info as $key=>$dependent_info)
+            <div class="dependent-information">
+                <div class="form-group row address-contact-row">
+                  <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Dependent Information({{$key+1}})</label>
+                </div>
+                <div class="form-group row">
+                    <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
+                  <div class="col-lg-3 col-md-3 col-sm-4">
+                    <input type="text" name="contact[dependent_info][0][first_name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" First Name" required="" value="{{(isset($dependent_info['first_name']) && $dependent_info['first_name']!="")? $dependent_info['first_name']:'' }}">
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-4">
+                    <input type="text" name="contact[dependent_info][0][last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name" required="" value="{{(isset($dependent_info['last_name']) && $dependent_info['last_name']!="")? $dependent_info['last_name']:'' }}">
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
+                  <div class="col-lg-3 col-md-3 col-sm-4">
+                    <input type="text" name="contact[dependent_info][0][relation]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder="Relation" required="" value="{{(isset($dependent_info['relation']) && $dependent_info['relation']!="")? $dependent_info['relation']:'' }}">
+
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-4">
+                    <select name="contact[dependent_info][0][gender]" class="form-control select2  select-input-field" style="width: 100%;">
+                      <option value="">Gender</option>
+                      <option value="male" {{(isset($dependent_info['gender']) && $dependent_info['gender']=="male")? 'selected':'' }} >Male</option>
+                      <option value="female" {{(isset($dependent_info['gender']) && $dependent_info['gender']=="female")? 'selected':'' }} >Female</option>
+                      <option value="other" {{(isset($dependent_info['gender']) && $dependent_info['gender']=="other")? 'selected':'' }}>Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row ">
+                  <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Government id </label>
+                  <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                      <input type="text" name="contact[dependent_info][0][gov_id]" class="form-control" placeholder="Government Id" value="{{(isset($dependent_info['gov_id']) && $dependent_info['gov_id']!="")? $dependent_info['gov_id']:'' }}">
+                      @error('email')
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                      </span>
+                      @enderror
+                    </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
+                      <div class="col-lg-9 col-md-9 col-sm-8">
+                        <input type="date" name="contact[dependent_info][0][gov_id_issue]" class="form-control" placeholder="Work Grade" value="{{(isset($dependent_info['gov_id_issue']) && $dependent_info['gov_id_issue']!="")? $dependent_info['gov_id_issue']:'' }}">
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                      </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
+                        <div class="col-lg-9 col-md-9 col-sm-8">
+                          <input type="date" name="contact[dependent_info][0][gov_id_expiry]" class="form-control" placeholder="Work Grade" value="{{(isset($dependent_info['gov_id_expiry']) && $dependent_info['gov_id_expiry']!="")? $dependent_info['gov_id_expiry']:'' }}">
+                          @error('email')
+                          <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                          </span>
+                          @enderror
+                        </div>
+                        </div>
+                </div>
+                <div class="form-group row ">
+                  <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Passport Detail </label>
+                  <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                      <input type="text" name="contact[dependent_info][0][passport_gov_id]" class="form-control" placeholder="e.g 34345" value="{{(isset($dependent_info['passport_gov_id']) && $dependent_info['passport_gov_id']!="")? $dependent_info['passport_gov_id']:'' }}">
+                      @error('email')
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                      </span>
+                      @enderror
+                    </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
+                      <div class="col-lg-9 col-md-9 col-sm-8">
+                        <input type="date" name="contact[dependent_info][0][passport_gov_id_issue]" class="form-control" placeholder="Work Grade" value="{{(isset($dependent_info['passport_gov_id_issue']) && $dependent_info['passport_gov_id_issue']!="")? $dependent_info['passport_gov_id_issue']:'' }}">
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                      </div>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
+                        <div class="col-lg-9 col-md-9 col-sm-8">
+                          <input type="date" name="contact[dependent_info][0][passport_gov_id_expiry]" class="form-control" placeholder="Work Grade" value="{{(isset($dependent_info['passport_gov_id_expiry']) && $dependent_info['passport_gov_id_expiry']!="")? $dependent_info['passport_gov_id_expiry']:'' }}">
+                          @error('email')
+                          <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                          </span>
+                          @enderror
+                        </div>
+                        </div>
+                </div>
+
+                <div class="form-group row contact-row" id="mobile-field">
+                  <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile
+                   </label>
+
+                  <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+                    <select name="contact[dependent_info][0][mobile_type]" class="form-control select2 col-md-3 select-input-field" style="width: 100%;">
+
+                      <option value="">Select Type</option>
+                      <option value="main" {{(isset($dependent_info['mobile_type']) && $dependent_info['mobile_type']=="main")? 'selected':'' }} >Main</option>
+                      <option value="work" {{(isset($dependent_info['mobile_type']) && $dependent_info['mobile_type']=="work")? 'selected':'' }} >Work</option>
+                      <option value="whatsapp" {{(isset($dependent_info['mobile_type']) && $dependent_info['mobile_type']=="whatsapp")? 'selected':'' }} >Whatsapp</option>
+                    </select>
+                    <input type="text" name="contact[dependent_info][0][mobile_area]" class="form-control col-md-3" placeholder="Area" value="{{(isset($dependent_info['mobile_area']) && $dependent_info['mobile_area']!="")? $dependent_info['mobile_area']:'' }}">
+                    <input type="tel" name="contact[dependent_info][0][mobile_number]" class="form-control col-md-3" placeholder="Number" value="{{(isset($dependent_info['mobile_number']) && $dependent_info['mobile_number']!="")? $dependent_info['mobile_number']:'' }}">
+                    <input type="tel" name="contact[dependent_info][0][mobile_extention]" class="form-control col-md-3" placeholder="Extention" value="{{(isset($dependent_info['mobile_extention']) && $dependent_info['mobile_extention']!="")? $dependent_info['mobile_extention']:'' }}">
+                  </div>
+
+                </div>
+                <div class="form-group row ">
+                  <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
+                  <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+
+                      <input type="email" name="contact[dependent_info][0][email]" class="form-control" placeholder="Email" value="{{(isset($dependent_info['email']) && $dependent_info['email']!="")? $dependent_info['email']:'' }}">
+
+                    </div>
+
+                  </div>
+                </div>
+
+              <div class="form-group row">
+                <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Notes <span style="color:red;">*</span> </label>
+                <div class="col-lg-3 col-md-3 col-sm-4">
+                  <textarea name="contact[dependent_info][0][notes]" class="form-control @error('contacts.notes') is-invalid @enderror" placeholder=" Notes" required="" >{{(isset($dependent_info['notes']) && $dependent_info['notes']!="")? $dependent_info['notes']:'' }}</textarea>
+                  @error('contacts.first_name')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-4">
+
+                                      <div class="custom-file">
+                                        <input type="file" name="contact[dependent_info][0][attachment][]" class="form-control custom-file-input" id="attachment" accept="image/*, .pdf, .doc" multiple>
+                                        <label class="custom-file-label" for="attachment">Choose file</label>
+
+                                      </div>
+                </div>
+
+              </div>
+              </div>
+
+            @endforeach
+            @else
             <div class="dependent-information">
                 <div class="form-group row address-contact-row">
                   <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Dependent Information</label>
@@ -658,8 +904,9 @@
 
               </div>
               </div>
-                <a href="javascript:void(0)" class="float-right mr-5 dependent_info" data-count="{{(isset($contact[0]->mobile) && !empty($contact[0]->mobile))?count($contact[0]->mobile)-1:0}}">Add Another Dependent</a>
 
+            @endif
+            <a href="javascript:void(0)" class="float-right mr-5 dependent_info" data-count="{{(isset($contact[0]->mobile) && !empty($contact[0]->mobile))?count($contact[0]->mobile)-1:0}}">Add Another Dependent</a>
     <!-- persons contacts end -->
     <!--  website information start -->
 

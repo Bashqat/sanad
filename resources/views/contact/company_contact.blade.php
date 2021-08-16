@@ -1,5 +1,5 @@
 <div class="tab-pane active" id="settings">
-
+  
       <form class="form-horizontal" method="POST" action="{{ (isset($contact) && !empty($contact[0])) ? route('contact.update'):route('contact.store',[$org_id]) }}" enctype="multipart/form-data">
           <input type="hidden" name="contact_type" value="company">
           @csrf
@@ -10,7 +10,7 @@
           <div class="form-group row">
             <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Contact name in English <span style="color:red;">*</span> </label>
             <div class="col-lg-9 col-md-9 col-sm-8">
-              <input type="text" name="contact[name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" Enter Contact Name" required="" value="{{ (isset($contact[0]->first_name))?$contact[0]->first_name:'' }}">
+              <input type="text" name="contact[name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" Enter Contact Name" required="" value="{{ (isset($contact[0]->name))?$contact[0]->name:'' }}">
               @error('contacts.name')
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -43,13 +43,14 @@
           <div class="form-group row">
             <label for="account_no" class="col-lg-3 col-md-3 col-sm-4 col-form-label"> Type </label>
             <div class="col-lg-3 col-md-3 col-sm-4">
-              <input type="radio" name="contact[company_type]" value="customer" class="form-control">Customer
+              <input type="radio" name="contact[company_type]" value="customer" class="form-control" {{ (isset($contact[0]->company_type) && $contact[0]->company_type=="customer")?'checked':'' }}>Customer
             </div>
             <div class="col-lg-3 col-md-3 col-sm-4">
-              <input type="radio" name="contact[company_type]" value="supplier" class="form-control">Supplier
+              <input type="radio" name="contact[company_type]" value="supplier" class="form-control" {{ (isset($contact[0]->company_type) && $contact[0]->company_type=="supplier")?'checked':'' }}>Supplier
             </div>
             <div class="col-lg-3 col-md-3 col-sm-4">
-              <input type="radio" name="contact[company_type]" value="" class="form-control">None
+
+              <input type="radio" name="contact[company_type]" value="" class="form-control" {{ (isset($contact[0]->company_type) && $contact[0]->company_type=="")?'checked':'' }}>None
             </div>
           </div>
           <div class="form-group row">
@@ -225,13 +226,14 @@
           <input type="text" name="contact[address][0][city]" class="form-control" placeholder="City" value="{{ (isset($contact[0]->address[0]['city']))?$contact[0]->address[0]['city']:'' }}">
           <input type="text" name="contact[address][0][post_code]" class="form-control" placeholder="Post Code" value="{{ (isset($contact[0]->address[0]['post_code']))?$contact[0]->address[0]['post_code']:'' }}">
         </div>
+
         <select name="contact[address][0][country]" class="form-control select2 select-input-field" id="countrySelect">
           <option class="mmmm" value="">Select Country</option>
           @foreach ($countries as $value => $option )
-          <option value="{{ $value }}" {{isset($contact[0]->country) && ($option==$contact[0]->country)?'selected':''}}>{{ $option }}</option>
+          <option value="{{ $value }}" {{isset($contact[0]->address[0]['country']) && ($value==$contact[0]->address[0]['country'])?'selected':''}}>{{ $option }}</option>
           @endforeach
         </select>
-        <input type="url" name="contact[address][0][google_map_link]" class="form-control" placeholder="Google Map Link">
+        <input type="url" name="contact[address][0][google_map_link]" class="form-control" placeholder="Google Map Link" value="{{ (isset($contact[0]->address[0]['google_map_link']))?$contact[0]->address[0]['google_map_link']:'' }}">
       </div>
     </div>
     <a href="javascript:void(0)" id="add_address" class="float-right mr-5" data-count="0">Add Another Address</a>
@@ -441,7 +443,7 @@
       </div>
     </div>
     @endif
-    <a href="javascript:void(0)" class="float-right mr-5" id="add_person" data-count="0">Add Another Person</a>
+    <a href="javascript:void(0)" class="float-right mr-5" id="add_person" data-count="{{isset($contact[0]->contact_information) && !empty($contact[0]->contact_information)?count($contact[0]->contact_information)-1:0}}">Add Another Person</a>
     <!-- persons contacts end -->
     <!--  website information start -->
     @if(isset($contact[0]->website_information) && !empty($contact[0]->website_information))
@@ -544,7 +546,7 @@
     </div>
     @endif
 
-    <a href="javascript:void(0)" class="float-right mr-5" id="add_website" data-count="0">Add Another Website Information</a>
+    <a href="javascript:void(0)" class="float-right mr-5" id="add_website" data-count="{{isset($contact[0]->website_information) && !empty($contact[0]->website_information)?count($contact[0]->website_information)-1:0}}">Add Another Website Information</a>
     <!-- website information end -->
     <br>
     <br>

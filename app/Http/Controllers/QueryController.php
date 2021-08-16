@@ -154,6 +154,7 @@ class QueryController extends Controller
               `tags` json DEFAULT NULL,
               `address` json DEFAULT NULL,
               `emp_info` json DEFAULT NULL,
+              `contact_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `personal_info` json DEFAULT NULL,
               `emergency_contact` json DEFAULT NULL,
               `dependent_info` json DEFAULT NULL,

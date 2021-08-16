@@ -205,6 +205,7 @@ $(document).ready(function(){
 
 	$(document).on('click', '#add_website', function () {
 		var count = parseInt($(this).attr('data-count')) + 1;
+    
 		$(this).attr('data-count', count);
 		var form = `
         <div id="website_information${count}">

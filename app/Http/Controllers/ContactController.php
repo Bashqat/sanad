@@ -42,7 +42,7 @@ class ContactController extends Controller
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
       $contacts=Employee::select('id','name','email','phone',)->where('type','!=','archive')->get();
-      $groups=Group::with('subgroup')->get();  
+      $groups=Group::with('subgroup')->get();
 
     //  echo '<pre>';
       //print_r($groups);exit;
@@ -83,7 +83,8 @@ class ContactController extends Controller
       foreach($contacts as $key=>$contact)
       {
         $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
-        $data[$key][]='<a href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->name.'</a>';
+        $data[$key][]='<a href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->name.'</a>
+        <p>'.$contact->name_arabic.'</p>';
 
         if(isset($contact->contact_information) && count($contact->contact_information)>0 )
         {
@@ -191,7 +192,8 @@ class ContactController extends Controller
       foreach($contacts as $key=>$contact)
       {
         $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
-        $data[$key][]='<a href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->name.'</a>';
+        $data[$key][]='<a href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->name.'</a>
+        <p>'.$contact->name_arabic.'</p>';
 
 
 
@@ -201,7 +203,7 @@ class ContactController extends Controller
 
         $phone='';
         $token = csrf_token();
-
+        $data[$key][]=(isset($contact->personal_info[0]['nationality'])?$contact->personal_info[0]['nationality']:'');
 
 
 
@@ -416,18 +418,29 @@ class ContactController extends Controller
               $contactData['name_arabic']=$contactData['first_name_arabic'].' '.$contactData['last_name_arabic'];
               $contactData=Arr::except($contactData, ['_token','org_id','first_name','last_name','first_name_arabic','last_name_arabic']);
             }
-            // if(isset($request->website_information)){
-            //     foreach ($request->website_information as $key => $websiteData) {
-            //         $websiteData['contact_id'] = $contact->id;
-            //         $website_information[] = Websiteinformation::create($websiteData);
-            //     }
-            // }
+
 
           ///  print_r($websiteData);exit;
             //$contactData['created_by'] = Auth::user()->id;
 
             $contact_id=$request->input('id');
             $contact = Contact::where('id',$contact_id)->update($contactData);
+            if(isset($request->website_information)){
+              Websiteinformation::where('contact_id',$contact_id)->delete();
+
+                foreach ($request->website_information as $key => $websiteData) {
+                    $websiteData['contact_id'] = $contact_id;
+                    $website_information[] = Websiteinformation::create($websiteData);
+                }
+            }
+            // if(isset($request->persons_contacts)){
+            //   ContactInformation::where('contact_id',$contact_id)->delete();
+            //     foreach ($request->persons_contacts as $key => $data) {
+            //         $contactInformationData = $this->uploadDataAttachmentsGetLinks($data,'contacts');
+            //          $contactInformationData['contact_id'] = $contact->id;
+            //          $contactInformation[] = ContactInformation::create($contactInformationData);
+            //     }
+            //   }
 
             // Save Conatct Information
             // if(isset($request->persons_contacts)){
@@ -448,6 +461,7 @@ class ContactController extends Controller
 
             return redirect()->route('contact.index',[$org_id])->with('success','Contact updated successfully.');
         }catch ( \Exception $e ) {
+          print_r($e);exit;
             if($contact != ""){
                 $contact->delete();
             }
@@ -470,12 +484,7 @@ class ContactController extends Controller
         $databaseName=$obj->get_db_name($org_id);
         $db_connection=$obj->org_connection($databaseName);
         $contact=Employee::where('id',$contact_id)->get();
-
-
-        //$website_information = website_information::where('contact_id',$contact_id)->get();
         $countries = CountryListFacade::getList('en');
-
-
         return view('contact.create', compact('countries','contact','org_id'));
 
 
@@ -514,6 +523,40 @@ class ContactController extends Controller
 
 
     }
+    public function employeeUpdate(Request $request)
+    {
+
+      try{
+        $obj=new OrganizationController();
+        $org_id=$request->input('org_id');
+        $contact_id=$request->input('id');
+        $databaseName=$obj->get_db_name($org_id);
+        $db_connection=$obj->org_connection($databaseName);
+        $request->request->add(['contacts' => $request->contact]);
+        $request->request->remove('contact');
+        $contactData = $this->uploadDataAttachmentsGetLinks($request->contacts,'contacts');
+
+        // $contactData['contact']=$request->input('contacts');
+         $contactData['organization_id'] = $org_id;
+        $contactData['created_by'] = Auth::user()->id;
+        $contactData['name'] = $contactData['first_name'].' '.$contactData['last_name'];
+        $contactData['name_arabic'] =$contactData['first_name_arabic'].' '.$contactData['last_name_arabic'];
+        $contactData['contact_type'] = $request->input('contact_type');
+        $contactData=Arr::except($contactData, ['_token','org_id','first_name','last_name','first_name_arabic','last_name_arabic']);
+
+        Employee::where('id',$contact_id)->update($contactData);
+        return redirect()->route('contact.employee',[$org_id])->with('success','Contact updated successfully.');
+        // echo '<pre>';
+        // print_r($contactData);exit;
+      }catch (Exception $e) {
+      DB::rollback();
+
+  } catch(\Illuminate\Database\QueryException $ex){
+      print_r($ex->getMessage());
+      DB::rollback();
+
+    }
+  }
 
     public function destroye(Request $request)
     {
