@@ -880,6 +880,11 @@ class ContactController extends Controller
     }
     public function view($org_id,$contact_id)
     {
-      return view('contact/view');
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $contact_detail=Contact::with('contact_information')->with('website_information')->where('id',$contact_id)->get()->toArray();
+
+      return view('contact/view',compact('contact_detail'));
     }
 }

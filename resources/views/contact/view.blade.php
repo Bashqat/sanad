@@ -35,7 +35,7 @@
                     </form>
                     <div class="dropdown">
                         <button class="btn dropdown-toggle custom-btn bg-white mb-0 drop-button" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Options 
+                            Options
                             <!-- <i class="fa fa-caret-down" aria-hidden="true"></i> -->
                             <img src="/images/site-images/view-con-opt.svg">
                         </button>
@@ -70,9 +70,9 @@
                                 <img src="/images/site-images/add-website.svg">
                                 Add New Website</button>
                         </div>
-                        
+
 					</div>
-    
+
 					<div class="collapse contact-inner-table-sec" id="websites-table-box" style="">
                         <table class="w-100 border-0">
                           <thead>
@@ -107,7 +107,7 @@
                             </tr>
                           </tbody>
                         </table>
-					
+
 				    </div>
 				</div>
 
@@ -147,7 +147,7 @@
 								</div>
                             </div>
                         </div>
-						
+
 					</div>
 					<div class="collapse contact-inner-table-sec" id="contact-persons-box">
                         <table class="w-100 border-0">
@@ -220,12 +220,12 @@
                             </tr>
                           </tbody>
                         </table>
-						
+
 				    </div>
 				</div>
 
 
-               
+
                 <!-- Notes-tables-start-here -->
                 <div class="contact-tables-sec bg-white notes-tables-sec">
     <div class="table-header-menu d-flex align-items-center">
@@ -238,9 +238,9 @@
 							</button>
                           <h5 class="text-capitalize">Additonal Notes and Attachments</h5>
                         </div>
-						
+
 					</div>
-    
+
     <div class="collapse" id="note-tables-box">
                      <div class="table-header-menu d-flex align-items-center">
                          <div class="col-md-6 d-flex align-items-center">
@@ -264,11 +264,11 @@
                                 Add New Note
                              </button>
                          </div>
-                    </div> 
+                    </div>
 
-    
+
 					<!-- Tab panes -->
-					
+
 						<div class="tab-content">
 							<div class="tab-pane active" id="notes-contact" role="tabpanel" aria-labelledby="notes-tab-contact">
                             <table>
@@ -276,7 +276,7 @@
                                     <tr>
                                     <td><input type="checkbox" class="" value=""></td>
                                         <td><span>Heading will be here</span>
-                                            <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. 
+                                            <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
                                                 Lorem ipsum may be used as a placeholder before final copy is available.
                                             </p>
                                             <span>By Keith Willaim </span>
@@ -290,7 +290,7 @@
                                     <tr>
                                     <td><input type="checkbox" class="" value=""></td>
                                         <td><span>Heading will be here</span>
-                                            <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. 
+                                            <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
                                                 Lorem ipsum may be used as a placeholder before final copy is available.
                                             </p>
                                             <span>By Keith Willaim </span>
@@ -304,7 +304,7 @@
                                     <tr>
                                     <td><input type="checkbox" class="" value=""></td>
                                         <td><span>Heading will be here</span>
-                                            <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. 
+                                            <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
                                                 Lorem ipsum may be used as a placeholder before final copy is available.
                                             </p>
                                             <span>By Keith Willaim </span>
@@ -317,22 +317,22 @@
                                     </tr>
                                 </tbody>
                             </table>
-                                
-                                    
+
+
                             </div>
 							<div class="tab-pane" id="email-contact" role="tabpanel" aria-labelledby="email-tab-contact">
                                 <h2>tab222</h2>
-								
+
 							</div>
 							<div class="tab-pane" id="activity-log-contact" role="tabpanel" aria-labelledby="activity-log-tab-contact">
                                  <h2>tab33333</h2>
-								
+
                                                                     <!-- PAGINATION-START -->
-                                    
+
                                 							</div>
 						</div>
 					</div>
-    
+
 				</div>
                 <!-- Notes-tables-end-here -->
 
@@ -378,9 +378,9 @@
                                     <b>+00965 559923031</b>
                                 </div>
                             </li>
-									
+
 							</ul>
-				
+
 					</div>
 				</aside>
 
@@ -408,9 +408,9 @@
                                 <img src="/images/site-images/address-location-cont.svg">
                                 https://googlemaplink
                                 </a>
-                            </li>		
+                            </li>
 							</ul>
-				
+
 					</div>
 				</aside>
 
@@ -426,12 +426,12 @@
                             </li>
                             <li>
                                 <p>Sub Group 1</p>
-                            </li>		
+                            </li>
 							</ul>
 
                         <div class="tags-btns overflow-auto">
 							<h4 class="text-capitalize mt-2 mb-3">tags</h4>
-																					
+
 
                             <div class="tab-buttons">
                                     <button type="button" data-tag-name="test" data-tag-index="0" class="btn btn-success edit-tag">test</button>
@@ -488,13 +488,13 @@
                                     </form>
                             </div>
                         </div>
-                            
-				
+
+
 					</div>
 				</aside>
 
 
-                
+
 
 
         </div>
@@ -506,15 +506,15 @@
 <script>
     $(document).ready(function(){
   $("#arrow_id1").click(function(){
-   
+
         $(this).closest('.contact-tables-sec').addClass("active-contact-table-sec");
-    
+
   });
   $("#arrow_id2").click(function(){
-    
+
         $(this).closest('.contact-tables-sec').removeClass("active-contact-table-sec");
- 
-    
+
+
   });
 });
     </script>
