@@ -7,20 +7,24 @@
 		<!-- /.col -->
 		<div class="col-md-12">
 			<div class="card">
-				<div class="card-header p-2">
-					<ul class="nav nav-pills justify-content-end  px-3">
-						<li class="nav-item">&nbsp;</li>
-					</ul>
+				<div class="card-header p-2 text-center d-flex align-items-center justify-content-center">
+					@if(!isset($contact[0]->contact_type) )
+					   <div class="contact-inputs-type mr-4">
+							<input type="radio" class="contact_type mr-2" name="contact_type" value='person' checked>Person
+						  </div>
+							<div class="contact-inputs-type mr-4">
+							<input type="radio" class="contact_type mr-2" name="contact_type" value='employee'>employee
+							 </div>
+							<div class="contact-inputs-type">
+							<input type="radio" class="contact_type mr-2" name="contact_type" value='company'>company
+							 </div>
+					@endif
 				</div><!-- /.card-header -->
 
 				<div class="card-body">
 
 					<div class="tab-content contact-create-sec">
-						@if(!isset($contact[0]->contact_type) )
-								<input type="radio" class="contact_type" name="contact_type" value='person' checked>Person
-								<input type="radio" class="contact_type" name="contact_type" value='employee'>employee
-								<input type="radio" class="contact_type" name="contact_type" value='company'>company
-						@endif
+
 
 						@if(isset($contact[0]->contact_type) && $contact[0]->contact_type=="person" )
 						<div class="contact_form person_contact">

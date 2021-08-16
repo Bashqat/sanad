@@ -1,5 +1,5 @@
 <div class="tab-pane active" id="settings">
-  
+
       <form class="form-horizontal" method="POST" action="{{ (isset($contact) && !empty($contact[0])) ? route('contact.update'):route('contact.store',[$org_id]) }}" enctype="multipart/form-data">
           <input type="hidden" name="contact_type" value="company">
           @csrf
@@ -43,14 +43,19 @@
           <div class="form-group row">
             <label for="account_no" class="col-lg-3 col-md-3 col-sm-4 col-form-label"> Type </label>
             <div class="col-lg-3 col-md-3 col-sm-4">
-              <input type="radio" name="contact[company_type]" value="customer" class="form-control" {{ (isset($contact[0]->company_type) && $contact[0]->company_type=="customer")?'checked':'' }}>Customer
+              <div class="company-type-options d-flex align-items-center">
+                  <input type="radio" name="contact[company_type]" value="customer" class="form-control mr-2 w-auto h-auto" {{ (isset($contact[0]->company_type) && $contact[0]->company_type=="customer")?'checked':'' }}>Customer
+              </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-4">
-              <input type="radio" name="contact[company_type]" value="supplier" class="form-control" {{ (isset($contact[0]->company_type) && $contact[0]->company_type=="supplier")?'checked':'' }}>Supplier
+              <div class="company-type-options d-flex align-items-center">
+                <input type="radio" name="contact[company_type]" value="supplier" class="form-control mr-2 w-auto h-auto" {{ (isset($contact[0]->company_type) && $contact[0]->company_type=="supplier")?'checked':'' }}>Supplier
+            </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-4">
-
-              <input type="radio" name="contact[company_type]" value="" class="form-control" {{ (isset($contact[0]->company_type) && $contact[0]->company_type=="")?'checked':'' }}>None
+              <div class="company-type-options d-flex align-items-center">
+                <input type="radio" name="contact[company_type]" value="" class="form-control mr-2 w-auto h-auto" {{ (isset($contact[0]->company_type) && $contact[0]->company_type=="")?'checked':'' }}>None
+             </div>
             </div>
           </div>
           <div class="form-group row">
