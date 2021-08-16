@@ -242,10 +242,10 @@
 					</div>
     
     <div class="collapse" id="note-tables-box">
-                     <div class="table-header-menu d-flex align-items-center">
-                         <div class="col-md-6 d-flex align-items-center">
+                     <div class="nav-header-menu d-flex align-items-center">
+                         <div class="col-md-6 d-flex align-items-center p-0">
                                 <!-- Nav tabs -->
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <ul class="nav nav-tabs mb-0" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="notes-tab-contact" data-toggle="tab" href="#notes-contact" role="tab" aria-controls="home" aria-selected="true">Notes</a>
                                     </li>
@@ -257,7 +257,7 @@
                                     </li>
                                 </ul>
                          </div>
-                         <div class="col-md-6 d-flex align-items-center justify-content-end">
+                         <div class="col-md-6 d-flex align-items-center justify-content-end p-0">
                               <button class="btn add-btn d-flex align-items-center" data-toggle="modal" data-target="#add-note-modal">
                 <!--             <i class="far fa-sticky-note mr-1"></i>-->
                                 <img src="/images/site-images/add-website.svg">
@@ -271,52 +271,63 @@
 					
 						<div class="tab-content">
 							<div class="tab-pane active" id="notes-contact" role="tabpanel" aria-labelledby="notes-tab-contact">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                    <td><input type="checkbox" class="" value=""></td>
-                                        <td><span>Heading will be here</span>
-                                            <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. 
-                                                Lorem ipsum may be used as a placeholder before final copy is available.
-                                            </p>
-                                            <span>By Keith Willaim </span>
-                                            <p>(Last edited by - Mark Boucher - 9/7/2021 - 7:33 AM)</p>
-                                        </td>
-                                        <td>
-                                            <img src="/images/site-images/c-p-l-pdf.svg">(03)
-                                            <img src="/images/site-images/contact-nots-pin.svg">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                    <td><input type="checkbox" class="" value=""></td>
-                                        <td><span>Heading will be here</span>
-                                            <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. 
-                                                Lorem ipsum may be used as a placeholder before final copy is available.
-                                            </p>
-                                            <span>By Keith Willaim </span>
-                                            <p>(Last edited by - Mark Boucher - 9/7/2021 - 7:33 AM)</p>
-                                        </td>
-                                        <td>
-                                            <img src="/images/site-images/c-p-l-pdf.svg">(03)
-                                            <img src="/images/site-images/contact-nots-pin.svg">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                    <td><input type="checkbox" class="" value=""></td>
-                                        <td><span>Heading will be here</span>
-                                            <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. 
-                                                Lorem ipsum may be used as a placeholder before final copy is available.
-                                            </p>
-                                            <span>By Keith Willaim </span>
-                                            <p>(Last edited by - Mark Boucher - 9/7/2021 - 7:33 AM)</p>
-                                        </td>
-                                        <td>
-                                            <img src="/images/site-images/c-p-l-pdf.svg">(03)
-                                            <img src="/images/site-images/contact-nots-pin.svg">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                <div class="notes-contact-inner-table-sec contact-inner-table-sec">
+                                    <table class="w-100 border-0">
+                                    <tbody>
+                                        <tr>
+                                        <td><input type="checkbox" class="" value=""></td>
+                                            <td><span>Heading will be here</span>
+                                                <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. 
+                                                    Lorem ipsum may be used as a placeholder before final copy is available.
+                                                </p>
+                                                <div class="notes-time-detail d-flex">
+                                                    <span>By Keith Willaim </span>
+                                                    <p>(Last edited by - Mark Boucher - 9/7/2021 - 7:33 AM)</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="nots-attach-pdf d-flex align-items-center">
+                                                    <img src="/images/site-images/c-p-l-pdf.svg">(03)
+                                                    <img src="/images/site-images/contact-nots-pin.svg">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                        <td><input type="checkbox" class="" value=""></td>
+                                            <td><span>Heading will be here</span>
+                                                <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. 
+                                                    Lorem ipsum may be used as a placeholder before final copy is available.
+                                                </p>
+                                                <div class="notes-time-detail d-flex">
+                                                    <span>By Keith Willaim </span>
+                                                    <p>(Last edited by - Mark Boucher - 9/7/2021 - 7:33 AM)</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <img src="/images/site-images/c-p-l-pdf.svg">(03)
+                                                <img src="/images/site-images/contact-nots-pin.svg">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                        <td><input type="checkbox" class="" value=""></td>
+                                            <td><span>Heading will be here</span>
+                                                <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. 
+                                                    Lorem ipsum may be used as a placeholder before final copy is available.
+                                                </p>
+                                                <div class="notes-time-detail d-flex">
+                                                    <span>By Keith Willaim </span>
+                                                    <p>(Last edited by - Mark Boucher - 9/7/2021 - 7:33 AM)</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <img src="/images/site-images/c-p-l-pdf.svg">(03)
+                                                <img src="/images/site-images/contact-nots-pin.svg">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                            
                                 
                                     
                             </div>
