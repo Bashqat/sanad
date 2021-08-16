@@ -2797,6 +2797,86 @@ form.header-search .input-group input.form-control {
     height: 100px;
 }
 
+.contact-tables-sec {
+    padding: 22px 40px 22px 16px;
+	margin-bottom: 20px;
+}
+
+.contact-tables-sec button.right-conatct-arrow {
+    padding: 0px 16px 0px 0px;
+}
+
+.contact-tables-sec h5 {
+    color: #4A4A4A;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+}
+
+.contact-view-website button.btn.add-btn {
+    padding: 0px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #4B7DDE;
+}
+
+.contact-view-website button.btn.add-btn img {
+    padding-right: 6px;
+}
+
+.websites-table-sec {
+    padding: 20px 0px 0px 24px;
+}
+
+.websites-table-sec table tr th {
+    height: 57px !important;
+    vertical-align: middle !important;
+    background: #F6F9FD;
+    font-size: 14px;
+    color: #4B7DDE;
+    line-height: 20px;
+    letter-spacing: -0.05px;
+    font-weight: 600;
+	text-align: left;
+}
+
+.websites-table-sec table tr td {
+    height: 57px;
+    vertical-align: middle;
+    padding: 0px !important;
+    text-align: left;
+}
+
+.websites-table-sec table tr td:first-child {
+    padding-left: 20px !important;
+}
+
+.websites-table-sec table tr td:last-child img {
+    margin-right: 10px;
+}
+
+.websites-table-sec table tbody tr {
+    border: 1px solid #f6f9fe;
+}
+
+.contact-view-contact-person-list button.btn.dropdown-toggle {
+    padding: 0px;
+    width: 81px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #434343;
+    border: 1px solid #eeeeee;
+    font-weight: 400;
+	font-family: helvetica neue;
+}
+
+.contact-view-contact-person-list .dropdown:first-child {
+    margin-right: 10px;
+}
+
 /***** contact-view-css-end-here *****/
 
 /***** Aug-14-css-end-here *****/

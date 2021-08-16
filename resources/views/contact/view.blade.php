@@ -52,10 +52,10 @@
         </div>
         <div class="row">
         <div class="col-md-9">
-        <div class="english-table-inner border p-3 bg-white mb-4">
+        <div class="contact-view-website contact-tables-sec border bg-white">
 					<div class="table-header-menu d-flex align-items-center">
-                        <div class="col-md-6 d-flex align-items-center">
-                            <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#websites-table-box" aria-expanded="false" aria-controls="collapseExample">
+                        <div class="col-md-6 d-flex align-items-center p-0">
+                            <button class="right-conatct-arrow btn collapsed" type="button" data-toggle="collapse" data-target="#websites-table-box" aria-expanded="false" aria-controls="collapseExample">
 								<h1 class="mb-0">
                                     <!-- <i class="fa fa-angle-down"></i> -->
                                     <img src="/images/site-images/cont-view-right-arrow.svg">
@@ -63,7 +63,7 @@
 							</button>
                            <h5 class="text-capitalize">websites</h5>
                         </div>
-                        <div class="col-md-6 d-flex justify-content-end">
+                        <div class="col-md-6 d-flex justify-content-end p-0">
                             <button class="btn add-btn d-flex align-items-center" data-toggle="modal" data-target="#add-website-modal">
 <!--                                <i class="fa fa-plus border rounded-circle p-1"></i>-->
                                 <img src="/images/site-images/add-website.svg">
@@ -72,10 +72,11 @@
                         
 					</div>
     
-					<div class="collapse" id="websites-table-box" style="">
-                        <table class="w-100">
+					<div class="collapse websites-table-sec" id="websites-table-box" style="">
+                        <table class="w-100 border-0">
                           <thead>
                             <tr>
+                             <th></th>
                               <th>Website Name</th>
                               <th>Link</th>
                                 <th>User Name</th>
@@ -111,10 +112,10 @@
 
 
 
-                <div class="english-table-inner border p-3 bg-white mb-4">
+                <div class="contact-view-contact-person-list contact-tables-sec border p-3 bg-white mb-4">
 					<div class="table-header-menu d-flex align-items-center">
-                        <div class="col-md-6 d-flex align-items-center">
-                             <button class="btn" type="button" data-toggle="collapse" data-target="#contact-persons-box" aria-expanded="false" aria-controls="collapseExample">
+                        <div class="col-md-6 d-flex align-items-center p-0">
+                             <button class="btn right-conatct-arrow" type="button" data-toggle="collapse" data-target="#contact-persons-box" aria-expanded="false" aria-controls="collapseExample">
 								<h1 class="mb-0">
 <!--                                    <i class="fa fa-angle-down"></i>-->
                                     <img src="/images/site-images/cont-view-right-arrow.svg">
@@ -122,7 +123,7 @@
 							</button>
                           <h5 class="text-capitalize">Contact Persons List</h5>
                         </div>
-                        <div class="col-md-6 d-flex justify-content-end">
+                        <div class="col-md-6 d-flex justify-content-end p-0">
                             <div class="dropdown">
 								<button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <!--									<i class="fa fa-list mr-1 p-1"></i>-->
