@@ -2798,7 +2798,6 @@ form.header-search .input-group input.form-control {
 }
 
 .contact-tables-sec {
-    padding: 22px 40px 22px 16px;
 	margin-bottom: 20px;
 }
 
@@ -2824,12 +2823,12 @@ form.header-search .input-group input.form-control {
     padding-right: 6px;
 }
 
-.websites-table-sec {
-    padding: 20px 0px 0px 24px;
+.contact-inner-table-sec {
+    padding: 22px 40px 22px 42px;
 }
 
-.websites-table-sec table tr th {
-    height: 57px !important;
+.contact-inner-table-sec table tr th {
+    height: 54px !important;
     vertical-align: middle !important;
     background: #F6F9FD;
     font-size: 14px;
@@ -2840,22 +2839,26 @@ form.header-search .input-group input.form-control {
 	text-align: left;
 }
 
-.websites-table-sec table tr td {
-    height: 57px;
+.contact-inner-table-sec table tr td {
+    height: 54px;
     vertical-align: middle;
     padding: 0px !important;
     text-align: left;
+	font-size: 14px;
+    color: #4A4A4A;
+    line-height: 20px;
+    letter-spacing: -0.05px;
 }
 
-.websites-table-sec table tr td:first-child {
+.contact-inner-table-sec table tr td:first-child {
     padding-left: 20px !important;
 }
 
-.websites-table-sec table tr td:last-child img {
+.contact-inner-table-sec table tr td:last-child img {
     margin-right: 10px;
 }
 
-.websites-table-sec table tbody tr {
+.contact-inner-table-sec table tbody tr {
     border: 1px solid #f6f9fe;
 }
 
@@ -2875,6 +2878,114 @@ form.header-search .input-group input.form-control {
 
 .contact-view-contact-person-list .dropdown:first-child {
     margin-right: 10px;
+}
+
+tr.contact-group-heading th {
+    background: #f6f6f6!important;
+    color: #434343 !important;
+}
+
+.contact-view-contact-person-list .contact-inner-table-sec table td a {
+    color: #32C5FF;
+    text-decoration: underline;
+}
+
+.contact-person-list-details img {
+    margin-right: 10px;
+}
+
+.contact-person-list-details img:last-child {
+    margin: 0px;
+}
+
+.contact-view-contact-person-list .contact-inner-table-sec table textarea {
+    width: 307px;
+    height: 37px;
+    border-color: #E9E9E9;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #979797;
+    line-height: 20px;
+    letter-spacing: -0.04px;
+    padding: 6px 10px 6px 14px;
+}
+
+.contact-pdf-data img {
+    margin-right: 7px;
+}
+
+.contact-tables-sec .table-header-menu.d-flex.align-items-center {
+	padding: 0px 40px 0px 16px;
+    height: 57px;
+}
+
+.active-contact-table-sec.contact-tables-sec {
+    border: 1px solid red !important;
+}
+
+.active-contact-table-sec .table-header-menu{
+    padding: 22px 40px 22px 16px;
+    border-bottom: 2px solid;
+}
+
+img.cont-view-up-arrow {
+    display: none;
+}
+
+.active-contact-table-sec img.cont-view-up-arrow {
+    display: block;
+}
+
+.active-contact-table-sec img.cont-view-right-arrow {
+    display: none;
+}
+
+.contact-detail-sec {
+    padding: 25px 25px 20px;
+    margin-bottom: 20px;
+
+}
+
+.contact-detail-sec .sidebar-top {
+    margin-bottom: 20px;
+}
+
+.contact-detail-sec .sidebar-top h4 {
+    color: #4A4A4A;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.06px;
+}
+
+.contact-detail-sec ul.sidebar-top-list li {
+    padding: 15px 20px;
+    margin: 0px 0px 15px;
+    background: #F9FAFC;
+    color: #4A4A4A;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.06px;
+	font-weight: 400;
+}
+
+.contact-detail-sec ul.sidebar-top-list li p {
+    margin: 0px;
+}
+
+.contact-detail-sec ul.sidebar-top-list li a {
+    color: #32C5FF;
+}
+
+.contact-detail-sec ul.sidebar-top-list li a img {
+    margin-right: 10px;
+}
+
+.contact-detail-sec ul.sidebar-top-list li b {
+    font-weight: 600;
+}
+
+.contact-detail-sec ul.sidebar-top-list li:last-child {
+    margin-bottom: 0px;
 }
 
 /***** contact-view-css-end-here *****/

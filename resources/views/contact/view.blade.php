@@ -52,13 +52,14 @@
         </div>
         <div class="row">
         <div class="col-md-9">
-        <div class="contact-view-website contact-tables-sec border bg-white">
+        <div class="contact-view-website contact-tables-sec  bg-white">
 					<div class="table-header-menu d-flex align-items-center">
                         <div class="col-md-6 d-flex align-items-center p-0">
                             <button class="right-conatct-arrow btn collapsed" type="button" data-toggle="collapse" data-target="#websites-table-box" aria-expanded="false" aria-controls="collapseExample">
 								<h1 class="mb-0">
                                     <!-- <i class="fa fa-angle-down"></i> -->
-                                    <img src="/images/site-images/cont-view-right-arrow.svg">
+                                    <img src="/images/site-images/cont-view-right-arrow.svg" class="cont-view-right-arrow" id="arrow_id1">
+                                    <img src="/images/site-images/cont-view-up-arrow.svg" class="cont-view-up-arrow" id="arrow_id2">
                                 </h1>
 							</button>
                            <h5 class="text-capitalize">websites</h5>
@@ -72,7 +73,7 @@
                         
 					</div>
     
-					<div class="collapse websites-table-sec" id="websites-table-box" style="">
+					<div class="collapse contact-inner-table-sec" id="websites-table-box" style="">
                         <table class="w-100 border-0">
                           <thead>
                             <tr>
@@ -112,13 +113,14 @@
 
 
 
-                <div class="contact-view-contact-person-list contact-tables-sec border p-3 bg-white mb-4">
+                <div class="contact-view-contact-person-list contact-tables-sec  bg-white mb-4">
 					<div class="table-header-menu d-flex align-items-center">
                         <div class="col-md-6 d-flex align-items-center p-0">
                              <button class="btn right-conatct-arrow" type="button" data-toggle="collapse" data-target="#contact-persons-box" aria-expanded="false" aria-controls="collapseExample">
 								<h1 class="mb-0">
 <!--                                    <i class="fa fa-angle-down"></i>-->
-                                    <img src="/images/site-images/cont-view-right-arrow.svg">
+                                    <img src="/images/site-images/cont-view-right-arrow.svg" class="cont-view-right-arrow" id="arrow_id1">
+                                    <img src="/images/site-images/cont-view-up-arrow.svg" class="cont-view-up-arrow" id="arrow_id2">
                                  </h1>
 							</button>
                           <h5 class="text-capitalize">Contact Persons List</h5>
@@ -147,10 +149,11 @@
                         </div>
 						
 					</div>
-					<div class="collapse " id="contact-persons-box">
-                        <table class="w-100">
+					<div class="collapse contact-inner-table-sec" id="contact-persons-box">
+                        <table class="w-100 border-0">
                           <thead>
                             <tr>
+                            <th></th>
                               <th>Person Name</th>
                               <th>Nick Name</th>
                                 <th>Position</th>
@@ -161,7 +164,8 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
+                          <tr class="contact-group-heading">
+                                <th></th>
                                 <th colspan="7">Group 1</th>
                             </tr>
                             <tr>
@@ -170,9 +174,11 @@
                                 <td>Marco</td>
                                 <td>Manager</td>
                                 <td>
-                                    <img src="/images/site-images/c-p-l-email.svg">
-                                    <img src="/images/site-images/c-p-l-phone.svg">
-                                    <img src="/images/site-images/c-p-l-wtap.svg">
+                                    <div class="contact-person-list-details d-inline-flex">
+                                        <img src="/images/site-images/c-p-l-email.svg">
+                                        <img src="/images/site-images/c-p-l-phone.svg">
+                                        <img src="/images/site-images/c-p-l-wtap.svg">
+                                    </div>
                                 </td>
                                 <td>
                                     <textarea type="text" placeholder="Type here"></textarea>
@@ -184,7 +190,8 @@
                                     <img src="/images/site-images/3-dots-cont-view.svg">
                                 </td>
                             </tr>
-                               <tr>
+                            <tr class="contact-group-heading">
+                              <th></th>
                                 <th colspan="7">Group 1</th>
                             </tr>
                             <tr>
@@ -193,15 +200,19 @@
                                 <td>Marco</td>
                                 <td>Manager</td>
                                 <td>
-                                    <img src="/images/site-images/c-p-l-email.svg">
-                                    <img src="/images/site-images/c-p-l-phone.svg">
-                                    <img src="/images/site-images/c-p-l-wtap.svg">
+                                   <div class="contact-person-list-details d-inline-flex">
+                                        <img src="/images/site-images/c-p-l-email.svg">
+                                        <img src="/images/site-images/c-p-l-phone.svg">
+                                        <img src="/images/site-images/c-p-l-wtap.svg">
+                                    </div>
                                 </td>
                                 <td>
                                     <textarea type="text" placeholder="Type here"></textarea>
                                 </td>
                                 <td>
-                                    <img src="/images/site-images/c-p-l-pdf.svg">
+                                    <div class="contact-pdf-data d-flex align-items-center">
+                                        <img src="/images/site-images/c-p-l-pdf.svg">(03)
+                                    </div>
                                 </td>
                                 <td>
                                     <img src="/images/site-images/3-dots-cont-view.svg">
@@ -216,10 +227,10 @@
 
                
                 <!-- Notes-tables-start-here -->
-                <div class="english-table-inner border p-3 bg-white mb-4 notes-tables-sec">
+                <div class="contact-tables-sec bg-white notes-tables-sec">
     <div class="table-header-menu d-flex align-items-center">
-                        <div class="col-md-12 d-flex align-items-center">
-                             <button class="btn" type="button" data-toggle="collapse" data-target="#note-tables-box" aria-expanded="false" aria-controls="collapseExample">
+                        <div class="col-md-12 d-flex align-items-center p-0">
+                             <button class="btn right-conatct-arrow" type="button" data-toggle="collapse" data-target="#note-tables-box" aria-expanded="false" aria-controls="collapseExample">
 								<h1 class="mb-0">
 <!--                                    <i class="fa fa-angle-down"></i>-->
                                     <img src="/images/site-images/cont-view-right-arrow.svg">
@@ -331,7 +342,7 @@
         </div>
         <div class="col-md-3">
 
-        <aside class="p-3 bg-white pb-5 mb-5 contact-detail-sec">
+        <aside class="bg-white contact-detail-sec">
 					<div class="sidebar-top d-flex justify-content-between align-items-center">
 						<h4 class="text-capitalize mb-0">Contact Details</h4>
 					</div>
@@ -344,13 +355,13 @@
                                 </div>
                             </li>
 							<li>
-                                <a href="#">
+                                <a href="#" class="d-inline-flex">
                                 <img src="/images/site-images/contact-globe.svg">
                                 https://dribbble.com
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#" class="d-inline-flex">
                                 <img src="/images/site-images/contact-globe.svg">
                                 https://dribbble.com
                                 </a>
@@ -374,7 +385,7 @@
 				</aside>
 
 
-                <aside class="p-3 bg-white pb-5 mb-5 contact-address-detail-sec">
+                <aside class="bg-white contact-detail-sec">
 					<div class="sidebar-top d-flex justify-content-between align-items-center">
 						<h4 class="text-capitalize mb-0">Address</h4>
 					</div>
@@ -393,7 +404,7 @@
                                 </div>
                             </li>
 							<li>
-                                <a href="#">
+                                <a href="#" class="d-inline-flex">
                                 <img src="/images/site-images/address-location-cont.svg">
                                 https://googlemaplink
                                 </a>
@@ -492,4 +503,19 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function(){
+  $("#arrow_id1").click(function(){
+   
+        $(this).closest('.contact-tables-sec').addClass("active-contact-table-sec");
+    
+  });
+  $("#arrow_id2").click(function(){
+    
+        $(this).closest('.contact-tables-sec').removeClass("active-contact-table-sec");
+ 
+    
+  });
+});
+    </script>
 @endsection
