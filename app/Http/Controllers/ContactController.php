@@ -42,7 +42,7 @@ class ContactController extends Controller
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
       $contacts=Employee::select('id','name','email','phone',)->where('type','!=','archive')->get();
-      $groups=Group::with('subgroup')->get();
+      $groups=Group::with('subgroup')->get(); 
     //  echo '<pre>';
       //print_r($groups);exit;
 
