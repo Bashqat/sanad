@@ -20,11 +20,11 @@
                         <img src="/images/site-images/customers.svg">
                         Customers</li>
                         <li class="sidebar-dropdown new-contact-btns">
-                        <img src="/images/site-images/supplier.svg">
+                      <a href="{{ route('contact.supplier',[$org_id,'supplier']) }}">  <img src="/images/site-images/supplier.svg">
                         Suppliers</li>
-                        <li class="sidebar-dropdown new-contact-btns">
+                        <li class="sidebar-dropdown new-contact-btns"><a href="{{ route('contact.employee',[$org_id]) }}">
                         <img src="/images/site-images/employees.svg">
-                        Employees</li>
+                        Employees</a></li>
                         <li class="sidebar-dropdown new-contact-btns">
                            <img src="/images/site-images/archive.svg">
                             <a href="{{ route('contact.archive',[$org_id]) }}">
@@ -55,6 +55,7 @@
 
                     <ul>
                       @if(!empty($groups))
+
                       @foreach($groups as $group)
                         <li class="groups-side-bar">
 
@@ -70,8 +71,14 @@
                                 <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0" style="">
                                     <div class="panel-body">
                                     <ul>
-                                        <li>Sub Group 1</li>
-                                        <li>Sub Group 2</li>
+
+                                      @if(!empty($group->subgroup))
+                                      @foreach($group->subgroup as $subgroup)
+                                      <?php //print_R($subgroup); ?>
+                                        <li><a href="{{route('organisation.group.contact.list',[$org_id,$subgroup['id']])}}">{{$subgroup['title']}}</a></li>
+                                        @endforeach
+                                        @endif
+
                                     </ul>
                                     </div>
                                 </div>

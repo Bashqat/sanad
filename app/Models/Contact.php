@@ -11,10 +11,8 @@ class Contact extends Model
 
     protected $fillable = [
         'xero_contact_id',
-        'first_name',
-        'last_name',
-        'first_name_arabic',
-        'last_name_arabic',
+        'name',
+        'name_arabic',
         'nickname',
         'position',
         'type',

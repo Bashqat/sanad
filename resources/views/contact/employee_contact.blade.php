@@ -1,6 +1,6 @@
 <div class="tab-pane active" id="settings">
-    <form class="form-horizontal" method="POST" action="{{ (isset($contact) && !empty($contact[0])) ? route('contact.update'):route('contact.store',[$org_id]) }}" enctype="multipart/form-data">
-        <input type="hidden" name="contact_type" value="employee">
+    <form class="form-horizontal" method="POST" action="{{ (isset($contact) && !empty($contact[0])) ? route('contact.employee.update'):route('contact.employee.store',[$org_id]) }}" enctype="multipart/form-data">
+        <!-- <input type="hidden" name="contact_type" value="employee"> -->
         @csrf
         @if(isset($contact) && !empty($contact[0]))
           <input type="hidden" name="id" value="{{$contact[0]->id}}">
@@ -99,7 +99,7 @@
       <div class="form-group row email-field">
         <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
         <div class="col-lg-9 col-md-9 col-sm-8">
-          <input type="email" name="contact[email]" class="form-control" placeholder="Example@example.com" value="{{(isset($contact[0]->email) && !empty($contact[0]->email))?$contact[0]->email:''}}">
+          <input type="email" name="contact[email]" class="form-control" placeholder="Example@example.com" value="">
           @error('email')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -107,6 +107,8 @@
           @enderror
         </div>
       </div>
+      <a href="javascript:void(0)" class="float-right mr-5 email_only" data-count="{{(isset($contact[0]->email) && !empty($contact[0]->email))?count($contact[0]->email)-1:0}}">Add Another Email</a>
+      <br>
 
 
     <input type="hidden" value="{{ json_encode($countries) }}" id="countryList">
@@ -119,13 +121,13 @@
 
       <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
         <input type="text" name="contact[address][{{$key}}][name]" class="form-control" placeholder="Address Name (e.g Head Office, Postal...etc)" value="{{ (isset($address['name']))?$address['name']:'' }}">
-        <input type="text" name="contact[address][{{$key}}]][address_line_1]" class="form-control" placeholder="Address Line 1" value="{{ (isset($address['address_line_1']))?$address['address_line_1']:'' }}">
-        <input type="text" name="contact[address][{{$key}}]][address_line_2]" class="form-control" placeholder="Address Line 2" value="{{ (isset($address['address_line_2']))?$address['address_line_2']:'' }}" >
+        <input type="text" name="contact[address][{{$key}}][address_line_1]" class="form-control" placeholder="Address Line 1" value="{{ (isset($address['address_line_1']))?$address['address_line_1']:'' }}">
+        <input type="text" name="contact[address][{{$key}}][address_line_2]" class="form-control" placeholder="Address Line 2" value="{{ (isset($address['address_line_2']))?$address['address_line_2']:'' }}" >
         <div class="address-city-post-code">
-          <input type="text" name="contact[address][{{$key}}]][city]" class="form-control" placeholder="City" value="{{ (isset($address['city']))?$address['city']:'' }}">
-          <input type="text" name="contact[address][{{$key}}]][post_code]" class="form-control" placeholder="Post Code" value="{{ (isset($address['post_code']))?$address['post_code']:'' }}">
+          <input type="text" name="contact[address][{{$key}}][city]" class="form-control" placeholder="City" value="{{ (isset($address['city']))?$address['city']:'' }}">
+          <input type="text" name="contact[address][{{$key}}][post_code]" class="form-control" placeholder="Post Code" value="{{ (isset($address['post_code']))?$address['post_code']:'' }}">
         </div>
-        <select name="contact[address][{{$key}}]][country]" class="form-control select2 select-input-field" id="countrySelect">
+        <select name="contact[address][{{$key}}][country]" class="form-control select2 select-input-field" id="countrySelect">
           <option class="mmmm" value="">Select Country</option>
           @foreach ($countries as $value => $option )
           <option value="{{ $value }}" {{(isset($address['country']) && ($value==$address['country']))?'selected':''}}>{{ $option }}</option>
@@ -216,12 +218,12 @@
     <div class="form-group row address-contact-row">
       <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Employment Information
     </div>
-    <div class="form-group row ">
 
+    <div class="form-group row ">
       <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
       <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
         <div class="col-lg-9 col-md-9 col-sm-8">
-          <input type="email" name="contact[emp_info][0][email]" class="form-control" placeholder="Example@example.com" value="">
+          <input type="email" name="contact[emp_info][0][email]" class="form-control" placeholder="Example@example.com" value="{{(isset($contact[0]->emp_info[0]['email']) && $contact[0]->emp_info[0]['email']!=""?$contact[0]->emp_info[0]['email']:'')}}">
           @error('email')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -235,7 +237,7 @@
       <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Employee work Id </label>
       <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
         <div class="col-lg-9 col-md-9 col-sm-8">
-          <input type="text" name="contact[emp_info][0][employe_work_id]" class="form-control" placeholder="Employement Work id" value="">
+          <input type="text" name="contact[emp_info][0][employe_work_id]" class="form-control" placeholder="Employement Work id" value="{{(isset($contact[0]->emp_info[0]['employe_work_id']) && $contact[0]->emp_info[0]['employe_work_id']!=""?$contact[0]->emp_info[0]['employe_work_id']:'')}}">
           @error('email')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -249,7 +251,7 @@
       <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Work Title </label>
       <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
         <div class="col-lg-9 col-md-9 col-sm-8">
-          <input type="text" name="contact[emp_info][0][work_title]" class="form-control" placeholder="Work Title" value="">
+          <input type="text" name="contact[emp_info][0][work_title]" class="form-control" placeholder="Work Title" value="{{(isset($contact[0]->emp_info[0]['work_title']) && $contact[0]->emp_info[0]['work_title']!=""?$contact[0]->emp_info[0]['work_title']:'')}}">
           @error('email')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -263,7 +265,7 @@
       <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Work Grade </label>
       <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
         <div class="col-lg-9 col-md-9 col-sm-8">
-          <input type="text" name="contact[emp_info][0][work_grade]" class="form-control" placeholder="Work Grade" value="">
+          <input type="text" name="contact[emp_info][0][work_grade]" class="form-control" placeholder="Work Grade" class="form-control" placeholder="Work Title" value="{{(isset($contact[0]->emp_info[0]['work_grade']) && $contact[0]->emp_info[0]['work_grade']!=""?$contact[0]->emp_info[0]['work_grade']:'')}}">
           @error('email')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -277,7 +279,7 @@
       <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Government id </label>
       <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
         <div class="col-lg-9 col-md-9 col-sm-8">
-          <input type="text" name="contact[emp_info][0][gov_id]" class="form-control" placeholder="Government Id" value="">
+          <input type="text" name="contact[emp_info][0][gov_id]" class="form-control" placeholder="Government Id" value="{{(isset($contact[0]->emp_info[0]['gov_id']) && $contact[0]->emp_info[0]['gov_id']!=""?$contact[0]->emp_info[0]['gov_id']:'')}}">
           @error('email')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -287,7 +289,7 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
           <div class="col-lg-9 col-md-9 col-sm-8">
-            <input type="date" name="contact[emp_info][0][gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
+            <input type="date" name="contact[emp_info][0][gov_id_issue]" class="form-control" placeholder="Work Grade" value="{{(isset($contact[0]->emp_info[0]['gov_id_issue']) && $contact[0]->emp_info[0]['gov_id_issue']!=""?$contact[0]->emp_info[0]['gov_id_issue']:'')}}">
             @error('email')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
@@ -297,7 +299,7 @@
           </div>
           <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
             <div class="col-lg-9 col-md-9 col-sm-8">
-              <input type="date" name="contact[emp_info][0][gov_id_expiry]" class="form-control" placeholder="Work Grade" value="">
+              <input type="date" name="contact[emp_info][0][gov_id_expiry]" class="form-control" placeholder="Work Grade" value="{{(isset($contact[0]->emp_info[0]['gov_id_expiry']) && $contact[0]->emp_info[0]['gov_id_expiry']!=""?$contact[0]->emp_info[0]['gov_id_expiry']:'')}}">
               @error('email')
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -310,7 +312,7 @@
       <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Passport Detail </label>
       <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
         <div class="col-lg-9 col-md-9 col-sm-8">
-          <input type="text" name="contact[emp_info][0][passport_gov_id]" class="form-control" placeholder="e.g 34345" value="">
+          <input type="text" name="contact[emp_info][0][passport_gov_id]" class="form-control" placeholder="e.g 34345" value="{{(isset($contact[0]->emp_info[0]['passport_gov_id']) && $contact[0]->emp_info[0]['passport_gov_id']!=""?$contact[0]->emp_info[0]['passport_gov_id']:'')}}">
           @error('email')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -320,7 +322,7 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
           <div class="col-lg-9 col-md-9 col-sm-8">
-            <input type="date" name="contact[emp_info][0][passport_gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
+            <input type="date" name="contact[emp_info][0][passport_gov_id_issue]" class="form-control" placeholder="Work Grade" value="{{(isset($contact[0]->emp_info[0]['passport_gov_id_issue']) && $contact[0]->emp_info[0]['passport_gov_id_issue']!=""?$contact[0]->emp_info[0]['passport_gov_id_issue']:'')}}">
             @error('email')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
@@ -330,7 +332,7 @@
           </div>
           <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
             <div class="col-lg-9 col-md-9 col-sm-8">
-              <input type="date" name="contact[emp_info][0][passport_gov_id_expiry]" class="form-control" placeholder="Work Grade" value="">
+              <input type="date" name="contact[emp_info][0][passport_gov_id_expiry]" class="form-control"  placeholder="Work Grade" value="{{(isset($contact[0]->emp_info[0]['passport_gov_id_expiry']) && $contact[0]->emp_info[0]['passport_gov_id_expiry']!=""?$contact[0]->emp_info[0]['passport_gov_id_expiry']:'')}}">
               @error('email')
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -343,7 +345,7 @@
       <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Work Starting Date </label>
       <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
         <div class="col-lg-9 col-md-9 col-sm-8">
-          <input type="date" name="contact[emp_info][0][work_starting_date]" class="form-control" placeholder="Government Id" value="">
+          <input type="date" name="contact[emp_info][0][work_starting_date]" class="form-control" placeholder="Government Id" value="{{(isset($contact[0]->emp_info[0]['work_starting_date']) && $contact[0]->emp_info[0]['work_starting_date']!=""?$contact[0]->emp_info[0]['work_starting_date']:'')}}">
           @error('email')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>

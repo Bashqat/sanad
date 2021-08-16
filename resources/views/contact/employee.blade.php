@@ -22,7 +22,6 @@
 
             <div class="contact-list-sec common-table-scroll contact-filters w-100">
                 <div class="inner-new-contact">
-                  <input type="hidden" name="type" value="{{$type}}" class="company_type" >
                   <div class="card-header">
                       <h3 class="card-title"> All Contacts</h3>
                       <div class="btn-group float-right">
@@ -97,7 +96,7 @@
                   </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="contact_table" class="table table-bordered table-striped">
+                        <table id="contact_employee_table" class="table table-bordered table-striped">
                             <thead>
                               <tr>
                                   <th><input type="checkbox" name="checkbox" class="select-all"></th>

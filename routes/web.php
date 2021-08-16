@@ -40,16 +40,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/organisation/delete', [App\Http\Controllers\OrganizationController::class, 'destroy'])->name('org_delete');
     //organisation contacts
     Route::get('organisation/{org_id}/contact/', [App\Http\Controllers\ContactController::class,'index'])->name('contact.index');
-    Route::get('organisation/{org_id}/contact/server-side', [App\Http\Controllers\ContactController::class,'serverSide'])->name('contact.index.serverside');
+    Route::get('organisation/{org_id}/contact/server-side/{type?}', [App\Http\Controllers\ContactController::class,'serverSide'])->name('contact.index.serverside');
     Route::get('organisation/{org_id}/contact/archive/server-side', [App\Http\Controllers\ContactController::class,'archiveserverSide'])->name('contact.archive.serverside');
     Route::get('organisation/{org_id}/contact/create', [App\Http\Controllers\ContactController::class,'create'])->name('contact.create');
      Route::post('organisation/{org_id}/contact/store', [App\Http\Controllers\ContactController::class,'store'])->name('contact.store');
-    Route::get('organisation/{org_id}/contact/edit/{contact_id}', [App\Http\Controllers\ContactController::class,'edit'])->name('contact.edit');
+    Route::get('organisation/{org_id}/contact/edit/{contact_id}', [App\Http\Controllers\ContactController::class,'edit'])->name('contacts.edit');
     Route::post('organisation/contact/update', [App\Http\Controllers\ContactController::class,'update'])->name('contact.update');
     Route::post('organisation/contact/delete', [App\Http\Controllers\ContactController::class,'destroye'])->name('contact.delete');
     Route::get('organisation/{org_id}/contact/archive', [App\Http\Controllers\ContactController::class,'archive'])->name('contact.archive');
 
+    //contact employee
+    Route::get('organisation/{org_id}/contact/employee', [App\Http\Controllers\ContactController::class,'employee'])->name('contact.employee');
+    Route::get('organisation/{org_id}/contact/employee-server-side', [App\Http\Controllers\ContactController::class,'employeeServerSide'])->name('contact.employee.serverside');
 
+    Route::post('organisation/{org_id}/contact/employee-store', [App\Http\Controllers\ContactController::class,'employeeStore'])->name('contact.employee.store');
+   Route::get('organisation/{org_id}/contact/employee/edit/{contact_id}', [App\Http\Controllers\ContactController::class,'employeeEdit'])->name('contact.employee.edit');
+   Route::post('organisation/contact/employee/update', [App\Http\Controllers\ContactController::class,'employeeUpdate'])->name('contact.employee.update');
+   Route::get('organisation/{org_id}/contact/edit/{contact_id}', [App\Http\Controllers\ContactController::class,'edit'])->name('contacts.edit');
+   Route::get('organisation/{org_id}/contact/{type?}', [App\Http\Controllers\ContactController::class,'index'])->name('contact.supplier');
     //user Management
     Route::resource('users-management',App\Http\Controllers\UserManagementController::class);
     Route::get('bulk-destroy',[App\Http\Controllers\UserManagementController::class,'bulkdestroy'])->name('bulk-destroy');

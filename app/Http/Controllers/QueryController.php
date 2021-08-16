@@ -26,6 +26,7 @@ class QueryController extends Controller
             $this->conneacted_app();
             $this->contact_activity();
             $this->group();
+            $this->createEmployee();
             return $db_name;
         }
     }
@@ -105,18 +106,13 @@ class QueryController extends Controller
     {
         $query="CREATE TABLE `contacts` (
               `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-              `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-              `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-              `first_name_arabic` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-              `last_name_arabic` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+              `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+              `name_arabic` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `nickname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `position` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'contact',
+              `company_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `tags` json DEFAULT NULL,
-              `emp_info` json DEFAULT NULL,
-              `personal_info` json DEFAULT NULL,
-              `emergency_contact` json DEFAULT NULL,
-              `dependent_info` json DEFAULT NULL,
               `account_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `contact_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'person',
 
@@ -140,6 +136,35 @@ class QueryController extends Controller
               `created_by` bigint UNSIGNED DEFAULT NULL,
               `xero_contact_id` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
               `xero_sync_status` enum('true','false') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
+              `created_at` timestamp NULL DEFAULT NULL,
+              `updated_at` timestamp NULL DEFAULT NULL,
+              `group_id` bigint UNSIGNED DEFAULT NULL,
+              `merged_to` bigint UNSIGNED DEFAULT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+        //  DB::statement($query);
+        DB::connection()->getPdo()->exec($query);
+    }
+    public function createEmployee()
+    {
+        $query="CREATE TABLE `contact_employee` (
+              `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+              `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+              `name_arabic` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+              `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'contact',
+              `tags` json DEFAULT NULL,
+              `address` json DEFAULT NULL,
+              `emp_info` json DEFAULT NULL,
+              `personal_info` json DEFAULT NULL,
+              `emergency_contact` json DEFAULT NULL,
+              `dependent_info` json DEFAULT NULL,
+              `phone` json DEFAULT NULL,
+              `mobile` json DEFAULT NULL,
+              `email` json DEFAULT NULL,
+              `attachment` json DEFAULT NULL,
+              `notes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+              `organization_id` bigint UNSIGNED DEFAULT NULL,
+              `created_by` bigint UNSIGNED DEFAULT NULL,
+
               `created_at` timestamp NULL DEFAULT NULL,
               `updated_at` timestamp NULL DEFAULT NULL,
               `group_id` bigint UNSIGNED DEFAULT NULL,

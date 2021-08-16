@@ -1,4 +1,20 @@
 <div class="tab-pane active" id="settings">
+  <?php
+  $firstname='';
+  $lastname='';
+  $firstname_arabic='';
+  $lastname_arabic='';
+  if(isset($contact) && !empty($contact[0]))
+  {
+    $name=explode(" ",$contact[0]->name);
+    $name_arabic=explode(" ",$contact[0]->name_arabic);
+    $firstname=$name[0];
+    $lastname=$name[1];
+    $firstname_arabic=$name_arabic[0];
+    $lastname_arabic=$name_arabic[1];
+
+  }
+  ?>
 
   <form class="form-horizontal" method="POST" action="{{ (isset($contact) && !empty($contact[0])) ? route('contact.update'):route('contact.store',[$org_id]) }}" enctype="multipart/form-data">
     <input type="hidden" name="contact_type" value="person">
@@ -10,7 +26,7 @@
     <div class="form-group row">
       <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Contact name in English <span style="color:red;">*</span> </label>
       <div class="col-lg-3 col-md-3 col-sm-4">
-        <input type="text" name="contact[first_name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" First Name" required="" value="{{ (isset($contact[0]->first_name))?$contact[0]->first_name:'' }}">
+        <input type="text" name="contact[first_name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" First Name" required="" value="{{ (isset($firstname))?$firstname:'' }}">
         @error('contacts.first_name')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -18,7 +34,7 @@
         @enderror
       </div>
       <div class="col-lg-3 col-md-3 col-sm-4">
-        <input type="text" name="contact[last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name" required="" value="{{ (isset($contact[0]->last_name))?$contact[0]->last_name:'' }}">
+        <input type="text" name="contact[last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name" required="" value="{{ (isset($lastname))?$lastname:'' }}">
         @error('contacts.first_name')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -29,7 +45,7 @@
     <div class="form-group row">
       <label for="name_arabic" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Contact  name in other language </label>
       <div class="col-lg-3 col-md-3 col-sm-4">
-        <input type="text" name="contact[first_name_arabic]" class="form-control" placeholder=" First Name" value="{{ (isset($contact[0]->first_name_arabic))?$contact[0]->first_name_arabic:'' }}">
+        <input type="text" name="contact[first_name_arabic]" class="form-control" placeholder=" First Name" value="{{ (isset($firstname_arabic))?$firstname_arabic:'' }}">
         @error('first_name_arabic')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -37,7 +53,7 @@
         @enderror
       </div>
       <div class="col-lg-3 col-md-3 col-sm-4">
-        <input type="text" name="contact[last_name_arabic]" class="form-control" placeholder=" Last Name" value="{{ (isset($contact[0]->last_name_arabic))?$contact[0]->last_name_arabic:'' }}">
+        <input type="text" name="contact[last_name_arabic]" class="form-control" placeholder=" Last Name" value="{{ (isset($lastname_arabic))?$lastname_arabic:'' }}">
         @error('last_name_arabic')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -150,19 +166,20 @@
 
       <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
         <input type="text" name="contact[address][{{$key}}][name]" class="form-control" placeholder="Address Name (e.g Head Office, Postal...etc)" value="{{ (isset($address['name']))?$address['name']:'' }}">
-        <input type="text" name="contact[address][{{$key}}]][address_line_1]" class="form-control" placeholder="Address Line 1" value="{{ (isset($address['address_line_1']))?$address['address_line_1']:'' }}">
-        <input type="text" name="contact[address][{{$key}}]][address_line_2]" class="form-control" placeholder="Address Line 2" value="{{ (isset($address['address_line_2']))?$address['address_line_2']:'' }}" >
+        <input type="text" name="contact[address][{{$key}}][address_line_1]" class="form-control" placeholder="Address Line 1" value="{{ (isset($address['address_line_1']))?$address['address_line_1']:'' }}">
+
+        <input type="text" name="contact[address][{{$key}}][address_line_2]" class="form-control" placeholder="Address Line 2" value="{{ (isset($address['address_line_2']))?$address['address_line_2']:'' }}" >
         <div class="address-city-post-code">
-          <input type="text" name="contact[address][{{$key}}]][city]" class="form-control" placeholder="City" value="{{ (isset($address['city']))?$address['city']:'' }}">
-          <input type="text" name="contact[address][{{$key}}]][post_code]" class="form-control" placeholder="Post Code" value="{{ (isset($address['post_code']))?$address['post_code']:'' }}">
+          <input type="text" name="contact[address][{{$key}}][city]" class="form-control" placeholder="City" value="{{ (isset($address['city']))?$address['city']:'' }}">
+          <input type="text" name="contact[address][{{$key}}][post_code]" class="form-control" placeholder="Post Code" value="{{ (isset($address['post_code']))?$address['post_code']:'' }}">
         </div>
-        <select name="contact[address][{{$key}}]][country]" class="form-control select2 select-input-field" id="countrySelect">
+        <select name="contact[address][{{$key}}][country]" class="form-control select2 select-input-field" id="countrySelect">
           <option class="mmmm" value="">Select Country</option>
           @foreach ($countries as $value => $option )
           <option value="{{ $value }}" {{(isset($address['country']) && ($value==$address['country']))?'selected':''}}>{{ $option }}</option>
           @endforeach
         </select>
-        <input type="url" name="contact[address][0][google_map_link]" class="form-control" placeholder="Google Map Link" value="{{ (isset($address['google_map_link']))?$address['google_map_link']:'' }}">
+        <input type="url" name="contact[address][{{$key}}][google_map_link]" class="form-control" placeholder="Google Map Link" value="{{ (isset($address['google_map_link']))?$address['google_map_link']:'' }}">
       </div>
     </div>
     @endforeach
@@ -249,7 +266,7 @@
 
       <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
 
-        <input type="text" name="contact[financial_information][0]['registration_number']" class="form-control" placeholder="User Registration number" value="{{ (isset($contact[0]->financial_information[0]['registration_number']))?$contact[0]->financial_information[0]['registration_number']:'' }}">
+        <input type="text" name="contact[financial_information][0][registration_number]" class="form-control" placeholder="User Registration number" value="{{ (isset($contact[0]->financial_information[0]['registration_number']))?$contact[0]->financial_information[0]['registration_number']:'' }}">
 
 
         <select name="contact[financial_information][0][sales_tax_rate]" class="form-control select2 select-input-field" id="countrySelect">
@@ -260,8 +277,9 @@
         <select name="contact[financial_information][0][purchase_tax_rate]" class="form-control select2 select-input-field" id="countrySelect">
           <option class="mmmm" value="">Default Purchase tax rate</option>
           <option value="0" {{(isset($contact[0]->financial_information[0]['purchase_tax_rate']) && $contact[0]->financial_information[0]['sales_tax_rate']==1)?'selected':''}}>0%</option>
-          <option value="1" {{(isset($contact[0]->financial_information[0]['purchase_tax_rate']) && $contact[0]->financial_information[0]['sales_tax_rate']==1)?'selected':''}}>1%</option>
+          <option value="1" {{(isset($contact[0]->financial_information[0]['purchase_tax_rate']) && $contact[0]->financial_information[0]['purchase_tax_rate']==1)?'selected':''}}>1%</option>
       </select>
+
 
       </div>
     </div>
