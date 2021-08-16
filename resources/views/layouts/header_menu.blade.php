@@ -79,9 +79,12 @@
 
 													 @if(!empty($org_list) && Auth::user()->role!=1)
 													 		@foreach ( $org_list as $key=>$list )
-																	<a href="/organisation/view/{{$list->id}}" class="dropdown-item">
+															 <div class="org-name-nav-item">
+															 <img src="/images/site-images/org-logo.svg">
+															 <a href="/organisation/view/{{$list->id}}" class="dropdown-item">
 																			{{$list->org_name}}
 																	</a>
+															</div>
 																@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
 																			@if($org_id==$list->id)
 																						<li class="dropdown-submenu ">
@@ -171,7 +174,7 @@
 								<div class="input-group input-group-sm">
 									<input class="form-control form-control-navbar" type="search" placeholder="{{ __('language.search') }}" aria-label="Search">
 									<div class="input-group-append">
-										<button class="btn btn-navbar" type="submit">
+										<button class="btn btn-navbar d-flex align-items-center" type="submit">
 											<!-- <i class="fas fa-search"></i> -->
 											<img src="/images/site-images/noun_search.svg">
 										</button>

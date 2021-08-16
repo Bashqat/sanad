@@ -2698,9 +2698,108 @@ li.nav-item.dropdown a.nav-link::after {
 	padding: 40px 0px !important;
 }
 
+.dropdown-menu .org-name-nav-item {
+    display: flex;
+    align-items: center;
+    height: 97px;
+    padding-left: 15px;
+}
+
+.dropdown-menu .org-name-nav-item a.dropdown-item {
+    color: #4A4A4A;
+    line-height: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.05px;
+    padding: 0px 0px 0px 10px;
+}
+
+form.header-search .input-group input.form-control {
+    background: #b6caf6;
+}
+
 /***** Header-sec-css-end-here *****/
 
 /***** Aug-11-css-end-here *****/
+
+/***** Aug-14-css-start-here *****/
+
+/***** contact-view-css-start-here *****/
+
+.contact-profile-info .profile-back-btn img {
+    /* margin-right: 20px; */
+	margin-right: 10px;
+}
+
+.contact-profile-info .profile-back-btn p {
+    /* margin-right: 40px; */
+	margin-right: 30px;
+    color: #4B7DDE;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.contact-profile-info .conatct-profile-img {
+    /* margin-right: 30px; */
+	margin-right: 20px;
+}
+
+.contact-profile-info .contact-profile-details{
+	font-size: 18px;
+    font-weight: 600;
+    color: #4B7DDE;
+    line-height: 20px;
+    letter-spacing: -0.06px;
+}
+
+.contact-profile-info .contact-profile-details h5 {
+    /* margin-bottom: 23px; */
+	margin-bottom: 10px;
+}
+
+.conatct-view-search-options form.contact-table-search .input-group {
+    width: 364px;
+}
+
+.conatct-view-search-options .contact-table-search.contact-side-bar-search .input-group input.form-control {
+    padding-left: 40px !important;
+}
+
+.conatct-view-search-options .dropdown button {
+    border-color: #fff;
+    background: #fff !important;
+    height: 40px !important;
+    width: 104px;
+    color: #B2B2B2 !important;
+    font-size: 16px !important;
+	padding: 0px !important;
+    font-weight: 400;
+	margin-right: 10px;
+}
+
+.conatct-view-search-options .dropdown button img {
+    /* margin-left: 12px; */
+	margin-left: 10px;
+}
+
+.conatct-view-search-options a.btn.custom-btn.btn-primary.edit-button {
+    width: 104px;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #4B7DDE;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.contact-view-profile-header {
+    height: 100px;
+}
+
+/***** contact-view-css-end-here *****/
+
+/***** Aug-14-css-end-here *****/
 
 /**Media-Start-Here**/
 
