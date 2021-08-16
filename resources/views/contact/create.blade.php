@@ -17,7 +17,7 @@
 
 					<div class="tab-content contact-create-sec">
 						@if(!isset($contact[0]->contact_type) )
-								<input type="radio" class="contact_type" name="contact_type" value='person'>Person
+								<input type="radio" class="contact_type" name="contact_type" value='person' checked>Person
 								<input type="radio" class="contact_type" name="contact_type" value='employee'>employee
 								<input type="radio" class="contact_type" name="contact_type" value='company'>company
 						@endif
@@ -47,8 +47,8 @@
 						<div class="contact_form employee_contact">
 							@include('contact.employee_contact')
 						</div>
-						@else
-						<div class="contact_form employee_contact" class="contact_form company_contact" style="display:none">
+						@elseif(!isset($contact[0]->contact_type))
+						<div class="contact_form employee_contact"  style="display:none">
 							@include('contact.employee_contact')
 						</div>
 						@endif

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Monarobase\CountryList\CountryListFacade;
 use App\Http\Controllers\OrganizationController;
@@ -13,6 +12,7 @@ use Auth;
 use Illuminate\Support\Arr;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Group;
+use App\Models\Employee;
 
 
 class ContactController extends Controller
@@ -23,21 +23,32 @@ class ContactController extends Controller
         // $obj=new OrganizationController();
         // $this->databaseName=$obj->org_connection($org_db_name);
     }
-    public function index(Request $request,$org_id)
+    public function index(Request $request,$org_id,$type='')
     {
       $obj=new OrganizationController();
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
-      $contacts=Contact::select('id','first_name','email','phone',)->with('contact_information')->where('type','!=','archive')->get();
+      $contacts=Contact::select('id','name','email','phone',)->with('contact_information')->where('type','!=','archive')->get();
+      $groups=Group::with('subgroup')->get();
+    //  echo '<pre>';
+      //print_r($groups);exit;
 
-      $groups=Group::get();
-      // if(request()->ajax()){
-      //   $filter=$request->filter_value;
-      //   $contacts=Contact::where('type','!=','archive')->orderBy('tags', 'DESC')->get();
-      //   return view('contact.filter',['org_id'=>$org_id,'contacts'=>$contacts]);
-      // }
-      //return json_encode($contacts);
-       return view('contact.index',['org_id'=>$org_id,'contacts'=>$contacts,'groups'=>$groups]);
+
+      return view('contact.index',['org_id'=>$org_id,'contacts'=>$contacts,'groups'=>$groups,'type'=>$type]);
+    }
+    public function employee(Request $request,$org_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $contacts=Employee::select('id','name','email','phone',)->where('type','!=','archive')->get();
+      $groups=Group::with('subgroup')->get();  
+
+    //  echo '<pre>';
+      //print_r($groups);exit;
+
+
+      return view('contact.employee',['org_id'=>$org_id,'contacts'=>$contacts,'groups'=>$groups]);
     }
     public function serverSide(Request $request,$org_id)
     {
@@ -45,6 +56,114 @@ class ContactController extends Controller
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
       $contacts=Contact::where('type','!=','archive')->with('contact_information');
+      if(request()->ajax()){
+        $search=$request->search['value'];
+        if($search=="country")
+        {
+          $contacts=$contacts->orderBy('country', 'ASC');
+        }
+        if($search=="tag")
+        {
+          $contacts=$contacts->orderBy('tags', 'ASC');
+        }
+        else if($search!="") {
+          $contacts=$contacts->where('name', 'like', '%' . $search . '%')
+             ->orWhere('website', 'like', '%' . $search. '%');
+        }
+
+
+      }
+      $contacts=$contacts->get();
+      $totalData=$contacts->count();
+      $totalFiltered = $totalData;
+
+
+      $data=[];
+
+      foreach($contacts as $key=>$contact)
+      {
+        $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
+        $data[$key][]='<a href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->name.'</a>';
+
+        if(isset($contact->contact_information) && count($contact->contact_information)>0 )
+        {
+           $first_person=$contact->contact_information[0]->first_name;
+           $data[$key][]=$first_person.'<img src="/images/site-images/contact-email-data.svg"><img src="/images/site-images/contact-phone-data.svg"><img src="/images/site-images/contact-wtap-data.svg">';
+         }
+        else {
+          $data[$key][]='';
+        }
+        if(isset($contact->contact_information) && count($contact->contact_information)>1 )
+        {
+           $second_person=$contact->contact_information[1]->first_name;
+           $data[$key][]=$second_person.'<img src="/images/site-images/contact-email-data.svg"><img src="/images/site-images/contact-phone-data.svg"><img src="/images/site-images/contact-wtap-data.svg">';
+
+        }
+        else {
+          $data[$key][]='';
+        }
+
+        $data[$key][]=(isset($contact->address[0]['country'])?$contact->address[0]['country']:'');
+        //$data[$key][]=$contact->email;
+
+        $phone='';
+        $token = csrf_token();
+
+        if($contact->contact_type=='person')
+        {
+          if(!empty($contact->phone))
+          {
+            foreach($contact->phone as $phone)
+            {
+              $phone=$phone['number'];
+            }
+          }
+        }
+
+
+
+
+        $edit_path=route('contacts.edit',[$org_id,$contact->id]);
+        $delete_path=route('contact.delete');
+        //$data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
+        $data[$key][]=$contact->tags;
+        $data[$key][]='<div class="dropdown">
+                  <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><img src="/images/site-images/3-dots-contact-list.svg" style="width:100%"></a>
+                  <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);"><a href="'.$edit_path.'" class="dropdown-item">Edit</a>
+                  <form class="inline-block" action="'.$delete_path.'" method="POST" onsubmit="return confirm(`Are you sure?`);">
+
+                      <input type="hidden" name="org_id" value="'.$org_id.'">
+
+                      <input type="hidden" name="id" value="'.$contact->id.'">
+                      <input type="hidden" name="_token" value="'.$token.'">
+                      <input type="submit" class="dropdown-item" value="Delete">
+                  </form>
+              </div>
+            </div>';
+
+      }
+
+
+          //$tabledata[]=$data;
+          $json_data = [
+                    "draw"            => intval($request->input('draw')),
+                    "recordsTotal"    => intval($totalData),
+                    "recordsFiltered" => intval($totalFiltered),
+                    "data"            => $data
+                  ];
+          echo  json_encode($json_data);
+
+
+
+
+
+    }
+    public function employeeServerSide(Request $request,$org_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $contacts=Employee::where('type','!=','archive');
       if(request()->ajax()){
         $search=$request->search['value'];
         if($search=="country")
@@ -72,47 +191,21 @@ class ContactController extends Controller
       foreach($contacts as $key=>$contact)
       {
         $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
-        $data[$key][]='<a href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->first_name.'</a>';
+        $data[$key][]='<a href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->name.'</a>';
 
-        if(isset($contact->contact_information) && count($contact->contact_information)>0 )
-        {
-           $first_person=$contact->contact_information[0]->first_name;
-           $data[$key][]=$first_person;
-         }
-        else {
-          $data[$key][]='';
-        }
-        if(isset($contact->contact_information) && count($contact->contact_information)>1 )
-        {
-           $second_person=$contact->contact_information[1]->first_name;
-           $data[$key][]=$second_person;
 
-        }
-        else {
-          $data[$key][]='';
-        }
 
-        $data[$key][]=$contact->country;
+
+        //$data[$key][]=$contact->country;
         //$data[$key][]=$contact->email;
 
         $phone='';
         $token = csrf_token();
 
-        if($contact->contact_type=='person')
-        {
-          if(!empty($contact->phone))
-          {
-            foreach($contact->phone as $phone)
-            {
-              $phone=$phone['number'];
-            }
-          }
-        }
 
 
 
-
-        $edit_path=route('contact.edit',[$org_id,$contact->id]);
+        $edit_path=route('contact.employee.edit',[$org_id,$contact->id]);
         $delete_path=route('contact.delete');
         //$data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
         $data[$key][]=$contact->tags;
@@ -226,8 +319,6 @@ class ContactController extends Controller
     public function store(Request $request,$org_id)
     {
 
-
-
         $obj=new OrganizationController();
         $databaseName=$obj->get_db_name($org_id);
         $db_connection=$obj->org_connection($databaseName);
@@ -236,11 +327,19 @@ class ContactController extends Controller
         $contact = "";
         $contactInformation = [];
         $website_information = [];
+
         try {
             $contactData = $this->uploadDataAttachmentsGetLinks($request->contacts,'contacts');
             $contactData['organization_id'] = $org_id;
             $contactData['created_by'] = Auth::user()->id;
             $contactData['contact_type'] = $request->input('contact_type');
+            if(isset($contactData['first_name']) && isset($contactData['last_name']))
+            {
+              $contactData['name'] = $contactData['first_name'].' '.$contactData['last_name'];
+              $contactData['name_arabic'] = $contactData['first_name_arabic'].' '.$contactData['last_name_arabic'];
+              $contactData=Arr::except($contactData, ['_token','org_id','first_name','last_name','first_name_arabic','last_name_arabic']);
+            }
+
 
             $contact = Contact::create($contactData);
 
@@ -296,8 +395,7 @@ class ContactController extends Controller
     }
     public function update(Request $request)
     {
-        echo '<pre>';
-        print_r($request->all());exit;
+
         $obj=new OrganizationController();
         $org_id=$request->input('org_id');
         $databaseName=$obj->get_db_name($org_id);
@@ -309,21 +407,27 @@ class ContactController extends Controller
             // Save Conatct
             //$contactData = $this->uploadDataAttachmentsGetLinks($request->contacts,'contacts');
 
+
             $contactData = $request->input('contact');
             $websiteData = $request->input('website_information');
+            if($request->input('contact_type')=='person')
+            {
+              $contactData['name']=$contactData['first_name'].' '.$contactData['last_name'];
+              $contactData['name_arabic']=$contactData['first_name_arabic'].' '.$contactData['last_name_arabic'];
+              $contactData=Arr::except($contactData, ['_token','org_id','first_name','last_name','first_name_arabic','last_name_arabic']);
+            }
             // if(isset($request->website_information)){
             //     foreach ($request->website_information as $key => $websiteData) {
             //         $websiteData['contact_id'] = $contact->id;
             //         $website_information[] = Websiteinformation::create($websiteData);
             //     }
             // }
-            //echo '<pre>';
-            //print_r($contactData);exit;
+
           ///  print_r($websiteData);exit;
             //$contactData['created_by'] = Auth::user()->id;
 
             $contact_id=$request->input('id');
-            $contact = Contact::where('id',$contact_id)->update(Arr::except($contactData, ['_token','org_id']));
+            $contact = Contact::where('id',$contact_id)->update($contactData);
 
             // Save Conatct Information
             // if(isset($request->persons_contacts)){
@@ -359,6 +463,56 @@ class ContactController extends Controller
             }
             return redirect()->route('contact.index',[$org_id])->with('error',$e->getMessage());
         }
+    }
+    public function employeeEdit($org_id,$contact_id)
+    {
+        $obj=new OrganizationController();
+        $databaseName=$obj->get_db_name($org_id);
+        $db_connection=$obj->org_connection($databaseName);
+        $contact=Employee::where('id',$contact_id)->get();
+
+
+        //$website_information = website_information::where('contact_id',$contact_id)->get();
+        $countries = CountryListFacade::getList('en');
+
+
+        return view('contact.create', compact('countries','contact','org_id'));
+
+
+    }
+
+    public function employeeStore(Request $request,$org_id)
+    {
+      try{
+        $obj=new OrganizationController();
+        $databaseName=$obj->get_db_name($org_id);
+        $db_connection=$obj->org_connection($databaseName);
+        $request->request->add(['contacts' => $request->contact]);
+        $request->request->remove('contact');
+        $contactData = $this->uploadDataAttachmentsGetLinks($request->contacts,'contacts');
+
+        // $contactData['contact']=$request->input('contacts');
+         $contactData['organization_id'] = $org_id;
+        $contactData['created_by'] = Auth::user()->id;
+        $contactData['name'] = $contactData['first_name'].' '.$contactData['last_name'];
+        $contactData['name_arabic'] =$contactData['first_name_arabic'].' '.$contactData['last_name_arabic'];
+        //$contactData['contact_type'] = $request->input('contact_type');
+        Employee::create($contactData);
+        return redirect()->route('contact.employee',[$org_id])->with('success','Contact updated successfully.');
+        // echo '<pre>';
+        // print_r($contactData);exit;
+      }catch (Exception $e) {
+      DB::rollback();
+
+  } catch(\Illuminate\Database\QueryException $ex){
+      print_r($ex->getMessage());
+      DB::rollback();
+
+
+  }
+
+
+
     }
 
     public function destroye(Request $request)

@@ -2,6 +2,12 @@ $(document).ready(function(){
 
   var org_id=$('.org_id').val();
   var group_id=$('.group_id').val();
+  // var type='';
+  // if($('.comapnay_type').val()!="")
+  // {
+  //   type=$('.comapnay_type').val();
+  // }
+  // alert(type);
   var table=$('#contact_table').DataTable({
    //"scrollX": true,
    //"pagingType": "numbers",
@@ -10,6 +16,14 @@ $(document).ready(function(){
        "ajax": '/organisation/'+org_id+'/contact/server-side',
 
    } );
+   var table=$('#contact_employee_table').DataTable({
+    //"scrollX": true,
+    //"pagingType": "numbers",
+        "processing": true,
+        "serverSide": true,
+        "ajax": '/organisation/'+org_id+'/contact/employee-server-side',
+
+    } );
    var table=$('#group_contact_table').DataTable({
     //"scrollX": true,
     //"pagingType": "numbers",
@@ -41,6 +55,7 @@ $(document).ready(function(){
            filter_value.push($(this).val());
          }
        })
+
          $('#contact_table').DataTable({
           //"scrollX": true,
           //"pagingType": "numbers",
@@ -51,7 +66,7 @@ $(document).ready(function(){
                   "processing": true,
                   "serverSide": true,
                   "searching": true,
-                  "ajax": '/organisation/'+org_id+'/contact/server-side',
+                  "ajax": '/organisation/'+org_id+'/contact/server-side'+type,
 
 
           } );
@@ -1457,6 +1472,27 @@ $(document).ready(function(){
 
       </div>
 
+      </div>
+            `;
+        $(field).insertBefore(this);
+      });
+
+      $(document).on('click', '.email_only', function () {
+        var count = parseInt($(this).attr('data-count')) + 1;
+        $(this).attr('data-count', count);
+        //var formCount = $('#add_person').attr('data-count');
+        var field = `  <div id="email${count}">
+        <div class="form-group row address-contact-row">
+          <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">EMail ( ${count+1} )
+          <a href="javascript:void(0)" class="removeEle" data-id="email${count}" data-btn="add_mobile">Remove</a>
+          </label>
+
+
+          <div class="col-lg-9 col-md-9 col-sm-8">
+            <input type="email" name="contact[email][${count}]" class="form-control" placeholder="Example@example.com" value="">
+
+          </div>
+        </div>
       </div>
             `;
         $(field).insertBefore(this);

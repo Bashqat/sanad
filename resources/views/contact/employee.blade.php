@@ -1,4 +1,4 @@
-@extends('layouts.contact_layout')
+@extends('layouts.app')
 <title>Contacts</title>
 @section('content')
 
@@ -22,7 +22,6 @@
 
             <div class="contact-list-sec common-table-scroll contact-filters w-100">
                 <div class="inner-new-contact">
-                  <input type="hidden" name="type" value="{{$type}}" class="company_type" >
                   <div class="card-header">
                       <h3 class="card-title"> All Contacts</h3>
                       <div class="btn-group float-right">
@@ -31,16 +30,13 @@
                                 <input class="form-control " type="search" placeholder="Search" aria-label="Search">
                                 <div class="input-search-append">
                                     <button class="btn" type="submit">
-                                        <!-- <i class="fas fa-search"></i> -->
-                                        <img src="/images/site-images/noun_Search_1.svg">
+                                        <i class="fas fa-search"></i>
                                     </button>
                                 </div>
                             </div>
                      </form>
                         <div class="input-group-prepend">
-                            <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <!-- <i class="fa fa-list mr-1 p-1"></i> -->
-                                <img src="/images/site-images/view.svg">
+                            <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list mr-1 p-1"></i>
                                 View
                             </button>
 
@@ -56,9 +52,7 @@
                             </div>
                             </div>
                           <div class="input-group-prepend">
-                              <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <!-- <i class="fa fa-cog"></i> -->
-                                  <img src="/images/site-images/options.svg">
+                              <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>
                                   Options
                               </button>
 
@@ -80,9 +74,7 @@
                               <div class="input-group-prepend">
 
 
-                                  <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <!-- <i class="fa fa-filter mr-1"></i> -->
-                                      <img src="/images/site-images/sort-by.svg">
+                                  <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-filter mr-1"></i>
                                       Sort By
                                   </button>
                                   <input type="hidden" class="org_id" name="org_id" value={{$org_id}}>
@@ -96,10 +88,7 @@
                               </div>
 
                               <a href="{{ route('contact.create',[$org_id]) }}">
-                                <button class="btn add-new-contact common-button-site float-right">
-                                    <!-- <i class="fa fa-plus"></i> -->
-                                    <img src="/images/site-images/pluse.svg">
-                                     Add New Contact  </button>
+                                <button class="btn add-new-contact common-button-site float-right"><i class="fa fa-plus ml-1"></i> Add New Contact  </button>
                               </a>
 
                           </div>
@@ -107,7 +96,7 @@
                   </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="contact_table" class="table table-bordered table-striped">
+                        <table id="contact_employee_table" class="table table-bordered table-striped">
                             <thead>
                               <tr>
                                   <th><input type="checkbox" name="checkbox" class="select-all"></th>

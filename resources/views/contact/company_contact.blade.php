@@ -10,7 +10,7 @@
           <div class="form-group row">
             <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Contact name in English <span style="color:red;">*</span> </label>
             <div class="col-lg-9 col-md-9 col-sm-8">
-              <input type="text" name="contact[first_name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" Enter Contact Name" required="" value="{{ (isset($contact[0]->first_name))?$contact[0]->first_name:'' }}">
+              <input type="text" name="contact[name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" Enter Contact Name" required="" value="{{ (isset($contact[0]->first_name))?$contact[0]->first_name:'' }}">
               @error('contacts.name')
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -38,6 +38,18 @@
                 <strong>{{ $message }}</strong>
               </span>
               @enderror
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="account_no" class="col-lg-3 col-md-3 col-sm-4 col-form-label"> Type </label>
+            <div class="col-lg-3 col-md-3 col-sm-4">
+              <input type="radio" name="contact[company_type]" value="customer" class="form-control">Customer
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4">
+              <input type="radio" name="contact[company_type]" value="supplier" class="form-control">Supplier
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4">
+              <input type="radio" name="contact[company_type]" value="" class="form-control">None
             </div>
           </div>
           <div class="form-group row">
