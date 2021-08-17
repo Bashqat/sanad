@@ -426,7 +426,7 @@
 				</aside>
 
 
-            <aside class="p-3 bg-white pb-5 mb-5 contact-groups-detail-sec">
+            <aside class=" bg-white contact-detail-sec contact-groups-detail-sec">
 					<div class="sidebar-top d-flex justify-content-between align-items-center">
 						<h4 class="text-capitalize mb-0">Groups</h4>
 					</div>
@@ -441,9 +441,9 @@
 							</ul>
 
                         <div class="tags-btns overflow-auto">
-							<h4 class="text-capitalize mt-2 mb-3">tags</h4>
-																					
-
+                            <div class="sidebar-top d-flex justify-content-between align-items-center">
+                                <h4 class="text-capitalize mb-0">tags</h4>
+                            </div>
                             <div class="tab-buttons">
                                     <button type="button" data-tag-name="test" data-tag-index="0" class="btn btn-success edit-tag">test</button>
                                     <form method="POST" action="https://sanadportal.com/contact-delete-tag" onsubmit="return confirm('Are you sure?');">
