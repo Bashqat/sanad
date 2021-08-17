@@ -388,13 +388,13 @@
                             <li>
                                 <div class="d-flex justify-content-between">
                                     <p>Phone Number:</p>
-                                    <b>+{{$contact_detail[0]['phone']['number']}}</b>
+                                    <b>+{{(isset($contact_detail[0]['phone']['number'])?$contact_detail[0]['phone']['number']:'')}}</b>
                                 </div>
                             </li>
                             <li>
                                 <div class="d-flex justify-content-between">
                                     <p>Fax Number:</p>
-                                    <b>+{{$contact_detail[0]['fax']['number']}}</b>
+                                    <b>+{{(isset($contact_detail[0]['fax']['number'])?$contact_detail[0]['fax']['number']:'')}}</b>
                                 </div>
                             </li>
 
@@ -411,22 +411,22 @@
 					<div class="sidebar-inner" id="sidebar-inner">
 						<ul class="sidebar-top-list">
                             <li>
-                                <p>{{$contact_detail[0]['address'][0]['name']}}</p>
+                                <p>{{isset($contact_detail[0]['address'][0]['name'])?$contact_detail[0]['address'][0]['name']:''}}</p>
                             </li>
                             <li>
-                                <p>{{$contact_detail[0]['address'][0]['city']}}</p>
+                                <p>{{isset($contact_detail[0]['address'][0]['city'])?$contact_detail[0]['address'][0]['city']:''}}</p>
                             </li>
 							<li>
                                 <div class="d-flex justify-content-between">
                                     <p>Country:</p>
-                                    <b>{{$contact_detail[0]['address'][0]['country']}}</b>
+                                    <b>{{isset($contact_detail[0]['address'][0]['country'])?$contact_detail[0]['address'][0]['country']:''}}</b>
                                 </div>
                             </li>
 							<li>
 
                                 <a href="#" class="d-inline-flex">
                                 <img src="/images/site-images/address-location-cont.svg">
-                                {{$contact_detail[0]['address'][0]['google_map_link']}}
+                                {{isset($contact_detail[0]['address'][0]['google_map_link'])?$contact_detail[0]['address'][0]['google_map_link']:''}}
                                 </a>
                             </li>
 							</ul>
