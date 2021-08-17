@@ -18,8 +18,9 @@
                 </a>
                     <ul>
                         <li class="sidebar-dropdown new-contact-btns">
+                          <a href="{{ route('contact.supplier',[$org_id,'customer']) }}">
                         <img src="/images/site-images/customers.svg">
-                        Customers</li>
+                        Customers</li></a>
                         <li class="sidebar-dropdown new-contact-btns">
                       <a href="{{ route('contact.supplier',[$org_id,'supplier']) }}">  <img src="/images/site-images/supplier.svg">
                         Suppliers</li>

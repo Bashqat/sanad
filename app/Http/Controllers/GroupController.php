@@ -152,7 +152,7 @@ class GroupController extends Controller
       $data=[];
       foreach($contacts as $key=>$contact)
       {
-        $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
+        //$data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
         $data[$key][]=$contact->name;
         $data[$key][]=$contact->website;
         $data[$key][]=$contact->email;

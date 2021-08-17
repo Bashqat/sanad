@@ -34,7 +34,7 @@
 						//echo $org_id;
 
 						}
-						
+
 
 
  ?>
@@ -58,7 +58,7 @@
 
 													<div class="nav-item dropdown company-menu show">
 														<a class="nav-link mr-md-2 ml-2 px-5" data-toggle="dropdown" href="#" aria-expanded="true">
-															
+
 																@if((empty($org_list)) && !preg_match('#[0-9]#',$org_id))
 																		  No Organisation exist
 																@elseif(!empty($org_list) && Auth::user()->role==1 )
@@ -79,8 +79,14 @@
 
 													 @if(!empty($org_list) && Auth::user()->role!=1)
 													 		@foreach ( $org_list as $key=>$list )
+															
 															 <div class="org-name-nav-item">
-															 <img src="/images/site-images/org-logo.svg">
+																 @if($list->logo!="")
+																 <img width="20%"" class="header_logo" src="{{ url('/organisation_logo') }}/{{$list->logo}}">
+																 @else
+																 <img src="/images/site-images/org-logo.svg">
+																 @endif
+
 															 <a href="/organisation/view/{{$list->id}}" class="dropdown-item">
 																			{{$list->org_name}}
 																	</a>
@@ -226,6 +232,7 @@
 							<div class="nav-item dropdown user-menu super-admin">
 								<a href="#" class="nav-link mr-md-1 dropdown-toggle user-circle-img" data-toggle="dropdown">
 									<img src="@if (filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL)){{ Auth::user()->avatar }}@else/images/profile/{{ Auth::user()->avatar }}@endif" class="user-image img-circle elevation-2" alt="User Image">
+									<span>{{ ucfirst(Auth::user()->name) }}</span>
 									<span class="d-none d-md-inline">
 										<!-- {{ Auth::user()->name }} -->
 										<!-- <i class="fas fa-sort-down"></i> -->
