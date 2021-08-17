@@ -82,7 +82,7 @@
 															
 															 <div class="org-name-nav-item">
 																 @if($list->logo!="")
-																 <img width="20%"" class="header_logo" src="{{ url('/organisation_logo') }}/{{$list->logo}}">
+																 <img class="header_logo" src="{{ url('/organisation_logo') }}/{{$list->logo}}">
 																 @else
 																 <img src="/images/site-images/org-logo.svg">
 																 @endif
