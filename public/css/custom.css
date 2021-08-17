@@ -2585,11 +2585,14 @@ form.contact-side-bar-search.contact-table-search {
     margin-right: 5px;
 }
 
-.side-bar-list li.new-contact-btns ul li a {
-    color: #4A4A4A;
+.org-name-nav-item img {
+    width: 100%;
+    max-width: 40px;
+    height: 40px;
+    object-fit: cover;
 }
 
-/***** contact-list-table-css-end-here *****/
+/***** contact-list-table-css-start-here *****/
 
 .contact-list-sec table thead tr th {
     font-size: 16px;
@@ -2643,6 +2646,64 @@ form.contact-side-bar-search.contact-table-search {
     color: #9E9E9E;
 }
 
+.contact-list-sec ul.pagination li {
+    margin: 0px;
+}
+
+.contact-list-sec ul.pagination li:first-child a.page-link {
+	background: #fff;
+    font-size: 0px;
+    padding: 18.5px;
+	border-color: #F0F0F0;
+    position: relative;
+}
+
+.contact-list-sec ul.pagination li:first-child a.page-link::after {
+    position: absolute;
+    content: "";
+    background-image: url(../images/site-images/previous-cont-list.svg);
+    top: 50%;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    right: 0;
+    background-repeat: no-repeat;
+    background-size: 15px 16px;
+    z-index: 9;
+}
+
+.contact-list-sec ul.pagination li:last-child a.page-link {
+	background: #fff;
+    font-size: 0px;
+    padding: 18.5px;
+	border-color: #F0F0F0;
+    position: relative;
+}
+
+.contact-list-sec ul.pagination li:last-child a.page-link::after {
+    position: absolute;
+    content: "";
+    background-image: url(../images/site-images/next-cont-list.svg);
+    top: 50%;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    right: 0;
+    background-repeat: no-repeat;
+    background-size: 15px 16px;
+    z-index: 9;
+}
+
+.contact-list-sec ul.pagination li a.page-link {
+    border-color: #F0F0F0;
+    color: #7B8FA4;
+}
+
+.contact-list-sec ul.pagination li.active a {
+    background: #4B7DDE;
+    color: #fff;
+    border-color: #4B7DDE;
+}
 /***** contact-list-table-css-end-here *****/
 
 /***** Header-sec-css-start-here *****/

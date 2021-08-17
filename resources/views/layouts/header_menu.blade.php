@@ -79,10 +79,10 @@
 
 													 @if(!empty($org_list) && Auth::user()->role!=1)
 													 		@foreach ( $org_list as $key=>$list )
-															
+
 															 <div class="org-name-nav-item">
 																 @if($list->logo!="")
-																 <img width="20%"" class="header_logo" src="{{ url('/organisation_logo') }}/{{$list->logo}}">
+																 <img  class="header_logo" src="{{ url('/organisation_logo') }}/{{$list->logo}}">
 																 @else
 																 <img src="/images/site-images/org-logo.svg">
 																 @endif
