@@ -87,14 +87,15 @@ class ContactController extends Controller
 
       foreach($contacts as $key=>$contact)
       {
+        
         $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
-        $data[$key][]='<a href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->name.'</a>
-        <p>'.$contact->name_arabic.'</p>';
+        $data[$key][]='<div class="contact-name-col"><a class="text-right d-block" href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->name.'</a>
+        <p class="text-right">'.$contact->name_arabic.'</p></div>';
 
         if(isset($contact->contact_information) && count($contact->contact_information)>0 )
         {
            $first_person=$contact->contact_information[0]->first_name;
-           $data[$key][]=$first_person.'<img src="/images/site-images/contact-email-data.svg"><img src="/images/site-images/contact-phone-data.svg"><img src="/images/site-images/contact-wtap-data.svg">';
+           $data[$key][]='<div class="contact-list-person d-flex align-items-center"><p>'.$first_person.'</p><img src="/images/site-images/contact-email-data.svg"><img src="/images/site-images/contact-phone-data.svg"><img src="/images/site-images/contact-wtap-data.svg"></div>';
          }
         else {
           $data[$key][]='';
@@ -102,7 +103,7 @@ class ContactController extends Controller
         if(isset($contact->contact_information) && count($contact->contact_information)>1 )
         {
            $second_person=$contact->contact_information[1]->first_name;
-           $data[$key][]=$second_person.'<img src="/images/site-images/contact-email-data.svg"><img src="/images/site-images/contact-phone-data.svg"><img src="/images/site-images/contact-wtap-data.svg">';
+           $data[$key][]='<div class="contact-list-person d-flex align-items-center"><p>'.$second_person.'</p><img src="/images/site-images/contact-email-data.svg"><img src="/images/site-images/contact-phone-data.svg"><img src="/images/site-images/contact-wtap-data.svg"></div>';
 
         }
         else {
@@ -132,7 +133,18 @@ class ContactController extends Controller
         $edit_path=route('contacts.edit',[$org_id,$contact->id]);
         $delete_path=route('contact.delete');
         //$data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
-        $data[$key][]=$contact->tags;
+        $tags=$contact->tags;
+        $tag_html='';
+        if(!empty($tags))
+        {
+          foreach($tags as $tag )
+          {
+            $tag_html.='<div class="tab-buttons">
+            <button type="button" data-tag-name="test" data-tag-index="0" class="btn btn-success edit-tag">'.$tag.'</button>
+            </div>';
+          }
+        }
+        $data[$key][]=$tag_html;
         $data[$key][]='<div class="dropdown">
                   <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><img src="/images/site-images/3-dots-contact-list.svg" style="width:100%"></a>
                   <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);"><a href="'.$edit_path.'" class="dropdown-item">Edit</a>

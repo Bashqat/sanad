@@ -743,11 +743,22 @@ ul.sidebar-top-list li span {
 	color: #fff;
 }
 
-.tags-btns .btn {
+/* .tags-btns .btn {
 	padding: 8px 20px;
 	margin-right: 10px;
 	margin-bottom: 10px;
 	text-transform: capitalize;
+} */
+
+.tags-btns .btn {
+    padding: 17px 40px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.06px;
+    border-radius: 30px;
 }
 
 .pagination-sec ul.pagination {
@@ -1999,11 +2010,26 @@ button.attachment-delete-btn {
     float: left;
 }
 
-.tab-buttons form {
+/* .tab-buttons form {
     position: absolute;
     top: -10px;
     right: 5px;
+} */
+
+.tab-buttons form {
+    position: absolute;
+    top: -7px;
+    right: 12px;
 }
+
+/* .tag-buttons-delete {
+    font-size: 10px;
+    background-color: rgba(0,0,0,0.6);
+    color: #fff;
+    border-radius: 50%;
+    border: 0px;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 10%);
+} */
 
 .tag-buttons-delete {
     font-size: 10px;
@@ -2012,6 +2038,12 @@ button.attachment-delete-btn {
     border-radius: 50%;
     border: 0px;
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 10%);
+    width: 18px;
+    height: 18px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 table tbody tr.odd td i.fa.fa-eye {
@@ -2041,7 +2073,7 @@ select.form-control optgroup {
 .top-contact-header .custom-search .form-outline input {
     padding-right: 30px !important;
 }
-.tab-buttons:nth-child(1n+1) .btn {
+/* .tab-buttons:nth-child(1n+1) .btn {
     background: #90b4ce;
     border-color: #90b4ce;
 }
@@ -2052,6 +2084,24 @@ select.form-control optgroup {
 .tab-buttons:nth-child(3n+3) .btn {
     background: #3da9fc;
     border-color: #3da9fc;
+} */
+
+.tab-buttons:nth-child(1n+1) .btn {
+	background: #f1eaf8;
+    border-color: #f1eaf8;
+    color: #6938B2 !important;
+}
+
+.tab-buttons:nth-child(3n+2) .btn {
+	background: #eaf9ef;
+    border-color: #eaf9ef;
+    color: #4AB762 !important;
+}
+
+.tab-buttons:nth-child(3n+3) .btn {
+    background: #e2f4fe;
+    border-color: #e2f4fe;
+    color: #0095EF !important;
 }
 
 table.table-bordered.dataTable td .contact-tag-btn:nth-child(3n+1) {
@@ -2534,6 +2584,66 @@ form.contact-side-bar-search.contact-table-search {
 .contact-list-sec .card-header a button.add-new-contact.common-button-site img {
     margin-right: 5px;
 }
+
+.side-bar-list li.new-contact-btns ul li a {
+    color: #4A4A4A;
+}
+
+/***** contact-list-table-css-end-here *****/
+
+.contact-list-sec table thead tr th {
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.06px;
+    background: #F6F9FD;
+    color: #4B7DDE;
+    font-weight: 400;
+    vertical-align: middle !important;
+    text-align: left;
+	padding: 15px 30px 15px 12px !important;
+}
+
+.contact-list-sec table tbody tr td {
+    padding: 24px 30px 24px 12px !important;
+    color: #4A4A4A;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.06px;
+    text-align: left;
+    vertical-align: middle;
+    /* font-family: Poppins; */
+}
+
+.contact-list-sec table tbody tr td p {
+    margin-bottom: 0px;
+}
+
+.contact-list-person p {
+    padding-right: 10px;
+}
+
+.contact-list-person img {
+    padding-right: 10px;
+}
+
+.contact-list-sec table tbody .tab-buttons button.btn {
+    margin-right: 5px;
+	margin-bottom: 5px;
+    padding: 3px 15px;
+}
+
+.contact-list-sec table tbody tr td .contact-name-col a {
+    text-transform: capitalize;
+    color: #4A4A4A;
+    text-decoration: none;
+}
+
+.contact-list-sec table tbody tr td .contact-name-col p {
+    font-size: 14px;
+    color: #9E9E9E;
+}
+
+/***** contact-list-table-css-end-here *****/
 
 /***** Header-sec-css-start-here *****/
 nav.main-header.navbar {
@@ -3104,6 +3214,10 @@ img.cont-view-up-arrow {
 .notes-tables-sec .notes-contact-inner-table-sec table tbody tr {
     border: 0px;
     border-bottom: 1px solid #f6f9fe;
+}
+
+.contact-groups-detail-sec .tags-btns {
+    margin-top: 25px;
 }
 
 /***** contact-view-css-end-here *****/

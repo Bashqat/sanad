@@ -28,7 +28,7 @@
                             <thead>
                               <tr>
                                   <th><input type="checkbox" name="checkbox" class="select-all"></th>
-                                  <th>Cntact name</th>
+                                  <th>Contact name</th>
                                   <th>First person</th>
                                   <th>Second person</th>
                                   <th>Country</th>
