@@ -241,7 +241,7 @@
         <input type="url" name="contact[address][0][google_map_link]" class="form-control" placeholder="Google Map Link" value="{{ (isset($contact[0]->address[0]['google_map_link']))?$contact[0]->address[0]['google_map_link']:'' }}">
       </div>
     </div>
-    <a href="javascript:void(0)" id="add_address" class="float-right mr-5" data-count="0">Add Another Address</a>
+    <a href="javascript:void(0)" id="add_address_company" class="float-right mr-5" data-count="0">Add Another Address</a>
     <!--  Address end -->
     <!--  persons contacts start -->
     @if(isset($contact[0]->contact_information) && !empty($contact[0]->contact_information))

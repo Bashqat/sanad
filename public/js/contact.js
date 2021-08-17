@@ -282,6 +282,38 @@ $(document).ready(function(){
         `;
 		$(form).insertBefore(this);
 	});
+  $(document).on('click', '#add_address_company', function () {
+    var count = parseInt($(this).attr('data-count')) + 1;
+    $(this).attr('data-count', count);
+    var countryList = JSON.parse($('#countryList').val());
+
+    var form = `
+        <div class="form-group row address-contact-row" id="address${count}">
+            <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Address ( ${count+1} )
+            <a href="javascript:void(0)" class="removeEle" data-id="address${count}" data-btn="add_address">Remove</a>
+            </label>
+            <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+                <input type="text" name="contact[address][${count}][name]" class="form-control" placeholder="Address Name (e.g Head Office, Postal...etc)" value="">
+                <input type="text" name="contact[address][${count}][address_line_1]" class="form-control" placeholder="Address Line 1">
+                <input type="text" name="contact[address][${count}][address_line_2]" class="form-control" placeholder="Address Line 2">
+                <div class="address-city-post-code">
+                <input type="text" name="contact[address][${count}][city]" class="form-control" placeholder="City">
+                <input type="text" name="contact[address][${count}][post_code]" class="form-control" placeholder="Post Code">
+        </div>`;
+
+    form += `<select name="contact[address][${count}][country]" class="form-control select2 select-input-field color-change">`;
+    form += `<option value="">Select Country</option>`;
+    $.each(countryList, function (key, val) {
+      form += `<option value="${key}">${val}</option>`;
+    });
+    form += `</select>`;
+    form += `
+                <input type="text" name="contact[address][${count}][google_map_link]" class="form-control" placeholder="Google Map Link">
+            </div>
+        </div>
+        `;
+    $(form).insertBefore(this);
+  });
 
 	$(document).on('click', '.removeEle', function () {
 		var ele = $(this).attr('data-id');
@@ -1280,37 +1312,32 @@ $(document).ready(function(){
     		//var formCount = $('#add_person').attr('data-count');
     		var field = `  <div id="emergency-contact${count}">
         <div class="form-group row address-contact-row">
-          <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Emergency Contact Information ( ${count+1} )
+          <label for="address" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Emergency Contact Information ( ${count+1} )
           <a href="javascript:void(0)" class="removeEle" data-id="emergency-contact${count}" data-btn="add_mobile">Remove</a>
           </label>
         </div>
         <div class="form-group row ">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Name
+          <label for="email" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Name
 
           </label>
 
-          <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
+          <div class="col-lg-8 col-md-8 col-sm-8 contact-address-fields">
               <input type="text" name="contact[emergency_contact][${count}][name]" class="form-control" placeholder="Name" value="">
 
-            </div>
 
           </div>
         </div>
         <div class="form-group row ">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Relation </label>
-          <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
+          <label for="email" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Relation </label>
+          <div class="col-lg-8 col-md-8 col-sm-8 contact-address-fields">
               <input type="text" name="contact[emergency_contact][${count}][relation]" class="form-control" placeholder="Relation" value="">
-
-            </div>
 
           </div>
         </div>
         <div class="form-group row contact-row">
-          <label for="land_line" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Land Line </label>
+          <label for="land_line" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Land Line </label>
 
-          <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+          <div class="col-lg-8 col-md-8 col-sm-8 person-sub-contact">
             <input type="text" name="contact[emergency_contact][${count}][country_code]" class="form-control col-md-3" placeholder="Country Code" value="">
             <input type="text" name="contact[emergency_contact][${count}][area]" class="form-control col-md-3" placeholder="Area" value="">
             <input type="tel" name="contact[emergency_contact][${count}][number]" class="form-control col-md-3" placeholder="Number" value="">
@@ -1318,10 +1345,10 @@ $(document).ready(function(){
           </div>
         </div>
         <div class="form-group row contact-row" id="mobile-field">
-          <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile
+          <label for="mobile" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Mobile
            </label>
-          <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
-            <select name="contact[emergency_contact][${count}][mobile_type]" class="form-control select2 col-md-3 select-input-field" style="width: 100%;">
+          <div class="col-lg-8 col-md-8 col-sm-8 person-sub-contact">
+            <select name="contact[emergency_contact][${count}][mobile_type]" class="form-control select2 col-md-3 select-input-field m-0" style="width: 100%;">
               <option value="">Select Type</option>
               <option value="main" >Main</option>
               <option value="work" >Work</option>
@@ -1334,12 +1361,12 @@ $(document).ready(function(){
 
         </div>
         <div class="form-group row ">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
-          <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
+          <label for="email" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Email </label>
+          <div class="col-lg-8 col-md-8 col-sm-8 contact-address-fields">
+
               <input type="email" name="contact[emergency_contact][${count}][relation]" class="form-control" placeholder="Email" value="">
 
-            </div>
+
 
           </div>
         </div>
@@ -1357,25 +1384,23 @@ $(document).ready(function(){
           <a href="javascript:void(0)" class="removeEle" data-id="dependent_info${count}" data-btn="add_mobile">Remove</a>
           </label>
         </div>
-        <div class="form-group row address-contact-row">
-          <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Dependent Information</label>
-        </div>
+
         <div class="form-group row">
-            <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
-          <div class="col-lg-3 col-md-3 col-sm-4">
+            <label for="address" class="col-lg-4 col-md-4 col-sm-4 col-form-label"></label>
+          <div class="col-lg-4 col-md-4 col-sm-4">
             <input type="text" name="contact[dependent_info][${count}][first_name]" class="form-control " placeholder=" First Name" required="" value="">
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-4">
+          <div class="col-lg-4 col-md-4 col-sm-4">
             <input type="text" name="contact[dependent_info][${count}][last_name]" class="form-control " placeholder=" Last Name" required="" value="">
           </div>
         </div>
         <div class="form-group row">
-            <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
-          <div class="col-lg-3 col-md-3 col-sm-4">
+            <label for="address" class="col-lg-4 col-md-4 col-sm-4 col-form-label"></label>
+          <div class="col-lg-4 col-md-4 col-sm-4">
             <input type="text" name="contact[dependent_info][${count}][relation]" class="form-control " placeholder="Relation" required="" value="">
 
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-4">
+          <div class="col-lg-4 col-md-4 col-sm-4">
             <select name="contact[dependent_info][${count}][gender]" class="form-control select2  select-input-field" style="width: 100%;">
               <option value="">Gender</option>
               <option value="male" >Male</option>
@@ -1385,62 +1410,51 @@ $(document).ready(function(){
           </div>
         </div>
         <div class="form-group row ">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Relation </label>
-          <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
+          <label for="email" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Relation </label>
+          <div class="col-lg-8 col-md-8 col-sm-8 contact-address-fields">
               <input type="text" name="contact[dependent_info][${count}][relation]" class="form-control" placeholder="Relation" value="">
-
-            </div>
-
           </div>
         </div>
         <div class="form-group row ">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Government id </label>
-          <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
+          <label for="email" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Government id </label>
+          <div class="col-lg-2 col-md-2 col-sm-4 contact-address-fields">
               <input type="text" name="contact[dependent_info][${count}][gov_id]" class="form-control" placeholder="Government Id" value="">
 
             </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
-              <div class="col-lg-9 col-md-9 col-sm-8">
+            <label for="email" class="col-lg-1 col-md-1 col-sm-4 col-form-label">Issue </label>
+            <div class="col-lg-2 col-md-2 col-sm-2 contact-address-fields">
                 <input type="date" name="contact[dependent_info][${count}][gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
+              </div>
+              <label for="email" class="col-lg-1 col-md-1 col-sm-4 col-form-label">Expiry </label>
 
-              </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
-                <div class="col-lg-9 col-md-9 col-sm-8">
+              <div class="col-lg-2 col-md-2 col-sm-4 contact-address-fields">
                   <input type="date" name="contact[dependent_info][${count}][gov_id_expiry]" class="form-control" placeholder="Work Grade" value="">
 
                 </div>
-                </div>
         </div>
         <div class="form-group row ">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Passport Detail </label>
-          <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
+          <label for="email" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Passport Detail </label>
+          <div class="col-lg-2 col-md-2 col-sm-4 contact-address-fields">
+
               <input type="text" name="contact[dependent_info][${count}][passport_gov_id]" class="form-control" placeholder="e.g 34345" value="">
 
             </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
-              <div class="col-lg-9 col-md-9 col-sm-8">
-                <input type="date" name="contact[dependent_info][${count}][passport_gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
+            <label for="email" class="col-lg-1 col-md-1 col-sm-4 col-form-label">Issue </label>
+            <div class="col-lg-2 col-md-2 col-sm-4 contact-address-fields">
 
+                <input type="date" name="contact[dependent_info][${count}][passport_gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
               </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
-                <div class="col-lg-9 col-md-9 col-sm-8">
+              <label for="email" class="col-lg-1 col-md-1 col-sm-4 col-form-label">Expiry </label>
+              <div class="col-lg-2 col-md-2 col-sm-4 contact-address-fields">
                   <input type="date" name="contact[dependent_info][${count}][passport_gov_id_expiry]" class="form-control" placeholder="Work Grade" value="">
 
-                </div>
                 </div>
         </div>
 
         <div class="form-group row contact-row" id="mobile-field">
-          <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile
+          <label for="mobile" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Mobile
            </label>
-          <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+          <div class="col-lg-8 col-md-8 col-sm-8 person-sub-contact">
             <select name="contact[dependent_info][${count}][mobile_type]" class="form-control select2 col-md-3 select-input-field" style="width: 100%;">
               <option value="">Select Type</option>
               <option value="main" >Main</option>
@@ -1454,22 +1468,19 @@ $(document).ready(function(){
 
         </div>
         <div class="form-group row ">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
-          <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
+          <label for="email" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Email </label>
+          <div class="col-lg-8 col-md-8 col-sm-8 contact-address-fields">
               <input type="email" name="contact[dependent_info][${count}][relation]" class="form-control" placeholder="Email" value="">
-
-            </div>
-
           </div>
         </div>
 
       <div class="form-group row">
-        <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Notes <span style="color:red;">*</span> </label>
+        <label for="name" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Notes</label>
         <div class="col-lg-3 col-md-3 col-sm-4">
           <textarea name="contact[dependent_info][${count}][notes]" class="form-control " placeholder=" Notes" required="" ></textarea>
 
         </div>
+        <label for="name" class="col-lg-1 col-md-1 col-sm-4 col-form-label">Notes</label>
         <div class="col-lg-3 col-md-3 col-sm-4">
 
         <div class="custom-file">

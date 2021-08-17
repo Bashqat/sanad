@@ -40,7 +40,8 @@ class Contact extends Model
         'emergency_contact',
         'dependent_info',
         'contact_type',
-        'financial_information'
+        'financial_information',
+        'company_type'
     ];
     protected $casts = [
         'phone' => 'array',

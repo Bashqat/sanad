@@ -360,6 +360,7 @@ class ContactController extends Controller
             $contactData['organization_id'] = $org_id;
             $contactData['created_by'] = Auth::user()->id;
             $contactData['contact_type'] = $request->input('contact_type');
+            $contactData['company_type'] = $request->input('company_type');
             if(isset($contactData['first_name']) && isset($contactData['last_name']))
             {
               $contactData['name'] = $contactData['first_name'].' '.$contactData['last_name'];
