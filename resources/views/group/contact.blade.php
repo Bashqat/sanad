@@ -1,8 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.contact_layout')
 <title>Contacts</title>
 @section('content')
 
-
+@include('contact.add-tag-modal')
+@include('contact.merge-contact-modal')
+{{-- Add Group Modal --}}
+@include('contact.add-group-modal')
+@include('contact.group-modal')
 <div class="contact-page-new mb-1">
     <div class="container-fluid">
         <div class="row">
@@ -27,7 +31,7 @@
                         <table id="group_contact_table" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox" name="checkbox" class="select-all"></th>
+                                    <!-- <th><input type="checkbox" name="checkbox" class="select-all"></th> -->
                                     <th>Name</th>
                                     <th>Website</th>
                                     <th>Email</th>

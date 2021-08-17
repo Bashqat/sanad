@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="{{ url('css/chosen/style.css') }}">
 
     <link rel="stylesheet" href="{{ url('css/chosen/chosen.css') }}">
+    <style>
+    .error-class {
+    color: red!important;
+    }
+    </style>
 
     @yield('third_party_stylesheets')
 
@@ -168,11 +173,12 @@
     </footer>
 </div>
 
-<script src="{{ mix('js/app.js') }}" defer></script>
+<script src="{{ mix('js/app.js') }}" ></script>
 <script src="{{ url('js/script.js') }}" defer></script>
 <script src="{{ url('js/custom.js') }}" defer></script>
 <script src="{{ url('js/chosen/chosen.jquery.js') }}" ></script>
 <script src="{{ url('js/chosen/init.js') }}" ></script>
+
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.colVis.min.js"></script>
@@ -180,5 +186,6 @@
 @yield('third_party_scripts')
 
 @stack('scripts')
+
 </body>
 </html>

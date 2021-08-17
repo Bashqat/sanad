@@ -2,18 +2,24 @@ $(document).ready(function(){
 
   var org_id=$('.org_id').val();
   var group_id=$('.group_id').val();
+  var type=$('.company_type').val();
+  var company_type='';
+  if( typeof type != 'undefined' || type != null ){
+    company_type='/'+type;
+  }
+
   // var type='';
   // if($('.comapnay_type').val()!="")
   // {
   //   type=$('.comapnay_type').val();
   // }
   // alert(type);
-  var table=$('#contact_table').DataTable({
+  var table1=$('#contact_table').DataTable({
    //"scrollX": true,
    //"pagingType": "numbers",
        "processing": true,
        "serverSide": true,
-       "ajax": '/organisation/'+org_id+'/contact/server-side',
+       "ajax": '/organisation/'+org_id+'/contact/server-side'+company_type,
 
    } );
    var table=$('#contact_employee_table').DataTable({
@@ -43,8 +49,9 @@ $(document).ready(function(){
 
     } );
    $('a.toggle-vis').on( 'click', function (e) {
+
         e.preventDefault();
-        var column = table.column($(this).attr('data-column'));
+        var column = table1.column($(this).attr('data-column'));
         column.visible( ! column.visible() );
     } );
     $(document).on('click', '.filter', function () {
@@ -105,10 +112,10 @@ $(document).ready(function(){
 		var formCount = $('#add_person').attr('data-count');
 		var field = `
         <div class="form-group row contact-row" id="mobile-field${count}">
-            <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile ( ${count+1} )
+            <label for="mobile" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Mobile ( ${count+1} )
                 <a href="javascript:void(0)" class="removeEle" data-id="mobile-field${count}" data-btn="add_mobile">Remove</a>
             </label>
-            <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+            <div class="col-lg-8 col-md-8 col-sm-8 person-sub-contact">
                 <select name="contact[mobile][${count}][type]" class="form-control select2 select-input-field color-change col-md-3 " style="width: 100%;">
                     <option value="">Select Type</option>
                     <option value="main">Main</option>
@@ -205,7 +212,7 @@ $(document).ready(function(){
 
 	$(document).on('click', '#add_website', function () {
 		var count = parseInt($(this).attr('data-count')) + 1;
-    
+
 		$(this).attr('data-count', count);
 		var form = `
         <div id="website_information${count}">
@@ -250,10 +257,10 @@ $(document).ready(function(){
 
 		var form = `
         <div class="form-group row address-contact-row" id="address${count}">
-            <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Address ( ${count+1} )
+            <label for="address" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Address ( ${count+1} )
             <a href="javascript:void(0)" class="removeEle" data-id="address${count}" data-btn="add_address">Remove</a>
             </label>
-            <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+            <div class="col-lg-8 col-md-8 col-sm-8 contact-address-fields">
                 <input type="text" name="contact[address][${count}][name]" class="form-control" placeholder="Address Name (e.g Head Office, Postal...etc)" value="">
                 <input type="text" name="contact[address][${count}][address_line_1]" class="form-control" placeholder="Address Line 1">
                 <input type="text" name="contact[address][${count}][address_line_2]" class="form-control" placeholder="Address Line 2">
@@ -1484,12 +1491,12 @@ $(document).ready(function(){
         //var formCount = $('#add_person').attr('data-count');
         var field = `  <div id="email${count}">
         <div class="form-group row address-contact-row">
-          <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">EMail ( ${count+1} )
+          <label for="address" class="col-lg-4 col-md-4 col-sm-4 col-form-label">EMail ( ${count+1} )
           <a href="javascript:void(0)" class="removeEle" data-id="email${count}" data-btn="add_mobile">Remove</a>
           </label>
 
 
-          <div class="col-lg-9 col-md-9 col-sm-8">
+          <div class="col-lg-8 col-md-8 col-sm-8">
             <input type="email" name="contact[email][${count}]" class="form-control" placeholder="Example@example.com" value="">
 
           </div>

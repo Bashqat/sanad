@@ -14,8 +14,9 @@
                     </div><!-- /.card-header --> --}}
                     <div class="card-body">
                     <div class="tab-content org-create-table">
+                      <img class="loader" style="display:none" src="/images/loader.gif">
                         <div class="tab-pane active" id="settings">
-                        <form class="form-horizontal" method="POST" action="{{ !empty($organisation_data) ? route('org_update') : route('org_store')}}" enctype="multipart/form-data">
+                        <form class="form-horizontal" id="org_new" method="POST" action="{{ !empty($organisation_data) ? route('org_update') : route('org_store')}}" enctype="multipart/form-data">
                             @csrf
 
                             @if(!empty($organisation_data) )
@@ -670,7 +671,7 @@
 
                             <div class="form-group row">
                                 <div class="offset-sm-2 col-sm-10 text-right">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary org_submit">Submit</button>
 
                                 </div>
                             </div>
@@ -689,3 +690,7 @@
         </div><!-- /.container-fluid -->
     <!-- /.content -->
 @endsection
+@push('scripts')
+
+ <!-- <script src="{{ url('js/organisation.js') }}" defer></script> -->
+@endpush

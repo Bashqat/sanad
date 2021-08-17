@@ -25,6 +25,7 @@ class ContactController extends Controller
     }
     public function index(Request $request,$org_id,$type='')
     {
+
       $obj=new OrganizationController();
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
@@ -50,12 +51,16 @@ class ContactController extends Controller
 
       return view('contact.employee',['org_id'=>$org_id,'contacts'=>$contacts,'groups'=>$groups]);
     }
-    public function serverSide(Request $request,$org_id)
+    public function serverSide(Request $request,$org_id,$type='')
     {
       $obj=new OrganizationController();
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
       $contacts=Contact::where('type','!=','archive')->with('contact_information');
+      if($type!="")
+      {
+        $contacts=Contact::where('type','!=','archive')->where('company_type',$type)->with('contact_information');
+      }
       if(request()->ajax()){
         $search=$request->search['value'];
         if($search=="country")
@@ -253,10 +258,14 @@ class ContactController extends Controller
         $search=$request->search['value'];
         if($search=="country")
         {
-          $contacts=$contacts->orderBy('address', 'ASC');
+          $contacts=$contacts->orderBy('country', 'ASC');
+        }
+        if($search=="tag")
+        {
+          $contacts=$contacts->orderBy('tags', 'ASC');
         }
         else if($search!="") {
-          $contacts=$contacts->where('first_name', 'like', '%' . $search . '%')
+          $contacts=$contacts->where('name', 'like', '%' . $search . '%')
              ->orWhere('website', 'like', '%' . $search. '%');
         }
 
@@ -267,26 +276,42 @@ class ContactController extends Controller
       $totalFiltered = $totalData;
 
 
-          $data=[];
+      $data=[];
+
       foreach($contacts as $key=>$contact)
       {
-        $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
-        $data[$key][]=$contact->name;
-        $data[$key][]=$contact->website;
-        $data[$key][]=$contact->email;
+
+        $data[$key][]='<a href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->name.'</a>
+        <p>'.$contact->name_arabic.'</p>';
+
+        if(isset($contact->contact_information) && count($contact->contact_information)>0 )
+        {
+           $first_person=$contact->contact_information[0]->first_name;
+           $data[$key][]=$first_person.'<img src="/images/site-images/contact-email-data.svg"><img src="/images/site-images/contact-phone-data.svg"><img src="/images/site-images/contact-wtap-data.svg">';
+         }
+        else {
+          $data[$key][]='';
+        }
+        if(isset($contact->contact_information) && count($contact->contact_information)>1 )
+        {
+           $second_person=$contact->contact_information[1]->first_name;
+           $data[$key][]=$second_person.'<img src="/images/site-images/contact-email-data.svg"><img src="/images/site-images/contact-phone-data.svg"><img src="/images/site-images/contact-wtap-data.svg">';
+
+        }
+        else {
+          $data[$key][]='';
+        }
+
+        $data[$key][]=(isset($contact->address[0]['country'])?$contact->address[0]['country']:'');
+        //$data[$key][]=$contact->email;
+
         $phone='';
         $token = csrf_token();
 
-        if(!empty($contact->phone))
-        {
-          foreach($contact->phone as $phone)
-          {
-            $phone=$phone;
-          }
-        }
+
 
         $restore_path=route('contact.restore');
-        $data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
+        //$data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>';
         $data[$key][]='<div class="dropdown">
                   <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-v"></i></a>
                   <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);">
@@ -884,7 +909,7 @@ class ContactController extends Controller
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
       $contact_detail=Contact::with('contact_information')->with('website_information')->where('id',$contact_id)->get()->toArray();
-      
+
 
       return view('contact/view',compact('contact_detail'));
     }

@@ -55,7 +55,7 @@
         <div class="contact-view-website contact-tables-sec  bg-white">
 					<div class="table-header-menu d-flex align-items-center">
                         <div class="col-md-6 d-flex align-items-center p-0">
-                            <button class="right-conatct-arrow btn collapsed" type="button" data-toggle="collapse" data-target="#websites-table-box" aria-expanded="false" aria-controls="collapseExample">
+                            <button class="right-conatct-arrow btn collapsed arrow_input" type="button" data-toggle="collapse" data-target="#websites-table-box" aria-expanded="false" aria-controls="collapseExample">
 								<h1 class="mb-0">
                                     <!-- <i class="fa fa-angle-down"></i> -->
                                     <img src="/images/site-images/cont-view-right-arrow.svg" class="cont-view-right-arrow" id="arrow_id1">
@@ -120,7 +120,7 @@
                 <div class="contact-view-contact-person-list contact-tables-sec  bg-white mb-4">
 					<div class="table-header-menu d-flex align-items-center">
                         <div class="col-md-6 d-flex align-items-center p-0">
-                             <button class="btn right-conatct-arrow" type="button" data-toggle="collapse" data-target="#contact-persons-box" aria-expanded="false" aria-controls="collapseExample">
+                             <button class="btn right-conatct-arrow arrow_input" type="button" data-toggle="collapse" data-target="#contact-persons-box" aria-expanded="false" aria-controls="collapseExample">
 								<h1 class="mb-0">
 <!--                                    <i class="fa fa-angle-down"></i>-->
                                     <img src="/images/site-images/cont-view-right-arrow.svg" class="cont-view-right-arrow" id="arrow_id1">
@@ -435,7 +435,7 @@
 				</aside>
 
 
-            <aside class="p-3 bg-white pb-5 mb-5 contact-groups-detail-sec">
+            <aside class="bg-white contact-detail-sec contact-groups-detail-sec">
 					<div class="sidebar-top d-flex justify-content-between align-items-center">
 						<h4 class="text-capitalize mb-0">Groups</h4>
 					</div>
@@ -450,7 +450,9 @@
 							</ul>
 
                         <div class="tags-btns overflow-auto">
-							<h4 class="text-capitalize mt-2 mb-3">tags</h4>
+													<div class="sidebar-top d-flex justify-content-between align-items-center">
+                                <h4 class="text-capitalize mb-0">tags</h4>
+						                </div>
 
 													@if(!empty($contact_detail[0]['tags']))
 													@foreach($contact_detail[0]['tags'] as $tags)
@@ -485,17 +487,12 @@
 
 <script>
     $(document).ready(function(){
-  $("#arrow_id1").click(function(){
-
-        $(this).closest('.contact-tables-sec').addClass("active-contact-table-sec");
-
-  });
-  $("#arrow_id2").click(function(){
-
-        $(this).closest('.contact-tables-sec').removeClass("active-contact-table-sec");
-
-
-  });
+  		$(".arrow_input").click(function(){
+   			$(this).closest('.contact-tables-sec').toggleClass("active-contact-table-sec");
+  			});
+ //  $(“.cont-view-up-arrow”).click(function(){
+ //    $(this).closest(‘.contact-tables-sec’).removeClass(“active-contact-table-sec”);
+ // });
 });
     </script>
 @endsection
