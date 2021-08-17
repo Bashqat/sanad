@@ -15,8 +15,8 @@
                         <img src="/images/site-images/profile-img.svg">
                     </div>
                     <div class="contact-profile-details text-capitalize text-right">
-                        <h5>Person_Name</h5>
-                        <p class="mb-0">person-name</p>
+                        <h5>{{$contact_detail[0]['name']}}</h5>
+                        <p class="mb-0">{{$contact_detail[0]['name_arabic']}}</p>
                     </div>
                 </div>
             </div>
@@ -87,15 +87,19 @@
                             </tr>
                           </thead>
                           <tbody>
+														@if(!empty($contact_detail[0]['website_information']))
+														@foreach($contact_detail[0]['website_information'] as $website)
                             <tr>
                               <td><input type="checkbox" class="row-select" value="4"></td>
-                              <td>ABC Name</td>
-                                <td>https://dribbble.com</td>
-                                <td>Test0100</td>
+                              <td>{{$website['title']}}</td>
+                                <td>{{$website['link']}}</td>
+                                <td>{{$website['username']}}</td>
                                 <td><img src="/images/site-images/cont-view-psd.svg"> *************</td>
                                 <td><img src="/images/site-images/cont-view-eye.svg"> View</td>
                                 <td><img src="/images/site-images/3-dots-cont-view.svg"></td>
                             </tr>
+														@endforeach
+														@endif
                             <tr>
                               <td><input type="checkbox" class="row-select" value="4"></td>
                               <td>ABC Name</td>
@@ -168,11 +172,13 @@
                                 <th></th>
                                 <th colspan="7">Group 1</th>
                             </tr>
+														@if(!empty($contact_detail[0]['contact_information']))
+														@foreach($contact_detail[0]['contact_information'] as $contact)
                             <tr>
                               <td><input type="checkbox" class="row-select" value="4"></td>
-                              <td><a href="#">Keith Wilaim</a></td>
-                                <td>Marco</td>
-                                <td>Manager</td>
+                              <td><a href="#">{{$contact['first_name']}}</a></td>
+                                <td>{{$contact['nickname']}}</td>
+                                <td>{{$contact['position']}}</td>
                                 <td>
                                     <div class="contact-person-list-details d-inline-flex">
                                         <img src="/images/site-images/c-p-l-email.svg">
@@ -181,7 +187,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <textarea type="text" placeholder="Type here"></textarea>
+                                    <textarea type="text" placeholder="Type here">{{$contact['notes']}}</textarea>
                                 </td>
                                 <td>
                                     <img src="/images/site-images/c-p-l-pdf.svg">
@@ -190,7 +196,9 @@
                                     <img src="/images/site-images/3-dots-cont-view.svg">
                                 </td>
                             </tr>
-                            <tr class="contact-group-heading">
+														@endforeach
+														@endif
+                            <!-- <tr class="contact-group-heading">
                               <th></th>
                                 <th colspan="7">Group 1</th>
                             </tr>
@@ -217,7 +225,7 @@
                                 <td>
                                     <img src="/images/site-images/3-dots-cont-view.svg">
                                 </td>
-                            </tr>
+                            </tr> -->
                           </tbody>
                         </table>
 
@@ -242,10 +250,10 @@
 					</div>
 
     <div class="collapse" id="note-tables-box">
-                     <div class="table-header-menu d-flex align-items-center">
-                         <div class="col-md-6 d-flex align-items-center">
+                     <div class="nav-header-menu d-flex align-items-center">
+                         <div class="col-md-6 d-flex align-items-center p-0">
                                 <!-- Nav tabs -->
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <ul class="nav nav-tabs mb-0" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="notes-tab-contact" data-toggle="tab" href="#notes-contact" role="tab" aria-controls="home" aria-selected="true">Notes</a>
                                     </li>
@@ -257,7 +265,7 @@
                                     </li>
                                 </ul>
                          </div>
-                         <div class="col-md-6 d-flex align-items-center justify-content-end">
+                         <div class="col-md-6 d-flex align-items-center justify-content-end p-0">
                               <button class="btn add-btn d-flex align-items-center" data-toggle="modal" data-target="#add-note-modal">
                 <!--             <i class="far fa-sticky-note mr-1"></i>-->
                                 <img src="/images/site-images/add-website.svg">
@@ -271,52 +279,63 @@
 
 						<div class="tab-content">
 							<div class="tab-pane active" id="notes-contact" role="tabpanel" aria-labelledby="notes-tab-contact">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                    <td><input type="checkbox" class="" value=""></td>
-                                        <td><span>Heading will be here</span>
-                                            <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
-                                                Lorem ipsum may be used as a placeholder before final copy is available.
-                                            </p>
-                                            <span>By Keith Willaim </span>
-                                            <p>(Last edited by - Mark Boucher - 9/7/2021 - 7:33 AM)</p>
-                                        </td>
-                                        <td>
-                                            <img src="/images/site-images/c-p-l-pdf.svg">(03)
-                                            <img src="/images/site-images/contact-nots-pin.svg">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                    <td><input type="checkbox" class="" value=""></td>
-                                        <td><span>Heading will be here</span>
-                                            <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
-                                                Lorem ipsum may be used as a placeholder before final copy is available.
-                                            </p>
-                                            <span>By Keith Willaim </span>
-                                            <p>(Last edited by - Mark Boucher - 9/7/2021 - 7:33 AM)</p>
-                                        </td>
-                                        <td>
-                                            <img src="/images/site-images/c-p-l-pdf.svg">(03)
-                                            <img src="/images/site-images/contact-nots-pin.svg">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                    <td><input type="checkbox" class="" value=""></td>
-                                        <td><span>Heading will be here</span>
-                                            <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
-                                                Lorem ipsum may be used as a placeholder before final copy is available.
-                                            </p>
-                                            <span>By Keith Willaim </span>
-                                            <p>(Last edited by - Mark Boucher - 9/7/2021 - 7:33 AM)</p>
-                                        </td>
-                                        <td>
-                                            <img src="/images/site-images/c-p-l-pdf.svg">(03)
-                                            <img src="/images/site-images/contact-nots-pin.svg">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                <div class="notes-contact-inner-table-sec contact-inner-table-sec">
+                                    <table class="w-100 border-0">
+                                    <tbody>
+                                        <tr>
+                                        <td><input type="checkbox" class="" value=""></td>
+                                            <td><span>Heading will be here</span>
+                                                <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
+                                                    Lorem ipsum may be used as a placeholder before final copy is available.
+                                                </p>
+                                                <div class="notes-time-detail d-flex">
+                                                    <span>By Keith Willaim </span>
+                                                    <p>(Last edited by - Mark Boucher - 9/7/2021 - 7:33 AM)</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="nots-attach-pdf d-flex align-items-center">
+                                                    <img src="/images/site-images/c-p-l-pdf.svg">(03)
+                                                    <img src="/images/site-images/contact-nots-pin.svg">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                        <td><input type="checkbox" class="" value=""></td>
+                                            <td><span>Heading will be here</span>
+                                                <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
+                                                    Lorem ipsum may be used as a placeholder before final copy is available.
+                                                </p>
+                                                <div class="notes-time-detail d-flex">
+                                                    <span>By Keith Willaim </span>
+                                                    <p>(Last edited by - Mark Boucher - 9/7/2021 - 7:33 AM)</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <img src="/images/site-images/c-p-l-pdf.svg">(03)
+                                                <img src="/images/site-images/contact-nots-pin.svg">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                        <td><input type="checkbox" class="" value=""></td>
+                                            <td><span>Heading will be here</span>
+                                                <p>Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.
+                                                    Lorem ipsum may be used as a placeholder before final copy is available.
+                                                </p>
+                                                <div class="notes-time-detail d-flex">
+                                                    <span>By Keith Willaim </span>
+                                                    <p>(Last edited by - Mark Boucher - 9/7/2021 - 7:33 AM)</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <img src="/images/site-images/c-p-l-pdf.svg">(03)
+                                                <img src="/images/site-images/contact-nots-pin.svg">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+
 
 
                             </div>
@@ -351,31 +370,31 @@
 							<li>
                                 <div class="d-flex justify-content-between">
                                     <p>Account Number:</p>
-                                    <b>00129310</b>
+                                    <b>{{$contact_detail[0]['account_no']}}</b>
                                 </div>
                             </li>
-							<li>
+														@if(!empty($contact_detail[0]['website_information']))
+														@foreach($contact_detail[0]['website_information'] as $website)
+
+														<li>
                                 <a href="#" class="d-inline-flex">
                                 <img src="/images/site-images/contact-globe.svg">
-                                https://dribbble.com
+                              {{$website['link']}}
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" class="d-inline-flex">
-                                <img src="/images/site-images/contact-globe.svg">
-                                https://dribbble.com
-                                </a>
-                            </li>
+														@endforeach
+														@endif
+
                             <li>
                                 <div class="d-flex justify-content-between">
                                     <p>Phone Number:</p>
-                                    <b>+00965 559923031</b>
+                                    <b>+{{$contact_detail[0]['phone']['number']}}</b>
                                 </div>
                             </li>
                             <li>
                                 <div class="d-flex justify-content-between">
                                     <p>Fax Number:</p>
-                                    <b>+00965 559923031</b>
+                                    <b>+{{$contact_detail[0]['fax']['number']}}</b>
                                 </div>
                             </li>
 
@@ -392,21 +411,22 @@
 					<div class="sidebar-inner" id="sidebar-inner">
 						<ul class="sidebar-top-list">
                             <li>
-                                <p>123 Main Street, New York, NY 10030</p>
+                                <p>{{$contact_detail[0]['address'][0]['name']}}</p>
                             </li>
                             <li>
-                                <p>123 Main Street, New York, NY 10030</p>
+                                <p>{{$contact_detail[0]['address'][0]['city']}}</p>
                             </li>
 							<li>
                                 <div class="d-flex justify-content-between">
                                     <p>Country:</p>
-                                    <b>United States of America</b>
+                                    <b>{{$contact_detail[0]['address'][0]['country']}}</b>
                                 </div>
                             </li>
 							<li>
+
                                 <a href="#" class="d-inline-flex">
                                 <img src="/images/site-images/address-location-cont.svg">
-                                https://googlemaplink
+                                {{$contact_detail[0]['address'][0]['google_map_link']}}
                                 </a>
                             </li>
 							</ul>
@@ -432,9 +452,10 @@
                         <div class="tags-btns overflow-auto">
 							<h4 class="text-capitalize mt-2 mb-3">tags</h4>
 
-
+													@if(!empty($contact_detail[0]['tags']))
+													@foreach($contact_detail[0]['tags'] as $tags)
                             <div class="tab-buttons">
-                                    <button type="button" data-tag-name="test" data-tag-index="0" class="btn btn-success edit-tag">test</button>
+                                    <button type="button" data-tag-name="test" data-tag-index="0" class="btn btn-success edit-tag">{{$tags}}</button>
                                     <form method="POST" action="https://sanadportal.com/contact-delete-tag" onsubmit="return confirm('Are you sure?');">
                                         <input type="hidden" name="_token" value="oGmBBmfvmRX9NJwJdqVjokujbkfGtwNQc5TPNGTx">                                        <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="id" value="116">
@@ -444,50 +465,9 @@
                                     </form>
                             </div>
 
-                            <div class="tab-buttons">
-                                    <button type="button" data-tag-name="test" data-tag-index="0" class="btn btn-success edit-tag">test</button>
-                                    <form method="POST" action="https://sanadportal.com/contact-delete-tag" onsubmit="return confirm('Are you sure?');">
-                                        <input type="hidden" name="_token" value="oGmBBmfvmRX9NJwJdqVjokujbkfGtwNQc5TPNGTx">                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="id" value="116">
-                                        <input type="hidden" name="tagName" value="test">
-                                        <input type="hidden" name="tagIndex" value="0">
-                                        <button type="submit" class="tag-buttons-delete"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                    </form>
-                            </div>
+														@endforeach
+															@endif
 
-                            <div class="tab-buttons">
-                                    <button type="button" data-tag-name="test" data-tag-index="0" class="btn btn-success edit-tag">test</button>
-                                    <form method="POST" action="https://sanadportal.com/contact-delete-tag" onsubmit="return confirm('Are you sure?');">
-                                        <input type="hidden" name="_token" value="oGmBBmfvmRX9NJwJdqVjokujbkfGtwNQc5TPNGTx">                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="id" value="116">
-                                        <input type="hidden" name="tagName" value="test">
-                                        <input type="hidden" name="tagIndex" value="0">
-                                        <button type="submit" class="tag-buttons-delete"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                    </form>
-                            </div>
-
-                            <div class="tab-buttons">
-                                    <button type="button" data-tag-name="test" data-tag-index="0" class="btn btn-success edit-tag">test</button>
-                                    <form method="POST" action="https://sanadportal.com/contact-delete-tag" onsubmit="return confirm('Are you sure?');">
-                                        <input type="hidden" name="_token" value="oGmBBmfvmRX9NJwJdqVjokujbkfGtwNQc5TPNGTx">                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="id" value="116">
-                                        <input type="hidden" name="tagName" value="test">
-                                        <input type="hidden" name="tagIndex" value="0">
-                                        <button type="submit" class="tag-buttons-delete"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                    </form>
-                            </div>
-
-                            <div class="tab-buttons">
-                                    <button type="button" data-tag-name="test" data-tag-index="0" class="btn btn-success edit-tag">test</button>
-                                    <form method="POST" action="https://sanadportal.com/contact-delete-tag" onsubmit="return confirm('Are you sure?');">
-                                        <input type="hidden" name="_token" value="oGmBBmfvmRX9NJwJdqVjokujbkfGtwNQc5TPNGTx">                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="id" value="116">
-                                        <input type="hidden" name="tagName" value="test">
-                                        <input type="hidden" name="tagIndex" value="0">
-                                        <button type="submit" class="tag-buttons-delete"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                    </form>
-                            </div>
-                        </div>
 
 
 					</div>

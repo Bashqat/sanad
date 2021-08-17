@@ -2988,6 +2988,124 @@ img.cont-view-up-arrow {
     margin-bottom: 0px;
 }
 
+
+.nav-header-menu ul.nav-tabs {
+    max-width: 100%;
+    border: 0;
+}
+
+.nav-header-menu ul.nav-tabs li.nav-item {
+    margin: 0px;
+}
+
+.nav-header-menu ul.nav-tabs li.nav-item a.nav-link.active {
+    background: transparent;
+    color: #4B7DDE;
+    font-weight: 600;
+}
+
+.nav-header-menu ul.nav-tabs li.nav-item a.nav-link.active::after {
+    display: none;
+}
+
+.nav-header-menu ul.nav-tabs li.nav-item a.nav-link {
+    border: 0px;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.05px;
+    line-height: 20px;
+	padding: 0px;
+}
+
+.nav-header-menu ul.nav-tabs li.nav-item {
+    margin: 0px 40px 0px 0px;
+}
+
+.nav-header-menu ul.nav-tabs li.nav-item:last-child {
+    margin: 0px;
+}
+
+.nav-header-menu ul.nav-tabs li.nav-item a.nav-link.active::before {
+    position: absolute;
+    content: "";
+    background: #4B7DDE;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: 30px;
+}
+
+.contact-tables-sec .nav-header-menu button.btn.add-btn {
+    padding: 0px;
+    color: #4B7DDE;
+    font-size: 16px;
+}
+
+.contact-tables-sec .nav-header-menu button.btn.add-btn img {
+    padding-right: 6px;
+}
+
+.notes-contact-inner-table-sec.contact-inner-table-sec table tr td {
+    color: #434343;
+	height: auto !important;
+	padding-top: 24px !important;
+}
+
+.notes-contact-inner-table-sec.contact-inner-table-sec table tr td span {
+    color: #4B7DDE;
+    font-size: 16px;
+	display: block;
+	margin-bottom: 14px;
+}
+
+.notes-time-detail span {
+    font-weight: 500;
+	padding-right: 12px;
+	font-size: 14px !important;
+    margin-bottom: 12px !important;
+}
+
+.notes-time-detail p {
+    color: #979797;
+}
+
+.notes-contact-inner-table-sec .nots-attach-pdf img:first-child {
+    margin-right: 6px;
+}
+
+.notes-contact-inner-table-sec .nots-attach-pdf img:last-child {
+    margin-left: 12px;
+}
+
+.notes-tables-sec .nav-header-menu {
+    padding: 25px 40px 20px 42px;
+}
+
+.notes-tables-sec .contact-inner-table-sec {
+	margin: 0px 40px 22px 42px;
+    padding: 0px 20px 22px 20px;
+	box-shadow: 1px 1px 4px 6px #f6f9fe;
+    /* padding: 0px 40px 22px 42px; */
+}
+
+.notes-contact-inner-table-sec.contact-inner-table-sec table tr td p {
+	margin-bottom: 12px;
+}
+
+.notes-tables-sec .tab-content {
+    padding-bottom: 20px;
+}
+
+.notes-tables-sec .notes-contact-inner-table-sec table tbody {
+    border: 0px;
+}
+
+.notes-tables-sec .notes-contact-inner-table-sec table tbody tr {
+    border: 0px;
+    border-bottom: 1px solid #f6f9fe;
+}
+
 /***** contact-view-css-end-here *****/
 
 /***** Aug-14-css-end-here *****/
