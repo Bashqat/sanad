@@ -229,8 +229,8 @@
 								</div>
 							</li>
 							</li>
-							<div class="nav-item dropdown user-menu super-admin">
-								<a href="#" class="nav-link mr-md-1 dropdown-toggle user-circle-img" data-toggle="dropdown">
+							<div class="nav-item dropdown user-menu super-admin user-profile-name">
+								<a href="#" class="nav-link mr-md-1 dropdown-toggle user-circle-img d-flex justify-content-center align-items-center" data-toggle="dropdown">
 									<img src="@if (filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL)){{ Auth::user()->avatar }}@else/images/profile/{{ Auth::user()->avatar }}@endif" class="user-image img-circle elevation-2" alt="User Image">
 									<span>{{ ucfirst(Auth::user()->name) }}</span>
 									<span class="d-none d-md-inline">

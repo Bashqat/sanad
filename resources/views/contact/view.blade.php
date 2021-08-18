@@ -96,7 +96,21 @@
                                 <td>{{$website['username']}}</td>
                                 <td><img src="/images/site-images/cont-view-psd.svg"> *************</td>
                                 <td><img src="/images/site-images/cont-view-eye.svg"> View</td>
-                                <td><img src="/images/site-images/3-dots-cont-view.svg"></td>
+                                <td>
+                                <div class="dropdown table-dropdown show">
+                                    <button class="btn " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <img src="/images/site-images/3-dots-cont-view.svg">
+                                        </button>
+                                    <div class="dropdown-menu dropdown-menu-right " aria-labelledby="dropdownMenuButton" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 34px, 0px);" x-placement="bottom-start">
+                                        <a class="dropdown-item d-flex align-items-center" href="#&quot;">
+                                        <img src="/images/site-images/archive-table-data.svg"> Archive Website
+                                        </a>
+                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <img src="/images/site-images/delete-table-data.svg"> Delete Website
+                                        </a>
+                                    </div>
+                                </div>
+                                </td>
                             </tr>
 														@endforeach
 														@endif
