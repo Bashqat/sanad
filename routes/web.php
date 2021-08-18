@@ -140,6 +140,11 @@ Route::group(['middleware' => 'auth'], function () {
         ///contact details
         Route::get('organisation/{org_id}/contact/{contact_id}/view', [App\Http\Controllers\ContactController::class,'view'])->name('contact.view');
 
+
+        //contact view page action
+        Route::post('organisation/contact/add-website', [App\Http\Controllers\ContactController::class,'addWebsite'])->name('organisation.contact.add_website');
+        Route::post('view-website-pin',[App\Http\Controllers\ContactController::class,'viewWebsitePin'])->name('view-website-pin');
+
 });
 
 

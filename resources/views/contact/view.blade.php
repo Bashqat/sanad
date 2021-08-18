@@ -1,6 +1,8 @@
 @extends('layouts.contact_layout')
 
 @section('content')
+{{-- Assign Group Modal --}}
+@include('contact.group-modal')
 
 <div class="english-table">
 	<div class="container-fluid">
@@ -20,6 +22,7 @@
                     </div>
                 </div>
             </div>
+						<input type="hidden" name="org_id" value="{{$org_id}}" class="org_id">
 			<div class="col-md-5">
                 <div class="conatct-view-search-options d-flex justify-content-end">
                     <form class="form-inline contact-side-bar-search contact-table-search">
@@ -40,13 +43,13 @@
                             <img src="/images/site-images/view-con-opt.svg">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="custom-menu" style="">
-                            <a class="dropdown-item show-contact-option" data-type="group" data-row="26">Add to group</a>
+                            <a class="dropdown-item show-contact-option" data-type="group" data-row="{{$contact_detail[0]['id']}}">Add to group</a>
                             <a class="dropdown-item show-contact-option" data-type="tag" data-row="26">Add tag</a>
                             <a class="dropdown-item show-contact-option" data-type="merge" data-row="26">Merge</a>
                             <a class="dropdown-item show-contact-option" data-type="archive" data-row="26">Archive</a>
                         </div>
                     </div>
-                    <a href="#" class="btn custom-btn btn-primary edit-button mb-0">Edit</a>
+                    <a href="{{route('contacts.edit',[$org_id,$contact_detail[0]['id']])}}" class="btn custom-btn btn-primary edit-button mb-0">Edit</a>
                 </div>
             </div>
         </div>
@@ -94,21 +97,25 @@
                               <td>{{$website['title']}}</td>
                                 <td>{{$website['link']}}</td>
                                 <td>{{$website['username']}}</td>
-                                <td><img src="/images/site-images/cont-view-psd.svg"> *************</td>
-                                <td><img src="/images/site-images/cont-view-eye.svg"> View</td>
-                                <td><img src="/images/site-images/3-dots-cont-view.svg"></td>
+                                <td><img src="/images/site-images/cont-view-psd.svg" > <span id="pin-{{$website['id']}}">*************</span></td>
+                                <td><img src="/images/site-images/cont-view-eye.svg" class="view_pin" data_id="{{$website['id']}}" data_org_id="{{$org_id}}"> View</td>
+                                <td><div class="dropdown table-dropdown show">
+                                    <button class="btn " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <img src="/images/site-images/3-dots-cont-view.svg">
+                                        </button>
+                                    <div class="dropdown-menu dropdown-menu-right " aria-labelledby="dropdownMenuButton" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 34px, 0px);" x-placement="bottom-start">
+                                        <a class="dropdown-item d-flex align-items-center" href="#&quot;">
+                                        <img src="/images/site-images/archive-table-data.svg"> Archive Website
+                                        </a>
+                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <img src="/images/site-images/delete-table-data.svg"> Delete Website
+                                        </a>
+                                    </div>
+                                </div></td>
                             </tr>
 														@endforeach
 														@endif
-                            <tr>
-                              <td><input type="checkbox" class="row-select" value="4"></td>
-                              <td>ABC Name</td>
-                                <td>https://dribbble.com</td>
-                                <td>Test0100</td>
-                                <td><img src="/images/site-images/cont-view-psd.svg"> *************</td>
-                                <td><img src="/images/site-images/cont-view-eye.svg"> View</td>
-                                <td><img src="/images/site-images/3-dots-cont-view.svg"></td>
-                            </tr>
+
                           </tbody>
                         </table>
 
@@ -484,8 +491,78 @@
         </div>
     </div>
 </div>
-
+{{-- ADD WEBSITE MODAL --}}
+<div class="modal fade" id="add-website-modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Add Website</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form method="POST" action="{{ route('organisation.contact.add_website') }}" id="add-website-form">
+				<div class="modal-body add-gp-sec">
+					@csrf
+					<input type="hidden" name="contact_id" value="{{ $contact_detail[0]['id'] }}">
+					<input type="hidden" name="org_id" value="{{ $org_id }}">
+					<div class="form-group">
+						<label for="title" class="col-form-label">Website Name:</label>
+						<input type="text" class="form-control" id="title" name="title" required>
+					</div>
+					<div class="form-group">
+						<label for="link" class="col-form-label">Link:</label>
+						<input type="url" class="form-control" id="link" name="link" required>
+					</div>
+					<div class="form-group">
+						<label for="username" class="col-form-label">Username:</label>
+						<input type="text" class="form-control" id="username" name="username" required>
+					</div>
+					<div class="form-group">
+						<label for="password" class="col-form-label">Password:</label>
+						<input type="password" class="form-control" id="password" name="password" required>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- Modal-PIN -->
+<div class="modal fade" id="watch" tabindex="-1" role="dialog" aria-labelledby="pinModal" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content enter-pin-sec">
+			<div class="modal-header">
+				<h5 class="modal-title" id="pinModal"><img src="/images/site-images/pin-key.svg">Enter Pin</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body p-5">
+				<form id="pin-code-form" method="post">
+					<div class="form-group">
+						<input type="hidden" id="org_id" name="org_id" value="">
+						<input type="hidden" id="website_id" name="website_id" value="">
+						<label>Enter your pin code</label>
+						<input type="password" class="form-control" name="pincode" id="pincode" aria-describedby="pincode"  required>
+					</div>
+					<div class="form-btns d-flex justify-content-between mt-4">
+						<button type="button" class="btn btn-light px-4 text-capitalize" data-dismiss="modal">cancel</button>
+						<button type="submit" class="btn btn-primary px-5 text-uppercase">ok</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="{{ url('js/contact.js') }}" defer></script>
 <script>
+
     $(document).ready(function(){
   		$(".arrow_input").click(function(){
    			$(this).closest('.contact-tables-sec').toggleClass("active-contact-table-sec");

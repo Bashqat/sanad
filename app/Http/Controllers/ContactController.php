@@ -13,6 +13,7 @@ use Illuminate\Support\Arr;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Group;
 use App\Models\Employee;
+use App\Models\Org_setting;
 
 
 class ContactController extends Controller
@@ -87,7 +88,7 @@ class ContactController extends Controller
 
       foreach($contacts as $key=>$contact)
       {
-        
+
         $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
         $data[$key][]='<div class="contact-name-col"><a class="text-right d-block" href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->name.'</a>
         <p class="text-right">'.$contact->name_arabic.'</p></div>';
@@ -896,8 +897,8 @@ class ContactController extends Controller
                 }else{
                     $rows = explode(',',$rows);
                     Contact::whereIn('id', $rows)->update(['group_id' => $groupId]);
-                    contactInformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
-                    Websiteinformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
+                    // contactInformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
+                    // Websiteinformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
                     return response()->json([
                         'success' => 1,
                         'msg' => 'Contact moved in group successfully.'
@@ -922,8 +923,56 @@ class ContactController extends Controller
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
       $contact_detail=Contact::with('contact_information')->with('website_information')->where('id',$contact_id)->get()->toArray();
+      $groups=Group::with('subgroup')->get();
 
 
-      return view('contact/view',compact('contact_detail'));
+      return view('contact/view',compact('contact_detail','org_id','groups'));
+    }
+    public function addWebsite(Request $request)
+    {
+      try{
+        $org_id=$request->input('org_id');
+        $obj=new OrganizationController();
+        $databaseName=$obj->get_db_name($org_id);
+        $db_connection=$obj->org_connection($databaseName);
+        Websiteinformation::create($request->all());
+        return redirect()->back()->with('success','Website add successfuly');
+
+      }catch (Exception $e) {
+              DB::rollback();
+              return redirect()->back()->with('error',$e->getMessage());
+      } catch(\Illuminate\Database\QueryException $ex){
+              return redirect()->back()->with('error',$ex->getMessage());
+              DB::rollback();
+      }
+    }
+
+    public function viewWebsitePin(Request $request){
+      $org_id=$request->input('org_id');
+      $website_id=$request->input('website_id');
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $pin=$request->input('pincode');
+      $pinData=Org_setting::where('security_pin',$pin)->get()->toArray();
+      if(!empty($pinData))
+      {
+        $websiteData=Websiteinformation::where('id',$website_id)->get()->toArray();
+        $password=$websiteData[0]['password'];
+        return response()->json([
+                      'success' => 1,
+                      'msg' => "Pin match successfully",
+                      'data' => $password,
+                      'id' => $website_id
+                  ]);
+
+      }
+      return response()->json([
+                    'success' => 0,
+                    'msg' => "Pin not match successfully",
+                    'id' => $website_id
+                ]);
+
+
     }
 }

@@ -870,17 +870,22 @@ $(document).ready(function(){
     }
 
     // View Pin Modal
-    $(document).on('click','.view-pin',function(){
-        var row = $(this).data('id');
-        $('#pinrowId').val(row);
-        if ( $(`#pin-id-${row}`).attr('data-view') == 'false' ) {
-        	$('#watch').modal('show');
-        }else{
-        	$(`#pswd-tab-${row}`).html('***********');
-        	$(`#pin-id-${row}`).html('<i class="fa fa-eye"></i>');
-        	$(`#pin-id-${row}`).attr('data-view','false')
+    $(document).on('click','.view_pin',function(){
+        var data_id = $(this).attr('data_id');
+        var data_org_id=$(this).attr('data_org_id');
+        $('#website_id').val(data_id);
+        $('#org_id').val(data_org_id);
+        $('#watch').modal('show');
 
-        }
+        // $('#pinrowId').val(row);
+        // if ( $(`#pin-id-${row}`).attr('data-view') == 'false' ) {
+        // 	$('#watch').modal('show');
+        // }else{
+        // 	$(`#pswd-tab-${row}`).html('***********');
+        // 	$(`#pin-id-${row}`).html('<i class="fa fa-eye"></i>');
+        // 	$(`#pin-id-${row}`).attr('data-view','false')
+        //
+        // }
     });
 
     //View Pin Action
@@ -895,10 +900,10 @@ $(document).ready(function(){
             },
             success: function(response){
                 if (response.success == 1) {
-                    $(`#pswd-tab-${response.id}`).html(response.data);
+                    $(`#pin-${response.id}`).html(response.data);
                     toastr.success(response.msg);
                     $(`#pin-id-${response.id}`).html('<i class="fa fa-eye-slash"></i>');
-                    $(`#pin-id-${response.id}`).attr('data-view','true');
+                    //$(`#pin-id-${response.id}`).attr('data-view','true');
                 }else{
                     toastr.error(response.msg);
                     $(`#pin-id-${response.id}`).html('<i class="fa fa-eye"></i>');
