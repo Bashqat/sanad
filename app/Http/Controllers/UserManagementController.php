@@ -182,6 +182,7 @@ class UserManagementController extends Controller
               'remember_token'=>$token,
 
           ]);
+
           $permission=[];
 
           if($request->contact != ''){
@@ -224,22 +225,30 @@ class UserManagementController extends Controller
             }
 
           }
+
+          if(!empty($permissionId))
+          {
             User_permission::create([
                 'permission_id' => json_encode($permissionId),
                 'user_id' => $user->id,
                 'group_contact_permission'=>$group_contact_permission
             ]);
+          }
+
             $setting=Org_setting::get()->toArray();
             if(!empty($setting[0]['smtp_email']))
             {
-
               $data=$this->email($request->name,$request->recipientEmail,$link,$request->organization);
             }
+
 
             return redirect()->route('org-users-management.index',$request->organization)->with('success','User Invite Sent Successfully.');
         }catch ( \Exception $e ) {
             //$user->delete();
             return redirect()->route('org-users-management.index',$request->organization)->with('error',$e->getMessage());
+        }catch(\Illuminate\Database\QueryException $ex){
+            print_r($ex->getMessage());
+            DB::rollback();
         }
 
     }
@@ -298,6 +307,7 @@ class UserManagementController extends Controller
                 ];
             }
             $id=$request->id;
+            
 
             User::where('id',$id)->update($data);
 

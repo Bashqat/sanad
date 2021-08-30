@@ -19,4 +19,8 @@ class Websiteinformation extends Model
         'contact_id',
         'group_id'
     ];
+    protected $casts = [
+        'group_id' => 'array'
+
+    ];
 }

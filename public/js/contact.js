@@ -48,240 +48,284 @@ $(document).ready(function(){
 
 
     } );
-   $('a.toggle-vis').on( 'click', function (e) {
+   $('.toggle-vis').on( 'click', function (e) {
+     $(".contact-custom-check:checked").each(function(){
+       var column_index=$(this).val();
+       e.preventDefault();
+       var column = table1.column(column_index);
+       column.visible( ! column.visible() );
+      });
 
-        e.preventDefault();
-        var column = table1.column($(this).attr('data-column'));
-        column.visible( ! column.visible() );
+
     } );
-    $(document).on('click', '.filter', function () {
-      var filter_value=[];
-      $('.filter').each(function(){
-        if($(this).prop("checked") == true)
-         {
-           filter_value.push($(this).val());
-         }
-       })
+    var contact_info=$('#contact-info').DataTable();
+    $('a.contact_info_column').on( 'click', function (e) {
 
-         $('#contact_table').DataTable({
-          //"scrollX": true,
-          //"pagingType": "numbers",
-                data: {
-                  "filter_value": filter_value,
+         e.preventDefault();
+         var column = contact_info.column($(this).attr('data-column'));
+         column.visible( ! column.visible() );
+     } );
 
-                },
-                  "processing": true,
-                  "serverSide": true,
-                  "searching": true,
-                  "ajax": '/organisation/'+org_id+'/contact/server-side'+type,
-
-
-          } );
-
-    })
+    // $(document).on('click', '.filter', function () {
+    //   var filter_value=[];
+    //   $('.filter').each(function(){
+    //     if($(this).prop("checked") == true)
+    //      {
+    //        filter_value.push($(this).val());
+    //      }
+    //    })
+    //
+    //      $('#contact_table').DataTable({
+    //       //"scrollX": true,
+    //       //"pagingType": "numbers",
+    //             data: {
+    //               "filter_value": filter_value,
+    //
+    //             },
+    //               "processing": true,
+    //               "serverSide": true,
+    //               "searching": true,
+    //               "ajax": '/organisation/'+org_id+'/contact/server-side'+type,
+    //
+    //
+    //       } );
+    //
+    // })
 
     var siteurl = window.location.origin;
 
-	$(document).on('click', '.mobile-clone', function () {
-		var count = parseInt($(this).attr('data-count')) + 1;
-		$(this).attr('data-count', count);
-		var formCount = $('#add_person').attr('data-count');
-		var field = `
-        <div class="form-group row contact-row" id="mobile-field${count}">
-            <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile ( ${count+1} )
-                <a href="javascript:void(0)" class="removeEle" data-id="mobile-field${count}" data-btn="add_mobile">Remove</a>
-            </label>
-            <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
-                <select name="persons_contacts[${formCount}][mobile][${count}][type]" class="form-control select2 select-input-field color-change col-md-3 " style="width: 100%;">
-                    <option value="">Select Type</option>
-                    <option value="main">Main</option>
-                    <option value="work">Work</option>
-                    <option value="whatsapp">Whatsapp</option>
-                </select>
-                <input type="text" name="persons_contacts[${formCount}][mobile][${count}][area]" class="form-control col-md-3" placeholder="Area">
-                <input type="tel" name="persons_contacts[${formCount}][mobile][${count}][number]" class="form-control col-md-3" placeholder="Number">
-                <input type="tel" name="persons_contacts[${formCount}][mobile][${count}][extention]" class="form-control col-md-3" placeholder="Extention">
-            </div>
-        </div>
-        `;
-		$(field).insertBefore(this);
-	});
-  $(document).on('click', '.mobile-clone-only', function () {
-		var count = parseInt($(this).attr('data-count')) + 1;
-		$(this).attr('data-count', count);
-		var formCount = $('#add_person').attr('data-count');
-		var field = `
-        <div class="form-group row contact-row" id="mobile-field${count}">
-            <label for="mobile" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Mobile ( ${count+1} )
-                <a href="javascript:void(0)" class="removeEle" data-id="mobile-field${count}" data-btn="add_mobile">Remove</a>
-            </label>
-            <div class="col-lg-8 col-md-8 col-sm-8 person-sub-contact">
-                <select name="contact[mobile][${count}][type]" class="form-control select2 select-input-field color-change col-md-3 " style="width: 100%;">
-                    <option value="">Select Type</option>
-                    <option value="main">Main</option>
-                    <option value="work">Work</option>
-                    <option value="whatsapp">Whatsapp</option>
-                </select>
-                <input type="text" name="contact[mobile][${count}][area]" class="form-control col-md-3" placeholder="Area">
-                <input type="tel" name="contact[mobile][${count}][number]" class="form-control col-md-3" placeholder="Number">
-                <input type="tel" name="contact[mobile][${count}][extention]" class="form-control col-md-3" placeholder="Extention">
-            </div>
-        </div>
-        `;
-		$(field).insertBefore(this);
-	});
-
-	$(document).on('click', '#add_person', function () {
-		var count = parseInt($(this).attr('data-count')) + 1;
-		$(this).attr('data-count', count);
-		var form = `
-        <div id="persons_contacts${count}">
-            <h4 class="modal-title mt-2 mb-2">Person Contact ( ${count+1} )
-                <a href="javascript:void(0)" class="removeEle" data-id="persons_contacts${count}" data-btn="add_person">Remove</a>
-            </h4>
-            <div class="form-group row">
-                <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label p-0"> </label>
-                <div class="col-lg-9 col-md-9 col-sm-8">
-					<div class="person-contact">
-                    <input type="text" name="persons_contacts[${count}][first_name]" class="form-control col-md-6" placeholder="First Name">
-                    <input type="text" name="persons_contacts[${count}][last_name]" class="form-control col-md-6" placeholder="Last Name">
-					</div>
-					<div class="person-contact">
-                    <input type="tel" name="persons_contacts[${count}][nickname]" class="form-control col-md-6" placeholder="Nickname">
-                    <input type="tel" name="persons_contacts[${count}][position]" class="form-control col-md-6" placeholder="Position">
-					</div>
-                </div>
-            </div>
-            <div class="form-group row contact-row">
-                <label for="persons_contacts[${count}][land_line][country_code]" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Land Line </label>
+    $(document).on('click', '.mobile-clone', function () {
+            var count = parseInt($(this).attr('data-count')) + 1;
+            $(this).attr('data-count', count);
+            var formCount = $('#add_person').attr('data-count');
+            var field = `
+            <div class="form-group row contact-row" id="mobile-field${count}">
+                <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile ( ${count+1} )
+                    <a href="javascript:void(0)" class="removeEle" data-id="mobile-field${count}" data-btn="add_mobile">Remove</a>
+                </label>
                 <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
-                    <input type="text" name="persons_contacts[${count}][land_line][country_code]" class="form-control col-md-3" placeholder="Country Code">
-                    <input type="text" name="persons_contacts[${count}][land_line][area]" class="form-control col-md-3" placeholder="Area">
-                    <input type="tel" name="persons_contacts[${count}][land_line][number]" class="form-control col-md-3" placeholder="Number">
-                    <input type="text" name="persons_contacts[${count}][land_line][extention]" class="form-control col-md-3" placeholder="Extention">
-                </div>
-            </div>
-            <div class="form-group row contact-row" id="mobile-field">
-                <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile </label>
-                <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
-                    <select name="persons_contacts[${count}][mobile][0][type]" class="form-control select2 select-input-field color-change col-md-3 " style="width: 100%;">
+                    <select name="persons_contacts[${formCount}][mobile][${count}][type]" class="form-control select2 select-input-field color-change col-md-3 " style="width: 100%;">
                         <option value="">Select Type</option>
                         <option value="main">Main</option>
                         <option value="work">Work</option>
                         <option value="whatsapp">Whatsapp</option>
                     </select>
-                    <input type="text" name="persons_contacts[${count}][mobile][0][area]" class="form-control col-md-3" placeholder="Area">
-                    <input type="tel" name="persons_contacts[${count}][mobile][0][number]" class="form-control col-md-3" placeholder="Number">
-                    <input type="tel" name="persons_contacts[${count}][mobile][0][extention]" class="form-control col-md-3" placeholder="Extention">
+                    <input type="text" name="persons_contacts[${formCount}][mobile][${count}][area]" class="form-control col-md-3" placeholder="Area">
+                    <input type="tel" name="persons_contacts[${formCount}][mobile][${count}][number]" class="form-control col-md-3" placeholder="Number">
+                    <input type="tel" name="persons_contacts[${formCount}][mobile][${count}][extention]" class="form-control col-md-3" placeholder="Extention">
                 </div>
             </div>
-            <a href="javascript:void(0)" class="mobile-clone float-right mr-5" data-count="0">Add Another Mobile</a>
-            <br>
-			<br>
-            <div class="form-group row email-field">
-                <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
-                <div class="col-lg-9 col-md-9 col-sm-8">
-                    <input type="email" name="persons_contacts[${count}][email]" class="form-control" placeholder="Enter Email" value="">
+            `;
+            $(field).insertBefore(this);
+        });
+      $(document).on('click', '.mobile-clone-only', function () {
+            var count = parseInt($(this).attr('data-count')) + 1;
+            $(this).attr('data-count', count);
+            var formCount = $('#add_person').attr('data-count');
+            var field = `
+            <div class="form-group row contact-row" id="mobile-field${count}">
+                <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile ( ${count+1} )
+                    <a href="javascript:void(0)" class="removeEle" data-id="mobile-field${count}" data-btn="add_mobile">Remove</a>
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+                    <select name="contact[mobile][${count}][type]" class="form-control select2 select-input-field color-change col-md-3 " style="width: 100%;">
+                        <option value="">Select Type</option>
+                        <option value="main">Main</option>
+                        <option value="work">Work</option>
+                        <option value="whatsapp">Whatsapp</option>
+                    </select>
+                    <input type="text" name="contact[mobile][${count}][area]" class="form-control col-md-3" placeholder="Area">
+                    <input type="tel" name="contact[mobile][${count}][number]" class="form-control col-md-3" placeholder="Number">
+                    <input type="tel" name="contact[mobile][${count}][extention]" class="form-control col-md-3" placeholder="Extention">
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="persons_contacts[${count}][notes]" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Notes </label>
-                <div class="col-lg-9 col-md-9 col-sm-8">
-                    <textarea name="persons_contacts[${count}][notes]" class="form-control" placeholder="Notes"></textarea>
+            `;
+            $(field).insertBefore(this);
+        });
+
+        $(document).on('click', '#add_person', function () {
+            var count = parseInt($(this).attr('data-count')) + 1;
+            $(this).attr('data-count', count);
+            var form = `
+            <div id="persons_contacts${count}">
+                <h4 class="modal-title mt-2 mb-2">Person Contact ( ${count+1} )
+                    <a href="javascript:void(0)" class="removeEle" data-id="persons_contacts${count}" data-btn="add_person">Remove</a>
+                </h4>
+                <div class="form-group row">
+                    <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label p-0"> </label>
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                        <div class="person-contact">
+                        <input type="text" name="persons_contacts[${count}][first_name]" class="form-control col-md-6" placeholder="First Name">
+                        <input type="text" name="persons_contacts[${count}][last_name]" class="form-control col-md-6" placeholder="Last Name">
+                        </div>
+                        <div class="person-contact">
+                        <input type="tel" name="persons_contacts[${count}][nickname]" class="form-control col-md-6" placeholder="Nickname">
+                        <input type="tel" name="persons_contacts[${count}][position]" class="form-control col-md-6" placeholder="Position">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row attachment-contact-edit-row">
-                <label for="persons_contacts[${count}][attachment][]" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Attachment </label>
-                <div class="col-lg-9 col-md-9 col-sm-8 input-group">
-                    <div class="custom-file">
-                        <input type="file" name="persons_contacts[${count}][attachment][]" class="form-control custom-file-input" accept="image/*, .pdf, .doc" multiple>
-                        <label class="custom-file-label" for="attachment">Choose file</label>
+                <div class="form-group row contact-row">
+                    <label for="persons_contacts[${count}][land_line][country_code]" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Land Line </label>
+                    <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+                        <input type="text" name="persons_contacts[${count}][land_line][country_code]" class="form-control col-md-3" placeholder="Country Code">
+                        <input type="text" name="persons_contacts[${count}][land_line][area]" class="form-control col-md-3" placeholder="Area">
+                        <input type="tel" name="persons_contacts[${count}][land_line][number]" class="form-control col-md-3" placeholder="Number">
+                        <input type="text" name="persons_contacts[${count}][land_line][extention]" class="form-control col-md-3" placeholder="Extention">
+                    </div>
+                </div>
+                <div class="form-group row contact-row" id="mobile-field">
+                    <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile </label>
+                    <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+                        <select name="persons_contacts[${count}][mobile][0][type]" class="form-control select2 select-input-field color-change col-md-3 " style="width: 100%;">
+                            <option value="">Select Type</option>
+                            <option value="main">Main</option>
+                            <option value="work">Work</option>
+                            <option value="whatsapp">Whatsapp</option>
+                        </select>
+                        <input type="text" name="persons_contacts[${count}][mobile][0][area]" class="form-control col-md-3" placeholder="Area">
+                        <input type="tel" name="persons_contacts[${count}][mobile][0][number]" class="form-control col-md-3" placeholder="Number">
+                        <input type="tel" name="persons_contacts[${count}][mobile][0][extention]" class="form-control col-md-3" placeholder="Extention">
+                    </div>
+                </div>
+                <a href="javascript:void(0)" class="mobile-clone float-right" data-count="0">Add Another Mobile</a>
+                <br>
+                <br>
+                <div class="form-group row email-field">
+                    <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                        <input type="email" name="persons_contacts[${count}][email]" class="form-control" placeholder="Enter Email" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="persons_contacts[${count}][notes]" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Notes </label>
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                        <textarea name="persons_contacts[${count}][notes]" class="form-control" placeholder="Notes"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row attachment-contact-edit-row">
+                    <label for="persons_contacts[${count}][attachment][]" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Attachment </label>
+                    <div class="col-lg-9 col-md-9 col-sm-8 input-group">
+                        <div class="custom-file">
+                            <input type="file" name="persons_contacts[${count}][attachment][]" class="form-control custom-file-input" accept="image/*, .pdf, .doc" multiple>
+                            <label class="custom-file-label" for="attachment">Choose file</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="user_defined" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Addition filed user defined </label>
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                        <input type="text" name="persons_contacts[${count}][user_defined]" class="form-control" placeholder="Enter Addition filed user defined" value="">
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="user_defined" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Addition filed user defined </label>
-                <div class="col-lg-9 col-md-9 col-sm-8">
-                    <input type="text" name="persons_contacts[${count}][user_defined]" class="form-control" placeholder="Enter Addition filed user defined" value="">
+            `;
+            $(form).insertBefore(this);
+        });
+
+        $(document).on('click', '#add_website', function () {
+            var count = parseInt($(this).attr('data-count')) + 1;
+
+            $(this).attr('data-count', count);
+            var form = `
+            <div id="website_information${count}">
+                <label>
+                    <h4 class="modal-title mt-2 mb-1">Website Information ( ${count+1} )
+                    <a href="javascript:void(0)" class="removeEle" data-id="website_information${count}" data-btn="add_website">Remove</a>
+                    </h4>
+                </label>
+                <div class="form-group row">
+                    <label for="title" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Title </label>
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                        <input type="text" name="website_information[${count}][title]" class="form-control" placeholder="Enter Title" value="" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="link" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Link </label>
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                        <input type="url" name="website_information[${count}][link]" class="form-control" placeholder="Enter Link" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="username" class="col-lg-3 col-md-3 col-sm-4 col-form-label">User Name </label>
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                        <input type="text" name="website_information[${count}][username]" class="form-control" placeholder="Enter User Name" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Password </label>
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                        <input type="password" name="website_information[${count}][password]" class="form-control" placeholder="Enter Password" value="">
+                    </div>
                 </div>
             </div>
-        </div>
-        `;
-		$(form).insertBefore(this);
-	});
+            `;
+            $(form).insertBefore(this);
+        });
 
-	$(document).on('click', '#add_website', function () {
-		var count = parseInt($(this).attr('data-count')) + 1;
+        $(document).on('click', '#add_address', function () {
+            var count = parseInt($(this).attr('data-count')) + 1;
+            $(this).attr('data-count', count);
+            var countryList = JSON.parse($('#countryList').val());
 
-		$(this).attr('data-count', count);
-		var form = `
-        <div id="website_information${count}">
-            <label>
-                <h4 class="modal-title mt-2 mb-1">Website Information ( ${count+1} )
-                <a href="javascript:void(0)" class="removeEle" data-id="website_information${count}" data-btn="add_website">Remove</a>
-                </h4>
-            </label>
-            <div class="form-group row">
-                <label for="title" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Title </label>
-                <div class="col-lg-9 col-md-9 col-sm-8">
-                    <input type="text" name="website_information[${count}][title]" class="form-control" placeholder="Enter Title" value="" required>
+            var form = `
+            <div class="form-group row address-contact-row" id="address${count}">
+                <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Address ( ${count+1} )
+                <a href="javascript:void(0)" class="removeEle" data-id="address${count}" data-btn="add_address">Remove</a>
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+                    <input type="text" name="contact[address][${count}][name]" class="form-control" placeholder="Address Name (e.g Head Office, Postal...etc)" value="">
+                    <input type="text" name="contact[address][${count}][address_line_1]" class="form-control" placeholder="Address Line 1">
+                    <input type="text" name="contact[address][${count}][address_line_2]" class="form-control" placeholder="Address Line 2">
+                    <div class="address-city-post-code">
+                    <input type="text" name="contact[address][${count}][city]" class="form-control" placeholder="City">
+                    <input type="text" name="contact[address][${count}][post_code]" class="form-control" placeholder="Post Code">
+                    </div>`;
+
+            form += `<select name="contact[address][${count}][country]" class="form-control select2 select-input-field color-change">`;
+            form += `<option value="">Select Country</option>`;
+            $.each(countryList, function (key, val) {
+                form += `<option value="${key}">${val}</option>`;
+            });
+            form += `</select>`;
+            form += `
+                    <input type="text" name="contact[address][${count}][google_map_link]" class="form-control" placeholder="Google Map Link">
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="link" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Link </label>
-                <div class="col-lg-9 col-md-9 col-sm-8">
-                    <input type="url" name="website_information[${count}][link]" class="form-control" placeholder="Enter Link" value="">
+            `;
+            $(form).insertBefore(this);
+        });
+      $(document).on('click', '#add_address_company', function () {
+        var count = parseInt($(this).attr('data-count')) + 1;
+        $(this).attr('data-count', count);
+        var countryList = JSON.parse($('#countryList').val());
+
+        var form = `
+            <div class="form-group row address-contact-row" id="address${count}">
+                <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Address ( ${count+1} )
+                <a href="javascript:void(0)" class="removeEle" data-id="address${count}" data-btn="add_address">Remove</a>
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+                    <input type="text" name="contact[address][${count}][name]" class="form-control" placeholder="Address Name (e.g Head Office, Postal...etc)" value="">
+                    <input type="text" name="contact[address][${count}][address_line_1]" class="form-control" placeholder="Address Line 1">
+                    <input type="text" name="contact[address][${count}][address_line_2]" class="form-control" placeholder="Address Line 2">
+                    <div class="address-city-post-code">
+                    <input type="text" name="contact[address][${count}][city]" class="form-control" placeholder="City">
+                    <input type="text" name="contact[address][${count}][post_code]" class="form-control" placeholder="Post Code">
+            </div>`;
+
+        form += `<select name="contact[address][${count}][country]" class="form-control select2 select-input-field color-change">`;
+        form += `<option value="">Select Country</option>`;
+        $.each(countryList, function (key, val) {
+          form += `<option value="${key}">${val}</option>`;
+        });
+        form += `</select>`;
+        form += `
+                    <input type="text" name="contact[address][${count}][google_map_link]" class="form-control" placeholder="Google Map Link">
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="username" class="col-lg-3 col-md-3 col-sm-4 col-form-label">User Name </label>
-                <div class="col-lg-9 col-md-9 col-sm-8">
-                    <input type="text" name="website_information[${count}][username]" class="form-control" placeholder="Enter User Name" value="">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="password" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Password </label>
-                <div class="col-lg-9 col-md-9 col-sm-8">
-                    <input type="password" name="website_information[${count}][password]" class="form-control" placeholder="Enter Password" value="">
-                </div>
-            </div>
-        </div>
-        `;
-		$(form).insertBefore(this);
-	});
-
-	$(document).on('click', '#add_address', function () {
-		var count = parseInt($(this).attr('data-count')) + 1;
-		$(this).attr('data-count', count);
-		var countryList = JSON.parse($('#countryList').val());
-
-		var form = `
-        <div class="form-group row address-contact-row" id="address${count}">
-            <label for="address" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Address ( ${count+1} )
-            <a href="javascript:void(0)" class="removeEle" data-id="address${count}" data-btn="add_address">Remove</a>
-            </label>
-            <div class="col-lg-8 col-md-8 col-sm-8 contact-address-fields">
-                <input type="text" name="contact[address][${count}][name]" class="form-control" placeholder="Address Name (e.g Head Office, Postal...etc)" value="">
-                <input type="text" name="contact[address][${count}][address_line_1]" class="form-control" placeholder="Address Line 1">
-                <input type="text" name="contact[address][${count}][address_line_2]" class="form-control" placeholder="Address Line 2">
-                <div class="address-city-post-code">
-                <input type="text" name="contact[address][${count}][city]" class="form-control" placeholder="City">
-                <input type="text" name="contact[address][${count}][post_code]" class="form-control" placeholder="Post Code">
-				</div>`;
-
-		form += `<select name="contact[address][${count}][country]" class="form-control select2 select-input-field color-change">`;
-		form += `<option value="">Select Country</option>`;
-		$.each(countryList, function (key, val) {
-			form += `<option value="${key}">${val}</option>`;
-		});
-		form += `</select>`;
-		form += `
-                <input type="text" name="contact[address][${count}][google_map_link]" class="form-control" placeholder="Google Map Link">
-            </div>
-        </div>
-        `;
-		$(form).insertBefore(this);
-	});
+            `;
+        $(form).insertBefore(this);
+      });
 
 	$(document).on('click', '.removeEle', function () {
 		var ele = $(this).attr('data-id');
@@ -447,9 +491,11 @@ $(document).ready(function(){
 				return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
 			},
 			success: function (response) {
-				if (table != "") {
-					table.ajax.reload();
-				}
+        if(response.success==1)
+        {
+          toastr.success(response.msg);
+        }
+
 				return true;
 			}
 		});
@@ -569,6 +615,7 @@ $(document).ready(function(){
 
     // Attachment View Modal action
     $(document).on('click', '.attachment-view-btn', function(){
+
         var fileType = $(this).data('file-type');
         var id = $(this).data('id');
 
@@ -578,9 +625,9 @@ $(document).ready(function(){
         var html = `<ul>`;
         $(files).each(function(index,file){
             var ext = file.split('.').pop();
-            var deleteBtn = ( $('#permission').val() == "true") ? `<button class="attachment-delete-btn" data-type="${fileType}" data-id="${id}" data-file="${file}">
+            var deleteBtn =  `<button class="attachment-delete-btn" data-type="${fileType}" data-id="${id}" data-file="${file}">
             <i class="fa fa-times" aria-hidden="true"></i>
-        </button>`:"";
+        </button>`;
             switch (ext) {
                 case 'pdf':
                     html += `<li><a href="/${file}" target="_blank" class="attachment-link">${deleteBtn}<i class="far fa-file-pdf"></i>
@@ -704,7 +751,7 @@ $(document).ready(function(){
         e.preventDefault();
         $.ajax({
             data: $(this).serialize(),
-            url: '/organisation/'+org_id+'/group-contact',
+            url: '/organisation/'+org_id+'/group-detail-contact',
             type: 'POST',
             beforeSend: function (request) {
                 $('#myModal').modal('hide');
@@ -725,13 +772,40 @@ $(document).ready(function(){
         });
         this.reset();
     });
-
+    $('#group-delete-form').submit(function(e){
+      var org_id=$('.org_id').val();
+        e.preventDefault();
+        $.ajax({
+            data: $(this).serialize(),
+            url: '/organisation/'+org_id+'/group-delete-contact',
+            type: 'POST',
+            beforeSend: function (request) {
+                $('#group_deleted_modal').modal('hide');
+                return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+            },
+            success: function(response){
+                if (response.success == 1) {
+                    toastr.success(response.msg);
+                }else{
+                    toastr.error(response.msg);
+                }
+                var table = $('input[name="table"]').val();
+                if ( table == "contactPersonsTable" ) {
+                    contactPersonsTable.ajax.reload();
+                }
+                contacts.ajax.reload();
+            }
+        });
+        this.reset();
+    });
     // Table Action performer
-    $('.option').click(function(e){
+    $('.option_action').click(function(e){
 
         e.preventDefault();
-        var id = $(this).data('id');
-        var action = $(this).data('type');
+        var id = $(".radio_option:checked").data('id');
+
+        var action = $(".radio_option:checked").data('type');
+
         var rows = [];
         $('.row-select').each(function(){
             if($(this).is(":checked")){
@@ -747,7 +821,8 @@ $(document).ready(function(){
 
         var url = $(this).attr('href');
 
-        switch ($(this).attr('data-type')) {
+
+        switch (action) {
             case "archive":
                 actionAjaxContactOption(url,rows,contacts);
                 break;
@@ -814,7 +889,201 @@ $(document).ready(function(){
             break;
         }
     });
+    $('.option_action_view').click(function(e){
 
+        e.preventDefault();
+        var id = $(".radio_option_view:checked").data('id');
+
+        var action = $(".radio_option_view:checked").data('type');
+        var rows=[];
+        rows.push($(".radio_option_view:checked").data('contact'));
+
+
+        var url = $(".radio_option_view:checked").attr('href');
+
+
+        switch (action) {
+            case "archive":
+                actionAjaxContactOption(url,rows,contacts);
+                break;
+            case "contact":
+                actionAjaxContactOption(url,rows,archive);
+                break;
+            case "merge":
+                $.ajax({
+                    data: {rows},
+                    url: url,
+                    type: 'POST',
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response){
+                        $('#modal-div').html(response);
+                        $('#contact-merge-modal').modal('show');
+                        $('#merge-selected-row').val(rows);
+                    }
+                });
+                break;
+            case "group":
+
+                $('#group-selected-row').val(rows);
+                $('#myModal').modal('show');
+                break;
+            case "tag":
+                $('#tag-selected-row').val(rows);
+                $('#add-tag-modal').modal('show');
+                break;
+            case "website-delete":
+                actionAjax(url,rows,websites);
+                break;
+            case "website-archive":
+                actionAjax(url,rows,websites);
+                break;
+            case "person-assign-group":
+                $('#group-selected-row').val(rows);
+                $('#group-selected-row').after('<input type="hidden" name="type" value="person"><input type="hidden" name="table" value="contactPersonsTable">');
+                $('#myModal').modal('show');
+                break;
+            case "person-remove-group":
+                actionAjax(url,rows,contactPersonsTable);
+                break;
+            case "contact-information-delete":
+                actionAjax(url,rows,contactPersonsTable);
+                break;
+            case "group-archive": case "group-active":
+                var res = actionAjax(url,rows,group_list);
+                break;
+            case "group-merge":
+                $.ajax({
+                    data: {rows},
+                    url: url,
+                    type: 'POST',
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response){
+                        $('#modal-div').html(response);
+                        $('#group-merge-modal').modal('show');
+                    }
+                });
+            break;
+        }
+    });
+    $('.option').click(function(e){
+
+        e.preventDefault();
+        var id = $(this).data('id');
+        var action = $(this).data('type');
+
+        var rows = [];
+        $('.row-select').each(function(){
+            if($(this).is(":checked")){
+                rows.push(this.value)
+            }
+        });
+
+
+        if(rows.length <= 0 ){
+            toastr.error('Please select atleast one row.');
+            return false;
+        }
+
+        var url = $(this).attr('href');
+
+
+        switch (action) {
+            case "archive":
+                actionAjaxContactOption(url,rows,contacts);
+                break;
+            case "contact":
+                actionAjaxContactOption(url,rows,archive);
+                break;
+            case "merge":
+                $.ajax({
+                    data: {rows},
+                    url: url,
+                    type: 'POST',
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response){
+                        $('#modal-div').html(response);
+                        $('#contact-merge-modal').modal('show');
+                        $('#merge-selected-row').val(rows);
+                    }
+                });
+                break;
+            case "group":
+
+                $('#group-selected-row').val(rows);
+                $('#myModal').modal('show');
+                break;
+            case "tag":
+                $('#tag-selected-row').val(rows);
+                $('#add-tag-modal').modal('show');
+                break;
+            case "contact_delete":
+                actionContactDelete(rows);
+                break;
+            case "delete_group":
+
+                    $('#group-deleted-row').val(rows);
+                    $('#group_deleted_modal').modal('show');
+                break;
+            case "person-assign-group":
+                $('#group-selected-row').val(rows);
+                $('#group-selected-row').after('<input type="hidden" name="type" value="person"><input type="hidden" name="table" value="contactPersonsTable">');
+                $('#myModal').modal('show');
+                break;
+            case "person-remove-group":
+                actionAjax(url,rows,contactPersonsTable);
+                break;
+            case "contact-information-delete":
+                actionAjax(url,rows,contactPersonsTable);
+                break;
+            case "group-archive": case "group-active":
+                var res = actionAjax(url,rows,group_list);
+                break;
+            case "group-merge":
+                $.ajax({
+                    data: {rows},
+                    url: url,
+                    type: 'POST',
+                    beforeSend: function (request) {
+                        return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(response){
+                        $('#modal-div').html(response);
+                        $('#group-merge-modal').modal('show');
+                    }
+                });
+            break;
+        }
+    });
+    function actionContactDelete(contact_id)
+    {
+      var org_id=$('.org_id').val();
+
+      $.ajax({
+          data: {'contact_id':contact_id},
+          url:'/organisation/'+org_id+'/contact/detail/delete/'+contact_id,
+          type: 'POST',
+          beforeSend: function (request) {
+              return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+          },
+          success: function(response){
+              if (response.success == 1) {
+                  toastr.success(response.msg);
+                  $('.delete_contact_'+contact_id).remove();
+              }else{
+                  toastr.error(response.msg);
+              }
+              if (table != "") {
+                  table.ajax.reload();
+              }
+          }
+      });
+    }
     // Ajax Action performer
     function actionAjax(url,rows,table=""){
         $.ajax({
@@ -838,17 +1107,22 @@ $(document).ready(function(){
     }
 
     // View Pin Modal
-    $(document).on('click','.view-pin',function(){
-        var row = $(this).data('id');
-        $('#pinrowId').val(row);
-        if ( $(`#pin-id-${row}`).attr('data-view') == 'false' ) {
-        	$('#watch').modal('show');
-        }else{
-        	$(`#pswd-tab-${row}`).html('***********');
-        	$(`#pin-id-${row}`).html('<i class="fa fa-eye"></i>');
-        	$(`#pin-id-${row}`).attr('data-view','false')
+    $(document).on('click','.view_pin',function(){
+        var data_id = $(this).attr('data_id');
+        var data_org_id=$(this).attr('data_org_id');
+        $('#website_id').val(data_id);
+        $('#org_id').val(data_org_id);
+        $('#watch').modal('show');
 
-        }
+        // $('#pinrowId').val(row);
+        // if ( $(`#pin-id-${row}`).attr('data-view') == 'false' ) {
+        // 	$('#watch').modal('show');
+        // }else{
+        // 	$(`#pswd-tab-${row}`).html('***********');
+        // 	$(`#pin-id-${row}`).html('<i class="fa fa-eye"></i>');
+        // 	$(`#pin-id-${row}`).attr('data-view','false')
+        //
+        // }
     });
 
     //View Pin Action
@@ -863,10 +1137,10 @@ $(document).ready(function(){
             },
             success: function(response){
                 if (response.success == 1) {
-                    $(`#pswd-tab-${response.id}`).html(response.data);
+                    $(`#pin-${response.id}`).html(response.data);
                     toastr.success(response.msg);
                     $(`#pin-id-${response.id}`).html('<i class="fa fa-eye-slash"></i>');
-                    $(`#pin-id-${response.id}`).attr('data-view','true');
+                    //$(`#pin-id-${response.id}`).attr('data-view','true');
                 }else{
                     toastr.error(response.msg);
                     $(`#pin-id-${response.id}`).html('<i class="fa fa-eye"></i>');
@@ -1275,12 +1549,12 @@ $(document).ready(function(){
 
       })
       $(document).on('click', '.emergency_contact', function () {
-    		var count = parseInt($(this).attr('data-count')) + 1;
-    		$(this).attr('data-count', count);
-    		//var formCount = $('#add_person').attr('data-count');
-    		var field = `  <div id="emergency-contact${count}">
+            var count = parseInt($(this).attr('data-count')) + 1;
+            $(this).attr('data-count', count);
+            //var formCount = $('#add_person').attr('data-count');
+            var field = `  <div id="emergency-contact${count}">
         <div class="form-group row address-contact-row">
-          <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Emergency Contact Information ( ${count+1} )
+          <label for="address" class="col-lg-12 col-md-12 col-sm-12 col-form-label">Emergency Contact Information ( ${count+1} )
           <a href="javascript:void(0)" class="removeEle" data-id="emergency-contact${count}" data-btn="add_mobile">Remove</a>
           </label>
         </div>
@@ -1290,20 +1564,15 @@ $(document).ready(function(){
           </label>
 
           <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
               <input type="text" name="contact[emergency_contact][${count}][name]" class="form-control" placeholder="Name" value="">
 
-            </div>
 
           </div>
         </div>
         <div class="form-group row ">
           <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Relation </label>
           <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
               <input type="text" name="contact[emergency_contact][${count}][relation]" class="form-control" placeholder="Relation" value="">
-
-            </div>
 
           </div>
         </div>
@@ -1321,7 +1590,7 @@ $(document).ready(function(){
           <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile
            </label>
           <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
-            <select name="contact[emergency_contact][${count}][mobile_type]" class="form-control select2 col-md-3 select-input-field" style="width: 100%;">
+            <select name="contact[emergency_contact][${count}][mobile_type]" class="form-control select2 col-md-3 select-input-field m-0" style="width: 100%;">
               <option value="">Select Type</option>
               <option value="main" >Main</option>
               <option value="work" >Work</option>
@@ -1336,106 +1605,110 @@ $(document).ready(function(){
         <div class="form-group row ">
           <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
           <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
+
               <input type="email" name="contact[emergency_contact][${count}][relation]" class="form-control" placeholder="Email" value="">
 
-            </div>
+
 
           </div>
         </div>
       </div>
             `;
-    		$(field).insertBefore(this);
-    	});
+            $(field).insertBefore(this);
+        });
       $(document).on('click', '.dependent_info', function () {
         var count = parseInt($(this).attr('data-count')) + 1;
         $(this).attr('data-count', count);
         //var formCount = $('#add_person').attr('data-count');
         var field = `  <div id="dependent_info${count}">
         <div class="form-group row address-contact-row">
-          <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Dependent Information ( ${count+1} )
+          <label for="address" class="col-lg-12 col-md-12 col-sm-12 col-form-label">Dependent Information ( ${count+1} )
           <a href="javascript:void(0)" class="removeEle" data-id="dependent_info${count}" data-btn="add_mobile">Remove</a>
           </label>
         </div>
-        <div class="form-group row address-contact-row">
-          <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Dependent Information</label>
-        </div>
-        <div class="form-group row">
-            <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
-          <div class="col-lg-3 col-md-3 col-sm-4">
-            <input type="text" name="contact[dependent_info][${count}][first_name]" class="form-control " placeholder=" First Name" required="" value="">
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-4">
-            <input type="text" name="contact[dependent_info][${count}][last_name]" class="form-control " placeholder=" Last Name" required="" value="">
-          </div>
-        </div>
-        <div class="form-group row">
-            <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
-          <div class="col-lg-3 col-md-3 col-sm-4">
-            <input type="text" name="contact[dependent_info][${count}][relation]" class="form-control " placeholder="Relation" required="" value="">
 
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-4">
-            <select name="contact[dependent_info][${count}][gender]" class="form-control select2  select-input-field" style="width: 100%;">
-              <option value="">Gender</option>
-              <option value="male" >Male</option>
-              <option value="female" >Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
+        <div class="form-group row">
+            <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
+            <div class="col-lg-9 col-md-9 col-sm-8">
+                <div class="person-contact name-contact-field ">
+                    <input type="text" name="contact[dependent_info][${count}][first_name]" class="form-control " placeholder=" First Name" required="" value="">
+                    <input type="text" name="contact[dependent_info][${count}][last_name]" class="form-control " placeholder=" Last Name" required="" value="">
+                </div>
+            </div>
         </div>
+
+        <div class="form-group row">
+            <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
+            <div class="col-lg-9 col-md-9 col-sm-8">
+                <div class="person-contact name-contact-field ">
+                    <input type="text" name="contact[dependent_info][${count}][relation]" class="form-control " placeholder="Relation" required="" value="">
+                    <select name="contact[dependent_info][${count}][gender]" class="form-control select2  select-input-field" style="width: 100%;">
+                    <option value="">Gender</option>
+                    <option value="male" >Male</option>
+                    <option value="female" >Female</option>
+                    <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group row ">
           <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Relation </label>
           <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
               <input type="text" name="contact[dependent_info][${count}][relation]" class="form-control" placeholder="Relation" value="">
-
-            </div>
-
           </div>
         </div>
-        <div class="form-group row ">
+
+        <div class="form-group row contact-row">
           <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Government id </label>
-          <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
-              <input type="text" name="contact[dependent_info][${count}][gov_id]" class="form-control" placeholder="Government Id" value="">
-
-            </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
               <div class="col-lg-9 col-md-9 col-sm-8">
-                <input type="date" name="contact[dependent_info][${count}][gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
+                    <div class="date-contact-fields">
+                          <div class="contact-address-fields mb-lg-0 mb-3">
+                              <input type="text" name="contact[dependent_info][${count}][gov_id]" class="form-control" placeholder="Government Id" value="">
 
-              </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
-                <div class="col-lg-9 col-md-9 col-sm-8">
-                  <input type="date" name="contact[dependent_info][${count}][gov_id_expiry]" class="form-control" placeholder="Work Grade" value="">
+                            </div>
 
-                </div>
-                </div>
+                            <div class="contact-address-fields d-flex mb-lg-0 mb-3 align-items-sm-start align-items-center">
+                                 <label for="email" class="col-form-label pr-2">Issue </label>
+                                <input type="date" name="contact[dependent_info][${count}][gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
+                              </div>
+
+
+                              <div class="contact-address-fields d-flex align-items-sm-start align-items-center">
+                                  <label for="email" class="col-form-label pr-2">Expiry </label>
+                                  <input type="date" name="contact[dependent_info][${count}][gov_id_expiry]" class="form-control" placeholder="Work Grade" value="">
+
+                                </div>
+                  </div>
+            </div>
+
+
         </div>
-        <div class="form-group row ">
+
+
+        <div class="form-group row contact-row">
           <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Passport Detail </label>
-          <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
-              <input type="text" name="contact[dependent_info][${count}][passport_gov_id]" class="form-control" placeholder="e.g 34345" value="">
+             <div class="col-lg-9 col-md-9 col-sm-8">
+                    <div class="date-contact-fields">
+                          <div class="contact-address-fields mb-lg-0 mb-3">
+                              <input type="text" name="contact[dependent_info][${count}][passport_gov_id]" class="form-control" placeholder="e.g 34345" value="">
 
+                            </div>
+
+                            <div class="contact-address-fields d-flex mb-lg-0 mb-3 align-items-sm-start align-items-center">
+                                <label for="email" class="col-form-label pr-2">Issue </label>
+                                <input type="date" name="contact[dependent_info][${count}][passport_gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
+                              </div>
+
+                              <div class="contact-address-fields d-flex align-items-sm-start align-items-center">
+                                  <label for="email" class="col-form-label pr-2">Expiry </label>
+                                  <input type="date" name="contact[dependent_info][${count}][passport_gov_id_expiry]" class="form-control" placeholder="Work Grade" value="">
+
+                                </div>
+                 </div>
             </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
-              <div class="col-lg-9 col-md-9 col-sm-8">
-                <input type="date" name="contact[dependent_info][${count}][passport_gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
-
-              </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-4 contact-address-fields">
-                <div class="col-lg-9 col-md-9 col-sm-8">
-                  <input type="date" name="contact[dependent_info][${count}][passport_gov_id_expiry]" class="form-control" placeholder="Work Grade" value="">
-
-                </div>
-                </div>
         </div>
+
 
         <div class="form-group row contact-row" id="mobile-field">
           <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile
@@ -1456,27 +1729,26 @@ $(document).ready(function(){
         <div class="form-group row ">
           <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
           <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-            <div class="col-lg-9 col-md-9 col-sm-8">
               <input type="email" name="contact[dependent_info][${count}][relation]" class="form-control" placeholder="Email" value="">
-
-            </div>
-
           </div>
         </div>
 
-      <div class="form-group row">
-        <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Notes <span style="color:red;">*</span> </label>
-        <div class="col-lg-3 col-md-3 col-sm-4">
-          <textarea name="contact[dependent_info][${count}][notes]" class="form-control " placeholder=" Notes" required="" ></textarea>
-
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-4">
-
-        <div class="custom-file">
-          <input type="file" name="contact[dependent_info][${count}][attachment][]" class="form-control custom-file-input" id="attachment" accept="image/*, .pdf, .doc" multiple>
-          <label class="custom-file-label" for="attachment">Choose file</label>
+      <div class="form-group row contact-row contact-dof-row">
+        <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Notes</label>
+           <div class="col-lg-9 col-md-9 col-sm-8">
+                    <div class="date-contact-fields">
+                         <div class="contact-address-fields mb-lg-0 mb-3">
+                              <textarea name="contact[dependent_info][${count}][notes]" class="form-control " placeholder=" Notes" required="" ></textarea>
+                        </div>
+                        <div class="contact-address-fields d-flex align-items-sm-start flex-sm-row flex-column">
+                              <label for="name" class="col-form-label pr-2">Attachment</label>
+                            <div class="custom-file">
+                              <input type="file" name="contact[dependent_info][${count}][attachment][]" class="form-control custom-file-input" id="attachment" accept="image/*, .pdf, .doc" multiple>
+                              <label class="custom-file-label" for="attachment">Choose file</label>
+                          </div>
+                        </div>
+               </div>
           </div>
-        </div>
 
       </div>
 
@@ -1491,12 +1763,12 @@ $(document).ready(function(){
         //var formCount = $('#add_person').attr('data-count');
         var field = `  <div id="email${count}">
         <div class="form-group row address-contact-row">
-          <label for="address" class="col-lg-4 col-md-4 col-sm-4 col-form-label">EMail ( ${count+1} )
+          <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label">EMail ( ${count+1} )
           <a href="javascript:void(0)" class="removeEle" data-id="email${count}" data-btn="add_mobile">Remove</a>
           </label>
 
 
-          <div class="col-lg-8 col-md-8 col-sm-8">
+          <div class="col-lg-9 col-md-9 col-sm-8">
             <input type="email" name="contact[email][${count}]" class="form-control" placeholder="Example@example.com" value="">
 
           </div>
@@ -1507,3 +1779,310 @@ $(document).ready(function(){
       });
 
 });
+  $(document).on('click', '.contact_merge', function () {
+    var rows=$(this).attr('data-row');
+    var url=$(this).attr('url');
+        $.ajax({
+            data: {rows},
+            url: url,
+            type: 'POST',
+            beforeSend: function (request) {
+                return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+            },
+            success: function(response){
+                $('#modal-div').html(response);
+                $('#contact-merge-modal').modal('show');
+                $('#merge-selected-row').val(rows);
+            }
+
+        });
+});
+$(document).on('click', '.file-attachment', function () {
+   var id=$(this).attr('data-id');
+   var contact_id=$(this).attr('data-contact-id');
+   var org_id=$('.org_id').val();
+  // var url=$(this).attr('url');
+  // var contact_detail_id=$(this).attr('data-id');
+  //
+  // $('.contact_detail_id').attr('data_id',contact_detail_id);
+  //   $('#file_attachment').modal('show');
+
+  $.ajax({
+      data: {'data_id':id,'data_contact_id':contact_id},
+      url: '/organisation/'+org_id+'/contact/attachment/list',
+      type: 'POST',
+      beforeSend: function (request) {
+          return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+      },
+      success: function(response){
+          // $('#modal-div').html(response);
+          // $('#contact-merge-modal').modal('show');
+          // $('#merge-selected-row').val(rows);
+          $('#listFolder').html(response);
+          $('#file_attachment').modal('show');
+      }
+  });
+
+});
+$(document).on('click', '#add_new_folder', function () {
+
+  var contact_detail_id=$(this).attr('data_contact_id');
+  var contact_id=$(this).attr('data_id');
+  $('.contact_detail_id1').val(contact_detail_id);
+  $('.contact_id1').val(contact_id);
+  //var url=$(this).attr('url');
+    $('#new_folder_modal').modal('show');
+
+});
+$(document).on('click', '.upload_attachment', function (e) {
+  var contact_id=$(this).attr('contact_id');
+  var contact_detail_id=$(this).attr('contact_detail_id');
+  var folder_id=$(this).attr('folder_id');
+  $('.c_id').val(contact_id);
+  $('.c_detail_id').val(contact_detail_id);
+  $('.f_id').val(folder_id);
+  $('#new_file_modal').modal('show');
+});
+$(document).on('click', '#add_file', function (e) {
+  var org_id=$('.org_id').val();
+  e.preventDefault();
+  var form = $('.attachment_file')[0]; // You need to use standard javascript object here
+  var formData = new FormData(form);
+  jQuery.each(jQuery('#file_name')[0].files, function(i, file) {
+    formData.append('file-'+i, file);
+  });
+  var folder_id=$('.f_id').val();
+  $.ajax({
+        data: formData,
+        contentType: false,
+        processData: false,
+        cache: false,
+        url: '/organisation/'+org_id+'/contact/attachment/store',
+        type: 'POST',
+
+        beforeSend: function (request) {
+            return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+        },
+        success: function(response){
+          $('.folder_apend_'+folder_id).after(response);
+          $('#new_file_modal').modal('toggle');
+        }
+    });
+})
+
+$(document).on('click', '.delete-folder', function (e) {
+    var  folder_id=$(this).attr('folder_id');
+    var org_id=$('.org_id').val();
+
+    $.ajax({
+          data: {folder_id:folder_id},
+          contentType: false,
+          processData: false,
+          cache: false,
+          dataType: "json",
+          url: '/organisation/'+org_id+'/contact/attachment/delete/'+folder_id,
+          type: 'POST',
+
+          beforeSend: function (request) {
+              return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+          },
+          success: function(response){
+                if(response.status=="success")
+                {
+                  $('.folder_id_'+response.folder_id).remove();
+                }
+                else {
+                  $('#delete_folder').modal('toggle');
+                }
+
+          }
+      });
+
+  })
+
+$(document).on('click', '.rename-folder', function (e) {
+  var  folder_id=$(this).attr('folder_id');
+  $('.rename_folder_id').val(folder_id);
+  $('#rename_folder').modal('toggle');
+
+})
+$(document).on('click', '.file_rename', function (e) {
+  var  file_id=$(this).attr('file_id');
+  var  file_type=$(this).attr('file_type');
+  $('.rename_file_id').val(file_id);
+  $('.rename_file_type').val(file_type);
+  $('#rename_file').modal('toggle');
+
+})
+
+$(document).on('click', '#update_folder_name', function (e) {
+  var org_id=$('.org_id').val();
+  e.preventDefault();
+  var form = $('#form-rename-folder')[0]; // You need to use standard javascript object here
+  var formData = new FormData(form);
+  var folder_id=$('.rename_folder_id').val();
+  $.ajax({
+        data: formData,
+        contentType: false,
+        processData: false,
+        cache: false,
+        url: '/organisation/'+org_id+'/contact/attachment/rename-folder',
+        type: 'POST',
+
+        beforeSend: function (request) {
+            return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+        },
+        success: function(response){
+          $('.folder_name_'+folder_id).html(response);
+          $('#rename_folder').modal('toggle');
+        }
+    });
+})
+
+$(document).on('click', '#update_file_name', function (e) {
+  var org_id=$('.org_id').val();
+  e.preventDefault();
+  var form = $('#form-rename-file')[0]; // You need to use standard javascript object here
+  var formData = new FormData(form);
+  var file_id=$('.rename_file_id').val();
+
+  var file_type=$('.rename_file_type').val();
+  $.ajax({
+        data: formData,
+        contentType: false,
+        processData: false,
+        cache: false,
+        dataType: "json",
+        url: '/organisation/'+org_id+'/contact/attachment/rename-file',
+        type: 'POST',
+
+        beforeSend: function (request) {
+            return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+        },
+        success: function(response){
+          $('.file_name_'+response.file_id).html(response.file_name);
+          $('#rename_file').modal('toggle');
+        }
+    });
+})
+$(document).on('click', '.move_file', function (e) {
+  var org_id=$('.org_id').val();
+  var  file_id=$(this).attr('file_id');
+  var  contact_id=$(this).attr('contact_id');
+  $.ajax({
+        data: {contact_id:contact_id},
+        contentType: false,
+        processData: false,
+        cache: false,
+        dataType: "json",
+        url: '/organisation/'+org_id+'/contact/attachment/folder-list/'+contact_id,
+        type: 'POST',
+
+        beforeSend: function (request) {
+            return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+        },
+        success: function(response){
+          var html=`<div class="form-group">
+                      <label for="folder_name">Select folder</label>
+                      <select class="form-control" name="folder_name">`;
+          //var html='';
+                  $.each(response, function(key,value) {
+
+            				    html+=`<option type="text" value="${value.id}">${value.folder_name}</option>`
+                  });
+                  html+=`</select></div>`;
+                  $('.move_file_id').val(file_id);
+                  $('.move_contact_id').val(contact_id);
+                  $('.move_file_id').after(html);
+                  $('#move_file_modal').modal('toggle');
+
+          console.log(html);
+          //$('.file_name_'+response.file_id).html(response.file_name);
+          //$('#rename_file').modal('toggle');
+        }
+    });
+})
+$(document).on('click', '#update-parent-folder', function (e) {
+  var org_id=$('.org_id').val();
+  e.preventDefault();
+  var form = $('#form-move-file')[0]; // You need to use standard javascript object here
+  var formData = new FormData(form);
+
+  $.ajax({
+        data: formData,
+        contentType: false,
+        processData: false,
+        cache: false,
+        dataType: "json",
+        url: '/organisation/'+org_id+'/contact/attachment/move-file',
+        type: 'POST',
+
+        beforeSend: function (request) {
+            return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+        },
+        success: function(response){
+          $('.file_detail_'+response.file_id).empty();
+          $('#move_file_modal').modal('toggle');
+        }
+    });
+})
+$(document).on('click', '.pagination', function (e) {
+    var page_no=$(this).attr('page_no');
+    var org_id=$('.org_id').val();
+    var folder_id=$(this).attr('folder_id');
+  // e.preventDefault();
+  // var form = $('#form-move-file')[0]; // You need to use standard javascript object here
+  // var formData = new FormData(form);
+  //
+  $.ajax({
+        data: {},
+        contentType: false,
+        processData: false,
+        cache: false,
+        url: '/organisation/'+org_id+'/contact/attachment/'+folder_id+'/file/'+page_no,
+        type: 'POST',
+
+        beforeSend: function (request) {
+            return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+        },
+        success: function(response){
+           $('.folder-content').html(response);
+           if(response!="")
+           {
+             $('.pagination_count_'+folder_id).html(page_no)
+             var next= parseInt(page_no) + parseInt(1);
+             var pre= parseInt(page_no) - parseInt(1);
+             $('.next_'+folder_id).attr('page_no',next);
+             $('.pre_'+folder_id).attr('page_no',pre);
+           }
+
+
+          // $('#move_file_modal').modal('toggle');
+        }
+    });
+})
+$(document).on('click', '#note_submit', function (e) {
+  var org_id=$('.org_id').val();
+  e.preventDefault();
+  var form = $('#add_note_form')[0]; // You need to use standard javascript object here
+  var formData = new FormData(form);
+
+  $.ajax({
+        data: formData,
+        contentType: false,
+        processData: false,
+        cache: false,
+        url: '/organisation/'+org_id+'/contact/note/store',
+        type: 'POST',
+
+        beforeSend: function (request) {
+            return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+        },
+        success: function(response){
+          $('#notes_data').append(response)
+          //$('.file_name_'+response.file_id).html(response.file_name);
+          $('#add-note-modal').modal('toggle');
+          console.log(response);
+        }
+    });
+})

@@ -30,5 +30,6 @@ class ContactInformation extends Model
         'land_line' => 'array',
         'mobile' => 'array',
         'attachment' => 'array',
+        'group_id'=>'array'
     ];
 }

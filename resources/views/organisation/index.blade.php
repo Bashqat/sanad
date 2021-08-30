@@ -9,8 +9,10 @@
 	<!-- /.card-header -->
 		<div class="card-body">
 			<div class="tabel-scroll-sec">
-				<table id="example1" class="table table-bordered table-striped">
+				<table id="organisation" class="table table-bordered table-striped">
 					<thead>
+
+						@if(!$organisations->isEmpty())
 						<tr>
 							<th>Organisation Name</th>
 							<th>Created by</th>
@@ -26,7 +28,7 @@
 									<tr class="odd">
 								@endif
 
-											<td>{{ $organisation->org_name }}</td>
+											<td><a href="/organisation/view/{{$organisation->id}}">{{ $organisation->org_name }}</a></td>
 											<td>{{ $organisation['user_detail']['name'] }}</td>
 											 <td>{{ $organisation->created_at }}</td>
 											<td>
@@ -51,7 +53,10 @@
 											</td>
 								</tr>
 						@endforeach
-						</tfoot>
+					</tbody>
+					@else
+					<h1 class="text-center">No organisation exist</h1>
+					@endif
 				</table>
 			</div>
 		</div>

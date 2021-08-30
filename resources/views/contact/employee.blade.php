@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.contact_layout')
 <title>Contacts</title>
 @section('content')
 
@@ -8,7 +8,6 @@
 @include('contact.add-group-modal')
 @include('contact.group-modal')
 
-
 <div class="contact-page-new mb-1">
     <div class="container-fluid">
         <div class="row flex-nowrap">
@@ -17,84 +16,12 @@
                        <button class="btn add-new-contact common-button-site float-right">New Contact <i class="fa fa-plus ml-1"></i> </button>
                      </a>
             </div> -->
-            <div class="common-sidebar-sec mb-3">
+            <div class="common-sidebar-sec">
             @include('contact.sidebar')
             </div>
 
             <div class="contact-list-sec common-table-scroll contact-filters w-100">
-                <div class="inner-new-contact">
-                  <div class="card-header">
-                      <h3 class="card-title"> All Contacts</h3>
-                      <div class="btn-group float-right">
-                      <form class="form-inline contact-side-bar-search contact-table-search">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control " type="search" placeholder="Search" aria-label="Search">
-                                <div class="input-search-append">
-                                    <button class="btn" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                     </form>
-                        <div class="input-group-prepend">
-                            <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-list mr-1 p-1"></i>
-                                View
-                            </button>
-
-                            <div class="dropdown-menu">
-
-                                <a class="toggle-vis dropdown-item" data-column="1">Name</a>
-                                <a class="toggle-vis dropdown-item" data-column="2">website</a>
-                                  <a class="toggle-vis dropdown-item" data-column="3">email</a>
-                                  <a class="toggle-vis dropdown-item" data-column="4">phone</a>
-                                  <a class="toggle-vis dropdown-item" data-column="5">Action</a>
-
-
-                            </div>
-                            </div>
-                          <div class="input-group-prepend">
-                              <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i>
-                                  Options
-                              </button>
-
-                              <div class="dropdown-menu">
-                                  <a class="dropdown-item option" href="javascript:void(0);" data-type="group" data-id="contacts_table">Add to group</a>
-                                  <a class="dropdown-item option" href="javascript:void(0);" data-type="tag" data-id="contacts_table">Add Tag</a>
-                                  @if(!isset($type))
-                                  <a class="dropdown-item option" href="/organisation/{{$org_id}}/contact-merge" data-type="merge" data-id="contacts_table">Merge</a>
-                                  @endif
-                                  <a class="dropdown-item option" href="/organisation/{{$org_id}}/contact-archive" data-type="archive" data-id="contacts_table">Archive</a>
-                                  <form action="{{ route('export.contacts', [$org_id,'all','']) }}" method="GET">
-                                      <button type="submit" class="dropdown-item" href="/export-contacts" data-id="contacts_table">Export CSV</button>
-                                  </form>
-                              </div>
-
-
-
-                              </div>
-                              <div class="input-group-prepend">
-
-
-                                  <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-filter mr-1"></i>
-                                      Sort By
-                                  </button>
-                                  <input type="hidden" class="org_id" name="org_id" value={{$org_id}}>
-
-
-                                  <div class="dropdown-menu">
-                                      <a class="dropdown-item " href="javascript:void(0);" data-type="group" data-id="contacts_table"><input type="checkbox" class="filter" name="filter" value="country">Country</a>
-                                      <a class="dropdown-item " href="javascript:void(0);" data-type="tag" data-id="contacts_table"><input type="checkbox" class="filter" name="filter" value="tag">Tag</a>
-
-                                  </div>
-                              </div>
-
-                              <a href="{{ route('contact.create',[$org_id]) }}">
-                                <button class="btn add-new-contact common-button-site float-right"><i class="fa fa-plus ml-1"></i> Add New Contact  </button>
-                              </a>
-
-                          </div>
-                      </div>
-                  </div>
+                @include('contact.contact_filter')
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="contact_employee_table" class="table table-bordered table-striped">
@@ -109,6 +36,7 @@
                                   <th>Phone</th> -->
                                   <!-- <th></th> -->
                                    <th>Tags</th>
+                                   <!-- <th>Attachment</th> -->
                                   <th>Action</th>
                               </tr>
                             </thead>

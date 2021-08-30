@@ -23,13 +23,13 @@
 
                 <a href="{{ route('org-users-management.invite', $org_id ?? '') }}" class="float-right btn btn-primary common-button-site user-filter-btn {{ ($org_id=="")?'disabled': ''}}">{{ __('language.invite_user') }} <i class="fa fa-plus ml-1"></i></a>
 		<!-- @hasrole('super-admin') -->
-		<form id="filter" method="get">
+		<!-- <form id="filter" method="get">
             <select class="float-right form-control select2 col-lg-1 col-md-2 col-sm-2 mr-1" name="role" onchange="change()">
                 <option value="user" {{ ($role == 'user')? "selected":"" }}>user</option>
                 <option value="admin" {{ ($role == 'admin')? "selected":"" }}>admin</option>
 			</select>
 		</form>
-		<label class="float-right mr-1 mt-2 mb-2">User Filter</label>
+		<label class="float-right mr-1 mt-2 mb-2">User Filter</label> -->
 		<!-- @endhasrole -->
 	</div>
 	<!-- /.card-header -->

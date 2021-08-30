@@ -16,7 +16,7 @@
                        <button class="btn add-new-contact common-button-site float-right">New Contact <i class="fa fa-plus ml-1"></i> </button>
                      </a>
             </div> -->
-            <div class="common-sidebar-sec mb-3">
+            <div class="common-sidebar-sec">
             @include('contact.sidebar')
             </div>
 
@@ -27,7 +27,9 @@
                         <table id="contact_table" class="table table-bordered table-striped">
                             <thead>
                               <tr>
-                                  <th><input type="checkbox" name="checkbox" class="select-all"></th>
+                                  <th>
+                                    <!-- <input type="checkbox" name="checkbox" class="select-all"> -->
+                                  </th>
                                   <th>Contact name</th>
                                   <th>First person</th>
                                   <th>Second person</th>
@@ -36,6 +38,7 @@
                                   <th>Phone</th> -->
                                   <!-- <th></th> -->
                                    <th>Tags</th>
+                                   <th>Attachment</th>
                                   <th>Action</th>
                               </tr>
                             </thead>
@@ -66,7 +69,7 @@
 						<li><a href="javascript:void(0)" class="upload-attachment"><i class="fas fa-cloud-upload-alt mr-1"></i>Upload</a></li>
 						<li><a href="#" class="download-attachment"><i class="fas fa-download mr-1"></i>Download</a></li>
 					</ul>
-                    <form method="POST" action="" enctype="multipart/form-data" id="attachmentUploadForm">
+                    <form method="POST" action="{{route('contact.attachment',$org_id)}}" enctype="multipart/form-data" id="attachmentUploadForm">
                         @csrf
                         <input type="hidden" name="id" id="attachmentUploadId">
                         <input type="hidden" name="uploadType" id="attachmentUploadType">

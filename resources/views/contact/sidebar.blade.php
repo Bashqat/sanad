@@ -1,4 +1,7 @@
-<aside class="border bg-white contact-side-bar">
+<div class="sidebar-icon">
+        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+    </div>
+<aside class="bg-white contact-side-bar">
     <div class="sidebar-menu">
     <form class="form-inline contact-side-bar-search">
         <div class="input-group input-group-sm">
@@ -55,66 +58,64 @@
                     </button>
                 </div>
 
-                    <ul>
-                      @if(!empty($groups))
+                <ul>
+                    @if(!empty($groups))
 
-                      @foreach($groups as $group)
-                        <li class="groups-side-bar">
+                    @foreach($groups as $group)
 
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="heading0">
-                                    <h3 class="panel-title">
-                                    <a class="collapsed gp-link" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse0" aria-expanded="false" aria-controls="collapse0">
-                                        {{$group->title}}
-                                    </a>
-                                    </h3>
-                                </div>
-                                <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0" style="">
-                                    <div class="panel-body">
-                                    <ul>
+                    @if(isset($group->subgroup) && !($group->subgroup->isEmpty()))
 
-                                      @if(!empty($group->subgroup))
-                                      @foreach($group->subgroup as $subgroup)
-                                      <?php //print_R($subgroup); ?>
-                                        <li><a href="{{route('organisation.group.contact.list',[$org_id,$subgroup['id']])}}">{{$subgroup['title']}}</a></li>
-                                        @endforeach
-                                        @endif
+                      <li class="groups-side-bar">
 
-                                    </ul>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
+                          <div class="panel-group" id="accordion{{$group->id}}" role="tablist" aria-multiselectable="true">
+                          <div class="panel panel-default">
+                              <div class="panel-heading" role="tab" id="heading0">
+                                  <h3 class="panel-title">
+                                  <a class="collapsed gp-link" role="button" title="" data-toggle="collapse" data-parent="#accordion{{$group->id}}" href="#collapse{{$group->id}}" aria-expanded="false" aria-controls="collapse{{$group->id}}">
+                                      {{$group->title}}
+                                  </a>
+                                  </h3>
+                              </div>
+                              <div id="collapse{{$group->id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0" style="">
+                                  <div class="panel-body">
+                                  <ul>
 
-                        </li>
-                        @endforeach
-                        @endif
+                                    @if(!empty($group->subgroup))
+                                    @foreach($group->subgroup as $subgroup)
+                                    <?php //print_R($subgroup); ?>
+                                      <li><a href="{{route('organisation.group.contact.list',[$org_id,$subgroup['id']])}}">{{$subgroup['title']}}</a></li>
+                                      @endforeach
+                                      @endif
 
-                        <!-- <li class="groups-side-bar">
+                                  </ul>
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
 
-                            <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="heading2">
-                                        <h3 class="panel-title">
-                                        <a class="collapsed gp-link" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
-                                        Group 2
-                                        </a>
-                                        </h3>
-                                    </div>
-                                    <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li>Sub Group 1</li>
-                                                <li>Sub Group 2</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                      </li>
+                      @else
 
-                        </li> -->
-                    </ul>
+                      <li class="groups-side-bar">
+
+                          <div class="panel-group" id="accordion{{$group->id}}" role="tablist" aria-multiselectable="true">
+                          <div class="panel panel-default">
+                              <div class="panel-heading" role="tab" id="heading0">
+                                  <h3 class="panel-title">
+                                  <a class="collapsed gp-link " role="button" title="" data-toggle="collapse" data-parent="#accordion{{$group->id}}" href="#collapse0" aria-expanded="false" aria-controls="collapse0">
+                                      {{$group->title}}
+                                  </a>
+                                  </h3>
+                              </div>
+                            </li>
+                      @endif
+
+                @endforeach
+                @endif
+
+                  
+                  </ul>
+
 
             </li>
 
@@ -130,6 +131,15 @@ $(document).ready(function(){
     $(this).closest('.groups-side-bar').toggleClass("groups-side-bar-active ");
   });
 });
+
+$(document).ready(function(){
+  $(".sidebar-icon").click(function(){
+    $(".common-sidebar-sec").toggleClass("active-sidebar");
+    $(".contact-list-sec").toggleClass("active-contact-list-sec");
+    $(".master_section-sec").toggleClass("active-master_section-sec");
+  });
+});
+
 </script>
 
 <!-- https://www.solodev.com/blog/web-design/how-to-use-bootstrap-accordions-to-organize-faq-pages.stml -->

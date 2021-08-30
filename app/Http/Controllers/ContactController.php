@@ -13,6 +13,11 @@ use Illuminate\Support\Arr;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Group;
 use App\Models\Employee;
+use App\Models\Org_setting;
+use App\Models\Contactattachment;
+use App\Models\Contactfiles;
+use App\Models\Notes;
+use Str;
 
 
 class ContactController extends Controller
@@ -37,6 +42,7 @@ class ContactController extends Controller
 
       return view('contact.index',['org_id'=>$org_id,'contacts'=>$contacts,'groups'=>$groups,'type'=>$type]);
     }
+    /* Function for load employe list*/
     public function employee(Request $request,$org_id)
     {
       $obj=new OrganizationController();
@@ -44,13 +50,9 @@ class ContactController extends Controller
       $db_connection=$obj->org_connection($databaseName);
       $contacts=Employee::select('id','name','email','phone',)->where('type','!=','archive')->get();
       $groups=Group::with('subgroup')->get();
-
-    //  echo '<pre>';
-      //print_r($groups);exit;
-
-
-      return view('contact.employee',['org_id'=>$org_id,'contacts'=>$contacts,'groups'=>$groups]);
+      return view('contact.employee',['org_id'=>$org_id,'contacts'=>$contacts,'groups'=>$groups,'type'=>'employee']);
     }
+    /*function for load all contacts*/
     public function serverSide(Request $request,$org_id,$type='')
     {
       $obj=new OrganizationController();
@@ -62,90 +64,80 @@ class ContactController extends Controller
         $contacts=Contact::where('type','!=','archive')->where('company_type',$type)->with('contact_information');
       }
       if(request()->ajax()){
-        $search=$request->search['value'];
-        if($search=="country")
-        {
-          $contacts=$contacts->orderBy('country', 'ASC');
-        }
-        if($search=="tag")
-        {
-          $contacts=$contacts->orderBy('tags', 'ASC');
-        }
-        else if($search!="") {
-          $contacts=$contacts->where('name', 'like', '%' . $search . '%')
-             ->orWhere('website', 'like', '%' . $search. '%');
-        }
-
-
-      }
-      $contacts=$contacts->get();
-      $totalData=$contacts->count();
-      $totalFiltered = $totalData;
-
-
-      $data=[];
-
-      foreach($contacts as $key=>$contact)
-      {
-        
-        $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
-        $data[$key][]='<div class="contact-name-col"><a class="text-right d-block" href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->name.'</a>
-        <p class="text-right">'.$contact->name_arabic.'</p></div>';
-
-        if(isset($contact->contact_information) && count($contact->contact_information)>0 )
-        {
-           $first_person=$contact->contact_information[0]->first_name;
-           $data[$key][]='<div class="contact-list-person d-flex align-items-center"><p>'.$first_person.'</p><img src="/images/site-images/contact-email-data.svg"><img src="/images/site-images/contact-phone-data.svg"><img src="/images/site-images/contact-wtap-data.svg"></div>';
-         }
-        else {
-          $data[$key][]='';
-        }
-        if(isset($contact->contact_information) && count($contact->contact_information)>1 )
-        {
-           $second_person=$contact->contact_information[1]->first_name;
-           $data[$key][]='<div class="contact-list-person d-flex align-items-center"><p>'.$second_person.'</p><img src="/images/site-images/contact-email-data.svg"><img src="/images/site-images/contact-phone-data.svg"><img src="/images/site-images/contact-wtap-data.svg"></div>';
-
-        }
-        else {
-          $data[$key][]='';
-        }
-
-        $data[$key][]=(isset($contact->address[0]['country'])?$contact->address[0]['country']:'');
-        //$data[$key][]=$contact->email;
-
-        $phone='';
-        $token = csrf_token();
-
-        if($contact->contact_type=='person')
-        {
-          if(!empty($contact->phone))
+          $search=$request->search['value'];
+          if($search=="country")
           {
-            foreach($contact->phone as $phone)
+            $contacts=$contacts->orderBy('country', 'ASC');
+          }
+          if($search=="tag")
+          {
+            $contacts=$contacts->orderBy('tags', 'ASC');
+          }
+          else if($search!="") {
+            $contacts=$contacts->where('name', 'like', '%' . $search . '%')
+               ->orWhere('website', 'like', '%' . $search. '%');
+          }
+        }
+        $contacts=$contacts->get();
+        $totalData=$contacts->count();
+        $totalFiltered = $totalData;
+        $data=[];
+        foreach($contacts as $key=>$contact)
             {
-              $phone=$phone['number'];
+              $data[$key][]='<input type="checkbox" class="row-select" value="'.$contact->id.'">';
+              $data[$key][]='<div class="contact-name-col"><a class="text-right d-block" href="/organisation/'.$org_id.'/contact/'.$contact->id.'/view">'.$contact->name.'</a>
+              <p class="text-right">'.$contact->name_arabic.'</p></div>';
+            if(isset($contact->contact_information) && count($contact->contact_information)>0 )
+              {
+                 $first_person=$contact->contact_information[0]->first_name;
+                 $data[$key][]='<div class="contact-list-person d-flex align-items-center"><p>'.$first_person.'</p><img src="/images/site-images/contact-email-data.svg"><img src="/images/site-images/contact-phone-data.svg"><img src="/images/site-images/contact-wtap-data.svg"></div>';
+               }
+            else {
+              $data[$key][]='';
             }
-          }
-        }
+            if(isset($contact->contact_information) && count($contact->contact_information)>1 )
+            {
+               $second_person=$contact->contact_information[1]->first_name;
+               $data[$key][]='<div class="contact-list-person d-flex align-items-center"><p>'.$second_person.'</p><img src="/images/site-images/contact-email-data.svg"><img src="/images/site-images/contact-phone-data.svg"><img src="/images/site-images/contact-wtap-data.svg"></div>';
 
+            }
+            else {
+              $data[$key][]='';
+            }
+            $data[$key][]=(isset($contact->address[0]['country'])?$contact->address[0]['country']:'');
+            $phone='';
+            $token = csrf_token();
 
+            if($contact->contact_type=='person')
+            {
+              if(!empty($contact->phone))
+              {
+                foreach($contact->phone as $phone)
+                {
+                  $phone=$phone['number'];
+                }
+              }
+            }
 
-
-        $edit_path=route('contacts.edit',[$org_id,$contact->id]);
-        $delete_path=route('contact.delete');
-        //$data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
-        $tags=$contact->tags;
-        $tag_html='';
-        if(!empty($tags))
-        {
-          foreach($tags as $tag )
-          {
-            $tag_html.='<div class="tab-buttons">
-            <button type="button" data-tag-name="test" data-tag-index="0" class="btn btn-success edit-tag">'.$tag.'</button>
-            </div>';
-          }
-        }
-        $data[$key][]=$tag_html;
-        $data[$key][]='<div class="dropdown">
+            $edit_path=route('contacts.edit',[$org_id,$contact->id]);
+            $delete_path=route('contact.delete');
+            //$data[$key][]='<i class="fas fa-phone-alt mr-1" aria-hidden="true"></i>'.$phone;
+            $tags=$contact->tags;
+            $tag_html='';
+            if(!empty($tags))
+            {
+              foreach($tags as $tag )
+              {
+                $tag_html.='<div class="tab-buttons">
+                <button type="button" data-tag-name="test" data-tag-index="0" class="btn btn-success edit-tag">'.$tag.'</button>
+                </div>';
+              }
+            }
+            $attachment_count=(isset($contact->attachment) && !empty($contact->attachment))?count($contact->attachment):'';
+            $data[$key][]=$tag_html;
+            $data[$key][]='<a class="attachment-view-btn d-flex align-items-center" data-files='.json_encode($contact->attachment).' data-toggle="modal" data-target="#attachment-view" data-file-type="contact" data-id="'.$contact->id.'"><img src="/images/site-images/doc-attch.svg">'.$attachment_count.'
+                    </a>';
+            $data[$key][]='<div class="dropdown">
                   <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><img src="/images/site-images/3-dots-contact-list.svg" style="width:100%"></a>
                   <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);"><a href="'.$edit_path.'" class="dropdown-item">Edit</a>
                   <form class="inline-block" action="'.$delete_path.'" method="POST" onsubmit="return confirm(`Are you sure?`);">
@@ -170,12 +162,7 @@ class ContactController extends Controller
                     "data"            => $data
                   ];
           echo  json_encode($json_data);
-
-
-
-
-
-    }
+      }
     public function employeeServerSide(Request $request,$org_id)
     {
       $obj=new OrganizationController();
@@ -372,6 +359,7 @@ class ContactController extends Controller
             $contactData['organization_id'] = $org_id;
             $contactData['created_by'] = Auth::user()->id;
             $contactData['contact_type'] = $request->input('contact_type');
+            $contactData['company_type'] = $request->input('company_type');
             if(isset($contactData['first_name']) && isset($contactData['last_name']))
             {
               $contactData['name'] = $contactData['first_name'].' '.$contactData['last_name'];
@@ -515,6 +503,7 @@ class ContactController extends Controller
             return redirect()->route('contact.index',[$org_id])->with('error',$e->getMessage());
         }
     }
+    /* Function or load employe edit page*/
     public function employeeEdit($org_id,$contact_id)
     {
         $obj=new OrganizationController();
@@ -523,8 +512,6 @@ class ContactController extends Controller
         $contact=Employee::where('id',$contact_id)->get();
         $countries = CountryListFacade::getList('en');
         return view('contact.create', compact('countries','contact','org_id'));
-
-
     }
 
     public function employeeStore(Request $request,$org_id)
@@ -738,6 +725,7 @@ class ContactController extends Controller
               $obj=new OrganizationController();
               $databaseName=$obj->get_db_name($org_id);
               $db_connection=$obj->org_connection($databaseName);
+
             if( !empty($rows = $request->rows ) ){
 
                 $contact = Contact::whereIn('id', $rows)->update(['type' => 'archive']);
@@ -776,18 +764,15 @@ class ContactController extends Controller
             return redirect()->back()->with('error',$e->getMessage());
         }
     }
-
+/* Function for load archive data*/
     public function archive($org_id)
     {
       $obj=new OrganizationController();
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
       $contacts=Contact::where('type','=','archive')->get();
-
       return view('contact.archive',['org_id'=>$org_id,'contacts'=>$contacts]);
-
-
-  }
+    }
 
   // Contact Merge
   public function contactToMerge(Request $request,$org_id){
@@ -884,6 +869,21 @@ class ContactController extends Controller
           $obj=new OrganizationController();
           $databaseName=$obj->get_db_name($org_id);
           $db_connection=$obj->org_connection($databaseName);
+          $contact_id = $request->rows;
+          $groupData=Contact::select('group_id')->where('id',$contact_id)->get()->toArray();
+          $group=$groupData[0]['group_id'];
+
+          $groupId = $request->groupId;
+          if(is_array($group) && !in_array($groupId,$group))
+          {
+            $group[]=$groupId;
+          }
+          else {
+            $group[]=$groupId;
+          }
+
+          // echo '<pre>';
+          // print_r($group);exit;
             if ( !empty( $groupId = $request->groupId ) && !empty($rows = $request->rows) ) {
                 if ( isset($request->type) && $request->type == "person" ) {
                     $rows = explode(',',$rows);
@@ -893,10 +893,11 @@ class ContactController extends Controller
                         'msg' => 'Person assign group successfully.'
                     ]);
                 }else{
+
                     $rows = explode(',',$rows);
-                    Contact::whereIn('id', $rows)->update(['group_id' => $groupId]);
-                    contactInformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
-                    Websiteinformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
+                    Contact::whereIn('id', $rows)->update(['group_id' => $group]);
+                    // contactInformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
+                    // Websiteinformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
                     return response()->json([
                         'success' => 1,
                         'msg' => 'Contact moved in group successfully.'
@@ -915,14 +916,511 @@ class ContactController extends Controller
             ]);
         }
     }
-    public function view($org_id,$contact_id)
+    public function groupContactDetail(Request $request,$org_id){
+        try {
+          $obj=new OrganizationController();
+          $databaseName=$obj->get_db_name($org_id);
+          $db_connection=$obj->org_connection($databaseName);
+          $contact_id = $request->rows;
+          $groupData=ContactInformation::select('group_id')->where('id',$contact_id)->get()->toArray();
+
+          $group=(!empty($groupData)?$groupData[0]['group_id']:[]);
+          $groupId = $request->groupId;
+          if(is_array($group) && !in_array($groupId,$group))
+          {
+            $group[]=$groupId;
+          }
+          else {
+            //$group[]=$groupId;
+          }
+          // echo '<pre>';
+
+            if ( !empty( $groupId = $request->groupId ) && !empty($rows = $request->rows) ) {
+                if ( isset($request->type) && $request->type == "person" ) {
+                    //$rows = explode(',',$rows);
+                    //print_R($group);exit;
+                    contactInformation::where('id', $rows)->update(['group_id' => $group]);
+                    return response()->json([
+                        'success' => 1,
+                        'msg' => 'Person assign group successfully.'
+                    ]);
+                }else{
+                  //print_R($rows);exit;
+                    //$rows = explode(',',$rows);
+                    contactInformation::where('id', $rows)->update(['group_id' => $group]);
+                    // contactInformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
+                    // Websiteinformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
+                    return response()->json([
+                        'success' => 1,
+                        'msg' => 'Contact moved in group successfully.'
+                    ]);
+                }
+            }else{
+                return response()->json([
+                    'success' => 0,
+                    'msg' => 'Group Id or Row must me selected.'
+                ]);
+            }
+        }catch ( \Exception $e ) {
+            return response()->json([
+                'success' => 0,
+                'msg' => $e->getMessage()
+            ]);
+        }
+    }
+    public function groupContactDelete(Request $request,$org_id){
+        try {
+          $obj=new OrganizationController();
+          $databaseName=$obj->get_db_name($org_id);
+          $db_connection=$obj->org_connection($databaseName);
+          $contact_id = $request->rows;
+          $groupData=ContactInformation::select('group_id')->where('id',$contact_id)->get()->toArray();
+
+          $group=(!empty($groupData)?$groupData[0]['group_id']:[]);
+          $groupId = $request->groupId;
+          if(is_array($group) && in_array($groupId,$group))
+          {
+            $group=array_diff([$groupId],$group);
+          }
+          else {
+            //$group[]=$groupId;
+          }
+          // echo '<pre>';
+
+
+            if ( !empty( $groupId = $request->groupId ) && !empty($rows = $request->rows) ) {
+                if ( isset($request->type) && $request->type == "person" ) {
+                    //$rows = explode(',',$rows);
+
+                    //print_R($group);exit;
+                    contactInformation::where('id', $rows)->update(['group_id' => $group]);
+                    return response()->json([
+                        'success' => 1,
+                        'msg' => 'Person assign group successfully.'
+                    ]);
+                }else{
+                  //print_R($rows);exit;
+                    //$rows = explode(',',$rows);
+
+                    contactInformation::where('id', $rows)->update(['group_id' => $group]);
+                    // contactInformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
+                    // Websiteinformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
+                    return response()->json([
+                        'success' => 1,
+                        'msg' => 'Contact removed from group successfully.'
+                    ]);
+                }
+            }
+        }catch ( \Exception $e ) {
+            return response()->json([
+                'success' => 0,
+                'msg' => $e->getMessage()
+            ]);
+        }
+    }
+    public function detailContactDelete($org_id,$id)
     {
       $obj=new OrganizationController();
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
-      $contact_detail=Contact::with('contact_information')->with('website_information')->where('id',$contact_id)->get()->toArray();
+
+      if(contactInformation::where('id', $id)->delete())
+      {
+        return response()->json([
+            'success' => 1,
+            'msg' => 'Contact deleted successfuly.'
+        ]);
+      }
+      // contactInformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
+      // Websiteinformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
+
+    }
+    public function view($org_id,$contact_id)
+    {
+      $obj=new OrganizationController();
+      $user_id=Auth::id();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $contact_detail=Contact::with('contact_information')->with('notes')->with('website_information')->where('id',$contact_id)->get()->toArray();
+      // echo '<pre>';
+      // print_R($contact_detail);
+      $contacts=Contact::select('id','name','email','phone',)->with('contact_information')->where('type','!=','archive')->get();
+
+      $groups=Group::with('subgroup')->get();
+      $contactGroup=[];
+      $group_id=$contact_detail[0]['group_id'];
+      if(!empty($group_id))
+      {
+        $contactGroup=Group::with('subgroup')->whereIn('id', $group_id)->get()->toArray();
+      }
 
 
-      return view('contact/view',compact('contact_detail'));
+
+      return view('contact/view',compact('contact_detail','org_id','groups','contactGroup','contacts','user_id'));
+    }
+    public function addWebsite(Request $request)
+    {
+      try{
+
+        $org_id=$request->input('org_id');
+        $obj=new OrganizationController();
+        $databaseName=$obj->get_db_name($org_id);
+        $db_connection=$obj->org_connection($databaseName);
+        Websiteinformation::create($request->all());
+        //return redirect()->back()->with('success','Website add successfuly');
+        return response()->json(['success'=>1,'msg'=>'Website add successfuly']);
+
+      }catch (Exception $e) {
+              DB::rollback();
+              return redirect()->back()->with('error',$e->getMessage());
+      } catch(\Illuminate\Database\QueryException $ex){
+              return redirect()->back()->with('error',$ex->getMessage());
+              DB::rollback();
+      }
+    }
+
+    public function viewWebsitePin(Request $request){
+      $org_id=$request->input('org_id');
+      $website_id=$request->input('website_id');
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $pin=$request->input('pincode');
+      $pinData=Org_setting::where('security_pin',$pin)->get()->toArray();
+      if(!empty($pinData))
+      {
+        $websiteData=Websiteinformation::where('id',$website_id)->get()->toArray();
+        $password=$websiteData[0]['password'];
+        return response()->json([
+                      'success' => 1,
+                      'msg' => "Pin match successfully",
+                      'data' => $password,
+                      'id' => $website_id
+                  ]);
+
+      }
+      return response()->json([
+                    'success' => 0,
+                    'msg' => "Pin not match successfully",
+                    'id' => $website_id
+                ]);
+
+
+    }
+    public function archiveWebsite($org_id,$id)
+    {
+
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      if(Websiteinformation::where('id',$id)->update(['type'=>'archive']))
+      {
+        return redirect()->back()->with('success','Website archive successfuly');
+      }
+
+    }
+    public function deleteWebsite($org_id,$id)
+    {
+
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      if(Websiteinformation::where('id',$id)->delete())
+      {
+        return redirect()->back()->with('success','Website deleted successfuly');
+      }
+
+    }
+    public function archiveContactId($org_id,$id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      if(Contact::where('id',$id)->update(['type'=>'archive']))
+      {
+        return redirect()->back()->with('success','Contact archived successfuly');
+      }
+    }
+    /*******  File attachment Section ******/
+    public function contactAttachmentUpload(Request $request,$org_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+
+        try {
+            if (!empty($request->files)) {
+                $data = $this->uploadDataAttachmentsGetLinks($request->all(),'contacts');
+                if ($request->uploadType == 'contact') {
+                    $modal = new Contact;
+                  }
+                // }elseif ($request->uploadType == 'contactInformation') {
+                //     $modal = new contactInformation;
+                // }elseif ($request->uploadType == 'note') {
+                //     $modal = new contactNotes;
+                // }
+                $oldAttachments = $modal->select('attachment')->where('id',$request->id)->first();
+                if (empty($oldAttachments->attachment)) {
+                    $modal->where('id', $request->id)->update(['attachment'=> $data['files']]);
+                }else{
+                    $finalData = array_merge( $oldAttachments->attachment, $data['files'] );
+                    $modal->where('id', $request->id)->update(['attachment'=> $finalData]);
+                }
+                return redirect()->back()->with('success',"File upload successfully.");
+            }else{
+                return redirect()->back()->with('error',"No file selected.");
+            }
+        }catch ( \Exception $e ) {
+            return redirect()->back()->with('error',$e->getMessage());
+        }
+    }
+
+    public function addnewFolder(Request $request,$org_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      try {
+          Contactattachment::create($request->all());
+          return redirect()->back()->with('success','folder created successfuly');
+      }catch ( \Exception $e ) {
+          return redirect()->back()->with('error',$e->getMessage());
+      }
+    }
+    public function listFolder(Request $request,$org_id)
+    {
+
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $contact_id=$request->input('data_id');
+      $contact_detail_id=$request->input('data_contact_id');
+      $folderList=Contactattachment::where('contact_id',$contact_id)->where('contact_detail_id',$contact_detail_id)->get()->toArray();
+      $files=[];
+      if(!empty($folderList))
+      {
+        foreach($folderList as $key=>$list)
+        {
+          $files[$list['id']]=Contactfiles::where('folder_id',$list['id'])->limit('5')->get()->toArray();
+          $count =Contactfiles::where('folder_id',$list['id'])->count();
+          $pages = ceil($count/5);
+          //$files[$key]['files']=Contactfiles::where('folder_id',$list['id'])->get()->toArray();
+        }
+
+      }
+      return view('contact/attachment',compact('folderList','files','contact_detail_id','contact_id','org_id'));
+    }
+    public function storeFile(Request $request,$org_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $file_name=$request->file('file_name');
+      $path=public_path('contact-attachment/');
+      if($file_name!="")
+      {
+        $imageName = Str::random(15).'.'.$file_name->getClientOriginalExtension();
+        $file_path='/contact-attachment'.'/'.$imageName;
+        $file_name->move($path, $imageName);
+        $attachment['folder_id']=$request->input('folder_id');
+        $attachment['file_type']=$file_name->getClientOriginalExtension();
+        $attachment['file_path']=$file_path;
+        $attachment['file_name']=$file_name->getClientOriginalName();
+        if(Contactfiles::create($attachment))
+        {
+          $contactfile=Contactfiles::all()->last();
+          $date=$contactfile->created_at;
+          $file_id=$contactfile->id;
+          $file_type=$contactfile->file_type;
+
+
+          $created_at = date('d/m/Y ', strtotime($date));
+          $created_at_time = date("h:i:sa", strtotime($date));
+          $html='<div class="tab-files-detail d-flex justify-content-between align-items-center">
+              <div class="attached-file">
+                  <img src="/images/site-images/attached-pdf.svg">
+              </div>
+              <div class="attached-file-name">
+                  <p class="file_name_'.$file_id.'">'.$file_name->getClientOriginalName().'</p>
+                  <span>File Uploaded on - '.$created_at.' - '.$created_at_time.' </span>
+              </div>
+              <div class="attached-file-options">
+                  <div class="dropdown">
+                      <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <img src="/images/site-images/3-dots-attach-option.svg">
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item file_rename" file_id="'.$file_id.'" file_type="'.$file_type.'"  href="#">Rename</a>
+                          <a class="dropdown-item" href="'.$file_path.'" target="_blank" download="'.$file_name->getClientOriginalName().'">Download</a>
+                          <a class="dropdown-item" href="#">Something else here</a>
+                      </div>
+                  </div>
+              </div>
+          </div>';
+          return $html;
+        }
+      }
+
+    }
+    public function renameFolder(Request $request,$org_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $folder_name=$request->input('folder_name');
+      $folder_id=$request->input('folder_id');
+      if(Contactattachment::where('id',$folder_id)->update(['folder_name'=>$folder_name]))
+      {
+        return $folder_name;
+      }
+      else {
+        return 'error';
+      }
+
+    }
+    public function renameFile(Request $request,$org_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+
+      $file_name=$request->input('file_name').'.'.$request->input('file_type');
+      $file_id=$request->input('file_id');
+      if(Contactfiles::where('id',$file_id)->update(['file_name'=>$file_name]))
+      {
+        //return $file_name;
+        return response()->json(['file_name'=>$file_name,'file_id'=>$file_id,'status'=>'success']);
+      }
+      else {
+        return response()->json(['status'=>'error']);
+      }
+
+    }
+    public function folderList(Request $request,$org_id,$id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $contact_id=$id;
+      $folderlist=Contactattachment::where('contact_detail_id',$contact_id)->get()->toArray();
+
+      return response()->json($folderlist);
+    }
+    public function fileMove(Request $request,$org_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+
+
+      $file_id=$request->input('file_id');
+      $folder_id=$request->input('folder_name');
+      if(Contactfiles::where('id',$file_id)->update(['folder_id'=>$folder_id]))
+      {
+        //return $file_name;
+        return response()->json(['file_id'=>$file_id,'status'=>'success']);
+      }
+      else {
+        return response()->json(['status'=>'error']);
+      }
+    }
+    public function deleteFolder(Request $request,$org_id,$id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $filelist=Contactfiles::where('folder_id',$id)->get()->toArray();
+
+
+      if(empty($filelist))
+      {
+        //return $file_name;
+        Contactattachment::where('id',$id)->delete();
+        return response()->json(['folder_id'=>$id,'status'=>'success']);
+      }
+      else {
+        return response()->json(['status'=>'error']);
+      }
+    }
+    public function filePagination($org_id,$folder_id,$pageno)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      $skip=$pageno*5-5;
+      $take=$pageno*5-5;
+      if($pageno==1){
+        $skip=0;
+        $take=5;
+      }
+      //$filelist=Contactfiles::where('folder_id',$id)->get()->toArray();
+      //$files[$list['id']]=Contactfiles::where('folder_id',$folder_id)->limit('5')->get()->toArray();
+      $count =Contactfiles::where('folder_id',$folder_id)->count();
+      //$pages = ceil($count/5);
+      $filelist=Contactfiles::where('folder_id',$folder_id)->skip($skip)->take($take)->get()->toArray();
+      $contact_detail_id=Contactattachment::select('contact_detail_id')->where('id',$folder_id)->get()->toArray();
+      $html='';
+      foreach($filelist as $file)
+      {
+        $created_at = date('d/m/Y ', strtotime($file['created_at']));
+        $created_at_time = date("h:i:sa", strtotime($file['created_at']));
+        $html.='<div class="tab-files-detail file_detail_'.$file['id'].' d-flex justify-content-between align-items-center">
+            <div class="attached-file">
+                <img src="/images/site-images/attached-pdf.svg">
+            </div>
+            <div class="attached-file-name">
+                <p class="file_name_'.$file['id'].'">'.$file['file_name'].'</p>
+                <span>File Uploaded on - '.$created_at.'-'.$created_at_time.' </span>
+            </div>
+            <div class="attached-file-options">
+                <div class="dropdown">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="/images/site-images/3-dots-attach-option.svg">
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item file_rename" file_id="'.$file['id'].'" file_type="'.$file['file_type'].'"  href="#">Rename</a>
+                        <a class="dropdown-item" href="'.$file['file_path'].'" target="_blank" download="'.$file['file_name'].'">Download</a>
+                        <a class="dropdown-item move_file" file_id="'.$file['id'].'" contact_id="'.$contact_detail_id[0]['contact_detail_id'].'" href="#">Move file to other folder</a>
+                    </div>
+                </div>
+            </div>
+        </div>';
+      }
+      return $html;
+
+    }
+    public function addNote(Request $request,$org_id)
+    {
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $db_connection=$obj->org_connection($databaseName);
+      // $notes['content_id']=$request->input('content_id');
+      // $notes['file_type']=$file_name->getClientOriginalExtension();
+      // $notes['file_path']=$file_path;
+      // $notes['file_name']=$file_name->getClientOriginalName();
+      $notes=$request->all();
+      if(Notes::create($notes))
+      {
+        $notes=Notes::all()->last();
+        $created_at = date('d/m/Y ', strtotime($notes->created_at));
+        $created_at_time = date("h:i:sa", strtotime($notes->created_at));
+            $html='<tr>
+                    <td><input type="checkbox" class="" value=""></td>
+                    <td><span>'.$notes->header.'</span>
+                    <p>'.$notes->content.'</p>
+                    <div class="notes-time-detail d-flex">
+                        <span>By Keith Willaim </span>
+                        <p>(Last edited by - Mark Boucher - '.$created_at.' - '.$created_at_time.')</p>
+                    </div>
+                  </td>
+              <td>
+                  <div class="nots-attach-pdf d-flex align-items-center">
+                      <img src="/images/site-images/c-p-l-pdf.svg">(03)
+                      <img src="/images/site-images/contact-nots-pin.svg">
+                  </div>
+              </td>
+        </tr>';
+        return $html;
+      }
     }
 }

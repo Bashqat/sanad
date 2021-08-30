@@ -17,7 +17,7 @@
                         <div class="tab-pane active" id="settings">
                           @if(isset($org_id))
                           <form class="form-horizontal" method="POST" action="{{ route('org-users-management.update') }}" enctype="multipart/form-data">
-                            <input type="hidden" name="org_id" value="{{ $org_id }}">"
+                            <input type="hidden" name="org_id" value="{{ $org_id }}">
                           @else
                             <form class="form-horizontal" method="POST" action="{{ route('users-management.update', $user->id) }}" enctype="multipart/form-data">
                               @method('put')
@@ -31,7 +31,7 @@
                             <div class="form-group row">
                                 <label for="inputEmail" class="col-sm-2 col-form-label">Upload Logo</label>
                                 <div class="col-sm-10 input-group edit-input-field">
-                                    @if (!empty($user->avatar))
+                                    @if (!empty($user->avatar) && $user->avatar!="user-avatar.png")
                                         <div class="thumb_img">
                                             <img src="{{url('images/profile')}}/{{ $user->avatar }}" class="img-thumbnail" id="image-thumb">
                                         </div>

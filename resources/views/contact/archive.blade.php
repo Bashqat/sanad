@@ -7,11 +7,7 @@
 <div class="contact-page-new mb-1">
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <!-- <div class="col-lg-12 contact-add-button">
-                <a href="{{ route('contact.create',[$org_id]) }}">
-                       <button class="btn add-new-contact common-button-site float-right">New Contact <i class="fa fa-plus ml-1"></i> </button>
-                     </a>
-            </div> -->
+
             <div class="common-sidebar-sec mb-3">
             @include('contact.sidebar')
             </div>
@@ -24,7 +20,7 @@
                             <thead>
                               <tr>
                                   
-                                  <th>Cntact name</th>
+                                  <th>Contact name</th>
                                   <th>First person</th>
                                   <th>Second person</th>
                                   <th>Country</th>

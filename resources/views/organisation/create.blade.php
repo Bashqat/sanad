@@ -55,7 +55,7 @@
                     <div class="form-group row">
                         <label for="logo" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Logo </label>
                         <div class="col-lg-9 col-md-9 col-sm-9 input-group">
-                          @if(isset($organisation_data[0]) && $organisation_data[0]!="")
+                          @if(isset($organisation_data[0]->logo) && $organisation_data[0]->logo!="")
       											<div class="thumb_img">
                             		<img src="{{ url('/organisation_logo') }}/{{ isset($organisation_data[0]->logo)?$organisation_data[0]->logo:'' }}" class="img-thumbnail" placeholder="Image not found">
                             </div>

@@ -27,6 +27,10 @@ class QueryController extends Controller
             $this->contact_activity();
             $this->group();
             $this->createEmployee();
+            $this->attachment();
+            $this->attachment_file();
+            $this->contact_notes();
+
             return $db_name;
         }
     }
@@ -138,7 +142,7 @@ class QueryController extends Controller
               `xero_sync_status` enum('true','false') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false',
               `created_at` timestamp NULL DEFAULT NULL,
               `updated_at` timestamp NULL DEFAULT NULL,
-              `group_id` bigint UNSIGNED DEFAULT NULL,
+              `group_id` json DEFAULT NULL,
               `merged_to` bigint UNSIGNED DEFAULT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
         //  DB::statement($query);
@@ -192,7 +196,7 @@ class QueryController extends Controller
               `attachment` json DEFAULT NULL,
               `created_at` timestamp NULL DEFAULT NULL,
               `updated_at` timestamp NULL DEFAULT NULL,
-              `group_id` bigint UNSIGNED DEFAULT NULL
+              `group_id` json DEFAULT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
             // DB::statement($query);
             DB::connection()->getPdo()->exec($query);
@@ -324,6 +328,45 @@ class QueryController extends Controller
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             ";
           DB::connection()->getPdo()->exec($query);
+    }
+    public function attachment()
+    {
+      $query="CREATE TABLE `contact_attachment` (
+        `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `folder_name` varchar(255) NOT NULL,
+        `contact_id` bigint(20) NOT NULL,
+        `contact_detail_id` bigint(20) NOT NULL,
+        `files` json DEFAULT NULL,
+        `created_at` datetime NOT NULL,
+        `updated_at` datetime NOT NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+      DB::connection()->getPdo()->exec($query);
+    }
+    public function attachment_file()
+    {
+      $query="CREATE TABLE `contact_attachment_files` (
+        `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `folder_id` bigint(20) NOT NULL,
+        `file_name` varchar(255) NOT NULL,
+        `file_path` varchar(255) NOT NULL,
+        `file_type` varchar(255) NOT NULL,
+        `created_at` datetime DEFAULT NULL,
+        `updated_at` datetime DEFAULT NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+      DB::connection()->getPdo()->exec($query);
+    }
+    public function contact_notes()
+    {
+      $query="CREATE TABLE `contact_notes` (
+        `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `contact_id` bigint(20) NOT NULL,
+        `header` varchar(255) NOT NULL,
+        `content` text NOT NULL,
+        `created_by` bigint(20) NOT NULL,
+        `created_at` datetime NOT NULL,
+        `updated_at` datetime NOT NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+      DB::connection()->getPdo()->exec($query);
     }
 
 }

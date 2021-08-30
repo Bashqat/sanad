@@ -79,10 +79,10 @@
 
 													 @if(!empty($org_list) && Auth::user()->role!=1)
 													 		@foreach ( $org_list as $key=>$list )
-															
+															@if($key<2)
 															 <div class="org-name-nav-item">
 																 @if($list->logo!="")
-																 <img class="header_logo" src="{{ url('/organisation_logo') }}/{{$list->logo}}">
+																 <img  class="header_logo" src="{{ url('/organisation_logo') }}/{{$list->logo}}">
 																 @else
 																 <img src="/images/site-images/org-logo.svg">
 																 @endif
@@ -91,6 +91,7 @@
 																			{{$list->org_name}}
 																	</a>
 															</div>
+
 																@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
 																			@if($org_id==$list->id)
 																						<li class="dropdown-submenu ">
@@ -99,6 +100,8 @@
 																						<li class="dropdown-submenu ">
 																									<a class="dropdown-item dropdown-toggle" href="#">Setting</a>
 																									<ul class="dropdown-menu header-submenu">
+																									<div class="header-submenu-triangle"></div>
+																									        <!-- <li><a class="dropdown-item triangle" href="/organisation/{{ $org_id }}/user-management">User</a></li> -->
 																											<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/user-management">User Management</a></li>
 																											<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/smtp">Email Setting</a></li>
 																											<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/contact">Contact</a></li>
@@ -118,17 +121,21 @@
 																<li class="dropdown-submenu ">
 																			<a class="dropdown-item dropdown-toggle" href="#">Setting</a>
 																			<ul class="dropdown-menu header-submenu">
+																			<div class="header-submenu-triangle"></div>
+																		         	<!-- <li><a class="dropdown-item triangle" href="/organisation/{{ $org_id }}/user-management">User </a></li> -->
 																					<li><a class="dropdown-item" href="/organisation/{{ $org_list[0]->id}}/user-management">User Management</a></li>
 																					<li><a class="dropdown-item" href="/organisation/{{ $org_list[0]->id }}/smtp">Email Setting</a></li>
 																					<li><a class="dropdown-item" href="/organisation/{{ $org_list[0]->id }}/contact">Contact</a></li>
 																					<li><a class="dropdown-item" href="/organisation/{{$org_list[0]->id}}/security">Security</a></li>
-																					<li><a class="dropdown-item" href="#">Account setting</a></li>
-																					<li><a class="dropdown-item" href="#">Template Setting</a></li>
+																					<li><a class="dropdown-item" href="href="/profile/{{Auth::user()->id}}/edit"">Account setting</a></li>
+																					<!-- <li><a class="dropdown-item" href="#">Template Setting</a></li> -->
 																					<li><a class="dropdown-item" href="{{route('organisation.app',$org_list[0]->id)}}">App Connection</a></li>
 																			</ul>
 																	</li>
 																@endif
 																<hr>
+																@endif
+
 														@endforeach
 											@endif
 											@if (Auth::user()->role=="1")
@@ -229,11 +236,11 @@
 								</div>
 							</li>
 							</li>
-							<div class="nav-item dropdown user-menu super-admin user-profile-name">
-								<a href="#" class="nav-link mr-md-1 dropdown-toggle user-circle-img d-flex justify-content-center align-items-center" data-toggle="dropdown">
+							<div class="nav-item dropdown user-menu user-profile-name super-admin">
+								<a href="#" class="nav-link mr-md-1 dropdown-toggle user-circle-img d-flex align-items-center" data-toggle="dropdown">
 									<img src="@if (filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL)){{ Auth::user()->avatar }}@else/images/profile/{{ Auth::user()->avatar }}@endif" class="user-image img-circle elevation-2" alt="User Image">
-									<span>{{ ucfirst(Auth::user()->name) }}</span>
-									<span class="d-none d-md-inline">
+									<p>{{ ucfirst(Auth::user()->name) }}</p>
+									<span class="d-md-inline">
 										<!-- {{ Auth::user()->name }} -->
 										<!-- <i class="fas fa-sort-down"></i> -->
 										<!-- <i class="fa fa-angle-down" aria-hidden="true"></i> -->
@@ -243,15 +250,15 @@
 								<ul class="dropdown-menu dropdown-menu-sm w-auto dropdown-menu-right super-admin">
 									<!-- Menu Footer-->
 									<a class="dropdown-item">
-										<span>{{ ucfirst(Auth::user()->name) }}</span>
+										<img src="@if (filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL)){{ Auth::user()->avatar }}@else/images/profile/{{ Auth::user()->avatar }}@endif" class="user-image img-circle elevation-2" alt="User Image"><span>{{ ucfirst(Auth::user()->name) }}</span>
 									</a>
 									<a class="dropdown-item" href="/profile/{{Auth::user()->id}}/edit">
-										<span>{{ __('language.edit') }}</span>
+										<img src="/images/site-images/edit-profile.svg"><span>{{ __('language.edit') }}</span>
 									</a>
 
 
 									<a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-										<span>{{ __('language.signout') }}</span>
+										<img src="/images/site-images/logout-profile.svg"><span>{{ __('language.signout') }}</span>
 										<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
 											@csrf
 										</form>

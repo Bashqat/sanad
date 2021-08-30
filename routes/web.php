@@ -119,7 +119,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('organisation/{org_id}/contact-archive',[App\Http\Controllers\ContactController::class,'contactToArchive'])->name('contactArchive');
         Route::post('organisation/{org_id}/contact-merge',[App\Http\Controllers\ContactController::class,'contactToMerge'])->name('contactToMerge');
         Route::post('organisation/{org_id}/group-contact',[App\Http\Controllers\ContactController::class,'groupContact'])->name('group-contact');
+        Route::post('organisation/{org_id}/group-detail-contact',[App\Http\Controllers\ContactController::class,'groupContactDetail'])->name('group-contact-detail');
         Route::post('organisation/contact/restore',[App\Http\Controllers\ContactController::class,'contactToRestore'])->name('contact.restore');
+        Route::post('organisation/{org_id}/contact/detail/delete/{id}',[App\Http\Controllers\ContactController::class,'detailContactDelete'])->name('contact.detail.delete');
+        Route::post('organisation/{org_id}/group-delete-contact',[App\Http\Controllers\ContactController::class,'groupContactDelete'])->name('group-delete-contact');
 
 
         // Route::get('contacts-import-option',[App\Http\Controllers\ContactController::class,'importContactsOption'])->name('export.contacts.option');
@@ -139,6 +142,27 @@ Route::group(['middleware' => 'auth'], function () {
 
         ///contact details
         Route::get('organisation/{org_id}/contact/{contact_id}/view', [App\Http\Controllers\ContactController::class,'view'])->name('contact.view');
+
+
+        //contact view page action
+        Route::post('organisation/contact/add-website', [App\Http\Controllers\ContactController::class,'addWebsite'])->name('organisation.contact.add_website');
+        Route::post('view-website-pin',[App\Http\Controllers\ContactController::class,'viewWebsitePin'])->name('view-website-pin');
+        Route::post('organisation/{org_id}/website/{id}/archive',[App\Http\Controllers\ContactController::class,'archiveWebsite'])->name('website.archive');
+        Route::post('organisation/{org_id}/website/{id}/delete',[App\Http\Controllers\ContactController::class,'deleteWebsite'])->name('website.delete');
+        Route::get('organisation/{org_id}/contact/{id}/archive',[App\Http\Controllers\ContactController::class,'archiveContactId'])->name('contact.id.archive');
+
+        // file attachment
+        Route::post('organisation/{org_id}/contact/attachment',[App\Http\Controllers\ContactController::class,'contactAttachmentUpload'])->name('contact.attachment');
+        Route::post('organisation/{org_id}/contact/attachment/add-new-folder',[App\Http\Controllers\ContactController::class,'addnewFolder'])->name('contact.new.folder');
+        Route::post('organisation/{org_id}/contact/attachment/list',[App\Http\Controllers\ContactController::class,'listFolder'])->name('contact.folder.list');
+        Route::post('organisation/{org_id}/contact/attachment/store',[App\Http\Controllers\ContactController::class,'storeFile'])->name('contact.file.store');
+        Route::post('organisation/{org_id}/contact/attachment/rename-folder',[App\Http\Controllers\ContactController::class,'renameFolder'])->name('contact.folder.rename');
+        Route::post('organisation/{org_id}/contact/attachment/rename-file',[App\Http\Controllers\ContactController::class,'renameFile'])->name('contact.file.rename');
+        Route::post('organisation/{org_id}/contact/attachment/folder-list/{id}',[App\Http\Controllers\ContactController::class,'folderList'])->name('contact.folder.list');
+        Route::post('organisation/{org_id}/contact/attachment/move-file',[App\Http\Controllers\ContactController::class,'fileMove'])->name('contact.file.move');
+        Route::post('organisation/{org_id}/contact/attachment/delete/{id}',[App\Http\Controllers\ContactController::class,'deleteFolder'])->name('contact.folder.delete');
+        Route::post('organisation/{org_id}/contact/attachment/{folder_id}/file/{page_no}',[App\Http\Controllers\ContactController::class,'filePagination'])->name('contact.file.pagination');
+        Route::post('organisation/{org_id}/contact/note/store',[App\Http\Controllers\ContactController::class,'addNote'])->name('contact.note.store');
 
 });
 

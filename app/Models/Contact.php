@@ -40,7 +40,9 @@ class Contact extends Model
         'emergency_contact',
         'dependent_info',
         'contact_type',
-        'financial_information'
+        'financial_information',
+        'company_type',
+        'group_id'
     ];
     protected $casts = [
         'phone' => 'array',
@@ -53,7 +55,8 @@ class Contact extends Model
         'emp_info'=>'array',
         'personal_info'=>'array',
         'emergency_contact'=>'array',
-        'dependent_info'=>'array'
+        'dependent_info'=>'array',
+        'group_id'=>'array'
     ];
     public function contact_information()
     {
@@ -61,6 +64,10 @@ class Contact extends Model
     }
     public function website_information()
     {
-      return $this->hasMany(Websiteinformation::class, 'contact_id', 'id');
+      return $this->hasMany(Websiteinformation::class, 'contact_id', 'id')->where('type','contact');
+    }
+    public function notes()
+    {
+      return $this->hasMany(Notes::class, 'contact_id', 'id');
     }
 }

@@ -25,7 +25,7 @@
 				<label for="name" class="col-form-label">Name:</label>
 			</div>
 			<div class="col-lg-9 col-md-10 col-sm-9">
-				<input type="text" name="name" class="form-control" id="name">
+				<input type="text" name="name" class="form-control" id="name" required>
 			</div>
 		</div>
 
@@ -34,7 +34,7 @@
 				<label for="recipientEmail" class="col-form-label">Recipient Email:</label>
 			</div>
 			<div class="col-lg-9 col-md-10 col-sm-9">
-				<input type="email" name="recipientEmail" class="form-control" id="recipientEmail">
+				<input type="email" name="recipientEmail" class="form-control" id="recipientEmail" required>
 			</div>
 		</div>
 			</div>
