@@ -16,6 +16,7 @@
                                 <label>Group Name</label>
                                 <input type="hidden" value="{{$org_id}}" name="org_id">
                                 <input type="hidden" id="group-selected-row" value="" name="rows">
+                                <input type="hidden" id="group_contact_type" value="contact" name="group_contact_type">
                                 <select id="group-select" class="form-control select2bs4 select2" style="width: 100%;" name="groupId">
                                     @foreach ($groups as $group)
                                         <option value="{{ $group->id }}">{{ $group->title }}</option>

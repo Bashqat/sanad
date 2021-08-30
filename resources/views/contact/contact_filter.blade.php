@@ -3,17 +3,17 @@
   <div class="card-header d-flex">
       <h3 class="card-title w-100"> All Contacts</h3>
       <div class="btn-group float-right">
-      <form class="form-inline contact-side-bar-search contact-table-search">
+      <!-- <form class="form-inline contact-side-bar-search contact-table-search">
             <div class="input-group input-group-sm">
                 <input class="form-control " type="search" placeholder="Search" aria-label="Search">
                 <div class="input-search-append">
                     <button class="btn" type="submit">
-                        <!-- <i class="fas fa-search"></i> -->
+
                         <img src="/images/site-images/noun_Search_1.svg">
                     </button>
                 </div>
             </div>
-     </form>
+     </form> -->
     <div class="contact-header-dropdowns d-flex">
         <div class="input-group-prepend sort-by-dropdown contact-view-options d-flex align-items-center">
             <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="custom-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

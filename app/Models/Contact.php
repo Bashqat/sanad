@@ -70,4 +70,8 @@ class Contact extends Model
     {
       return $this->hasMany(Notes::class, 'contact_id', 'id');
     }
+    public function activity()
+    {
+      return $this->hasMany(contact_activity::class, 'contact_id', 'id');
+    }
 }

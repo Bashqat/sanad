@@ -18,7 +18,7 @@
                 <div class="contact-profile-info d-flex align-items-center">
                     <div class="profile-back-btn d-flex align-items-center">
                         <img src="/images/site-images/profile-back.svg">
-                       <p class="mb-0">Back</p>
+                       <a href="{{ url()->previous() }}"><p class="mb-0">Back</p></a>
                     </div>
                     <!-- <div class="conatct-profile-img">
                         <img src="/images/site-images/prperson contactofile-img.svg">
@@ -37,7 +37,7 @@
                             <input class="form-control " type="search" placeholder="Search" aria-label="Search">
                             <div class="input-search-append">
                                 <button class="btn d-flex align-items-center" type="submit">
-                                    <!-- <i class="fas fa-search"></i> -->
+
                                     <img src="/images/site-images/noun_Search_1.svg">
                                 </button>
                             </div>
@@ -51,17 +51,17 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="custom-menu" style="">
                             <div class="contact-options d-flex align-items-center">
-                            <input class="contact-custom-radio" type="radio"  name="flexRadioDefault" id="flexRadioDefault1">
+                            <input class="contact-custom-radio radio_option_view" type="radio"  name="flexRadioDefault" id="flexRadioDefault1" data-type="group" data-id="contacts_table" data-contact="{{$contact_detail[0]['id']}}">
                             <a class="dropdown-item show-contact-option" data-type="group" data-row="{{$contact_detail[0]['id']}}">Add to group</a>
                             </div>
 
                             <div class="contact-options d-flex align-items-center">
-                            <input class="contact-custom-radio" type="radio"  name="flexRadioDefault" id="flexRadioDefault1">
+                            <input class="contact-custom-radio radio_option_view" type="radio"  name="flexRadioDefault" id="flexRadioDefault1" data-type="tag" data-id="contacts_table" data-contact="{{$contact_detail[0]['id']}}">
                             <a class="dropdown-item show-contact-option" data-type="tag" data-row="{{$contact_detail[0]['id']}}">Add tag</a>
                             </div>
 
                             <div class="contact-options d-flex align-items-center">
-                            <input class="contact-custom-radio" type="radio"  name="flexRadioDefault" id="flexRadioDefault1">
+                            <input class="contact-custom-radio radio_option_view" type="radio"  name="flexRadioDefault" id="flexRadioDefault1" data-type="merge" data-id="contacts_table" data-contact="{{$contact_detail[0]['id']}}" href="/organisation/{{$org_id}}/contact-merge">
                             <a class="dropdown-item show-contact-option contact_merge" href="#" data-type="merge" url="/organisation/{{$org_id}}/contact-merge" data-id="contacts_table" data-type="merge" data-row="{{$contact_detail[0]['id']}}">Merge</a>
                             </div>
 
@@ -456,11 +456,34 @@
 
 							</div>
 							<div class="tab-pane" id="activity-log-contact" role="tabpanel" aria-labelledby="activity-log-tab-contact">
-                                 <h2>tab33333</h2>
+								<table class="w-100 border-0">
+									<thead>
+										<tr>
+										 <th></th>
+											<th>Title</th>
+											<th>Description</th>
+												<!-- <th>User Name</th> -->
+												<th>Date</th>
 
-                                                                    <!-- PAGINATION-START -->
+										</tr>
+									</thead>
+									<tbody>
+									 @if(!empty($contact_detail[0]['activity']))
 
-                                							</div>
+									 @foreach($contact_detail[0]['activity'] as $activity)
+										<tr>
+											<td><input type="checkbox" class="row-select" value="4"></td>
+											<td>{{$activity['title']}}</td>
+												<td>{{$activity['description']}}</td>
+												<td>{{$activity['created_at']}}</td>
+
+										</tr>
+									 @endforeach
+									 @endif
+
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 

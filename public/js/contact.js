@@ -772,6 +772,32 @@ $(document).ready(function(){
         });
         this.reset();
     });
+    $('#group-form').submit(function(e){
+      var org_id=$('.org_id').val();
+        e.preventDefault();
+        $.ajax({
+            data: $(this).serialize(),
+            url: '/organisation/'+org_id+'/group-contact',
+            type: 'POST',
+            beforeSend: function (request) {
+                $('#myModal').modal('hide');
+                return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+            },
+            success: function(response){
+                if (response.success == 1) {
+                    toastr.success(response.msg);
+                }else{
+                    toastr.error(response.msg);
+                }
+                var table = $('input[name="table"]').val();
+                if ( table == "contactPersonsTable" ) {
+                    contactPersonsTable.ajax.reload();
+                }
+                contacts.ajax.reload();
+            }
+        });
+        this.reset();
+    });
     $('#group-delete-form').submit(function(e){
       var org_id=$('.org_id').val();
         e.preventDefault();
@@ -847,6 +873,7 @@ $(document).ready(function(){
             case "group":
 
                 $('#group-selected-row').val(rows);
+                $('#group_contact_type').val('contact_detail')
                 $('#myModal').modal('show');
                 break;
             case "tag":
@@ -893,12 +920,9 @@ $(document).ready(function(){
 
         e.preventDefault();
         var id = $(".radio_option_view:checked").data('id');
-
         var action = $(".radio_option_view:checked").data('type');
         var rows=[];
         rows.push($(".radio_option_view:checked").data('contact'));
-
-
         var url = $(".radio_option_view:checked").attr('href');
 
 
@@ -927,6 +951,7 @@ $(document).ready(function(){
             case "group":
 
                 $('#group-selected-row').val(rows);
+
                 $('#myModal').modal('show');
                 break;
             case "tag":
@@ -1016,6 +1041,7 @@ $(document).ready(function(){
             case "group":
 
                 $('#group-selected-row').val(rows);
+                $('#group_contact_type').val('group_contact_type')
                 $('#myModal').modal('show');
                 break;
             case "tag":

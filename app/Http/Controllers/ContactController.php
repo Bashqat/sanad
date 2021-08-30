@@ -939,15 +939,27 @@ class ContactController extends Controller
                 if ( isset($request->type) && $request->type == "person" ) {
                     //$rows = explode(',',$rows);
                     //print_R($group);exit;
-                    contactInformation::where('id', $rows)->update(['group_id' => $group]);
-                    return response()->json([
+                    if($request->group_contact_type=='contact')
+                    {
+                      Contact::where('id', $rows)->update(['group_id' => $group]);
+                    }else{
+                      contactInformation::where('id', $rows)->update(['group_id' => $group]);
+                    }
+                    $this->contactLog($rows,$type = 'publish','Add group','Group add successfully');
+                      return response()->json([
                         'success' => 1,
                         'msg' => 'Person assign group successfully.'
                     ]);
                 }else{
                   //print_R($rows);exit;
                     //$rows = explode(',',$rows);
-                    contactInformation::where('id', $rows)->update(['group_id' => $group]);
+                    if($request->group_contact_type=='contact')
+                    {
+                      Contact::where('id', $rows)->update(['group_id' => $group]);
+                    }else{
+                      contactInformation::where('id', $rows)->update(['group_id' => $group]);
+                    }
+                    $this->contactLog($rows,$type = 'publish','Add group','Group add successfully');
                     // contactInformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
                     // Websiteinformation::whereIn('contact_id', $rows)->update(['group_id' => $groupId]);
                     return response()->json([
@@ -1041,7 +1053,7 @@ class ContactController extends Controller
       $user_id=Auth::id();
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
-      $contact_detail=Contact::with('contact_information')->with('notes')->with('website_information')->where('id',$contact_id)->get()->toArray();
+      $contact_detail=Contact::with('contact_information')->with('notes')->with('website_information')->with('activity')->where('id',$contact_id)->get()->toArray();
       // echo '<pre>';
       // print_R($contact_detail);
       $contacts=Contact::select('id','name','email','phone',)->with('contact_information')->where('type','!=','archive')->get();
