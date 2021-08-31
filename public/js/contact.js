@@ -1585,7 +1585,7 @@ $(document).ready(function(){
           </label>
         </div>
         <div class="form-group row ">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Name
+          <label for="email" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Name
 
           </label>
 
@@ -1603,9 +1603,9 @@ $(document).ready(function(){
           </div>
         </div>
         <div class="form-group row contact-row">
-          <label for="land_line" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Land Line </label>
+          <label for="land_line" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Land Line </label>
 
-          <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+          <div class="col-lg-8 col-md-8 col-sm-8 person-sub-contact">
             <input type="text" name="contact[emergency_contact][${count}][country_code]" class="form-control col-md-3" placeholder="Country Code" value="">
             <input type="text" name="contact[emergency_contact][${count}][area]" class="form-control col-md-3" placeholder="Area" value="">
             <input type="tel" name="contact[emergency_contact][${count}][number]" class="form-control col-md-3" placeholder="Number" value="">
@@ -1613,7 +1613,7 @@ $(document).ready(function(){
           </div>
         </div>
         <div class="form-group row contact-row" id="mobile-field">
-          <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile
+          <label for="mobile" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Mobile
            </label>
           <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
             <select name="contact[emergency_contact][${count}][mobile_type]" class="form-control select2 col-md-3 select-input-field m-0" style="width: 100%;">
@@ -1737,9 +1737,9 @@ $(document).ready(function(){
 
 
         <div class="form-group row contact-row" id="mobile-field">
-          <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile
+          <label for="mobile" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Mobile
            </label>
-          <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+          <div class="col-lg-8 col-md-8 col-sm-8 person-sub-contact">
             <select name="contact[dependent_info][${count}][mobile_type]" class="form-control select2 col-md-3 select-input-field" style="width: 100%;">
               <option value="">Select Type</option>
               <option value="main" >Main</option>
