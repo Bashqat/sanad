@@ -24,7 +24,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@if($subscriptions->isEmpty())
+						@if(!$subscriptions->isEmpty())
 						@foreach ( $subscriptions as $subscription )
 								@if($loop->iteration % 2 == 0)
 									<tr class="even">
