@@ -20,7 +20,9 @@
             @include('contact.sidebar')
             </div>
 
-            <div class="contact-list-sec common-table-scroll contact-filters w-100">
+              <div class="contact-list-sec common-table-scroll contact-filters w-100 @if ( $errors->any() || Session::get('info') || Session::get('success') || Session::get('warning') )alert-position @endif">
+            @include('flash-message')
+
                 @include('contact.contact_filter')
                     <!-- /.card-header -->
                     <div class="card-body">

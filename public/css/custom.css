@@ -13,7 +13,6 @@
 		url("http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular") format("svg");
 }
 
-
 body {
 	font-family: 'DM Sans', sans-serif;
 }
@@ -272,9 +271,14 @@ input#agreeTerms {
 	border-bottom: 1px solid #e9ecef;
 }
 
+.thumb_img {
+    display: inline-flex;
+}
+
 .thumb_img img {
 	max-width: 50px;
-	height: 38px;
+	width:100%;
+	height: 40px;
 	border-radius: 0;
 	margin-right: 10px;
 }
@@ -1562,11 +1566,14 @@ a.resend-invite-link {
 	justify-content: space-between;
 }
 
-.person-contact input, .person-contact textarea.form-control, .person-contact .custom-file, .person-contact select.form-control {
+.person-contact input, .person-contact textarea.form-control, .person-contact .nots-attachment, .person-contact select.form-control {
 	width: 100%;
 	max-width: 415px;
 }
 
+.nots-attachment a.attachment-link {
+    margin-right: 10px;
+}
 .person-contact.notes-contact {
     margin-bottom: 0px !important;
 }
@@ -1982,6 +1989,7 @@ ul.pagination, ul.pagination .paginate_button, ul.pagination .paginate_button a.
 
 a.attachment-link {
     position: relative;
+	display: inline-flex;
 }
 
 
@@ -2318,6 +2326,11 @@ table tbody tr.odd td a div {
 	margin-bottom: 30px;
 	padding: 33px 0;
 	overflow: scroll;
+	transition: all .4s ease-out;
+
+}
+.contact-list-sec.alert-position .card-body {
+	top: 184px;
 }
 
 .contact-list-sec .card-body table {
@@ -2329,11 +2342,13 @@ table tbody tr.odd td a div {
     left: 20px;
     right: 20px;
     bottom: 10px;
+	background: #fff;
 }
 
 .contact-list-sec .card-body .dataTables_wrapper {
-    position: relative;
-	height:100%;
+    /* position: relative; */
+	position: revert;
+    height: 100% !important;
     padding-bottom: 80px;
 }
 
@@ -2499,51 +2514,6 @@ table tbody tr.odd td a div {
     height: auto !important;
 }
 
-/* .groups-side-bar .panel-group {
-    width: 100%;
-    margin: 44px 43px 44px 0px;
-	margin: 20px 43px 20px 0px;
-    background: #f6f8fe;
-    border-left: 3px solid #4874e5;
-    border-radius: 6px;
-}
-
-.groups-side-bar .panel-group .panel-body ul li {
-	list-style: disc !important;
-    font-size: 14px;
-    color: #4B7DDE;
-    font-weight: 500;
-    padding: 12px 0px 33px 17px !important;
-	border-bottom: 0px;
-}
-
-.groups-side-bar .panel-group .panel-title {
-    padding: 44px 0px 44px 44px;
-	padding: 20px 0px 20px 44px;
-	font-weight: 500;
-}
-
-.groups-side-bar .panel-group .panel-title a {
-    color: #4B7DDE;
-    font-size: 14px;
-} */
-
-
-
-
-/* .groups-side-bar2 .panel-group .panel-title {
-    padding: 44px 0px 44px 47px;
-    font-weight: 500;
-}
-
-.groups-side-bar2 .panel-group .panel-title a {
-    color: #4A4A4A;
-    font-size: 14px;
-} */
-
-
-
-
 .groups-side-bar .panel-group {
     width: 100%;
     /* margin: 44px 43px 44px 0px; */
@@ -2660,6 +2630,26 @@ table tbody tr.odd td a div {
     padding: 0 20px;
 }
 
+.contact-list-sec .dataTables_wrapper table tbody .dropdown-menu {
+    padding: 0px 0px 12px;
+    margin: 0;
+    border-color: #fff;
+}
+
+
+.contact-list-sec .dataTables_wrapper table tbody .dropdown-menu .dropdown-item {
+    color: #434343;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.05px;
+    font-family: 'Poppins';
+    padding: 14px 12px 0px 12px !important;
+}
+
+.contact-list-sec .dataTables_wrapper table tbody .dropdown-menu .dropdown-item:hover{
+    background:#fff;
+}
+
 .contact-list-sec .card-header .input-group-prepend {
     padding: 0px;
     width: 104px;
@@ -2708,6 +2698,10 @@ form.contact-side-bar-search.contact-table-search {
     max-width: 40px;
     height: 40px;
     object-fit: cover;
+}
+
+.contact-list-sec .alert {
+    margin-top: 20px;
 }
 
 /***** contact-list-table-css-start-here *****/
@@ -3316,6 +3310,10 @@ form.header-search .input-group input.form-control {
 .contact-inner-table-sec table{
 	margin-top: 22px;
 	margin-bottom: 22px;
+}
+
+.contact-table-scroll {
+    overflow: scroll;
 }
 
 .contact-inner-table-sec table tr th {
@@ -4415,6 +4413,15 @@ input.contact-custom-radio:checked {
     display: flex;
     justify-content: space-between;
 }
+
+.date-contact-fields.company-type-fields {
+    justify-content: flex-start !important;
+}
+
+.date-contact-fields.company-type-fields .company-type-options.contact-address-fields {
+    width: auto;
+}
+
 .date-contact-fields .contact-address-fields {
     width: 100%;
     padding-right: 10px;
@@ -4424,9 +4431,15 @@ input.contact-custom-radio:checked {
     padding-right: 0px;
 }
 
-.date-contact-fields input {
-    /* max-width: 190px; */
+.contact-create-sec a {
+    color: #4b7dde;
+    text-decoration: none;
 }
+
+.contact-create-sec .form-group a.btn {
+    color: #fff;
+}
+
 
 /***** Aug-14-css-end-here *****/
 
@@ -4570,7 +4583,7 @@ input.contact-custom-radio:checked {
 	    margin-bottom: 1rem;
 	}
 
-	.person-contact .custom-file, .person-contact select.form-control{
+	.person-contact .nots-attachment, .person-contact select.form-control{
 		max-width: 100%;
 	}
 
@@ -4638,7 +4651,6 @@ input.contact-custom-radio:checked {
 
 	.contact-inner-table-sec {
 		padding: 15px 20px 15px 20px;
-		overflow: scroll;
 	}
 
 	.contact-inner-table-sec table {
@@ -4861,12 +4873,20 @@ input.contact-custom-radio:checked {
 		flex-direction: column;
 	}
 
+	.date-contact-fields.company-type-fields{
+		flex-direction: row;
+	}
+
 	.date-contact-fields input {
 		max-width: 100%;
 	}
 
 	.date-contact-fields .contact-address-fields {
 		padding-right: 0;
+	}
+
+	.date-contact-fields.company-type-fields .company-type-options.contact-address-fields {
+		padding-right: 10px;
 	}
 
 }
@@ -5395,6 +5415,10 @@ input.contact-custom-radio:checked {
 
 	.user-profile-name ul.dropdown-menu a.dropdown-item span {
 		font-size: 13px;
+	}
+
+	.date-contact-fields.company-type-fields {
+		flex-direction: column;
 	}
 
 }
