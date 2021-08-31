@@ -41,12 +41,8 @@ class Contact extends Model
         'dependent_info',
         'contact_type',
         'financial_information',
-<<<<<<< HEAD
         'company_type',
         'group_id'
-=======
-        'company_type'
->>>>>>> d882ca495bd2036a10f8786f6d85f0597b277193
     ];
     protected $casts = [
         'phone' => 'array',
