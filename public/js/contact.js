@@ -2112,3 +2112,31 @@ $(document).on('click', '#note_submit', function (e) {
         }
     });
 })
+  $(document).on('click','.sort_filter',function(){
+    var rows
+    var org_id=$('.org_id').val();
+    $('.sort_filter_option').each(function(){
+        if($(this).is(":checked")){
+            rows.push(this.value)
+        }
+      });
+        $.ajax({
+              data: {'sort_filter':rows},
+              contentType: false,
+              processData: false,
+              cache: false,
+              url:  '/organisation/'+org_id+'/contact/server-side',
+              type: 'GET',
+
+              beforeSend: function (request) {
+                  return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+              },
+              success: function(response){
+                // $('#notes_data').append(response)
+                // //$('.file_name_'+response.file_id).html(response.file_name);
+                // $('#add-note-modal').modal('toggle');
+                // console.log(response);
+              }
+          });
+
+  })

@@ -180,8 +180,8 @@ class ContactController extends Controller
           $contacts=$contacts->orderBy('tags', 'ASC');
         }
         else if($search!="") {
-          $contacts=$contacts->where('first_name', 'like', '%' . $search . '%')
-             ->orWhere('website', 'like', '%' . $search. '%');
+          $contacts=$contacts->where('name', 'like', '%' . $search . '%');
+             // ->orWhere('country', 'like', '%' . $search. '%');
         }
 
 

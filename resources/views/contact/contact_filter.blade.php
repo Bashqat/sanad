@@ -126,26 +126,21 @@
                   <div class="dropdown-menu">
                   <div class="contact-options d-flex align-items-center">
                              <input type="checkbox" class="filter contact-custom-check" name="filter" value="country">
-                            <a class="dropdown-item " href="javascript:void(0);" data-type="group" data-id="contacts_table">Country</a>
+                            <a class="dropdown-item sort_filter_option" href="javascript:void(0);" data-type="country" >Country</a>
                             </div>
                             <!-- <input type="checkbox" class="filter" name="filter" value="country"> -->
 
                             <div class="contact-options d-flex align-items-center">
-                            <input type="checkbox" class="filter contact-custom-check" name="filter" value="tag">
+                            <input type="checkbox" class="filter contact-custom-check sort_filter_option" name="filter" value="tag">
                             <a class="dropdown-item " href="javascript:void(0);" data-type="tag" data-id="contacts_table">Tag</a>
                             </div>
 
                             <div class="dropdown-footer-btns d-flex align-items-center justify-content-between">
                                 <button class="btn dropdown-cancel-btn">Reset</button>
-                                <button class="btn dropdown-save-btn">Apply</button>
+                                <button class="btn dropdown-save-btn sort_filter">Apply</button>
                             </div>
-
-
-
-
-
-                  </div>
-              </div>
+                        </div>
+                      </div>
 
               <a href="{{ route('contact.create',[$org_id]) }}">
                 <button class="btn add-new-contact common-button-site float-right">
