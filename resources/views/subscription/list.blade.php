@@ -24,6 +24,7 @@
 						</tr>
 					</thead>
 					<tbody>
+						@if($subscriptions->isEmpty())
 						@foreach ( $subscriptions as $subscription )
 								@if($loop->iteration % 2 == 0)
 									<tr class="even">
@@ -62,6 +63,9 @@
 											</td>
 								</tr>
 						@endforeach
+						@else
+						<tr><td></td><td></td> <td></td><td><h1 class="text-center">No Data found</h1></td></tr>
+						@endif
 						</tfoot>
 				</table>
 			</div>

@@ -68,7 +68,7 @@
                                 @endif
                             </td>
 
-                            <td><i class="fa fa-at" aria-hidden="true"></i>{{ $user->email }}</td>
+                            <td>{{ $user->email }}</td>
                             <!-- <td>
                                 <p>{{ ( $user->can('view edit contact') ) ? "view edit contact":"" }}</p>
                                 <p>{{ ( $user->can('view contact') ) ? "view contact":"" }}</p>

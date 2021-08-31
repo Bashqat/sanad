@@ -24,7 +24,7 @@ Route::get('/callback', [App\Http\Controllers\Auth\LoginController::class,'handl
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('profile', App\Http\Controllers\UserController::class);
-    Route::get('/master-setting', [App\Http\Controllers\MasterController::class, 'index'])->name('master_setting');
+    Route::get('/master-settings', [App\Http\Controllers\MasterController::class, 'index'])->name('master_setting');
     Route::post('/master-setting-update', [App\Http\Controllers\MasterController::class, 'updateSetting'])->name('master_setting_update');
     Route::get('/setting', [App\Http\Controllers\SuperadminController::class, 'index'])->name('setting');
     Route::post('/setting-update', [App\Http\Controllers\SuperadminController::class, 'updateSetting'])->name('setting_update');

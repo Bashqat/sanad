@@ -40,19 +40,25 @@ $(document).on('click','.select-all',function(){
 });
 $(document).on('click','#delete_all',function(){
 
-    var check =  confirm('Are you sure you want to delete this item?');
-
-    if (check == false) { return false; }
-
     let idArr = [];
-    var org_status=$('#org_select_status').val();
-    var org_id=$('#org_id').val();
-
     $('.row-select').each(function(){
         if($(this).prop('checked')){
             idArr.push($(this).attr('data-id'));
         }
     });
+    if(idArr.length === 0) {
+      toastr.error('Please select atleast one');
+      return false;
+    }
+
+    var check =  confirm('Are you sure you want to delete this item?');
+    if (check == false) { return false; }
+
+
+    var org_status=$('#org_select_status').val();
+    var org_id=$('#org_id').val();
+
+
 
     $.ajax({
         type:"GET",

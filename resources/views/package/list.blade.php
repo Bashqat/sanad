@@ -14,7 +14,7 @@
 						<tr>
 							<th>Name</th>
               <th>Price</th>
-							<th>No of organisation limit</th>
+							<th>Number of organisation limit</th>
 							<th>Number of user limit</th>
               <th>Number of contact limit</th>
               <th>Storage</th>

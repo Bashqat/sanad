@@ -34,12 +34,15 @@ $( document ).ready(function() {
            success:function(data) {
               if(data.status=="success")
               {
+
                     $('.msg_response').addClass('alert-success');
                     $('.msg_response').html('<strong>Success!</strong>'+data.msg);
+                    $('.msg_response').show();
               }
               else{
                     $('.msg_response').addClass('alert-danger');
                     $('.msg_response').html('<strong>Error!</strong>'+data.msg);
+                    $('.msg_response').show();
 
               }
            }
