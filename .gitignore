@@ -1,7 +1,6 @@
 /node_modules
 /public/hot
 /public/storage
-/public/images
 /public/organisation_logo
 /storage/*.key
 /vendor
