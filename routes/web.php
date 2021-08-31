@@ -147,7 +147,6 @@ Route::group(['middleware' => 'auth'], function () {
         //contact view page action
         Route::post('organisation/contact/add-website', [App\Http\Controllers\ContactController::class,'addWebsite'])->name('organisation.contact.add_website');
         Route::post('view-website-pin',[App\Http\Controllers\ContactController::class,'viewWebsitePin'])->name('view-website-pin');
-<<<<<<< HEAD
         Route::post('organisation/{org_id}/website/{id}/archive',[App\Http\Controllers\ContactController::class,'archiveWebsite'])->name('website.archive');
         Route::post('organisation/{org_id}/website/{id}/delete',[App\Http\Controllers\ContactController::class,'deleteWebsite'])->name('website.delete');
         Route::get('organisation/{org_id}/contact/{id}/archive',[App\Http\Controllers\ContactController::class,'archiveContactId'])->name('contact.id.archive');
@@ -164,8 +163,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('organisation/{org_id}/contact/attachment/delete/{id}',[App\Http\Controllers\ContactController::class,'deleteFolder'])->name('contact.folder.delete');
         Route::post('organisation/{org_id}/contact/attachment/{folder_id}/file/{page_no}',[App\Http\Controllers\ContactController::class,'filePagination'])->name('contact.file.pagination');
         Route::post('organisation/{org_id}/contact/note/store',[App\Http\Controllers\ContactController::class,'addNote'])->name('contact.note.store');
-=======
->>>>>>> d882ca495bd2036a10f8786f6d85f0597b277193
 
 });
 
