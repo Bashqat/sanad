@@ -92,7 +92,7 @@
                     @enderror
                 </div>
 
-                <div class="input-group mb-3">
+                <!-- <div class="input-group mb-3">
                     <div class="input-group">
                         <div class="custom-file">
                           <input
@@ -110,7 +110,7 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
-                </div>
+                </div> -->
 
                 <div class="row">
                     <div class="col-12">

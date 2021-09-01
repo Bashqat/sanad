@@ -2,6 +2,8 @@
 /public/hot
 /public/storage
 /public/organisation_logo
+/public/images/contacts
+/public/images/profile
 /storage/*.key
 /vendor
 .env

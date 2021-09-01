@@ -64,14 +64,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        
+
         $imageName = '';
-        if($data['profile']){
-            $img = $data['profile'];
-            $imageName = time().'.'.$img->extension();
-            $img->move(public_path('images/profile'), $imageName);
-        }
-        
+        // if(isset$data['profile']){
+        //     $img = $data['profile'];
+        //     $imageName = time().'.'.$img->extension();
+        //     $img->move(public_path('images/profile'), $imageName);
+        // }
+
 
         return User::create([
             'name' => $data['name'],
@@ -81,6 +81,6 @@ class RegisterController extends Controller
             'status' => 'active',
             'role'=>'2',
         ]);
-    
+
     }
 }

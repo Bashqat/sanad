@@ -238,7 +238,11 @@
 							</li>
 							<div class="nav-item dropdown user-menu user-profile-name super-admin">
 								<a href="#" class="nav-link mr-md-1 dropdown-toggle user-circle-img d-flex align-items-center" data-toggle="dropdown">
+									@if(Auth::user()->avatar!="")
 									<img src="@if (filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL)){{ Auth::user()->avatar }}@else/images/profile/{{ Auth::user()->avatar }}@endif" class="user-image img-circle elevation-2" alt="User Image">
+									@else
+									<img src="/images/site-images/profile.svg" class="user-image img-circle elevation-2" alt="User Image">
+									@endif
 									<p>{{ ucfirst(Auth::user()->name) }}</p>
 									<span class="d-md-inline">
 										<!-- {{ Auth::user()->name }} -->
@@ -250,7 +254,12 @@
 								<ul class="dropdown-menu dropdown-menu-sm w-auto dropdown-menu-right super-admin">
 									<!-- Menu Footer-->
 									<a class="dropdown-item">
-										<img src="@if (filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL)){{ Auth::user()->avatar }}@else/images/profile/{{ Auth::user()->avatar }}@endif" class="user-image img-circle elevation-2" alt="User Image"><span>{{ ucfirst(Auth::user()->name) }}</span>
+										@if(Auth::user()->avatar!="")
+										<img src="@if (filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL)){{ Auth::user()->avatar }}@else/images/profile/{{ Auth::user()->avatar }}@endif" class="user-image img-circle elevation-2" alt="User Image">
+										@else
+										<img src="/images/site-images/profile.svg" class="user-image img-circle elevation-2" alt="User Image">
+										@endif
+										<span>{{ ucfirst(Auth::user()->name) }}</span>
 									</a>
 									<a class="dropdown-item" href="/profile/{{Auth::user()->id}}/edit">
 										<img src="/images/site-images/edit-profile.svg"><span>{{ __('language.edit') }}</span>
