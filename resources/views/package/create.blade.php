@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="contact_count" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Storage<span style="color:red;">in GB</span> </label>
+                            <label for="contact_count" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Storage <span style="color:red;">in GB *</span> </label>
                             <div class="col-lg-9 col-md-9 col-sm-9">
                                 <input type="number" name="storage" class="form-control
                                 " id="storage " placeholder="Enter number of contact" required="" value="{{ isset($package_data[0]->storage) ? $package_data[0]->storage : ''}}">
@@ -113,5 +113,23 @@
         </div>
         <!-- /.row -->
         </div><!-- /.container-fluid -->
+        <style>
+        .chosen-container .chosen-results li.active-result {
+            display: list-item;
+            cursor: pointer;
+            background: #3da8f7 !important;
+            padding: 10px;
+        }
+        ul.chosen-choices::after {
+          content: "\f0d7";
+          font-family: 'FontAwesome';
+          vertical-align: middle;
+          display: inline-block;
+          position: absolute;
+          right: 11px;
+          font-size: 25px;
+          top: 10px;
+      }
+        </style>
     <!-- /.content -->
 @endsection

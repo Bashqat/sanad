@@ -2,7 +2,7 @@
 return [
 
     'dashboard' => 'Dashboard',
-    'business'  => 'Buisness',
+    'business'  => 'Business',
     'application'=>'Application',
     'email_smtp'=>'Email/Smtp',
     'payment_gateway'=>'Payment gateway',
@@ -24,7 +24,7 @@ return [
     'change_pin'=>' Change Pin',
     'pin'=>'Pin',
     'organisation'=>'Organisation',
-    'setting'=>'Setting',
+    'setting'=>'Settings',
     'dashboard'=>'Dashboard',
     'search'=>'Search',
     'signout'=>'Sign out',

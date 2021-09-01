@@ -29,7 +29,7 @@
 								@endif
 
 											<td><a href="/organisation/view/{{$organisation->id}}">{{ $organisation->org_name }}</a></td>
-											<td>{{ $organisation['user_detail']['name'] }}</td>
+											<td>{{ (isset($organisation['user_detail']['name']))?$organisation['user_detail']['name']:'' }}</td>
 											 <td>{{ $organisation->created_at }}</td>
 											<td>
 												<div class="dropdown">

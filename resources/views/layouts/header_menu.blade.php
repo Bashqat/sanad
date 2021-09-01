@@ -98,7 +98,7 @@
 																								<a class="dropdown-item" href="#">Files</a></li>
 																						</li>
 																						<li class="dropdown-submenu ">
-																									<a class="dropdown-item dropdown-toggle" href="#">Setting</a>
+																									<a class="dropdown-item dropdown-toggle" href="#">Settings</a>
 																									<ul class="dropdown-menu header-submenu">
 																									<div class="header-submenu-triangle"></div>
 																									        <!-- <li><a class="dropdown-item triangle" href="/organisation/{{ $org_id }}/user-management">User</a></li> -->
@@ -296,4 +296,9 @@
 	  });
 	  return false;
 	});
+
+	setTimeout(function() {
+      $('.alert').hide();
+    }, 5000);
+
 </script>
