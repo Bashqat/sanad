@@ -21,7 +21,7 @@ Auth::routes();
 Route::get('/login-gmail', [App\Http\Controllers\Auth\LoginController::class,'redirectToProvider'])->name('login-gmail');
 Route::get('/callback', [App\Http\Controllers\Auth\LoginController::class,'handleProviderCallback'])->name('callback');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('profile', App\Http\Controllers\UserController::class);
     Route::get('/master-settings', [App\Http\Controllers\MasterController::class, 'index'])->name('master_setting');
