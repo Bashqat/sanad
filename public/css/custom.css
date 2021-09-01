@@ -4443,6 +4443,17 @@ input.contact-custom-radio:checked {
 
 /***** Aug-14-css-end-here *****/
 
+/***** Sep-1-css-start-here *****/
+
+.login-card-body .card-body img {
+    max-width: 100px;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 20px;
+}
+
+/***** Sep-1-css-end-here *****/
+
 /**Media-Start-Here**/
 @media(max-width: 1600px) {
 	.contact-list-sec .dataTables_wrapper table {

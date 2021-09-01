@@ -28,6 +28,7 @@
         <div class="login-card-body">
             <!-- <p class="login-box-msg">Sign in to start your session</p> -->
               <div class="card-body">
+                <img src="/images/site-images/SANAD Logo Beta.png" class="img-fluid">
                  <h4 class="pb-2 text-center text-dark text-uppercase">{{ __('language.login') }}</h4>
             <form method="post" action="{{ url('/login') }}">
                 @csrf
