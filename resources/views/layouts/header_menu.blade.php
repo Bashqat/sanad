@@ -28,16 +28,38 @@
 
 						}else {
 							preg_match_all('!\d+!', $actual_link, $matches);
-
 							$org_id=$matches[0][0];
+							}
+						}else {
+							$used_org=Auth::user()->used_org;
+							if($used_org!=0)
+							{
+								$org_id=$used_org;
+							}
 						}
-						//echo $org_id;
 
-						}
+
 
 
 
  ?>
+
+@php
+$new_org=$org_list->toArray();
+$key = array_search($org_id, array_column($new_org, 'id'));
+array_unshift($new_org,$new_org[$key]);
+unset($new_org[$key+1]);
+$orglist=$new_org;
+$org_list=[];
+if(!empty($orglist))
+{
+	foreach($orglist as $list)
+	{
+		$org_list[]=$list;
+	}
+}
+@endphp
+
 <nav class="main-header navbar navbar-expand navbar-white navbar-light py-0">
 				<nav class="navbar navbar-expand-md toggle-navbar-sec p-0">
 							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -64,11 +86,11 @@
 																@elseif(!empty($org_list) && Auth::user()->role==1 )
 																				Select
 																@elseif(Auth::user()->role==2 && isset($org_list[0]) && !empty($org_list[0]) && !preg_match('#[0-9]#',$org_id))
-																			{{$org_list[0]->org_name}}
+																			{{$org_list[0]['org_name']}}
 																@endif
 																@foreach ( $org_list as $list )
-																		@if($org_id==$list->id)
-																			{{$list->org_name}}
+																		@if($org_id==$list['id'])
+																			{{$list['org_name']}}
 																		@endif
 																@endforeach
 																<!-- <i class="fa fa-angle-down" aria-hidden="true"></i> -->
@@ -77,67 +99,44 @@
 
 												<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right org-menu" >
 
-													 @if(!empty($org_list) && Auth::user()->role!=1)
-													 		@foreach ( $org_list as $key=>$list )
-															@if($key<2)
-															 <div class="org-name-nav-item">
-																 @if($list->logo!="")
-																 <img  class="header_logo" src="{{ url('/organisation_logo') }}/{{$list->logo}}">
+					@if(!empty($org_list) && Auth::user()->role!=1)
+						@foreach ( $org_list as $key=>$list )
+								@if($key<2)
+												<div class="org-name-nav-item">
+																 @if($list['logo']!="")
+																 		<img  class="header_logo" src="{{ url('/organisation_logo') }}/{{$list['logo']}}">
 																 @else
-																 <img src="/images/site-images/org-logo.svg">
+																 		<img src="/images/site-images/org-logo.svg">
 																 @endif
 
-															 <a href="/organisation/view/{{$list->id}}" class="dropdown-item">
-																			{{$list->org_name}}
+															 <a href="/organisation/view/{{$list['id']}}" class="dropdown-item">
+																			{{$list['org_name']}}
 																	</a>
-															</div>
-
-																@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
-																			@if($org_id==$list->id)
-																						<li class="dropdown-submenu ">
-																								<a class="dropdown-item" href="#">Files</a></li>
-																						</li>
-																						<li class="dropdown-submenu ">
-																									<a class="dropdown-item dropdown-toggle" href="#">Settings</a>
-																									<ul class="dropdown-menu header-submenu">
-																									<div class="header-submenu-triangle"></div>
-																									        <!-- <li><a class="dropdown-item triangle" href="/organisation/{{ $org_id }}/user-management">User</a></li> -->
-																											<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/user-management">User Management</a></li>
-																											<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/smtp">Email Setting</a></li>
-																											<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/contact">Contact</a></li>
-																											<li><a class="dropdown-item" href="/organisation/{{$org_id}}/security">Security</a></li>
-																											<li><a class="dropdown-item" href="#">Account setting</a></li>
-																											<li><a class="dropdown-item" href="#">Template Setting</a></li>
-																											<li><a class="dropdown-item" href="{{route('organisation.app',$org_id)}}">App Connection</a></li>
-																									</ul>
-																							</li>
-
-																				@endif
-
-																@elseif($key==0)
+														</div>
+														@if($org_id==$list['id'])
 																<li class="dropdown-submenu ">
 																		<a class="dropdown-item" href="#">Files</a></li>
 																</li>
 																<li class="dropdown-submenu ">
-																			<a class="dropdown-item dropdown-toggle" href="#">Setting</a>
+																			<a class="dropdown-item dropdown-toggle" href="#">Settings</a>
 																			<ul class="dropdown-menu header-submenu">
 																			<div class="header-submenu-triangle"></div>
-																		         	<!-- <li><a class="dropdown-item triangle" href="/organisation/{{ $org_id }}/user-management">User </a></li> -->
-																					<li><a class="dropdown-item" href="/organisation/{{ $org_list[0]->id}}/user-management">User Management</a></li>
-																					<li><a class="dropdown-item" href="/organisation/{{ $org_list[0]->id }}/smtp">Email Setting</a></li>
-																					<li><a class="dropdown-item" href="/organisation/{{ $org_list[0]->id }}/contact">Contact</a></li>
-																					<li><a class="dropdown-item" href="/organisation/{{$org_list[0]->id}}/security">Security</a></li>
-																					<li><a class="dropdown-item" href="href="/profile/{{Auth::user()->id}}/edit"">Account setting</a></li>
-																					<!-- <li><a class="dropdown-item" href="#">Template Setting</a></li> -->
-																					<li><a class="dropdown-item" href="{{route('organisation.app',$org_list[0]->id)}}">App Connection</a></li>
+																							<!-- <li><a class="dropdown-item triangle" href="/organisation/{{ $org_id }}/user-management">User</a></li> -->
+																					<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/user-management">User Management</a></li>
+																					<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/smtp">Email Setting</a></li>
+																					<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/contact">Contact</a></li>
+																					<li><a class="dropdown-item" href="/organisation/{{$org_id}}/security">Security</a></li>
+																					<li><a class="dropdown-item" href="#">Account setting</a></li>
+																					<li><a class="dropdown-item" href="#">Template Setting</a></li>
+																					<li><a class="dropdown-item" href="{{route('organisation.app',$org_id)}}">App Connection</a></li>
 																			</ul>
 																	</li>
-																@endif
-																<hr>
-																@endif
+															@endif
+														<hr>
+												@endif
 
-														@endforeach
-											@endif
+						@endforeach
+					@endif
 											@if (Auth::user()->role=="1")
 												<a href="{{ route('master_setting') }}" class="dropdown-item">
 														{{ __('language.setting') }}

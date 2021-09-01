@@ -55,7 +55,7 @@ class OrganizationController extends Controller
             'driver' => 'mysql',
             "host" => "127.0.0.1",
             "database" => $databaseName,
-            "username" => "root",
+            "username" => getenv('DB_USERNAME'),
             "password" => getenv('DB_PASSWORD'),
             'charset' => 'utf8',
             'prefix' => '',
@@ -154,6 +154,8 @@ class OrganizationController extends Controller
           $connection=$this->org_connection($databaseName);
           $orgInfo=Organisation::where('org_id','=',$org_id)->get();
           $invite_user=User::count();
+          $this->updateUsedorg($org_id);
+
           return view('organisation/view',['organisation_data'=>$orgInfo,'invite_user'=>$invite_user]);
 
       }catch (Exception $e) {
@@ -164,6 +166,13 @@ class OrganizationController extends Controller
           DB::rollback();
 
       }
+    }
+    public function updateUsedorg($org_id)
+    {
+      $db=getenv("DB_DATABASE");
+      $this->org_connection($db);
+      $user_id=Auth::id();
+      User::where('id',$user_id)->update(['used_org'=>$org_id]);
     }
     public function get_db_name($org_id)
     {
@@ -179,7 +188,6 @@ class OrganizationController extends Controller
             $org_db_id=$request->input('org_id');
             $databaseName=$this->get_db_name($org_db_id);
             $connection=$this->org_connection($databaseName);
-
             $org_id=$request->input('id');
             $inputs=$request->all();
             $organisation=Organisation::where('id',$org_id)->get();

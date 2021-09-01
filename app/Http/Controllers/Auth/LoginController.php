@@ -45,7 +45,7 @@ class LoginController extends Controller
     //   {
     //
     //   }
-    //   return redirect('/dashboard');
+    //
     // }
     public function redirectToProvider()
     {
