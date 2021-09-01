@@ -81,7 +81,7 @@
             </form>
 
 
-            <div class="forget-pass pb-2 pt-3">
+            <div class="forget-pass pb-2 pt-4 mt-4">
                   <!--  <span class="or d-block mb-3 text-center">- OR -</span> -->
 
                 <a href="{{ route('login-gmail') }}" class="gmail">

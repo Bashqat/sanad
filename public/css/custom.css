@@ -70,7 +70,7 @@ p.login-box-msg {
 }
 
 .login-card-body .card-body {
-	padding-bottom: 10px;
+	/*padding-bottom: 10px;*/
 }
 
 .login-card-body input.form-control,
@@ -4450,6 +4450,10 @@ input.contact-custom-radio:checked {
     margin: 0 auto;
     display: block;
     margin-bottom: 20px;
+}
+
+.login-card-body .card-body .forget-pass {
+    border-top: 1px solid #cccccc;
 }
 
 /***** Sep-1-css-end-here *****/
