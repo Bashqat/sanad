@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Actor&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -420,15 +421,18 @@ select.form-control.select2 {
 }
 
 .profile-form button[type="submit"] {
-	background: #3da9fc;
+	background: #4b7ddf;
 	color: #fff;
-	border: 1px solid #3da9fc;
+	border: 1px solid #4b7ddf;
+	width: 100%;
+    max-width: 90px;
 	transition: all .3s ease-in-out;
 }
 
 .profile-form button[type="submit"]:hover {
-	background: #fff;
-	color: #3da9fc;
+	background: #fff !important;
+	color: #4b7ddf;
+	border-color:#4b7ddf !important; 
 }
 
 .about-profile strong {
@@ -1442,10 +1446,17 @@ select.form-control {
 	padding-top: 20px;
 }
 
+.profile-form .card {
+    width: 100%;
+    max-width: 940px;
+    margin: 0 auto;
+}
+
 .edit-profile-main-sec {
-	width: 100%;
-	max-width: 1140px;
-	margin: 0 auto;
+	/*width: 100%;*/
+	/*max-width: 1140px;*/
+	/*max-width: 940px;
+	margin: 0 auto;*/
 }
 
 .edit-profile-main-sec .profile-pic-remove {
@@ -4522,6 +4533,84 @@ input.contact-custom-radio:checked {
     margin: 0 auto;
 }
 
+.edit-input-field .thumb_img img {
+    max-width: 140px;
+    height: 140px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.edit-input-field .custom-file label.custom-file-label {
+    display: none;
+}
+
+.edit-input-field .custom-file input {
+    display: none;
+}
+
+.edit-input-field .custom-file {
+    border: 1px solid #4b7ddf;
+    color: #4b7ddf;
+    width: 100%;
+    max-width: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    font-size: 15px;
+    padding: 8px 16px;
+    height: 40px !important;
+}
+
+.edit-input-field a.btn-danger.profile-pic-remove {
+    width: 100%;
+    max-width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-input-field a.btn-danger.profile-pic-remove:hover {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+}
+
+.breadcrumb li.breadcrumb-item {
+    margin: 0px;
+}
+
+.breadcrumb li.breadcrumb-item:first-child {
+    margin-left: 10px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    padding-left: 0px;
+}
+
+.breadcrumb li.breadcrumb-item {
+    margin: 0px;
+    color: #4A4A4A;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.05px;
+    font-family: 'Poppins';
+}
+
+.breadcrumb li.breadcrumb-item a {
+    color: #4A4A4A;
+}
+
+.breadcrumb li.breadcrumb-item.active {
+    color: #0E43FF;
+}
+
+.profile-form nav ol.breadcrumb {
+    width: 100%;
+    max-width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /***** Sep-1-css-end-here *****/
 
 /**Media-Start-Here**/
@@ -5429,9 +5518,9 @@ input.contact-custom-radio:checked {
 	.common-button-site,
 	.card-body .form-horizontal .btn,
 	.edit-button,
-	.del-button {
-		padding: 6px 10px;
-		height: 35px !important;
+	.del-button, .edit-input-field .custom-file {
+		padding: 6px 10px ;
+		min-height: 35px !important;
 	}
 
 	.contact-create-sec .email-field {

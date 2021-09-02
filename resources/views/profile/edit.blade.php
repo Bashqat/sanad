@@ -11,7 +11,7 @@
                         <li class="breadcrumb-item active" aria-current="page">Edit</li>
                     </ol>
                 </nav>
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-body pt-5">
                     <div class="tab-content edit-profile-main-sec">
                         <div class="tab-pane active" id="settings">
@@ -36,6 +36,7 @@
                                       id="userProfile"
                                       accept="image/*">
                                       <label class="custom-file-label" for="userProfile">Choose file</label>
+                                       Upload
                                     </div>
                                     <div class="input-group-append">
                                         <a class="input-group-text btn btn-danger profile-pic-remove" id="removeProfile">Remove</a>
