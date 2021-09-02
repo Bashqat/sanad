@@ -3183,6 +3183,53 @@ form.header-search .input-group input.form-control {
     top: -9px;
 }
 
+
+.header-dropdown img {
+width: 100%;
+max-width: 40px;
+margin: 0 auto;
+}
+
+.header-dropdown img.invoices-img{
+	    max-width: 30px;
+}
+
+.header-dropdown span {
+color: #000000;
+font-size: 12px;
+font-weight: 500;
+font-family: 'Poppins';
+margin-top: 2px;
+text-align: center;
+}
+
+.dropdown-menu.header-dropdown {
+    width: 100%;
+    min-width: 300px;
+    padding: 0px;
+    margin-top: 34px;
+}
+
+.dropdown-menu.header-dropdown.show {
+    border-color: #4b7ddf;
+}
+
+.dropdown-menu.header-dropdown .triangle-table-dropdown {
+    width: 13px;
+    height: 13px;
+    top: -17px;
+    left: 35px;
+}
+
+.dropdown-menu.header-dropdown .triangle-table-dropdown, .dropdown-menu.header-dropdown .triangle-table-dropdown:before, .dropdown-menu.header-dropdown .triangle-table-dropdown:after {
+    width: 13px;
+    height: 13px;
+}
+
+.dropdown-menu.header-dropdown a.dropdown-item:hover {
+    background: #fff;
+}
+
 /***** Header-sec-css-end-here *****/
 
 /***** Aug-11-css-end-here *****/
@@ -4611,6 +4658,10 @@ input.contact-custom-radio:checked {
     margin-right: auto;
 }
 
+.org-create-table .address-city-post-code:first-of-type {
+    margin-bottom: 16px;
+}
+
 /***** Sep-1-css-end-here *****/
 
 /**Media-Start-Here**/
@@ -4688,6 +4739,14 @@ input.contact-custom-radio:checked {
 
 	.deshbord-sec .card.deshbord-first-login {
 	    padding: 70px 0;
+	}
+
+	.header-dropdown img {
+	    max-width: 60px;
+	}
+
+	.header-dropdown img.invoices-img{
+	    max-width: 40px;
 	}
 
 }
