@@ -155,7 +155,7 @@ if(!$org_list->isEmpty())
 																							<!-- <li><a class="dropdown-item triangle" href="/organisation/{{ $org_id }}/user-management">User</a></li> -->
 																					<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/user-management">User Management</a></li>
 																					<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/smtp">Email Setting</a></li>
-																					<li><a class="dropdown-item" href="">Contact</a></li>
+																					<li><a class="dropdown-item" href="/organisation/{{ $org_id }}/contact">Contact</a></li>
 																					<li><a class="dropdown-item" href="/organisation/{{$org_id}}/security">Security</a></li>
 																					<li><a class="dropdown-item" href="#">Account setting</a></li>
 																					<li><a class="dropdown-item" href="#">Template Setting</a></li>
@@ -233,7 +233,7 @@ if(!$org_list->isEmpty())
 
 									<div class="triangle-table-dropdown"></div>
 										<div class="d-flex align-items-center">
-												<a href="/organisation/{{ $org_id }}/contact" class="dropdown-item d-flex flex-column p-0">
+												<a href="" class="dropdown-item d-flex flex-column p-0">
 													 <img src="/images/site-images/contact-dropdown.svg" class="img-fluid">
 																			<span>Contact</span>
 																		</a>
