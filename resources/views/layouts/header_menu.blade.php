@@ -45,19 +45,26 @@
  ?>
 
 @php
-$new_org=$org_list->toArray();
-$key = array_search($org_id, array_column($new_org, 'id'));
-array_unshift($new_org,$new_org[$key]);
-unset($new_org[$key+1]);
-$orglist=$new_org;
-$org_list=[];
-if(!empty($orglist))
+
+if(!$org_list->isEmpty())
 {
-	foreach($orglist as $list)
+	$new_org=$org_list->toArray();
+	$key = array_search($org_id, array_column($new_org, 'id'));
+	array_unshift($new_org,$new_org[$key]);
+	unset($new_org[$key+1]);
+	$orglist=$new_org;
+	$org_list=[];
+	if(!empty($orglist))
 	{
-		$org_list[]=$list;
+		foreach($orglist as $list)
+		{
+			$org_list[]=$list;
+		}
 	}
 }
+
+
+
 @endphp
 
 <nav class="main-header navbar navbar-expand navbar-white navbar-light py-0">
