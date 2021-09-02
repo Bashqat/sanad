@@ -66,7 +66,7 @@ class OrganizationController extends Controller
     public function store(Request $request)
     {
         try{
-
+                
                 $obj=new QueryController();
                 $superAdminId=Auth::id();
                 $org_name=$request->input('display_name');
@@ -201,7 +201,7 @@ class OrganizationController extends Controller
             else {
               $inputs['logo']=$org_logo;
             }
-            
+
 
             if(Organisation::where('id', $org_id)->update(Arr::except($inputs, ['_token','org_id'])))
                        {

@@ -45,6 +45,7 @@
                                       id="userProfile"
                                       accept="image/*">
                                       <label class="custom-file-label" for="userProfile">Choose file</label>
+                                      Upload
                                     </div>
                                     <div class="input-group-append">
                                         <a class="input-group-text btn btn-danger profile-pic-remove" id="removeProfile">Remove</a>

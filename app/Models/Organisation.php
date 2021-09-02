@@ -33,4 +33,7 @@ class Organisation extends Model
     'user_defined',
     'logo'
   ];
+  protected $casts = [
+      'address' => 'array',
+    ];
 }

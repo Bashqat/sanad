@@ -49,7 +49,7 @@ class QueryController extends Controller
             `type_of_business` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `business_registration_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-            `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+            `address` json DEFAULT NULL,
             `current_date_utc_format` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `fax` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

@@ -131,10 +131,22 @@
                         <!-- An unexamined life is not worth living. - Socrates -->
                     <div class="form-group row">
                         <label for="address" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organization Address </label>
-                        <div class="col-lg-9 col-md-9 col-sm-9">
-                            <input type="text" name="address" class="form-control
-                            " id="address " placeholder="Enter Address" value="{{ isset($organisation_data[0]->address) ? $organisation_data[0]->address : ''}}">
+
+                        <div class="col-lg-9 col-md-9 col-sm-9 contact-address-fields">
+                            <input type="text" name="address[address1]" class="form-control
+                            " id="address1" placeholder="Address" value="{{ isset($organisation_data[0]->address['address1']) ? $organisation_data[0]->address['address1'] : ''}}">
+                            <input type="text" name="address[address2]" class="form-control
+                            " id="address " placeholder="Address" value="{{ isset($organisation_data[0]->address['address2']) ? $organisation_data[0]->address['address2'] : ''}}">
+                            <div class="address-city-post-code">
+                                <input type="text" name="address[city]" class="form-control" placeholder="City" value="{{ isset($organisation_data[0]->address['city']) ? $organisation_data[0]->address['city'] : ''}}">
+                                <input type="text" name="address[region]" class="form-control" placeholder="Region" value="{{ isset($organisation_data[0]->address['region']) ? $organisation_data[0]->address['region'] : ''}}">
+                            </div>
+                            <div class="address-city-post-code">
+                              <input type="text" name="address[zip_code]" class="form-control" placeholder="Zipcode" value="{{ isset($organisation_data[0]->address['zip_code']) ? $organisation_data[0]->address['zip_code'] : ''}}">
+                              <input type="text" name="address[po_box]" class="form-control" placeholder="Po box" value="{{ isset($organisation_data[0]->address['po_box']) ? $organisation_data[0]->address['po_box'] : ''}}">
+                            </div>
                         </div>
+
                     </div>
 
 

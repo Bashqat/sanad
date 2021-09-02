@@ -52,7 +52,7 @@
       </div> -->
     </div>
     <div class="form-group row contact-row">
-      <label for="name_arabic" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Contact  name in other language </label>
+      <label for="name_arabic" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Contact name in other language <span style="color:red;">*</span> </label>
       <div class="col-lg-9 col-md-9 col-sm-8">
         <div class="person-contact name-contact-field">
           <input type="text" name="contact[first_name_arabic]" class="form-control" placeholder=" First Name" value="{{ (isset($firstname_arabic))?$firstname_arabic:'' }}" required="">

@@ -314,11 +314,11 @@ if(!$org_list->isEmpty())
 	  return false;
 	});
 
-	// setInterval(function() {
-	//
-	// 		if ( $(".alert").hasClass("alert-danger") || $(".alert").hasClass("alert-success") ) {
-	//       $('.alert').hide();
-	// 		}
-  //   }, 5000);
+	setInterval(function() {
+
+			if ( $(".alert").hasClass("alert-danger") || $(".alert").hasClass("alert-success") ) {
+	      $('.alert').hide();
+			}
+    }, 5000);
 
 </script>
