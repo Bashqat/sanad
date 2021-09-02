@@ -11,7 +11,8 @@ $( document ).ready(function() {
     //console.log(form_data);
     $(form_arry_data).each(function(i, field){
         console.log(field.name);
-        if(field.value=="")
+        var strlength=field.value.trim().length;
+        if(field.value==="" || strlength==0)
         {
             $('#'+field.name+"_error").html('This field is required');
             form_submit='no';
@@ -45,6 +46,11 @@ $( document ).ready(function() {
                     $('.msg_response').show();
 
               }
+              setInterval(function() {
+            		if ( $(".alert").hasClass("alert-danger") || $(".alert").hasClass("alert-success") ) {
+            	      $('.alert').hide();
+            			}
+                }, 5000);
            }
         });
         return false;

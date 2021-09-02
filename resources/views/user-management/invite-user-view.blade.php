@@ -96,9 +96,19 @@
 											<div class="form-group">
 											<select data-placeholder="Select" name="group_contact_access[]" multiple class="chosen-select" tabindex="8">
 												<option value=""></option>
-												<option>All Conacts</option>
-												<option>All Groups</option>
-												<option>All</option>
+												<option value="all_contacts">All Conacts</option>
+												@if(!empty($contacts))
+												@foreach($contacts as $contact)
+													<option style="padding-left:20px;" value="{{$contact['id']}}">{{$contact['name']}}</option>
+												@endforeach
+												@endif
+													<option value="all_groups">All Groups</option>
+												@if(!empty($groups))
+												@foreach($groups as $group)
+													<option style="padding-left:20px;" value="{{$group['id']}}">{{$group['title']}}</option>
+												@endforeach
+												@endif
+												<option value="all">All</option>
 
 											</select>
 											</div>

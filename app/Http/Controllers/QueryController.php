@@ -54,6 +54,7 @@ class QueryController extends Controller
             `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `fax` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+            `tax_reg_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `website` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `currency` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
             `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

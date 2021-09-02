@@ -26,6 +26,7 @@ class Organisation extends Model
     'fax',
     'mobile',
     'website',
+    'tax_reg_number',
     'email',
     'currency',
     'status',
