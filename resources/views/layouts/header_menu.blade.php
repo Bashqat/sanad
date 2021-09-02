@@ -248,7 +248,7 @@ if(!$org_list->isEmpty())
 									</div>
 									<div class="d-flex align-items-center mt-2 pb-3">
 																		<a href="#" class="dropdown-item d-flex flex-column p-0">
-													 <img src="/images/site-images/invoices-dropdown.svg" class="img-fluid invoices-img">
+													 <img src="/images/site-images/Invoices-dropdown.svg" class="img-fluid invoices-img">
 																			<span>Invoices</span>
 																		</a>
 																		<a href="#" class="dropdown-item d-flex flex-column p-0">
@@ -256,7 +256,7 @@ if(!$org_list->isEmpty())
 																			<span>Bills</span>
 																		</a>
 																		<a href="#" class="dropdown-item d-flex flex-column p-0">
-													 <img src="/images/site-images/support-dropdown.svg" class="img-fluid">
+													 <img src="/images/site-images/Support-dropdown.svg" class="img-fluid">
 																			<span>Support</span>
 																		</a>
 									</div>
