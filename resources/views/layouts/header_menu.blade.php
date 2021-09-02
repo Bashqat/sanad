@@ -207,13 +207,49 @@ if(!$org_list->isEmpty())
 									<!-- <i class="far fa-question-circle"></i> -->
 									<img src="/images/site-images/grid_round.svg">
 								</a>
-								<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+								<div class="dropdown-menu dropdown-menu-sm dropdown-menu-left header-dropdown">
+									
+									<div class="triangle-table-dropdown"></div>
+										<div class="d-flex align-items-center">
+												<a href="#" class="dropdown-item d-flex flex-column p-0">
+													 <img src="/images/site-images/contact-dropdown.svg" class="img-fluid">
+																			<span>Contact</span>
+																		</a>
+											<a href="#" class="dropdown-item d-flex flex-column p-0">
+													  <img src="/images/site-images/files-dropdown.svg">
+																			<span>Files</span>
+																		</a>
+											<a href="#" class="dropdown-item d-flex flex-column p-0">
+													  <img src="/images/site-images/chat-dropdown.svg">
+																			<span>Chat</span>
+																		</a>
+									</div>
+									<div class="d-flex align-items-center mt-2">
+																		<a href="#" class="dropdown-item d-flex flex-column p-0">
+													 <img src="/images/site-images/invoices-dropdown.svg" class="img-fluid invoices-img">
+																			<span>Invoices</span>
+																		</a>
+																		<a href="#" class="dropdown-item d-flex flex-column p-0">
+													 <img src="/images/site-images/bills-dropdown.svg" class="img-fluid">
+																			<span>Bills</span>
+																		</a>
+																		<a href="#" class="dropdown-item d-flex flex-column p-0">
+													 <img src="/images/site-images/support-dropdown.svg" class="img-fluid">
+																			<span>Support</span>
+																		</a>
+									</div>
+									
+									
+									
+<!--
+									
 									<a href="#" class="dropdown-item">
 										<span>Help Center</span>
 									</a>
 									<a href="#" class="dropdown-item">
 										<span>Submit Support Ticket</span>
 									</a>
+-->
 								</div>
 							</li>
 							<li class="nav-item dropdown">
@@ -261,6 +297,7 @@ if(!$org_list->isEmpty())
 								</a>
 								<ul class="dropdown-menu dropdown-menu-sm w-auto dropdown-menu-right super-admin">
 									<!-- Menu Footer-->
+									<div class="triangle-table-dropdown"></div>
 									<a class="dropdown-item">
 										@if(Auth::user()->avatar!="")
 										<img src="@if (filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL)){{ Auth::user()->avatar }}@else/images/profile/{{ Auth::user()->avatar }}@endif" class="user-image img-circle elevation-2" alt="User Image">
