@@ -90,9 +90,9 @@ if(!$org_list->isEmpty())
 
 																@if((empty($org_list)) && !preg_match('#[0-9]#',$org_id))
 																		  No Organisation exist
-																@elseif(!empty($org_list) && Auth::user()->role==1 )
-																				Select
-																@elseif(Auth::user()->role==2 && isset($org_list[0]) && !empty($org_list[0]) && !preg_match('#[0-9]#',$org_id))
+																@elseif(empty($org_list))
+																				Select Organisation
+																@elseif(Auth::user()->role==2 && isset($org_list[0]) && !empty($org_list) && !preg_match('#[0-9]#',$org_id))
 																			{{$org_list[0]['org_name']}}
 																@endif
 																@foreach ( $org_list as $list )

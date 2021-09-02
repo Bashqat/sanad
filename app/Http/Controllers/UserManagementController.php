@@ -11,6 +11,8 @@ use App\Http\Controllers\OrganizationController;
 use Illuminate\Validation\Rule;
 use App\Lib\Email;
 use App\Models\Org_setting;
+use App\Models\Group;
+use App\Models\Contact;
 use URL;
 
 class UserManagementController extends Controller
@@ -154,7 +156,13 @@ class UserManagementController extends Controller
     }
     public function inviteUser(Request $request,$org_id)
     {
-      return view('user-management.invite-user-view',compact('org_id'));
+      $obj=new OrganizationController();
+      $databaseName=$obj->get_db_name($org_id);
+      $connection=$obj->org_connection($databaseName);
+      $groups=Group::get()->toArray();
+      $contacts=Contact::get()->toArray();
+
+      return view('user-management.invite-user-view',compact('org_id','groups','contacts'));
     }
     public function inviteUserSave(Request $request)
     {
@@ -307,7 +315,7 @@ class UserManagementController extends Controller
                 ];
             }
             $id=$request->id;
-            
+
 
             User::where('id',$id)->update($data);
 

@@ -26,10 +26,11 @@ class OrganizationController extends Controller
     public function index()
     {
 
-        $organisations=MasterOrganisation::with('user_detail')->where('superadmin_id','=',Auth::id())->get();
+        $organisations=MasterOrganisation::with('user_detail')->where('superadmin_id','=',Auth::id())->orderBy('id', 'DESC')->get();
+
         if(Auth::user()->role==1)
           {
-            $organisations=MasterOrganisation::with('user_detail')->get();
+            $organisations=MasterOrganisation::with('user_detail')->orderBy('id', 'DESC')->get();
           }
         $user=User::where('id',Auth::id())->get();
         return view('organisation.index', compact('organisations'));
@@ -38,12 +39,8 @@ class OrganizationController extends Controller
     public function create()
     {
         $timezone_list =Timezonelist::create('current_date_utc_format', null, 'id="timezone" class="form-control select2"');
-
-        //print_r($timezone_list);exit;
         $countries=CountryListFacade::getList('en');
-        $currency=['USD','EUR','JPY','GBP','CHF','CAD','AUD','ZAR'];
-
-
+        $currency=['USD','EUR','JPY','GBP','CHF','CAD','AUD','ZAR','SAR', 'BHD', 'OMR', 'AED', 'KWD'];
         $organisationType=$this->organizationTypes();
         $busType=$this->businessTypes();
 
@@ -124,7 +121,7 @@ class OrganizationController extends Controller
     public function edit($org_id)
     {
         try{
-            $currency=['USD','EUR','JPY','GBP','CHF','CAD','AUD','ZAR'];
+            $currency=['USD','EUR','JPY','GBP','CHF','CAD','AUD','ZAR','SAR', 'BHD', 'OMR', 'AED', 'KWD'];
             $orgData=MasterOrganisation::where('id','=',$org_id)->get();
             $databaseName=$org_id.'_'.$orgData[0]->org_db_name;
             $countries=CountryListFacade::getList('en');
@@ -204,7 +201,7 @@ class OrganizationController extends Controller
             else {
               $inputs['logo']=$org_logo;
             }
-
+            
 
             if(Organisation::where('id', $org_id)->update(Arr::except($inputs, ['_token','org_id'])))
                        {
