@@ -117,5 +117,6 @@ $( document ).ready(function() {
           $('#role').val(setRole);
         });
         var organisation_info=$('#organisation').DataTable();
+        var user_mamnagement=$('#user_mamnagement').DataTable();
 
     });
