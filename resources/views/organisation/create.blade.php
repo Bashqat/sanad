@@ -6,14 +6,14 @@
         <div class="row">
             <!-- /.col -->
             <div class="col-md-12">
-                <div class="card">
+                <div class="card org-create-table">
                     {{-- <div class="card-header p-2">
                     <ul class="nav nav-pills justify-content-start px-3">
                         <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Add Organization</a></li>
                     </ul>
                     </div><!-- /.card-header --> --}}
                     <div class="card-body">
-                    <div class="tab-content org-create-table">
+                    <div class="tab-content">
                       <img class="loader" style="display:none" src="/images/loader.gif">
                         <div class="tab-pane active" id="settings">
                         <form class="form-horizontal" id="org_new" method="POST" action="{{ !empty($organisation_data) ? route('org_update') : route('org_store')}}" enctype="multipart/form-data">
@@ -129,7 +129,7 @@
 
 
                         <!-- An unexamined life is not worth living. - Socrates -->
-                    <div class="form-group row">
+                    <div class="form-group row contact-row">
                         <label for="address" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organization Address </label>
 
                         <div class="col-lg-9 col-md-9 col-sm-9 contact-address-fields">
@@ -237,13 +237,18 @@
                 </div>
 
 
-
-                            <div class="form-group row">
-                                <div class="offset-sm-2 col-sm-10 text-right">
-                                    <button type="submit" class="btn btn-primary org_submit">Submit</button>
-
-                                </div>
+                        <div class="form-footer">
+                            <div class="form-group row mb-0">
+                                <!-- <div class="row"> -->
+                                     <div class="col-6 text-left p-0">
+                                        <button type="submit" class="btn org_cancle btn-cancle">Cancle</button>
+                                    </div>  
+                                    <div class="col-6 text-right p-0">
+                                        <button type="submit" class="btn btn-primary org_submit">Submit</button>
+                                    </div>   
+                               <!--  </div> -->
                             </div>
+                        </div>
                         </form>
                 </div>
                         <!-- /.tab-pane -->

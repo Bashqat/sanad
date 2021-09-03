@@ -1447,7 +1447,7 @@ select.form-control {
 
 .org-create-table {
 	width: 100%;
-	max-width: 1140px;
+	max-width: 940px;
 	margin: 0 auto;
 	padding-top: 20px;
 }
@@ -4858,6 +4858,27 @@ input.contact-custom-radio:checked {
     padding: 1px;
 }
 
+.form-footer{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    padding: 20px;
+    z-index: 9;
+}
+
+.form-footer .form-group {
+    width: 100%;
+    max-width: 940px;
+    margin: 0 auto;
+}
+
+.form-footer .btn-cancle {
+    border-color: #4b7ddf;
+    color: #4b7ddf;
+}
+
 /***** Sep-1-css-end-here *****/
 
 /**Media-Start-Here**/
@@ -5018,7 +5039,7 @@ input.contact-custom-radio:checked {
 	    padding-bottom: 7px !important;
 	}
 
-	.contact-create-sec .form-group.row.contact-row {
+	.contact-create-sec .form-group.row.contact-row, .org-create-table .form-group.row.contact-row {
 	    align-items: start;
 	}
 
@@ -5676,6 +5697,14 @@ input.contact-custom-radio:checked {
 	.custom-pagination .dataTables_filter {
 	    margin-bottom: 20px;
 	    margin-top: 20px;
+	}
+
+	.address-city-post-code input:last-child{
+		max-width: 100%;
+	}
+
+	.address-city-post-code:last-child input:last-child{
+		margin-bottom: 0;
 	}
 
 }
