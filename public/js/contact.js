@@ -236,7 +236,7 @@ $(document).ready(function(){
                 <div class="form-group row">
                     <label for="title" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Title </label>
                     <div class="col-lg-9 col-md-9 col-sm-8">
-                        <input type="text" name="website_information[${count}][title]" class="form-control" placeholder="Enter Title" value="" required>
+                        <input type="text" name="website_information[${count}][title]" class="form-control" placeholder="Enter Title" value="" >
                     </div>
                 </div>
                 <div class="form-group row">
@@ -1575,213 +1575,213 @@ $(document).ready(function(){
 
       })
       $(document).on('click', '.emergency_contact', function () {
-            var count = parseInt($(this).attr('data-count')) + 1;
-            $(this).attr('data-count', count);
-            //var formCount = $('#add_person').attr('data-count');
-            var field = `  <div id="emergency-contact${count}">
-        <div class="form-group row address-contact-row">
-          <label for="address" class="col-lg-12 col-md-12 col-sm-12 col-form-label">Emergency Contact Information ( ${count+1} )
-          <a href="javascript:void(0)" class="removeEle" data-id="emergency-contact${count}" data-btn="add_mobile">Remove</a>
-          </label>
-        </div>
-        <div class="form-group row ">
-          <label for="email" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Name
-
-          </label>
-
-          <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-              <input type="text" name="contact[emergency_contact][${count}][name]" class="form-control" placeholder="Name" value="">
-
-
-          </div>
-        </div>
-        <div class="form-group row ">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Relation </label>
-          <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-              <input type="text" name="contact[emergency_contact][${count}][relation]" class="form-control" placeholder="Relation" value="">
-
-          </div>
-        </div>
-        <div class="form-group row contact-row">
-          <label for="land_line" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Land Line </label>
-
-          <div class="col-lg-8 col-md-8 col-sm-8 person-sub-contact">
-            <input type="text" name="contact[emergency_contact][${count}][country_code]" class="form-control col-md-3" placeholder="Country Code" value="">
-            <input type="text" name="contact[emergency_contact][${count}][area]" class="form-control col-md-3" placeholder="Area" value="">
-            <input type="tel" name="contact[emergency_contact][${count}][number]" class="form-control col-md-3" placeholder="Number" value="">
-            <input type="text" name="contact[emergency_contact][${count}][extention]" class="form-control col-md-3" placeholder="Extention" value="">
-          </div>
-        </div>
-        <div class="form-group row contact-row" id="mobile-field">
-          <label for="mobile" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Mobile
-           </label>
-          <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
-            <select name="contact[emergency_contact][${count}][mobile_type]" class="form-control select2 col-md-3 select-input-field m-0" style="width: 100%;">
-              <option value="">Select Type</option>
-              <option value="main" >Main</option>
-              <option value="work" >Work</option>
-              <option value="whatsapp" >Whatsapp</option>
-            </select>
-            <input type="text" name="contact[emergency_contact][${count}][mobile_area]" class="form-control col-md-3" placeholder="Area" value="">
-            <input type="tel" name="contact[mobile][0][number]" class="form-control col-md-3" placeholder="Number" value="">
-            <input type="tel" name="contact[emergency_contact][${count}][mobile_extention]" class="form-control col-md-3" placeholder="Extention" value="">
-          </div>
-
-        </div>
-        <div class="form-group row ">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
-          <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-
-              <input type="email" name="contact[emergency_contact][${count}][relation]" class="form-control" placeholder="Email" value="">
-
-
-
-          </div>
-        </div>
-      </div>
-            `;
-            $(field).insertBefore(this);
-        });
-      $(document).on('click', '.dependent_info', function () {
-        var count = parseInt($(this).attr('data-count')) + 1;
-        $(this).attr('data-count', count);
-        //var formCount = $('#add_person').attr('data-count');
-        var field = `  <div id="dependent_info${count}">
-        <div class="form-group row address-contact-row">
-          <label for="address" class="col-lg-12 col-md-12 col-sm-12 col-form-label">Dependent Information ( ${count+1} )
-          <a href="javascript:void(0)" class="removeEle" data-id="dependent_info${count}" data-btn="add_mobile">Remove</a>
-          </label>
-        </div>
-
-        <div class="form-group row">
-            <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
-            <div class="col-lg-9 col-md-9 col-sm-8">
-                <div class="person-contact name-contact-field ">
-                    <input type="text" name="contact[dependent_info][${count}][first_name]" class="form-control " placeholder=" First Name" required="" value="">
-                    <input type="text" name="contact[dependent_info][${count}][last_name]" class="form-control " placeholder=" Last Name" required="" value="">
-                </div>
+                var count = parseInt($(this).attr('data-count')) + 1;
+                $(this).attr('data-count', count);
+                //var formCount = $('#add_person').attr('data-count');
+                var field = `  <div id="emergency-contact${count}">
+            <div class="form-group row address-contact-row">
+              <label for="address" class="col-lg-12 col-md-12 col-sm-12 col-form-label">Emergency Contact Information ( ${count+1} )
+              <a href="javascript:void(0)" class="removeEle" data-id="emergency-contact${count}" data-btn="add_mobile">Remove</a>
+              </label>
             </div>
-        </div>
+            <div class="form-group row ">
+              <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Name
 
-        <div class="form-group row">
-            <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
-            <div class="col-lg-9 col-md-9 col-sm-8">
-                <div class="person-contact name-contact-field ">
-                    <input type="text" name="contact[dependent_info][${count}][relation]" class="form-control " placeholder="Relation" required="" value="">
-                    <select name="contact[dependent_info][${count}][gender]" class="form-control select2  select-input-field" style="width: 100%;">
-                    <option value="">Gender</option>
-                    <option value="male" >Male</option>
-                    <option value="female" >Female</option>
-                    <option value="other">Other</option>
-                    </select>
-                </div>
+              </label>
+
+              <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+                  <input type="text" name="contact[emergency_contact][${count}][name]" class="form-control" placeholder="Name" value="">
+
+
+              </div>
             </div>
-        </div>
+            <div class="form-group row ">
+              <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Relation </label>
+              <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+                  <input type="text" name="contact[emergency_contact][${count}][relation]" class="form-control" placeholder="Relation" value="">
 
-        <div class="form-group row ">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Relation </label>
-          <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-              <input type="text" name="contact[dependent_info][${count}][relation]" class="form-control" placeholder="Relation" value="">
+              </div>
+            </div>
+            <div class="form-group row contact-row">
+              <label for="land_line" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Land Line </label>
+
+              <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+                <input type="text" name="contact[emergency_contact][${count}][country_code]" class="form-control col-md-3" placeholder="Country Code" value="">
+                <input type="text" name="contact[emergency_contact][${count}][area]" class="form-control col-md-3" placeholder="Area" value="">
+                <input type="tel" name="contact[emergency_contact][${count}][number]" class="form-control col-md-3" placeholder="Number" value="">
+                <input type="text" name="contact[emergency_contact][${count}][extention]" class="form-control col-md-3" placeholder="Extention" value="">
+              </div>
+            </div>
+            <div class="form-group row contact-row" id="mobile-field">
+              <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile
+               </label>
+              <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+                <select name="contact[emergency_contact][${count}][mobile_type]" class="form-control select2 col-md-3 select-input-field m-0" style="width: 100%;">
+                  <option value="">Select Type</option>
+                  <option value="main" >Main</option>
+                  <option value="work" >Work</option>
+                  <option value="whatsapp" >Whatsapp</option>
+                </select>
+                <input type="text" name="contact[emergency_contact][${count}][mobile_area]" class="form-control col-md-3" placeholder="Area" value="">
+                <input type="tel" name="contact[mobile][0][number]" class="form-control col-md-3" placeholder="Number" value="">
+                <input type="tel" name="contact[emergency_contact][${count}][mobile_extention]" class="form-control col-md-3" placeholder="Extention" value="">
+              </div>
+
+            </div>
+            <div class="form-group row ">
+              <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
+              <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+
+                  <input type="email" name="contact[emergency_contact][${count}][relation]" class="form-control" placeholder="Email" value="">
+
+
+
+              </div>
+            </div>
           </div>
-        </div>
+                `;
+                $(field).insertBefore(this);
+            });
+            $(document).on('click', '.dependent_info', function () {
+                var count = parseInt($(this).attr('data-count')) + 1;
+                $(this).attr('data-count', count);
+                //var formCount = $('#add_person').attr('data-count');
+                var field = `  <div id="dependent_info${count}">
+                <div class="form-group row address-contact-row">
+                  <label for="address" class="col-lg-12 col-md-12 col-sm-12 col-form-label">Dependent Information ( ${count+1} )
+                  <a href="javascript:void(0)" class="removeEle" data-id="dependent_info${count}" data-btn="add_mobile">Remove</a>
+                  </label>
+                </div>
 
-        <div class="form-group row contact-row">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Government id </label>
-              <div class="col-lg-9 col-md-9 col-sm-8">
-                    <div class="date-contact-fields">
-                          <div class="contact-address-fields mb-lg-0 mb-3">
-                              <input type="text" name="contact[dependent_info][${count}][gov_id]" class="form-control" placeholder="Government Id" value="">
+                <div class="form-group row">
+                    <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                        <div class="person-contact name-contact-field ">
+                            <input type="text" name="contact[dependent_info][${count}][first_name]" class="form-control " placeholder=" First Name" required="" value="">
+                            <input type="text" name="contact[dependent_info][${count}][last_name]" class="form-control " placeholder=" Last Name" required="" value="">
+                        </div>
+                    </div>
+                </div>
 
-                            </div>
+                <div class="form-group row">
+                    <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                        <div class="person-contact name-contact-field ">
+                            <input type="text" name="contact[dependent_info][${count}][relation]" class="form-control " placeholder="Relation" required="" value="">
+                            <select name="contact[dependent_info][${count}][gender]" class="form-control select2  select-input-field" style="width: 100%;">
+                            <option value="">Gender</option>
+                            <option value="male" >Male</option>
+                            <option value="female" >Female</option>
+                            <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-                            <div class="contact-address-fields d-flex mb-lg-0 mb-3 align-items-sm-start align-items-center">
-                                 <label for="email" class="col-form-label pr-2">Issue </label>
-                                <input type="date" name="contact[dependent_info][${count}][gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
-                              </div>
-
-
-                              <div class="contact-address-fields d-flex align-items-sm-start align-items-center">
-                                  <label for="email" class="col-form-label pr-2">Expiry </label>
-                                  <input type="date" name="contact[dependent_info][${count}][gov_id_expiry]" class="form-control" placeholder="Work Grade" value="">
-
-                                </div>
+                <div class="form-group row ">
+                  <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Relation </label>
+                  <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+                      <input type="text" name="contact[dependent_info][${count}][relation]" class="form-control" placeholder="Relation" value="">
                   </div>
-            </div>
+                </div>
+
+                <div class="form-group row contact-row">
+                  <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Government id </label>
+                      <div class="col-lg-9 col-md-9 col-sm-8">
+                            <div class="date-contact-fields">
+                                  <div class="contact-address-fields mb-lg-0 mb-3">
+                                      <input type="text" name="contact[dependent_info][${count}][gov_id]" class="form-control" placeholder="Government Id" value="">
+
+                                    </div>
+
+                                    <div class="contact-address-fields d-flex mb-lg-0 mb-3 align-items-sm-start align-items-center">
+                                         <label for="email" class="col-form-label pr-2">Issue </label>
+                                        <input type="date" name="contact[dependent_info][${count}][gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
+                                      </div>
 
 
-        </div>
+                                      <div class="contact-address-fields d-flex align-items-sm-start align-items-center">
+                                          <label for="email" class="col-form-label pr-2">Expiry </label>
+                                          <input type="date" name="contact[dependent_info][${count}][gov_id_expiry]" class="form-control" placeholder="Work Grade" value="">
 
-
-        <div class="form-group row contact-row">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Passport Detail </label>
-             <div class="col-lg-9 col-md-9 col-sm-8">
-                    <div class="date-contact-fields">
-                          <div class="contact-address-fields mb-lg-0 mb-3">
-                              <input type="text" name="contact[dependent_info][${count}][passport_gov_id]" class="form-control" placeholder="e.g 34345" value="">
-
-                            </div>
-
-                            <div class="contact-address-fields d-flex mb-lg-0 mb-3 align-items-sm-start align-items-center">
-                                <label for="email" class="col-form-label pr-2">Issue </label>
-                                <input type="date" name="contact[dependent_info][${count}][passport_gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
-                              </div>
-
-                              <div class="contact-address-fields d-flex align-items-sm-start align-items-center">
-                                  <label for="email" class="col-form-label pr-2">Expiry </label>
-                                  <input type="date" name="contact[dependent_info][${count}][passport_gov_id_expiry]" class="form-control" placeholder="Work Grade" value="">
-
-                                </div>
-                 </div>
-            </div>
-        </div>
-
-
-        <div class="form-group row contact-row" id="mobile-field">
-          <label for="mobile" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Mobile
-           </label>
-          <div class="col-lg-8 col-md-8 col-sm-8 person-sub-contact">
-            <select name="contact[dependent_info][${count}][mobile_type]" class="form-control select2 col-md-3 select-input-field" style="width: 100%;">
-              <option value="">Select Type</option>
-              <option value="main" >Main</option>
-              <option value="work" >Work</option>
-              <option value="whatsapp" >Whatsapp</option>
-            </select>
-            <input type="text" name="contact[dependent_info][${count}][mobile_area]" class="form-control col-md-3" placeholder="Area" value="">
-            <input type="tel" name="contact[dependent_info][${count}][mobile_number]" class="form-control col-md-3" placeholder="Number" value="">
-            <input type="tel" name="contact[dependent_info][${count}][mobile_extention]" class="form-control col-md-3" placeholder="Extention" value="">
-          </div>
-
-        </div>
-        <div class="form-group row ">
-          <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
-          <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
-              <input type="email" name="contact[dependent_info][${count}][relation]" class="form-control" placeholder="Email" value="">
-          </div>
-        </div>
-
-      <div class="form-group row contact-row contact-dof-row">
-        <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Notes</label>
-           <div class="col-lg-9 col-md-9 col-sm-8">
-                    <div class="date-contact-fields">
-                         <div class="contact-address-fields mb-lg-0 mb-3">
-                              <textarea name="contact[dependent_info][${count}][notes]" class="form-control " placeholder=" Notes" required="" ></textarea>
-                        </div>
-                        <div class="contact-address-fields d-flex align-items-sm-start flex-sm-row flex-column">
-                              <label for="name" class="col-form-label pr-2">Attachment</label>
-                            <div class="custom-file">
-                              <input type="file" name="contact[dependent_info][${count}][attachment][]" class="form-control custom-file-input" id="attachment" accept="image/*, .pdf, .doc" multiple>
-                              <label class="custom-file-label" for="attachment">Choose file</label>
+                                        </div>
                           </div>
-                        </div>
-               </div>
-          </div>
+                    </div>
 
-      </div>
 
-      </div>
-            `;
-        $(field).insertBefore(this);
-      });
+                </div>
+
+
+                <div class="form-group row contact-row">
+                  <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Passport Detail </label>
+                     <div class="col-lg-9 col-md-9 col-sm-8">
+                            <div class="date-contact-fields">
+                                  <div class="contact-address-fields mb-lg-0 mb-3">
+                                      <input type="text" name="contact[dependent_info][${count}][passport_gov_id]" class="form-control" placeholder="e.g 34345" value="">
+
+                                    </div>
+
+                                    <div class="contact-address-fields d-flex mb-lg-0 mb-3 align-items-sm-start align-items-center">
+                                        <label for="email" class="col-form-label pr-2">Issue </label>
+                                        <input type="date" name="contact[dependent_info][${count}][passport_gov_id_issue]" class="form-control" placeholder="Work Grade" value="">
+                                      </div>
+
+                                      <div class="contact-address-fields d-flex align-items-sm-start align-items-center">
+                                          <label for="email" class="col-form-label pr-2">Expiry </label>
+                                          <input type="date" name="contact[dependent_info][${count}][passport_gov_id_expiry]" class="form-control" placeholder="Work Grade" value="">
+
+                                        </div>
+                         </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group row contact-row" id="mobile-field">
+                  <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile
+                   </label>
+                  <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
+                    <select name="contact[dependent_info][${count}][mobile_type]" class="form-control select2 col-md-3 select-input-field" style="width: 100%;">
+                      <option value="">Select Type</option>
+                      <option value="main" >Main</option>
+                      <option value="work" >Work</option>
+                      <option value="whatsapp" >Whatsapp</option>
+                    </select>
+                    <input type="text" name="contact[dependent_info][${count}][mobile_area]" class="form-control col-md-3" placeholder="Area" value="">
+                    <input type="tel" name="contact[dependent_info][${count}][mobile_number]" class="form-control col-md-3" placeholder="Number" value="">
+                    <input type="tel" name="contact[dependent_info][${count}][mobile_extention]" class="form-control col-md-3" placeholder="Extention" value="">
+                  </div>
+
+                </div>
+                <div class="form-group row ">
+                  <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
+                  <div class="col-lg-9 col-md-9 col-sm-8 contact-address-fields">
+                      <input type="email" name="contact[dependent_info][${count}][relation]" class="form-control" placeholder="Email" value="">
+                  </div>
+                </div>
+
+              <div class="form-group row contact-row contact-dof-row">
+                <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Notes</label>
+                   <div class="col-lg-9 col-md-9 col-sm-8">
+                            <div class="date-contact-fields">
+                                 <div class="contact-address-fields mb-lg-0 mb-3">
+                                      <textarea name="contact[dependent_info][${count}][notes]" class="form-control " placeholder=" Notes" required="" ></textarea>
+                                </div>
+                                <div class="contact-address-fields d-flex align-items-sm-start flex-sm-row flex-column">
+                                      <label for="name" class="col-form-label pr-2">Attachment</label>
+                                    <div class="custom-file">
+                                      <input type="file" name="contact[dependent_info][${count}][attachment][]" class="form-control custom-file-input" id="attachment" accept="image/*, .pdf, .doc" multiple>
+                                      <label class="custom-file-label" for="attachment">Choose file</label>
+                                  </div>
+                                </div>
+                       </div>
+                  </div>
+
+              </div>
+
+              </div>
+                    `;
+                $(field).insertBefore(this);
+              });
 
       $(document).on('click', '.email_only', function () {
         var count = parseInt($(this).attr('data-count')) + 1;

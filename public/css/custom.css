@@ -432,7 +432,7 @@ select.form-control.select2 {
 .profile-form button[type="submit"]:hover {
 	background: #fff !important;
 	color: #4b7ddf;
-	border-color:#4b7ddf !important; 
+	border-color:#4b7ddf !important;
 }
 
 .about-profile strong {
