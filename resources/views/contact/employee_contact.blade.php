@@ -43,14 +43,7 @@
             @enderror
           </div>
           </div>
-          <!-- <div class="col-lg-4 col-md-4 col-sm-4">
-            <input type="text" name="contact[last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name" required="" value="{{ (isset($lastname))?$lastname:'' }}">
-            @error('contacts.first_name')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-          </div> -->
+
         </div>
         <div class="form-group row contact-row">
           <label for="name_arabic" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Contact  name in other language </label>
@@ -223,7 +216,7 @@
       <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Notes <span style="color:red;">*</span> </label>
       <div class="col-lg-9 col-md-9 col-sm-8">
       <div class="person-contact notes-contact">
-        <textarea name="contact[notes]" class="form-control @error('contacts.notes') is-invalid @enderror" placeholder=" Notes" required="" >{{ (isset($contact[0]->notes))?$contact[0]->notes:'' }}</textarea>
+        <textarea name="contact[notes]" class="form-control @error('contacts.notes') is-invalid @enderror" placeholder=" Notes"  >{{ (isset($contact[0]->notes))?$contact[0]->notes:'' }}</textarea>
         @error('contacts.notes')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -678,19 +671,19 @@
                     <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
                   <div class="col-lg-9 col-md-9 col-sm-8">
                   <div class="person-contact name-contact-field ">
-                    <input type="text" name="contact[dependent_info][0][first_name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" First Name" required="" value="{{(isset($dependent_info['first_name']) && $dependent_info['first_name']!="")? $dependent_info['first_name']:'' }}">
-                    <input type="text" name="contact[dependent_info][0][last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name" required="" value="{{(isset($dependent_info['last_name']) && $dependent_info['last_name']!="")? $dependent_info['last_name']:'' }}">
+                    <input type="text" name="contact[dependent_info][0][first_name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" First Name"  value="{{(isset($dependent_info['first_name']) && $dependent_info['first_name']!="")? $dependent_info['first_name']:'' }}">
+                    <input type="text" name="contact[dependent_info][0][last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name"  value="{{(isset($dependent_info['last_name']) && $dependent_info['last_name']!="")? $dependent_info['last_name']:'' }}">
                   </div>
                   </div>
 
                   <!-- <div class="col-lg-4 col-md-4 col-sm-4">
-                    <input type="text" name="contact[dependent_info][0][last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name" required="" value="{{(isset($dependent_info['last_name']) && $dependent_info['last_name']!="")? $dependent_info['last_name']:'' }}">
+                    <input type="text" name="contact[dependent_info][0][last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name"  value="{{(isset($dependent_info['last_name']) && $dependent_info['last_name']!="")? $dependent_info['last_name']:'' }}">
                   </div> -->
                 </div>
                 <div class="form-group row">
                     <label for="address" class="col-lg-4 col-md-4 col-sm-4 col-form-label"></label>
                   <div class="col-lg-4 col-md-4 col-sm-4">
-                    <input type="text" name="contact[dependent_info][0][relation]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder="Relation" required="" value="{{(isset($dependent_info['relation']) && $dependent_info['relation']!="")? $dependent_info['relation']:'' }}">
+                    <input type="text" name="contact[dependent_info][0][relation]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder="Relation"  value="{{(isset($dependent_info['relation']) && $dependent_info['relation']!="")? $dependent_info['relation']:'' }}">
 
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-4">
@@ -792,7 +785,7 @@
               <div class="form-group row">
                 <label for="name" class="col-lg-4 col-md-4 col-sm-4 col-form-label">Notes </label>
                 <div class="col-lg-4 col-md-4 col-sm-4">
-                  <textarea name="contact[dependent_info][0][notes]" class="form-control @error('contacts.notes') is-invalid @enderror" placeholder=" Notes" required="" >{{(isset($dependent_info['notes']) && $dependent_info['notes']!="")? $dependent_info['notes']:'' }}</textarea>
+                  <textarea name="contact[dependent_info][0][notes]" class="form-control @error('contacts.notes') is-invalid @enderror" placeholder=" Notes"  >{{(isset($dependent_info['notes']) && $dependent_info['notes']!="")? $dependent_info['notes']:'' }}</textarea>
                   @error('contacts.first_name')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -822,19 +815,19 @@
                     <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
                   <div class="col-lg-9 col-md-9 col-sm-8">
                   <div class="person-contact name-contact-field ">
-                    <input type="text" name="contact[dependent_info][0][first_name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" First Name" required="" value="">
-                    <input type="text" name="contact[dependent_info][0][last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name" required="" value="">
+                    <input type="text" name="contact[dependent_info][0][first_name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" First Name"  value="">
+                    <input type="text" name="contact[dependent_info][0][last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name"  value="">
                   </div>
                   </div>
                   <!-- <div class="col-lg-4 col-md-4 col-sm-4">
-                    <input type="text" name="contact[dependent_info][0][last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name" required="" value="">
+                    <input type="text" name="contact[dependent_info][0][last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name"  value="">
                   </div> -->
                 </div>
                 <div class="form-group row contact-row">
                     <label for="address" class="col-lg-3 col-md-3 col-sm-4 col-form-label"></label>
                   <div class="col-lg-9 col-md-9 col-sm-8">
                   <div class="person-contact name-contact-field ">
-                    <input type="text" name="contact[dependent_info][0][relation]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder="Relation" required="" value="">
+                    <input type="text" name="contact[dependent_info][0][relation]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder="Relation"  value="">
                     <select name="contact[dependent_info][0][gender]" class="form-control select2  select-input-field" style="width: 100%;">
                       <option value="">Gender</option>
                       <option value="male" >Male</option>
@@ -964,7 +957,7 @@
                    <div class="col-lg-9 col-md-9 col-sm-8">
                     <div class="date-contact-fields">
                         <div class="contact-address-fields mb-lg-0 mb-3">
-                          <textarea name="contact[dependent_info][0][notes]" class="form-control @error('contacts.notes') is-invalid @enderror" placeholder=" Notes" required="" ></textarea>
+                          <textarea name="contact[dependent_info][0][notes]" class="form-control @error('contacts.notes') is-invalid @enderror" placeholder=" Notes"  ></textarea>
                           @error('contacts.first_name')
                           <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

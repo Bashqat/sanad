@@ -27,14 +27,14 @@
       <label for="name" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Contact name in English <span style="color:red;">*</span> </label>
       <div class="col-lg-9 col-md-9 col-sm-8">
         <div class="person-contact name-contact-field ">
-            <input type="text" name="contact[first_name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" First Name"  value="{{ (isset($firstname))?$firstname:'' }}">
+            <input type="text" name="contact[first_name]" class="form-control @error('contacts.name') is-invalid @enderror" placeholder=" First Name"  value="{{ (isset($firstname))?$firstname:'' }}" required>
             @error('contacts.first_name')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
             </span>
             @enderror
 
-            <input type="text" name="contact[last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name"  value="{{ (isset($lastname))?$lastname:'' }}">
+            <input type="text" name="contact[last_name]" class="form-control @error('contacts.first_name') is-invalid @enderror" placeholder=" Last Name"  value="{{ (isset($lastname))?$lastname:'' }}" required>
             @error('contacts.first_name')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
