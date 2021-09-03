@@ -219,6 +219,12 @@ if(!$org_list->isEmpty())
 											@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
 
 												<!-- <a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item">{{__('language.user_management') }}</a> -->
+												<a href="{{ route('subscription.list') }}" class="dropdown-item">
+																	<span>Subscription and billing</span>
+												</a>
+												<a href="{{ route('users-management.index') }}" class="dropdown-item">
+																	<span>User management</span>
+												</a>
 											@else
 														<a href="{{ route('subscription.list') }}" class="dropdown-item">
 																			<span>Subscription and billing</span>
