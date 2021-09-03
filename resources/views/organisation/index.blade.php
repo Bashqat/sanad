@@ -1,13 +1,13 @@
 @extends('layouts.app')
 <title>Organisation List</title>
 @section('content')
-<div class="card">
-		<div class="card-header">
+<div class="card section-size">
+		<div class="card-header py-4">
 			<h3 class="card-title">Orgnizations</h3>
 			<a class="float-right btn btn-primary common-button-site" href="{{ route('org_create') }}">Add <i class="fa fa-plus ml-1"></i></a>
 		</div>
 	<!-- /.card-header -->
-		<div class="card-body">
+		<div class="card-body custom-pagination">
 			<div class="tabel-scroll-sec">
 				<table id="organisation" class="table table-bordered table-striped">
 					<thead>

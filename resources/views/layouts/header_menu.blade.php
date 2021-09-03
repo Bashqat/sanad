@@ -231,9 +231,10 @@ if(!$org_list->isEmpty())
 								</a>
 								<div class="dropdown-menu dropdown-menu-sm dropdown-menu-left header-dropdown">
 
-									<div class="triangle-table-dropdown"></div>
-										<div class="d-flex align-items-center">
-												<a href="" class="dropdown-item d-flex flex-column p-0">
+									<div class="triangle-table-dropdown1"></div>
+										<div class="d-flex align-items-center mt-2">
+												<a href="/organisation/{{ $org_id }}/contact" class="dropdown-item d-flex flex-column p-0">
+
 													 <img src="/images/site-images/contact-dropdown.svg" class="img-fluid">
 																			<span>Contact</span>
 																		</a>
