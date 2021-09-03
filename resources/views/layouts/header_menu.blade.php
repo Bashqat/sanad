@@ -94,7 +94,7 @@ if(!$org_list->isEmpty())
 																@elseif(empty($org_list))
 																				Select Organisation
 																@elseif(Auth::user()->role==2 && isset($org_list[0]) && !empty($org_list) && !preg_match('#[0-9]#',$org_id))
-																			{{$org_list[0]['org_name']}}
+																			
 																@endif
 															@if(strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
 																	@foreach ( $org_list as $list )
@@ -407,7 +407,6 @@ if(!$org_list->isEmpty())
 	});
 
 	setInterval(function() {
-
 			if ( $(".alert").hasClass("alert-danger") || $(".alert").hasClass("alert-success") ) {
 	      $('.alert').hide();
 			}
