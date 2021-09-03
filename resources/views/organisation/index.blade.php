@@ -37,7 +37,8 @@
 														<a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-v"></i></a>
 														<!--Menu-->
 														<div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);">
-															@if (Auth::user()->role==$organisation->superadmin_id)
+
+															@if (Auth::user()->id==$organisation->superadmin_id)
 																	<a href="{{ route('org_edit', $organisation->id) }}" class="dropdown-item">Edit</a>
 																	<form class="inline-block" action="{{ route('org_delete')}}" method="POST" onsubmit="return confirm('Are you sure?');">
 																			<input type="hidden" name="id" value="{{$organisation->id}}">
