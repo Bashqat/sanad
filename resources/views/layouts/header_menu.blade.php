@@ -105,10 +105,36 @@ if(!$org_list->isEmpty())
 															@else
 																@php
 																	$newstring=ltrim($actual_link, '/');
+																	//echo $newstring;
 
 																	if (strpos($newstring, '/') !== false) {
-																				$menu=explode("/",$newstring);
-																				echo $menu[0].' '.$menu[1];
+																						$menu=explode("/",$newstring);
+																						$new_menu=[];
+																						if(count($menu)>2)
+																						{
+																							for($i=0;$i<'1';$i++)
+																							{
+																								$new_menu[]=$menu[$i];
+																							}
+																							$menu=explode("-",$new_menu[0]);
+																							if(count($menu)>1)
+																							{
+																								echo $menu[0].' '.$menu[1];
+																							}
+																							else
+																							{
+																								echo $menu[0];
+																							}
+
+
+
+																				}
+																				else
+																				{
+																					echo $menu[0].' '.$menu[1];
+																				}
+
+
 																		}
 																		else if (strpos($newstring, '-') !== false) {
 																			    $menu=explode("-",$newstring);
@@ -193,6 +219,12 @@ if(!$org_list->isEmpty())
 											@if (strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
 
 												<!-- <a href="/organisation/{{ $org_id }}/user-management" class="dropdown-item">{{__('language.user_management') }}</a> -->
+												<a href="{{ route('subscription.list') }}" class="dropdown-item">
+																	<span>Subscription and billing</span>
+												</a>
+												<a href="{{ route('users-management.index') }}" class="dropdown-item">
+																	<span>User management</span>
+												</a>
 											@else
 														<a href="{{ route('subscription.list') }}" class="dropdown-item">
 																			<span>Subscription and billing</span>
