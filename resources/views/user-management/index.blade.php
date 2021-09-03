@@ -35,7 +35,7 @@
 	<!-- /.card-header -->
 	<div class="card-body">
 		<div class="tabel-scroll-sec table-user-mang">
-			<table id="example1" class="table table-bordered table-striped">
+			<table id="user_mamnagement" class="table table-bordered table-striped">
 				<thead>
 					<tr>
 						<th><input type="checkbox" name="checkbox" class="select-all"></th>
@@ -57,7 +57,7 @@
                         <tr class="odd">
                         @endif
                             <td><input type="checkbox" class="row-select" data-id="{{ $user->id }}"></td>
-                            <td>
+                            <td class="capital">
                                 <a href="">{{ $user->name }}</a>
                             </td>
                             <td>

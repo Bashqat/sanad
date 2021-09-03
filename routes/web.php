@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('profile', App\Http\Controllers\UserController::class);
     Route::get('/master-settings', [App\Http\Controllers\MasterController::class, 'index'])->name('master_setting');
     Route::post('/master-setting-update', [App\Http\Controllers\MasterController::class, 'updateSetting'])->name('master_setting_update');
-    Route::get('/setting', [App\Http\Controllers\SuperadminController::class, 'index'])->name('setting');
+    Route::get('/settings', [App\Http\Controllers\SuperadminController::class, 'index'])->name('setting');
     Route::post('/setting-update', [App\Http\Controllers\SuperadminController::class, 'updateSetting'])->name('setting_update');
     Route::post('/setting-update', [App\Http\Controllers\SuperadminController::class, 'updateSetting'])->name('setting_update');
     //organisations
@@ -83,7 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('organisation/security/update',[App\Http\Controllers\OrganizationController::class,'securityUpdate'])->name('organisation.security.update');
 
     ///Package management
-    Route::get('package/list',[App\Http\Controllers\PackageController::class,'list'])->name('package.list');
+    Route::get('package-list',[App\Http\Controllers\PackageController::class,'list'])->name('package.list');
     Route::get('package/create/{id?}',[App\Http\Controllers\PackageController::class,'create'])->name('package.create');
     Route::post('package/add',[App\Http\Controllers\PackageController::class,'store'])->name('package.store');
     Route::post('package/update',[App\Http\Controllers\PackageController::class,'update'])->name('package.update');

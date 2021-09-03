@@ -10,8 +10,8 @@
         <a class="nav-link active" data-toggle="tab" href="#pin_setting" role="tab" aria-controls="home"> {{ __('language.change_pin') }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile">{{ __('language.email_smtp') }}</a>
-      </li>
+        <!-- <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile">{{ __('language.email_smtp') }}</a>
+      </li> -->
       <!-- <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#messages" role="tab" aria-controls="messages">Messages</a>
       </li>
@@ -23,7 +23,7 @@
   <div class="tab-content">
     <div class="tab-pane active" id="pin_setting" role="tabpanel">
       <div class="card">
-                   
+
                    <div class="card-body pt-5">
                    <div class="tab-content edit-profile-main-sec">
                        <div class="tab-pane active" id="settings">
@@ -33,16 +33,16 @@
                            <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="inputPin">{{ __('language.pin') }}</label>
-                                    
+
                                     <input type="number" name="pin" class="form-control" id="inputPin" placeholder="{{ __('language.pin') }}" value="{{ (isset($setting[0]->pin)) ? $setting[0]->pin : '' }}" required>
                                     <span id="pin_error" class="error" role="alert">
-                                            
+
                                             </span>
                                 </div>
                               </div>
-                           
-                           
-                           
+
+
+
                            <div class="form-group row">
                            <div class="offset-sm-2 col-sm-10 text-right">
                                <button type="submit" class="btn btn-primary update_superadmin_setting">{{ __('language.update') }}</button>
@@ -64,7 +64,7 @@
               </div>
         </div>
     </div>
-    
+
   </div>
 
 
@@ -113,4 +113,3 @@
     padding-right: 15px;
 }
     </style>
-    

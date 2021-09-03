@@ -96,12 +96,34 @@ if(!$org_list->isEmpty())
 																@elseif(Auth::user()->role==2 && isset($org_list[0]) && !empty($org_list) && !preg_match('#[0-9]#',$org_id))
 																			{{$org_list[0]['org_name']}}
 																@endif
+															@if(strpos($actual_link, 'organisation/') !== false && preg_match('#[0-9]#',$actual_link))
+																	@foreach ( $org_list as $list )
+																			@if($org_id==$list['id'])
+																				{{$list['org_name']}}
+																			@endif
+																	@endforeach
+															@else
+																@php
+																	$newstring=ltrim($actual_link, '/');
 
-																@foreach ( $org_list as $list )
-																		@if($org_id==$list['id'] )
-																			{{$list['org_name']}}
-																		@endif
-																@endforeach
+																	if (strpos($newstring, '/') !== false) {
+																				$menu=explode("/",$newstring);
+																				echo $menu[0].' '.$menu[1];
+																		}
+																		else if (strpos($newstring, '-') !== false) {
+																			    $menu=explode("-",$newstring);
+																					echo $menu[0].' '.$menu[1];
+																		}
+																		else
+																		{
+																			echo $newstring;
+																		}
+
+
+
+																@endphp
+
+															@endif
 																<!-- <i class="fa fa-angle-down" aria-hidden="true"></i> -->
 																<img src="/images/site-images/arrow-right.svg">
 														</a>
@@ -212,6 +234,7 @@ if(!$org_list->isEmpty())
 									<div class="triangle-table-dropdown1"></div>
 										<div class="d-flex align-items-center mt-2">
 												<a href="/organisation/{{ $org_id }}/contact" class="dropdown-item d-flex flex-column p-0">
+
 													 <img src="/images/site-images/contact-dropdown.svg" class="img-fluid">
 																			<span>Contact</span>
 																		</a>
@@ -226,7 +249,7 @@ if(!$org_list->isEmpty())
 									</div>
 									<div class="d-flex align-items-center mt-2 pb-3">
 																		<a href="#" class="dropdown-item d-flex flex-column p-0">
-													 <img src="/images/site-images/invoices-dropdown.svg" class="img-fluid invoices-img">
+													 <img src="/images/site-images/Invoices-dropdown.svg" class="img-fluid invoices-img">
 																			<span>Invoices</span>
 																		</a>
 																		<a href="#" class="dropdown-item d-flex flex-column p-0">
@@ -234,7 +257,7 @@ if(!$org_list->isEmpty())
 																			<span>Bills</span>
 																		</a>
 																		<a href="#" class="dropdown-item d-flex flex-column p-0">
-													 <img src="/images/site-images/support-dropdown.svg" class="img-fluid">
+													 <img src="/images/site-images/Support-dropdown.svg" class="img-fluid">
 																			<span>Support</span>
 																		</a>
 									</div>
