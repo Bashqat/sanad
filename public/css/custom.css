@@ -1450,6 +1450,7 @@ select.form-control {
 	max-width: 940px;
 	margin: 0 auto;
 	padding-top: 20px;
+	border-radius: 0;
 }
 
 .profile-form .card {
@@ -1551,7 +1552,7 @@ a.resend-invite-link {
 
 .contact-inputs input.form-control {
 	width: 100%;
-	max-width: 270px;
+	max-width: 210px;
 }
 
 .contact-inputs {
@@ -1584,9 +1585,9 @@ a.resend-invite-link {
 	justify-content: space-between;
 }
 
-.person-contact input, .person-contact textarea.form-control, .person-contact .nots-attachment, .person-contact select.form-control {
+.person-contact input, .person-contact textarea.form-control, .person-contact .nots-attachment, .person-contact .custom-file, .person-contact select.form-control {
 	width: 100%;
-	max-width: 415px;
+	max-width: 325px;
 }
 
 .nots-attachment a.attachment-link {
@@ -1612,7 +1613,8 @@ a.resend-invite-link {
 .person-sub-contact input,
 .person-sub-contact select.form-control {
 	width: 100%;
-	max-width: 197px;
+	/*max-width: 197px;*/
+	max-width: 155px;
 }
 
 textarea.form-control::placeholder {
@@ -2219,13 +2221,13 @@ span.contact-filter {
 
 .btn.btn-primary:hover {
     color: #fff;
-    background: #3da9fc !important;
-    border-color: #3da9fc !important;
+    background: #4b7ddf !important;
+    border-color: #4b7ddf !important;
 }
 
 .btn.btn-primary:active {
-    background: #3da9fc !important;
-    border-color: #3da9fc !important;
+    background: #4b7ddf !important;
+    border-color: #4b7ddf !important;
 }
 
 .dropdown-menu .dropdown-item:focus {
@@ -4866,6 +4868,7 @@ input.contact-custom-radio:checked {
     background: #fff;
     padding: 20px;
     z-index: 9;
+    box-shadow: 0 -2px 4px 0 rgb(0 0 0 / 20%);
 }
 
 .form-footer .form-group {
@@ -4876,7 +4879,11 @@ input.contact-custom-radio:checked {
 
 .form-footer .btn-cancle {
     border-color: #4b7ddf;
-    color: #4b7ddf;
+    color: #4b7ddf !important;
+}
+
+.capital {
+    text-transform: capitalize;
 }
 
 /***** Sep-1-css-end-here *****/
@@ -5070,7 +5077,7 @@ input.contact-custom-radio:checked {
 	    margin-bottom: 1rem;
 	}
 
-	.person-contact .nots-attachment, .person-contact select.form-control{
+	.person-contact .nots-attachment, .person-contact select.form-control, .person-contact .custom-file{
 		max-width: 100%;
 	}
 
@@ -5875,6 +5882,10 @@ input.contact-custom-radio:checked {
 
 	.contact-row label {
 	    padding-top: 0px !important;
+	}
+
+	.contact-row .custom-file label {
+	    padding-top: 7px !important;
 	}
 
 	.address-contact-row label {

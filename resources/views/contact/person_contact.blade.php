@@ -338,12 +338,16 @@
 
     <!-- persons contacts end -->
     <!--  website information start -->
-
-    <div class="form-group row">
-      <div class="offset-sm-2 col-sm-10 text-right">
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <a href="{{ URL::previous() }}" class="btn btn-danger">Cancel</a>
+  <div class="form-footer">
+      <div class="form-group row mb-0">
+         <div class="col-6 text-left">
+            <a href="{{ URL::previous() }}" class="btn btn-cancle">Cancel</a>
+         </div>
+        <div class="col-6 text-right">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
       </div>
-    </div>
+  </div>
+
   </form>
 </div>

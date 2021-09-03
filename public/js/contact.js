@@ -190,7 +190,7 @@ $(document).ready(function(){
                 <a href="javascript:void(0)" class="mobile-clone float-right" data-count="0">Add Another Mobile</a>
                 <br>
                 <br>
-                <div class="form-group row email-field">
+                <div class="form-group row email-field email-field-small">
                     <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Email </label>
                     <div class="col-lg-9 col-md-9 col-sm-8">
                         <input type="email" name="persons_contacts[${count}][email]" class="form-control" placeholder="Enter Email" value="">

@@ -42,21 +42,19 @@
           </div>
           <div class="form-group row">
             <label for="account_no" class="col-lg-3 col-md-3 col-sm-4 col-form-label"> Type </label>
-            <div class="col-lg-3 col-md-3 col-sm-4">
-              <div class="company-type-options d-flex align-items-center">
+          <div class="col-lg-9 col-md-9 col-sm-8 d-flex">
+              <div class="company-type-options d-flex align-items-center mr-sm-3 mr-2">
                   <input type="radio" name="contact[company_type]" value="customer" class="form-control mr-2 w-auto h-auto" {{ (isset($contact[0]->company_type) && $contact[0]->company_type=="customer")?'checked':'' }}>Customer
               </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-4">
-              <div class="company-type-options d-flex align-items-center">
+              <div class="company-type-options d-flex align-items-center mr-sm-3 mr-2">
                 <input type="radio" name="contact[company_type]" value="supplier" class="form-control mr-2 w-auto h-auto" {{ (isset($contact[0]->company_type) && $contact[0]->company_type=="supplier")?'checked':'' }}>Supplier
             </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-4">
-              <div class="company-type-options d-flex align-items-center">
+              <div class="company-type-options d-flex align-items-center mr-sm-3 mr-2">
                 <input type="radio" name="contact[company_type]" value="" class="form-control mr-2 w-auto h-auto" {{ (isset($contact[0]->company_type) && $contact[0]->company_type=="")?'checked':'' }}>None
              </div>
-            </div>
+          </div>
+
+
           </div>
           <div class="form-group row">
             <label for="logo" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Logo </label>
@@ -555,10 +553,14 @@
     <!-- website information end -->
     <br>
     <br>
-    <div class="form-group row">
-      <div class="offset-sm-2 col-sm-10 text-right">
+
+    <div class="form-footer">
+      <div class="form-group row mb-0">
+         <div class="col-6 text-left">
+        <a href="{{ URL::previous() }}" class="btn btn-cancle">Cancel</a>
+      </div>
+      <div class="col-6 text-right">
         <button type="submit" class="btn btn-primary">Submit</button>
-        <a href="{{ URL::previous() }}" class="btn btn-danger">Cancel</a>
       </div>
     </div>
   </form>

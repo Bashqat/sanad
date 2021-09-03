@@ -6,7 +6,7 @@
         <div class="row">
             <!-- /.col -->
             <div class="col-md-12">
-                <div class="card">
+                <div class="card org-create-table">
                     {{-- <div class="card-header p-2">
                     <ul class="nav nav-pills justify-content-start px-3">
                         <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab"> Organization Detail</a></li>

@@ -6,7 +6,7 @@
 	<div class="row">
 		<!-- /.col -->
 		<div class="col-md-12">
-			<div class="card">
+			<div class="card  section-size">
 				<div class="card-header p-2 text-center d-flex align-items-center justify-content-center">
 					@if(!isset($contact[0]->contact_type) )
 					   <div class="contact-inputs-type mr-4">
