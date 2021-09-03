@@ -46,14 +46,18 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="main-heading">{{ ucfirst( str_replace("-"," ", Request::segment(1)) ) }}</h1>
+                        <h1 class="main-heading capital">{{ ucfirst( str_replace("-"," ", Request::segment(1)) ) }}</h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
         </section>
 
         <section class="content pb-3 position-relative master_section-sec">
-            @include('flash-message')
+          @if (session('success'))
+     @include('flash-message')
+     @endif
+
+
             @yield('content')
 
         </section>

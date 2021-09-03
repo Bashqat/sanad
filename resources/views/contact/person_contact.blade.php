@@ -108,7 +108,7 @@
       <label for="land_line" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Land Line </label>
 
       <div class="col-lg-9 col-md-9 col-sm-8 person-sub-contact">
-        <input type="text" name="contact[phone][0][country_code]" class="form-control col-md-3" placeholder="Country Code" value="{{ (isset($contact[0]->phone[0]['country_code']))?$contact[0]->phone[0]['country_code']:'' }}" >
+        <input type="text" name="contact[phone][0][country_code]" class="form-control col-md-3" placeholder="Country Code" value="{{ (isset($contact[0]->phone[0]['country_code']))?$contact[0]->phone[0]['country_code']:$location }}" >
         <input type="text" name="contact[phone][0][area]" class="form-control col-md-3" placeholder="Area" value="{{ (isset($contact[0]->phone[0]['area']))?$contact[0]->phone[0]['area']:'' }}" >
         <input type="tel" name="contact[phone][0][number]" class="form-control col-md-3" placeholder="Number" value="{{ (isset($contact[0]->phone[0]['number']))?$contact[0]->phone[0]['number']:'' }}" >
         <input type="text" name="contact[phone][0][extention]" class="form-control col-md-3" placeholder="Extention" value="{{ (isset($contact[0]->phone[0]['extention']))?$contact[0]->phone[0]['extention']:'' }}" >

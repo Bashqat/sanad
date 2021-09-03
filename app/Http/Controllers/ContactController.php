@@ -17,6 +17,7 @@ use App\Models\Org_setting;
 use App\Models\Contactattachment;
 use App\Models\Contactfiles;
 use App\Models\Notes;
+use App\Models\Organisation;
 use Str;
 
 
@@ -340,7 +341,18 @@ class ContactController extends Controller
     public function create($org_id)
     {
         $countries = CountryListFacade::getList('en');
-        return view('contact.create',compact('countries','org_id'));
+        $obj=new OrganizationController();
+        $databaseName=$obj->get_db_name($org_id);
+        $db_connection=$obj->org_connection($databaseName);
+        $org_data=Organisation::where('org_id',$org_id)->get();
+
+        $location='';
+        if(!$org_data->isEmpty())
+        {
+          $location=$org_data[0]->location;
+        }
+
+        return view('contact.create',compact('countries','org_id','location'));
     }
     public function store(Request $request,$org_id)
     {

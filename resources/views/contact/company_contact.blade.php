@@ -111,7 +111,7 @@
     <div class="form-group row contact-row">
       <label for="phone" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Phone </label>
       <div class="d-flex contact-inputs col-lg-9 col-md-9 col-sm-8">
-        <input type="text" name="contact[phone][country_code]" class="form-control " placeholder="Country Code" value="{{ (isset($contact[0]->phone['country_code']))?$contact[0]->phone['country_code']:'' }}">
+        <input type="text" name="contact[phone][country_code]" class="form-control " placeholder="Country Code" value="{{ (isset($contact[0]->phone['country_code']))?$contact[0]->phone['country_code']:$location }}">
         <input type="text" name="contact[phone][area]" class="form-control " placeholder="Area" value="{{ (isset($contact[0]->phone['area']))?$contact[0]->phone['area']:'' }}">
         <input type="tel" name="contact[phone][number]" class="form-control " placeholder="Number" value="{{ (isset($contact[0]->phone['number']))?$contact[0]->phone['number']:'' }}">
       </div>
@@ -125,7 +125,7 @@
     <div class="form-group row contact-row">
       <label for="fax" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Fax </label>
       <div class="d-flex  contact-inputs col-lg-9 col-md-9 col-sm-8">
-        <input type="text" name="contact[fax][country_code]" class="form-control " placeholder="Country Code" value="{{ (isset($contact[0]->fax['country_code']))?$contact[0]->phone['country_code']:'' }}">
+        <input type="text" name="contact[fax][country_code]" class="form-control " placeholder="Country Code" value="{{ (isset($contact[0]->fax['country_code']))?$contact[0]->phone['country_code']:$location }}">
         <input type="text" name="contact[fax][area]" class="form-control " placeholder="Area" value="{{ (isset($contact[0]->fax['area']))?$contact[0]->phone['area']:'' }}">
         <input type="tel" name="contact[fax][number]" class="form-control " placeholder="Number" value="{{ (isset($contact[0]->fax['number']))?$contact[0]->phone['number']:'' }}">
       </div>
@@ -133,7 +133,7 @@
     <div class="form-group row contact-row">
       <label for="mobile" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Mobile </label>
       <div class="d-flex  contact-inputs col-lg-9 col-md-9 col-sm-8">
-        <input type="text" name="contact[mobile][country_code]" class="form-control " placeholder="Country Code" value="{{ (isset($contact[0]->mobile['country_code']))?$contact[0]->mobile['country_code']:'' }}">
+        <input type="text" name="contact[mobile][country_code]" class="form-control " placeholder="Country Code" value="{{ (isset($contact[0]->mobile['country_code']))?$contact[0]->mobile['country_code']:$location }}">
         <input type="text" name="contact[mobile][area]" class="form-control " placeholder="Area" value="{{ (isset($contact[0]->mobile['area']))?$contact[0]->mobile['area']:'' }}">
         <input type="tel" name="contact[mobile][number]" class="form-control " placeholder="Number" value="{{ (isset($contact[0]->mobile['number']))?$contact[0]->mobile['number']:'' }}">
       </div>

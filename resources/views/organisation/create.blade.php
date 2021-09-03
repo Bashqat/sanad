@@ -9,7 +9,7 @@
                 <div class="card org-create-table">
                     {{-- <div class="card-header p-2">
                     <ul class="nav nav-pills justify-content-start px-3">
-                        <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Add Organization</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Add Organisation</a></li>
                     </ul>
                     </div><!-- /.card-header --> --}}
                     <div class="card-body">
@@ -53,7 +53,7 @@
                         <!-- An unexamined life is not worth living. - Socrates -->
 
                     <div class="form-group row">
-                        <label for="logo" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organization Logo </label>
+                        <label for="logo" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organisation Logo </label>
                         <div class="col-lg-9 col-md-9 col-sm-9 input-group">
                           @if(isset($organisation_data[0]->logo) && $organisation_data[0]->logo!="")
       											<div class="thumb_img">
@@ -70,13 +70,13 @@
 
 
                         <div class="form-group row">
-                            <label for="type_of_organization" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Type of Organization <span style="color:red;">*</span> </label>
+                            <label for="type_of_Organisation" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Type of Organisation <span style="color:red;">*</span> </label>
                             <div class="col-lg-9 col-md-9  col-sm-9">
-                                <select name="type_of_organization" class="form-control select2  " style="width: 100%;" required="">
+                                <select name="type_of_Organisation" class="form-control select2  " style="width: 100%;" required="">
 
                                 <option value="">Select </option>
                                     @foreach($organisationType as $key=>$val)
-                                      <option value="{{$key}}" {{ (isset($organisation_data[0]->type_of_organization) && $key==$organisation_data[0]->type_of_organization)?'selected':''}}>{{$val}}</option>
+                                      <option value="{{$key}}" {{ (isset($organisation_data[0]->type_of_Organisation) && $key==$organisation_data[0]->type_of_Organisation)?'selected':''}}>{{$val}}</option>
                                     @endforeach
 
                                 </select>
@@ -113,7 +113,7 @@
 
 
                                     <div class="form-group row">
-                                        <label for="location" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organization Location <span style="color:red;">*</span> </label>
+                                        <label for="location" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organisation Location <span style="color:red;">*</span> </label>
                                         <div class="col-lg-9 col-md-9  col-sm-9">
                                             <select name="location" class="form-control select2  " style="width: 100%;" required="">
 
@@ -130,7 +130,7 @@
 
                         <!-- An unexamined life is not worth living. - Socrates -->
                     <div class="form-group row contact-row">
-                        <label for="address" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organization Address </label>
+                        <label for="address" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organisation Address </label>
 
                         <div class="col-lg-9 col-md-9 col-sm-9 contact-address-fields">
                             <input type="text" name="address[address1]" class="form-control
@@ -152,7 +152,7 @@
 
                         <!-- An unexamined life is not worth living. - Socrates -->
                 <div class="form-group row">
-                    <label for="phone" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organization Phone </label>
+                    <label for="phone" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organisation Phone </label>
                     <div class="col-lg-9 col-md-9 col-sm-9">
                         <input type="text" name="phone" class="form-control
                         " id="phone " placeholder="Enter Phone" value="{{ isset($organisation_data[0]->phone) ? $organisation_data[0]->phone : ''}}">
@@ -163,7 +163,7 @@
 
                         <!-- An unexamined life is not worth living. - Socrates -->
                 <div class="form-group row">
-                    <label for="fax" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organization Fax </label>
+                    <label for="fax" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organisation Fax </label>
                     <div class="col-lg-9 col-md-9 col-sm-9">
                         <input type="text" name="fax" class="form-control
                         " id="fax " placeholder="Enter Fax" value="{{ isset($organisation_data[0]->fax) ? $organisation_data[0]->fax : ''}}">
@@ -174,7 +174,7 @@
 
                         <!-- An unexamined life is not worth living. - Socrates -->
             <div class="form-group row">
-                <label for="mobile" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organization Mobile </label>
+                <label for="mobile" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organisation Mobile </label>
                 <div class="col-lg-9 col-md-9 col-sm-9">
                     <input type="text" name="mobile" class="form-control
                     " id="mobile " placeholder="Enter Mobile" value="{{ isset($organisation_data[0]->mobile) ? $organisation_data[0]->mobile : ''}}">
@@ -185,7 +185,7 @@
 
                         <!-- An unexamined life is not worth living. - Socrates -->
                 <div class="form-group row">
-                    <label for="website" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organization Website </label>
+                    <label for="website" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organisation Website </label>
                     <div class="col-lg-9 col-md-9 col-sm-9">
                         <input type="text" name="website" class="form-control
                         " id="website " placeholder="Enter Website" value="{{ isset($organisation_data[0]->website) ? $organisation_data[0]->website : ''}}">
@@ -204,7 +204,7 @@
 
                         <!-- An unexamined life is not worth living. - Socrates -->
             <div class="form-group row">
-                <label for="email" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organization Email </label>
+                <label for="email" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organisation Email </label>
                 <div class="col-lg-9 col-md-9 col-sm-9">
                     <input type="text" name="email" class="form-control
                     " id="email " placeholder="Enter Email" value="{{ isset($organisation_data[0]->email) ? $organisation_data[0]->email : ''}}">
@@ -214,7 +214,7 @@
 
 
                         <div class="form-group row">
-                            <label for="currency" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organization Currency <span style="color:red;">*</span> </label>
+                            <label for="currency" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Organisation Currency <span style="color:red;">*</span> </label>
                             <div class="col-lg-9 col-md-9  col-sm-9">
                                 <select name="currency" class="form-control select2  " style="width: 100%;" required="">
                                     <option value="">Select </option>
@@ -241,11 +241,11 @@
                             <div class="form-group row mb-0">
                                 <!-- <div class="row"> -->
                                      <div class="col-6 text-left p-0">
-                                        <button type="submit" class="btn org_cancle btn-cancle">Cancle</button>
-                                    </div>  
+                                        <a href="{{ URL::previous() }}" class="btn org_cancle btn-cancle">Cancel</a>
+                                    </div>
                                     <div class="col-6 text-right p-0">
                                         <button type="submit" class="btn btn-primary org_submit">Submit</button>
-                                    </div>   
+                                    </div>
                                <!--  </div> -->
                             </div>
                         </div>
