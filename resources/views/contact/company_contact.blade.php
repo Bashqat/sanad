@@ -458,7 +458,7 @@
       <div class="form-group row">
         <label for="title" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Title <span style="color:red;">*</span></label>
         <div class="col-lg-9 col-md-9 col-sm-8">
-          <input type="text" name="website_information[{{$key}}][title]" class="form-control" placeholder="Website Title(Supplier Portal)" value="{{ (isset($website_information->title))?$website_information->title:'' }}" required>
+          <input type="text" name="website_information[{{$key}}][title]" class="form-control" placeholder="Website Title(Supplier Portal)" value="{{ (isset($website_information->title))?$website_information->title:'' }}" >
           @error('title')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -507,7 +507,7 @@
       <div class="form-group row">
         <label for="title" class="col-lg-3 col-md-3 col-sm-4 col-form-label">Title <span style="color:red;">*</span></label>
         <div class="col-lg-9 col-md-9 col-sm-8">
-          <input type="text" name="website_information[0][title]" class="form-control" placeholder="Website Title(Supplier Portal)" value="{{ (isset($website_information->title))?$website_information->title:'' }}" required>
+          <input type="text" name="website_information[0][title]" class="form-control" placeholder="Website Title(Supplier Portal)" value="{{ (isset($website_information->title))?$website_information->title:'' }}" >
           @error('title')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>

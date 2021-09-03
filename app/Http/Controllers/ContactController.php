@@ -1060,12 +1060,16 @@ class ContactController extends Controller
 
       $groups=Group::with('subgroup')->get();
       $contactGroup=[];
-      $group_id=$contact_detail[0]['group_id'];
+      if(!empty($contact_detail))
+      {
+        $group_id=$contact_detail[0]['group_id'];
+      }
       if(!empty($group_id))
       {
         $contactGroup=Group::with('subgroup')->whereIn('id', $group_id)->get()->toArray();
       }
-
+      // echo '<pre>';
+      // print_R($contact_detail);exit;
 
 
       return view('contact/view',compact('contact_detail','org_id','groups','contactGroup','contacts','user_id'));
