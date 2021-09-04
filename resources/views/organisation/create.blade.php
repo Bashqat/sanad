@@ -193,7 +193,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="fax" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Tax Registration Number </label>
+                    <label for="fax" class="col-lg-3 col-md-3 col-sm-3 col-form-label">Tax Registration Number <span style="color:red;">*</span></label>
                     <div class="col-lg-9 col-md-9 col-sm-9">
                         <input type="text" name="tax_reg_number" class="form-control
                         " id="fax " placeholder="Enter Tax Registration Number" value="{{ isset($organisation_data[0]->tax_reg_number) ? $organisation_data[0]->tax_reg_number : ''}}" required>
