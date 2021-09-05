@@ -117,6 +117,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('organisation/{org_id}/export-contacts/{type}/{id?}',[App\Http\Controllers\ContactController::class,'exportContacts'])->name('export.contacts');
         Route::post('organisation/{org_id}/tag-contact',[App\Http\Controllers\ContactController::class,'tagContact'])->name('tag-contact');
         Route::post('organisation/{org_id}/contact-archive',[App\Http\Controllers\ContactController::class,'contactToArchive'])->name('contactArchive');
+
         Route::post('organisation/{org_id}/contact-merge',[App\Http\Controllers\ContactController::class,'contactToMerge'])->name('contactToMerge');
         Route::post('organisation/{org_id}/group-contact',[App\Http\Controllers\ContactController::class,'groupContact'])->name('group-contact');
         Route::post('organisation/{org_id}/group-detail-contact',[App\Http\Controllers\ContactController::class,'groupContactDetail'])->name('group-contact-detail');

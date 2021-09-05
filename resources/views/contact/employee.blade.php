@@ -40,6 +40,54 @@
                                   <th>Action</th>
                               </tr>
                             </thead>
+                            <tbody>
+                              @foreach($contacts as $contact)
+                              <tr>
+                                <td><input type="checkbox" class="row-select" value="{{ $contact->id }}"></td>
+                                <td><div class="contact-name-col"><a class="text-right d-block" href="/organisation/{{$org_id}}/contact/{{$contact->id}}/view">{{$contact->name}}</a>
+                              <p class="text-right">{{$contact->name_arabic}}</p></div>
+                            </td>
+                            <td>
+                            {{(isset($contact->personal_info[0]['nationality'])?$contact->personal_info[0]['nationality']:'');}}
+                            </td>
+                            @php
+                            $tags=$contact->tags;
+                            $tag_html='';
+                            if(!empty($tags))
+                            {
+                              foreach($tags as $tag )
+                              {
+                                $tag_html.='<div class="tab-buttons">
+                                <button type="button" data-tag-name="test" data-tag-index="0" class="btn btn-success edit-tag">'.$tag.'</button>
+                                </div>';
+                              }
+
+                            }
+                            echo '<td>'.$tag_html.'</td>';
+                            $attachment_count=(isset($contact->attachment) && !empty($contact->attachment))?count($contact->attachment):'';
+                            $edit_path=route('contacts.edit',[$org_id,$contact->id]);
+                            $delete_path=route('contact.delete');
+                            $edit_path=route('contact.employee.edit',[$org_id,$contact->id]);
+                            $delete_path=route('contact.delete');
+                            @endphp
+                            <td>
+                              <div class="dropdown">
+                                    <a type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><img src="/images/site-images/3-dots-contact-list.svg" style="width:100%"></a>
+                                    <div class="dropdown-menu dropdown-primary" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 21px, 0px);"><a href="{{$edit_path}}" class="dropdown-item">Edit</a>
+                                    <form class="inline-block" action="{{$delete_path}}" method="POST" onsubmit="return confirm(`Are you sure?`);">
+
+                                        <input type="hidden" name="org_id" value="{{$org_id}}">
+                                        <input type="hidden" name="id" value=""{{$contact->id}}">
+                                        @csrf
+                                        <input type="submit" class="dropdown-item" value="Delete">
+                                    </form>
+                                </div>
+                              </div>
+                            </td>
+                              </tr>
+
+                              @endforeach
+                            </tbody>
 
                         </table>
                     </div>

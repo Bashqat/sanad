@@ -118,7 +118,11 @@ class GroupController extends Controller
       $obj=new OrganizationController();
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
-      $contacts=Contact::select('name','email','phone',)->where('type','!=','archive')->where('group_id',$group_id)->get();
+      $group[]=$group_id;
+
+      $contacts=Contact::where('type','!=','archive')->whereIn('group_id',[1,2])->get();
+      echo '<pre>';
+      print_r($contacts);exit;
       $groups=Group::get();
       // if(request()->ajax()){
       //   $filter=$request->filter_value;
@@ -126,7 +130,7 @@ class GroupController extends Controller
       //   return view('contact.filter',['org_id'=>$org_id,'contacts'=>$contacts]);
       // }
       //return json_encode($contacts);
-       return view('group.contact',['org_id'=>$org_id,'contacts'=>$contacts,'groups'=>$groups,'group_id'=>$group_id]);
+       return view('contact.index',['org_id'=>$org_id,'contacts'=>$contacts,'groups'=>$groups,'group_id'=>$group_id]);
 
     }
     public function contactserverSide(Request $request,$org_id,$group_id)

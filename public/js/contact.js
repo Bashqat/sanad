@@ -14,22 +14,22 @@ $(document).ready(function(){
   //   type=$('.comapnay_type').val();
   // }
   // alert(type);
-  var table1=$('#contact_table').DataTable({
-   //"scrollX": true,
-   //"pagingType": "numbers",
-       "processing": true,
-       "serverSide": true,
-       "ajax": '/organisation/'+org_id+'/contact/server-side'+company_type,
-
-   } );
-   var table=$('#contact_employee_table').DataTable({
-    //"scrollX": true,
-    //"pagingType": "numbers",
-        "processing": true,
-        "serverSide": true,
-        "ajax": '/organisation/'+org_id+'/contact/employee-server-side',
-
-    } );
+  // var table1=$('#contact_table').DataTable({
+  //
+  //      "processing": true,
+  //      "serverSide": true,
+  //      "ajax": '/organisation/'+org_id+'/contact/server-side'+company_type,
+  //
+  //  } );
+  var table1=$('#contact_table').DataTable();
+  var table=$('#contact_employee_table').DataTable();
+  //var notes_data=$('#notes_data').DataTable();
+   // var table=$('#contact_employee_table').DataTable({
+   //      "processing": true,
+   //      "serverSide": true,
+   //      "ajax": '/organisation/'+org_id+'/contact/employee-server-side',
+   //
+   //  } );
    var table=$('#group_contact_table').DataTable({
     //"scrollX": true,
     //"pagingType": "numbers",
@@ -516,10 +516,11 @@ $(document).ready(function(){
 			success: function (response) {
 				if (response.success == 1) {
 					toastr.success(response.msg);
+           window.location.reload();
 				} else {
 					toastr.error(response.msg);
 				}
-				contacts.ajax.reload();
+				//table1.ajax.reload();
 				var pageURL = window.location.href;
 				var lastURLSegment = pageURL.substr(pageURL.lastIndexOf('/') + 1);
 				if ( $.isNumeric(lastURLSegment) ) { window.location.reload(); }
@@ -739,14 +740,15 @@ $(document).ready(function(){
                     toastr.error(response.msg);
                 }
                 $('#add-website-modal').modal('hide');
-                websites.ajax.reload();
+                //websites.ajax.reload();
+                window.location. reload();
             }
         });
         this.reset();
     });
 
     // Add Group Submit handler
-    $('#group-form').submit(function(e){
+    $('#group-form-view').submit(function(e){
       var org_id=$('.org_id').val();
         e.preventDefault();
         $.ajax({
@@ -829,36 +831,32 @@ $(document).ready(function(){
 
         e.preventDefault();
         var id = $(".radio_option:checked").data('id');
-
         var action = $(".radio_option:checked").data('type');
-
         var rows = [];
         $('.row-select').each(function(){
             if($(this).is(":checked")){
                 rows.push(this.value)
             }
         });
-
-
         if(rows.length <= 0 ){
             toastr.error('Please select atleast one row.');
             return false;
         }
 
         var url = $(this).attr('href');
-
-
         switch (action) {
             case "archive":
-                actionAjaxContactOption(url,rows,contacts);
+                //actionAjaxContactOption(url,rows,contacts);
+                archiveContact(rows);
                 break;
             case "contact":
                 actionAjaxContactOption(url,rows,archive);
                 break;
             case "merge":
+                  var org_id=$('.org_id').val();
                 $.ajax({
                     data: {rows},
-                    url: url,
+                    url: '/organisation/'+org_id+'/contact-merge',
                     type: 'POST',
                     beforeSend: function (request) {
                         return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
@@ -916,6 +914,26 @@ $(document).ready(function(){
             break;
         }
     });
+    function archiveContact(rows)
+    {
+      var org_id=$('.org_id').val()
+      $.ajax({
+          data: {rows:rows},
+          url: '/organisation/'+org_id+'/contact-archive',
+          type: 'POST',
+          beforeSend: function (request) {
+              return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+          },
+          success: function(response){
+              if(response.success==1)
+              {
+                toastr.success(response.msg);
+                window.location.reload();
+              }
+          }
+      });
+
+    }
     $('.option_action_view').click(function(e){
 
         e.preventDefault();

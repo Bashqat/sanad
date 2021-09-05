@@ -426,12 +426,28 @@
                                                 <p>{{$notes['content']}}
                                                 </p>
                                                 <div class="notes-time-detail d-flex">
-                                                    <span>By Keith Willaim </span>
+
 																										@php
 																										$created_at = date('d/m/Y ', strtotime($notes['created_at']));
 																										$created_at_time = date("h:i:sa", strtotime($notes['created_at']));
+																										Config::set("database.connections.mysql", [
+																															'driver' => 'mysql',
+																															"host" => "127.0.0.1",
+																															"database" => getenv("DB_DATABASE"),
+																															"username" => "root",
+																															"password" => getenv("DB_PASSWORD"),
+																															'charset' => 'utf8',
+																															'prefix' => '',
+																															'prefix_indexes' => true,
+																															'schema' => 'public',
+																															'sslmode' => 'prefer',
+																											]);
+																											DB::purge('mysql');
+																										$user=\App\Models\User::where('id',Auth::id())->first();
+
 																										@endphp
-                                                    <p>(Last edited by - Mark Boucher - {{$created_at}} - $created_at_time)</p>
+																										<span>By {{$user->name}} </span>
+                                                    <p>(Last edited by - {{$user->name}} - {{$created_at}} - $created_at_time)</p>
                                                 </div>
                                             </td>
                                             <td>
@@ -558,11 +574,12 @@
                                 </div>
                             </li>
 							<li>
-
+															@if(isset($contact_detail[0]['address'][0]['google_map_link']) && $contact_detail[0]['address'][0]['google_map_link']!="")
                                 <a href="#" class="d-inline-flex">
                                 <img src="/images/site-images/address-location-cont.svg">
                                 {{isset($contact_detail[0]['address'][0]['google_map_link'])?$contact_detail[0]['address'][0]['google_map_link']:''}}
                                 </a>
+																@endif
                             </li>
 							</ul>
 

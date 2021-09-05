@@ -43,8 +43,14 @@
         <div class="folder-content">
         @if(!empty($files[$list['id']]))
           @php
-          $count=count($files[$list['id']]);
-          $count = ceil($count/5);
+          $count=1;
+          if($count>1)
+          {
+            $count=count($files[$list['id']]);
+            $count = ceil($count/5);
+          }
+
+          
           @endphp
         @foreach($files[$list['id']] as $file)
         <div class="tab-files-detail file_detail_{{$file['id']}} d-flex justify-content-between align-items-center">

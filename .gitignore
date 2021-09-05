@@ -4,6 +4,7 @@
 /public/organisation_logo
 /public/images/contacts
 /public/images/profile
+/public/contact-attachment/
 /storage/*.key
 /vendor
 .env

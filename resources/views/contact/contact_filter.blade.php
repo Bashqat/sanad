@@ -84,7 +84,7 @@
                             </div>
 
                             <div class="contact-options d-flex align-items-center">
-                            <input class="contact-custom-radio radio_option" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <input class="contact-custom-radio radio_option" type="radio" name="flexRadioDefault" id="flexRadioDefault1" data-type="merge" data-id="contacts_table">
                             <a class="dropdown-item option" href="/organisation/{{$org_id}}/contact-merge" data-type="merge" data-id="contacts_table">Merge</a>
                             </div>
 

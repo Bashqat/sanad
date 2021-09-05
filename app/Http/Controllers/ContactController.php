@@ -31,11 +31,16 @@ class ContactController extends Controller
     }
     public function index(Request $request,$org_id,$type='')
     {
-
       $obj=new OrganizationController();
       $databaseName=$obj->get_db_name($org_id);
       $db_connection=$obj->org_connection($databaseName);
-      $contacts=Contact::select('id','name','email','phone',)->with('contact_information')->where('type','!=','archive')->get();
+      $contacts=Contact::where('type','!=','archive')->with('contact_information');
+      if($type!="")
+      {
+        $contacts=Contact::where('type','!=','archive')->where('company_type',$type)->with('contact_information');
+      }
+      $contacts=$contacts->get();
+
       $groups=Group::with('subgroup')->get();
     //  echo '<pre>';
       //print_r($groups);exit;
@@ -357,6 +362,7 @@ class ContactController extends Controller
     public function store(Request $request,$org_id)
     {
 
+
         $obj=new OrganizationController();
         $databaseName=$obj->get_db_name($org_id);
         $db_connection=$obj->org_connection($databaseName);
@@ -371,13 +377,14 @@ class ContactController extends Controller
             $contactData['organization_id'] = $org_id;
             $contactData['created_by'] = Auth::user()->id;
             $contactData['contact_type'] = $request->input('contact_type');
-            $contactData['company_type'] = $request->input('company_type');
+            //$contactData['company_type'] = $request->input('company_type');
             if(isset($contactData['first_name']) && isset($contactData['last_name']))
             {
               $contactData['name'] = $contactData['first_name'].' '.$contactData['last_name'];
               $contactData['name_arabic'] = $contactData['first_name_arabic'].' '.$contactData['last_name_arabic'];
               $contactData=Arr::except($contactData, ['_token','org_id','first_name','last_name','first_name_arabic','last_name_arabic']);
             }
+
 
 
             $contact = Contact::create($contactData);
@@ -885,14 +892,20 @@ class ContactController extends Controller
           $groupData=Contact::select('group_id')->where('id',$contact_id)->get()->toArray();
           $group=$groupData[0]['group_id'];
 
+
           $groupId = $request->groupId;
           if(is_array($group) && !in_array($groupId,$group))
           {
             $group[]=$groupId;
           }
-          else {
+          elseif($group==null){
             $group[]=$groupId;
           }
+          else {
+            $goup=$group;
+          }
+
+
 
           // echo '<pre>';
           // print_r($group);exit;
@@ -1451,4 +1464,5 @@ class ContactController extends Controller
         return $html;
       }
     }
+
 }
